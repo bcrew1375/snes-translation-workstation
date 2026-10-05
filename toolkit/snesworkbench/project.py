@@ -15,9 +15,17 @@ from .patching import BuildResult, sha256, validate_rom
 
 @dataclass(frozen=True)
 class RomConfig:
+    """Identity of a ROM input or output.
+
+    ``size`` and ``sha256`` may be ``None`` for an *output* whose bytes do not
+    exist yet, which is the normal state before a translation has been written.
+    The original input ROM is always fully pinned: its size and digest are
+    required, because the build must refuse an unsupported source image.
+    """
+
     default_path: Path
-    size: int
-    sha256: str
+    size: int | None = None
+    sha256: str | None = None
 
 
 @dataclass(frozen=True)
@@ -93,14 +101,16 @@ def load_project(project: str | Path, root: Path | None = None) -> ProjectConfig
             adapter=data["adapter"],
             source_directory=project_root / data.get("source_directory", "src"),
             input=RomConfig(
-                _path(repo, project_root, input_data["default_path"], repository_relative=True),
+                # Project-relative: each project owns its ROM under rom/.
+                _path(repo, project_root, input_data["default_path"], repository_relative=False),
                 input_data["size"],
                 input_data["sha256"],
             ),
             output=RomConfig(
-                _path(repo, project_root, output_data["default_path"], repository_relative=True),
-                output_data["size"],
-                output_data["sha256"],
+                # A translated ROM may not exist yet, so its identity is optional.
+                _path(repo, project_root, output_data["default_path"], repository_relative=False),
+                output_data.get("size"),
+                output_data.get("sha256"),
             ),
             manifests=manifests,
             approved_ranges=approved_ranges,

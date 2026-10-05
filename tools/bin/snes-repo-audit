@@ -10,7 +10,7 @@ for raw in r.stdout.split(b'\0'):
     if not raw: continue
     rel=raw.decode(); p=ROOT/rel
     if not p.is_file(): continue
-    if rel.startswith(('build/','disassembly/')) or (rel.startswith('roms/') and p.name!='README.md') or rel.lower().endswith(BANNED_SUFFIXES): fail.append(f'prohibited ROM/generated asset: {rel}'); continue
+    if rel.startswith(('build/','disassembly/')) or (rel.startswith('projects/') and '/rom/' in '/'+rel and p.name!='README.md') or rel.lower().endswith(BANNED_SUFFIXES): fail.append(f'prohibited ROM/generated asset: {rel}'); continue
     try: t=p.read_text('utf-8')
     except UnicodeDecodeError: fail.append(f'unreviewed binary file: {rel}'); continue
     if CJK.search(t): fail.append(f'Japanese/CJK content requires explicit review: {rel}')

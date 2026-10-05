@@ -1,7 +1,7 @@
 # User-supplied ROMs and generated build output
-/roms/*/*
-!/roms/README.md
-!/roms/*/README.md
+# Each project owns its ROM: projects/<id>/rom/original.sfc
+/projects/*/rom/*
+!/projects/*/rom/README.md
 /build/
 
 # ROM-derived working data. Reproducible via `make disassemble`, never tracked:
@@ -14,7 +14,7 @@
 /projects/*/translation/strings.tsv
 /projects/*/translation/text_layout.tsv
 
-# Any ROM image anywhere in the tree, in case one is dropped outside roms/
+# Any ROM image anywhere in the tree, in case one is dropped outside projects/
 *.sfc
 *.smc
 *.fig

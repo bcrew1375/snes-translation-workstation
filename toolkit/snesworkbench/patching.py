@@ -12,12 +12,30 @@ def sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def validate_rom(data: bytes, *, size: int, digest: str, description: str) -> None:
+def validate_rom(
+    data: bytes,
+    *,
+    size: int | None,
+    digest: str | None,
+    description: str,
+) -> None:
+    """Check a ROM against expected identity, skipping absent expectations.
+
+    An output ROM whose size/digest are not yet recorded passes through this
+    check; the input ROM always supplies both, so an unsupported source image
+    is still rejected.
+    """
+    actual_size = len(data)
     actual_digest = sha256(data)
-    if len(data) != size or actual_digest != digest:
+    problems = []
+    if size is not None and actual_size != size:
+        problems.append(f"expected {size} bytes")
+    if digest is not None and actual_digest != digest:
+        problems.append(f"expected SHA-256 {digest}")
+    if problems:
         raise WorkstationError(
-            f"unsupported {description}: expected {size} bytes with SHA-256 {digest}, "
-            f"got {len(data)} bytes with SHA-256 {actual_digest}"
+            f"unsupported {description}: {'; '.join(problems)}, "
+            f"got {actual_size} bytes with SHA-256 {actual_digest}"
         )
 
 

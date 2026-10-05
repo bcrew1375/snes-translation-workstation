@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "rom": {
+    "path": "projects/dbz-kakusei-hen/rom/original.sfc",
+    "sha256": "cc5ab583b5189c3f5b374335edf4b857461278d41ef674f7db31aa100dcb814a",
+    "title_romanized": "Dragon Ball Z - Chou Gokuuden - Kakusei Hen",
+    "title_encoding": "Shift-JIS (CP932), stored at ROM $07FC0-$07FD4",
+    "title_note": "The original Japanese title is not reproduced here: repository policy keeps original-language text out of tracked files. It can be read directly from the ROM header.",
+    "size_bytes": 2097152,
+    "rom_banks": 64,
+    "mapping": "lorom",
+    "map_mode": "0x30",
+    "cartridge_type": "0x02",
+    "expansion_chip": null,
+    "notes": "2 MiB LoROM (slow), ROM+RAM+battery, no expansion chip. Regions below are only those verified so far; every unlisted byte is reported as unknown on purpose."
+  },
+  "symbols": {
+    "00:8000": {
+      "name": "ResetVector_Entry",
+      "kind": "routine",
+      "confidence": "confirmed"
+    }
+  },
+  "regions": [
+    {
+      "bank": 0,
+      "cpu_start": "$FFC0",
+      "cpu_end": "$FFFF",
+      "rom_start": "$07FC0",
+      "rom_end": "$07FFF",
+      "type": "data",
+      "name": "Bank 0 SNES internal header",
+      "confidence": "confirmed"
+    },
+    {
+      "bank": 0,
+      "cpu_start": "$8000",
+      "cpu_end": "$8011",
+      "rom_start": "$000000",
+      "rom_end": "$000011",
+      "type": "code",
+      "name": "Reset vector stub: SEI CLD CLC XCE SEP #$30, STZ.w $4200, LDA.b #$80, STA.w $2100, JML $808012",
+      "confidence": "confirmed"
+    },
+    {
+      "bank": 0,
+      "cpu_start": "$FFB0",
+      "cpu_end": "$FFBF",
+      "rom_start": "$07FB0",
+      "rom_end": "$07FBF",
+      "type": "data",
+      "name": "Bank 0 extended-header lead-in, ASCII \"B2A2ZJ\" then padding; purpose not yet established",
+      "confidence": "tentative"
+    },
+    {
+      "bank": 0,
+      "cpu_start": "$FFEA",
+      "cpu_end": "$FFFF",
+      "rom_start": "$1FFEA",
+      "rom_end": "$1FFFF",
+      "type": "padding",
+      "name": "Bank 0 native-mode vectors are entirely $FF; the game installs its own vector table at runtime rather than using the stock LoROM vectors",
+      "confidence": "confirmed"
+    }
+  ]
+}

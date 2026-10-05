@@ -1,0 +1,25 @@
+schema_version = 1
+id = "dbz-kakusei-hen"
+name = "Dragon Ball Z - Chou Gokuuden - Kakusei Hen"
+platform = "snes"
+adapter = "dbz_kakusei_hen.build"
+source_directory = "src"
+
+# Paths resolve relative to this project directory, so a project owns its own
+# ROM and does not repeat its identifier in every path.
+[input]
+default_path = "rom/original.sfc"
+size = 2097152
+sha256 = "cc5ab583b5189c3f5b374335edf4b857461278d41ef674f7db31aa100dcb814a"
+
+# The translated ROM does not exist yet, so its size and digest are omitted.
+# The identity check is skipped until both are recorded here. Set them once a
+# real translation is produced so later builds stay pinned.
+[output]
+default_path = "build/dbz-kakusei-hen/translated.sfc"
+
+[manifests]
+analysis = "analysis/project.json"
+
+# Regions a translation may modify. Empty until an adapter declares them; the
+# build rejects any changed byte outside these ranges.

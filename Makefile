@@ -1,5 +1,5 @@
 PROJECT ?=
-ROM ?= $(if $(PROJECT),roms/$(PROJECT)/original.sfc,)
+ROM ?= $(if $(PROJECT),projects/$(PROJECT)/rom/original.sfc,)
 OUTPUT ?= $(if $(PROJECT),build/$(PROJECT)/translated.sfc,)
 DISASSEMBLY ?= disassembly
 BANK ?=

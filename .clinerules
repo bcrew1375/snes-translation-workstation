@@ -57,7 +57,7 @@ offset so a real regression is diagnosable rather than papered over.
 
 The original ROM is expected at:
 
-    roms/<project-id>/original.sfc
+    projects/<project-id>/rom/original.sfc
 
 Treat this file as immutable reference material.
 
@@ -449,7 +449,7 @@ It supports concepts including:
 
 Examples:
 
-    snes-font-scan roms/<project-id>/original.sfc \
+    snes-font-scan projects/<project-id>/rom/original.sfc \
         --bank 4 \
         --all-bit-offsets \
         --width 8 \
@@ -458,7 +458,7 @@ Examples:
 
 For packed 6x8 glyphs:
 
-    snes-font-scan roms/<project-id>/original.sfc \
+    snes-font-scan projects/<project-id>/rom/original.sfc \
         --bank 4 \
         --width 6 \
         --height 8 \
@@ -764,7 +764,7 @@ Especially test:
 
 Synthetic test data is preferred over requiring the copyrighted ROM for generic tool tests.
 
-The devcontainer should be able to validate its tooling without `roms/<project-id>/original.sfc`.
+The devcontainer should be able to validate its tooling without `projects/<project-id>/rom/original.sfc`.
 
 ---
 
@@ -780,7 +780,7 @@ from:
 
     project ROM analysis/verification
 
-A missing `roms/<project-id>/original.sfc` should not prevent the development environment from starting.
+A missing `projects/<project-id>/rom/original.sfc` should not prevent the development environment from starting.
 
 ROM-dependent commands should fail clearly and explain what file is required.
 

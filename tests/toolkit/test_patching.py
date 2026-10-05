@@ -40,6 +40,24 @@ class PatchingTest(unittest.TestCase):
         with self.assertRaisesRegex(WorkstationError, "unsupported fixture"):
             validate_rom(data, size=5, digest="0" * 64, description="fixture")
 
+    def test_unknown_output_identity_is_allowed(self):
+        """A translated ROM has no recorded hash until one is produced."""
+        data = b"test"
+        # Both expectations absent: nothing to check, so this passes.
+        validate_rom(data, size=None, digest=None, description="translated ROM")
+        # A supplied expectation is still enforced even when the other is absent.
+        validate_rom(data, size=4, digest=None, description="translated ROM")
+
+    def test_known_output_identity_is_still_enforced(self):
+        import hashlib
+
+        data = b"test"
+        with self.assertRaisesRegex(WorkstationError, "expected SHA-256"):
+            validate_rom(data, size=None, digest="0" * 64, description="translated ROM")
+        with self.assertRaisesRegex(WorkstationError, "expected 9 bytes"):
+            validate_rom(data, size=9, digest=hashlib.sha256(data).hexdigest(),
+                         description="translated ROM")
+
 
 if __name__ == "__main__":
     unittest.main()
