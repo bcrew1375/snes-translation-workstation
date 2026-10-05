@@ -6,6 +6,10 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
  build-essential clang cmake pkg-config git ca-certificates curl wget unzip python3 python3-pip python3-venv python3-pil python3-yaml \
  qtbase5-dev qtbase5-dev-tools libxv-dev libsdl1.2-dev libao-dev libopenal-dev libdbus-1-dev \
  xxd jq ripgrep file bc less vim-tiny xvfb x11vnc openbox xterm dbus-x11 x11-utils websockify supervisor \
+ # Noto CJK supplies Japanese glyphs. Without them the original text renders as
+ # tofu in the GUI, the editor, and rendered font/graphics analysis, so Japanese
+ # source text cannot be read or reviewed at all.
+ fonts-noto-cjk fonts-noto-cjk-extra \
  && rm -rf /var/lib/apt/lists/*
 RUN git clone --depth 1 --branch "${ASAR_VERSION}" https://github.com/RPGHacker/asar.git /tmp/asar \
  && cmake -S /tmp/asar/src -B /tmp/asar/build -DCMAKE_BUILD_TYPE=Release \

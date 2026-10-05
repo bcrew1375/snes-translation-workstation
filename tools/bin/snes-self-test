@@ -3,7 +3,7 @@ set -uo pipefail
 fail=0; pass(){ printf '[PASS] %s\n' "$1"; }; bad(){ printf '[FAIL] %s\n' "$1" >&2; fail=1; }
 for c in asar bsnes-plus python3 Xvfb openbox x11vnc sleep supervisord supervisorctl; do command -v "$c" >/dev/null && pass "$c available" || bad "$c unavailable"; done
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
-for c in snes-rom-info snes-offset snes-hexdump snes-verify snes-run snes-debug snes-desktop snes-tiles snes-fidelity snes-disassemble snes-workstation; do "$root/tools/bin/$c" --help >/dev/null 2>&1 && pass "$c --help" || bad "$c --help"; done
+for c in snes-rom-info snes-offset snes-hexdump snes-verify snes-run snes-debug snes-desktop snes-tiles snes-tile-scan snes-fidelity snes-disassemble snes-workstation; do "$root/tools/bin/$c" --help >/dev/null 2>&1 && pass "$c --help" || bad "$c --help"; done
 [[ $("$root/tools/bin/snes-offset" --mapping lorom 02:8000) == 0x10000 ]] && pass 'LoROM conversion' || bad 'LoROM conversion'
 [[ $("$root/tools/bin/snes-offset" --mapping hirom C1:2345) == 0x12345 ]] && pass 'HiROM conversion' || bad 'HiROM conversion'
 PYTHONPATH="$root/toolkit" python3 -m unittest discover -s "$root/tests/toolkit" -v >/dev/null && pass 'generic toolkit tests' || bad 'generic toolkit tests'
@@ -42,6 +42,11 @@ if "$root/tools/bin/snes-disassemble" "$tmp/synthetic.sfc" --outdir "$tmp/dis" -
 else
     bad '65816 disassembly of synthetic ROM'
 fi
-python3 tools/bin/snes-repo-audit >/dev/null \
-  && pass 'repository source audit' || bad 'repository source audit'
+if "$root/tools/bin/snes-tile-scan" "$tmp/synthetic.sfc" --offset 0x8000 --count 8 --bpp 4 -o "$tmp/tiles" >/dev/null 2>&1 \
+   && [ -s "$tmp/tiles/off008000_4bpp.png" ]; then
+    pass 'tile contact sheet from synthetic ROM'
+else
+    bad 'tile contact sheet from synthetic ROM'
+fi
+if "$root/tools/bin/snes-repo-audit" >/dev/null; then pass 'repository source audit'; else bad 'repository source audit'; fi
 (( fail == 0 )) && echo 'Environment OK' || { echo 'Environment has failures' >&2; exit 1; }

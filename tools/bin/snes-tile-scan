@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+"""Render ROM tile data as contact sheets for visual review.
+
+This is exploratory tooling, not evidence: a tile that looks like a letter may
+still be a sprite, and a bank that looks like noise may be compressed data.
+Nothing here proves what the bytes mean.
+
+    snes-tile-scan ROM --bank 0 --bpp 4
+    snes-tile-scan ROM --all --bpp 2 --columns 32
+    snes-tile-scan ROM --offset 0x1B8000 --count 256 --bpp 4
+
+Output defaults to projects/*/analysis/tiles/ which is git-ignored, because the
+sheets are ROM-derived.
+"""
+
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "toolkit"))
+
+from snesworkbench.errors import WorkstationError  # noqa: E402
+from snesworkbench.graphics import render_tile_sheet, tile_stride  # noqa: E402
+from snesworkbench.rom import detect_mapping  # noqa: E402
+
+BANK_SIZE = {"lorom": 0x8000, "hirom": 0x10000}
+DEFAULT_OUT = ROOT / "projects" / "dbz-kakusei-hen" / "analysis" / "tiles"
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        prog="snes-tile-scan",
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument("rom", type=Path)
+    target = parser.add_mutually_exclusive_group(required=True)
+    target.add_argument("--bank", type=lambda v: int(v, 0), help="single ROM bank")
+    target.add_argument("--all", action="store_true", help="scan every bank")
+    target.add_argument("--offset", type=lambda v: int(v, 0), help="explicit file offset")
+    parser.add_argument("--count", type=lambda v: int(v, 0), help="tiles to render")
+    parser.add_argument("--bpp", type=int, choices=(2, 4, 8), default=4)
+    parser.add_argument("--columns", type=int, default=16)
+    parser.add_argument("--scale", type=int, default=2)
+    parser.add_argument(
+        "--normalize", action="store_true",
+        help="stretch the colour range actually present onto full grayscale; "
+             "use when a font only uses low colour indices and would otherwise "
+             "render nearly invisible",
+    )
+    parser.add_argument("--mapping", choices=tuple(BANK_SIZE), help="override mapping")
+    parser.add_argument("-o", "--outdir", type=Path, default=DEFAULT_OUT)
+    args = parser.parse_args()
+
+    if not args.rom.is_file():
+        parser.error(f"ROM not found: {args.rom}")
+    data = args.rom.read_bytes()
+
+    try:
+        mapping = args.mapping or detect_mapping(data)[0]
+    except ValueError as error:
+        print(f"snes-tile-scan: {error}", file=sys.stderr)
+        return 1
+
+    stride = tile_stride(args.bpp)
+    step = BANK_SIZE[mapping]
+    bank_count = (len(data) + step - 1) // step
+
+    # Each job is (label, start, length, index-of-first-tile)
+    jobs: list[tuple[str, int, int, int]] = []
+    if args.bank is not None:
+        if not 0 <= args.bank < bank_count:
+            parser.error(f"bank {args.bank} outside ROM (0..{bank_count - 1})")
+        jobs.append((f"bank{args.bank:02X}", args.bank * step, step, 0))
+    elif args.all:
+        for bank in range(bank_count):
+            jobs.append((f"bank{bank:02X}", bank * step, step, 0))
+    else:
+        if not 0 <= args.offset < len(data):
+            parser.error(f"offset {args.offset:#x} outside ROM")
+        length = args.count * stride if args.count else min(step, len(data) - args.offset)
+        jobs.append((f"off{args.offset:06X}", args.offset, length, 0))
+
+    args.outdir.mkdir(parents=True, exist_ok=True)
+    failures = 0
+    for label, start, length, _ in jobs:
+        chunk = data[start : start + length]
+        name = f"{label}_{args.bpp}bpp.png"
+        out = args.outdir / name
+        try:
+            image = render_tile_sheet(
+                chunk,
+                bpp=args.bpp,
+                columns=args.columns,
+                scale=args.scale,
+                normalize=args.normalize,
+            )
+        except (ValueError, WorkstationError) as error:
+            print(f"{label}: skipped ({error})", file=sys.stderr)
+            failures += 1
+            continue
+        image.save(out)
+        tiles = min(len(chunk) // stride, (len(chunk) // stride))
+        print(
+            f"{label}: {out} "
+            f"({tiles} tiles; tile N offset = ${start:X} + N*{stride})"
+        )
+    return 1 if failures and failures == len(jobs) else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

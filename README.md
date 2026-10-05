@@ -10,8 +10,27 @@ The devcontainer includes:
 
 - **bsnes-plus** for SNES emulation and debugger-oriented analysis (VRAM/tilemap/sprite viewers, breakpoints, usage logging).
 - **Asar 1.91** for 65C816/SPC700/Super FX assembly and patch workflows.
+- **A vendored Asar disassembler** from `Yoshifanatic1/SNES-ROM-Framework`
+  (`tools/vendor/snes-rom-framework/`) that decodes 65816, SPC700 and Super FX.
+  It is pinned, with provenance in that directory's `UPSTREAM.md`.
+- **Noto CJK fonts.** Japanese text is unreadable without them; the original
+  text cannot be reviewed or translated otherwise.
 - Python/Pillow for project-specific analysis, text, graphics and bounded patch generation.
 - Xvfb/Openbox/x11vnc/noVNC on port 6080 for a browser-accessible GUI.
+
+## Projects
+
+Each game owns its ROM:
+
+```text
+projects/<project-id>/
+    project.toml
+    rom/original.sfc        user input, git-ignored
+    src/                    game-specific adapter
+    analysis/               reviewed findings and region manifests
+    translation/
+    tests/
+```
 
 ## Core commands
 
@@ -30,11 +49,12 @@ make audit
 Direct tool use:
 
 ```sh
-snes-rom-info roms/<project>/original.sfc
+snes-rom-info projects/<project>/rom/original.sfc
 snes-offset --mapping lorom 02:8000
 snes-offset --mapping hirom C1:2345
 snes-hexdump ROM 80:8000 64
 snes-tiles ROM 0x10000 --bpp 4 --count 256 -o build/tiles.png
+snes-tile-scan ROM --bank 0x37 --bpp 4 --columns 32 --normalize
 snes-disassemble ROM --outdir disassembly --bank 0
 snes-fidelity ROM
 snes-run ROM

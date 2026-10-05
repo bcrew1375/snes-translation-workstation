@@ -408,6 +408,12 @@ When runtime evidence establishes a fact, record that knowledge in the source or
 
 `snes-tiles` is an exact viewer for data believed to already be stored in SNES-compatible tile format.
 
+`snes-tile-scan` renders a whole bank, or an explicit offset, as a contact sheet
+at 2, 4 or 8 bpp. It is exploratory: a tile that looks like a letter may be a
+sprite, and a bank that looks like noise may be compressed data. Use `--normalize`
+when a suspected font only occupies low colour indices and would otherwise render
+nearly invisible.
+
 Do not assume arbitrary ROM data is tile-aligned.
 
 `snes-tile-scan` is useful for exploratory visualization of conventional tile data but is not proof that data represents graphics.
@@ -433,7 +439,9 @@ Do not assume font glyphs:
 - have fixed width
 - are uncompressed
 
-Use `snes-font-scan` for hypothesis testing.
+Use `snes-font-scan` for hypothesis testing. (Not yet implemented; until it is,
+render candidate ranges with `snes-tile-scan --normalize` and inspect them
+visually.)
 
 It supports concepts including:
 

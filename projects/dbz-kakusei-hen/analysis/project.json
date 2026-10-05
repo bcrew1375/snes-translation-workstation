@@ -62,5 +62,32 @@
       "name": "Bank 0 native-mode vectors are entirely $FF; the game installs its own vector table at runtime rather than using the stock LoROM vectors",
       "confidence": "confirmed"
     }
-  ]
+  ],
+  "findings": {
+    "text_encoding": {
+      "status": "unknown",
+      "confidence": "strong_inference",
+      "shift_jis_ruled_out": true,
+      "evidence": "A scan for Shift-JIS double-byte runs across the whole image yielded 159 candidate runs totalling 2236 characters, but every significant run is a repeating byte pair such as e849e849e849 rather than readable text. No genuine Shift-JIS text was found.",
+      "note": "The character encoding is custom: possibly a flat glyph index, possibly a dictionary or compressed scheme. Rule 17 requires establishing this from evidence before any translation is attempted."
+    },
+    "hardware_register_access": {
+      "status": "unknown",
+      "confidence": "tentative",
+      "evidence": "No immediate-literal references to VRAM ($2116/$2118/$2119), CGRAM ($2121), BGMODE ($2105), tilemap base ($210C), OAM DMA ($2181/$2182/$2183) or DMA destination registers ($43/$44) were found anywhere in the ROM, even though the reset stub uses plain absolute stores such as STA.w $2100.",
+      "note": "Suggests hardware registers are reached indirectly, or that the access forms searched do not match this title's idiom. Static register hunting is therefore not a reliable discovery method here; dynamic tracing is the expected route."
+    },
+    "font_regions": {
+      "status": "tentative",
+      "confidence": "tentative",
+      "evidence": "Rendering bank $0C at 4bpp shows Japanese character glyphs. Rendering bank $37 at 4bpp shows a dense glyph sheet of kana-like strokes and symbols whose colour indices are limited to {0, 3, 12, 15}, a four-level palette rather than the full sixteen.",
+      "note": "At least two banks appear to hold glyph data, implying a paged or indexed character system rather than a single flat font table. The character-to-tile mapping is not established. Treat both regions as candidates, not conclusions."
+    },
+    "emulator_automation": {
+      "status": "confirmed",
+      "confidence": "confirmed",
+      "evidence": "bsnes-plus exposes no headless or batch command line; invoking it with --help launches the GUI. CDL and tracelog capture are interactive operations through the noVNC desktop.",
+      "note": "Dynamic analysis has no scripting path in this container. Budget for interactive work; this is the largest schedule risk in the analysis plan."
+    }
+  }
 }
