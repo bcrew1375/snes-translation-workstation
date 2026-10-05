@@ -1,0 +1,179 @@
+#!/usr/bin/env python3
+"""Disassemble a ROM to readable 65816/SPC700/SuperFX assembly for analysis.
+
+This is the *readable* disassembly, produced by the vendored Asar disassembler
+from tools/vendor/snes-rom-framework. It is a review aid: it decodes real
+mnemonics and tracks the M/X processor-size flags so operand widths are right,
+but it does not classify code versus data and it is NOT a byte-exact rebuild
+source. For the rebuild guarantee use tools/bin/snes-fidelity instead.
+
+Output is ROM-derived working data and is therefore git-ignored.
+
+    snes-disassemble ROM --outdir disassembly
+    snes-disassemble ROM --bank 0 --mapping lorom
+    snes-disassemble ROM --cpu spc700 --bank 3
+"""
+
+from __future__ import annotations
+
+import argparse
+import re
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "toolkit"))
+
+from snesworkbench.errors import WorkstationError  # noqa: E402
+from snesworkbench.rom import detect_mapping  # noqa: E402
+
+VENDOR = ROOT / "tools" / "vendor" / "snes-rom-framework"
+SCRIPTS = {
+    "65816": VENDOR / "Extras" / "SNESASMDis.asm",
+    "spc700": VENDOR / "Extras" / "SPC700ASMDis.asm",
+    "superfx": VENDOR / "Extras" / "SuperFXASMDis.asm",
+}
+BANK_SIZE = {"lorom": 0x8000, "hirom": 0x10000}
+
+
+def substitute(script: str, mapping: str, org: int, bank: int, limit: int) -> str:
+    """Rewrite the vendored script's documented knobs for one bank.
+
+    Only exact assignment lines are touched. The script also contains internal
+    ``#=`` bookkeeping variables such as ``!ByteCounter`` and ``!CurrentOffset``
+    that must be left alone, so a prefix match on the name is not enough.
+    """
+    knobs = {
+        "!ROMOffset": f"!ROMOffset = ${org:06X}",
+        "!Bank": f"!Bank = {bank:02X}",
+        "!MaxBytes": f"!MaxBytes = {limit}",
+        "!16BitA": "!16BitA = 0",
+        "!16BitXY": "!16BitXY = 0",
+    }
+    lines = []
+    for line in script.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("lorom") and mapping == "hirom":
+            lines.append("hirom")
+            continue
+        replaced = False
+        for name, value in knobs.items():
+            if re.match(rf"^{re.escape(name)}\s*=[^#\n]", line):
+                lines.append(value)
+                replaced = True
+                break
+        if not replaced:
+            lines.append(line)
+    return "\n".join(lines) + "\n"
+
+
+def disassemble_bank(
+    script: str, mapping: str, bank: int, workdir: Path, limit: int, rom_name: str
+) -> str:
+    step = BANK_SIZE[mapping]
+    # !ROMOffset is an Asar/ROM address, i.e. bank<<16 | CPU address. Under LoROM
+    # the cartridge window is $8000-$FFFF, so bank N is at N<<16 | $8000 (bank 1
+    # is $018000, NOT $01000 -- the latter is the $0000-$7FFF WRAM mirror and
+    # reads back as $00, which Asar cannot turn into a macro name).
+    org = (bank << 16) | 0x8000 if mapping == "lorom" else 0x800000 | (bank << 16)
+    source = workdir / "disasm.asm"
+    source.write_text(substitute(script, mapping, org, bank, limit), encoding="utf-8")
+    output = workdir / rom_name
+    result = subprocess.run(
+        ["asar", "--no-title-check", "--fix-checksum=off", str(source), str(output)],
+        cwd=workdir,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise WorkstationError(
+            f"asar failed on bank {bank:02X}: "
+            f"{(result.stdout + result.stderr).strip()[:400]}"
+        )
+    return result.stdout
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        prog="snes-disassemble",
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument("rom", type=Path)
+    parser.add_argument(
+        "--outdir", type=Path, default=ROOT / "disassembly",
+        help="output directory (git-ignored)",
+    )
+    parser.add_argument("--mapping", choices=("lorom", "hirom"),
+                        help="override detected mapping")
+    parser.add_argument("--cpu", choices=tuple(SCRIPTS), default="65816")
+    parser.add_argument(
+        "--bank", type=lambda v: int(v, 0),
+        help="single bank (default: every bank)",
+    )
+    parser.add_argument(
+        "--limit", type=lambda v: int(v, 0), default=None,
+        help="bytes per bank (default: the full bank)",
+    )
+    args = parser.parse_args()
+
+    if not args.rom.is_file():
+        parser.error(f"ROM not found: {args.rom}")
+    script_path = SCRIPTS[args.cpu]
+    if not script_path.is_file():
+        parser.error(
+            f"vendored script missing: {script_path}. "
+            "See tools/vendor/snes-rom-framework/UPSTREAM.md."
+        )
+
+    rom = args.rom.read_bytes()
+    try:
+        mapping = args.mapping or detect_mapping(rom)[0]
+    except ValueError as error:
+        print(f"snes-disassemble: {error}", file=sys.stderr)
+        return 1
+
+    step = BANK_SIZE[mapping]
+    bank_count = (len(rom) + step - 1) // step
+    banks = [args.bank] if args.bank is not None else list(range(bank_count))
+    for bank in banks:
+        if not 0 <= bank < bank_count:
+            parser.error(f"bank {bank} outside ROM (0..{bank_count - 1})")
+    limit = args.limit if args.limit is not None else step
+
+    script = script_path.read_text(encoding="utf-8", errors="replace")
+    args.outdir.mkdir(parents=True, exist_ok=True)
+    workdir = args.outdir / ".work"
+    # Stage under the input's own suffix. Asar treats a ".smc" target as having a
+    # 512-byte copier header even when it does not, which would shift every
+    # read1() by $200 and silently mis-decode the whole ROM.
+    rom_name = "ROM" + (args.rom.suffix or ".sfc")
+    try:
+        for bank in banks:
+            if workdir.is_dir():
+                shutil.rmtree(workdir)
+            workdir.mkdir(parents=True)
+            shutil.copyfile(args.rom, workdir / rom_name)
+            text = disassemble_bank(script, mapping, bank, workdir, limit, rom_name)
+            suffix = "" if args.bank is None else f"_{bank:02X}"
+            target = args.outdir / f"bank{bank:02X}{suffix}_{args.cpu}.asm"
+            header = (
+                f"; {args.rom.name} bank {bank:02X} ({args.cpu}, {mapping})\n"
+                "; generated by tools/bin/snes-disassemble -- readable output only\n"
+                "; byte-exact rebuild: tools/bin/snes-fidelity\n\n"
+            )
+            target.write_text(header + text, encoding="utf-8")
+            print(f"bank {bank:02X}: {target}")
+    except (OSError, WorkstationError) as error:
+        print(f"snes-disassemble: {error}", file=sys.stderr)
+        return 1
+    finally:
+        shutil.rmtree(workdir, ignore_errors=True)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
