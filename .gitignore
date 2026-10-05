@@ -1,0 +1,38 @@
+# User-supplied ROMs and generated build output
+/roms/*/*
+!/roms/README.md
+!/roms/*/README.md
+/build/
+
+# ROM-derived working data. Reproducible via `make disassemble`, never tracked:
+# these can embed copyrighted code, graphics, and decoded original text.
+/disassembly/
+/analysis/
+/projects/*/disassembly/
+/projects/*/local/
+/projects/*/analysis/tiles/
+/projects/*/translation/strings.tsv
+/projects/*/translation/text_layout.tsv
+
+# Any ROM image anywhere in the tree, in case one is dropped outside roms/
+*.sfc
+*.smc
+*.fig
+*.swc
+*.sfv
+
+# Extracted/generated media and build products
+*.png
+*.bin
+*.sym
+*.o
+*.map
+*.wav
+*.spc
+*.srm
+
+# Language/tool caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/

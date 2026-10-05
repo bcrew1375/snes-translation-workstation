@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+import argparse,sys
+from pathlib import Path
+p=argparse.ArgumentParser(); p.add_argument('a'); p.add_argument('b'); x=p.parse_args(); a=Path(x.a).read_bytes(); b=Path(x.b).read_bytes()
+if a==b: print('MATCH'); raise SystemExit(0)
+n=min(len(a),len(b)); i=next((i for i in range(n) if a[i]!=b[i]),n); print(f'MISMATCH first difference at 0x{i:X}; sizes {len(a)} vs {len(b)}',file=sys.stderr); raise SystemExit(1)

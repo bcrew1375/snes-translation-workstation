@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+import re,subprocess,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[2]
+BANNED_SUFFIXES=('.sfc','.smc','.fig','.swc','.rom','.spc','.srm','.wav','.bin','.png')
+CJK=re.compile(r'[\u3040-\u30ff\u3400-\u9fff]'); HEX=re.compile(r'(?:0x[0-9a-fA-F]{2}\s*,\s*){16,}')
+r=subprocess.run(['git','ls-files','-z','--cached','--others','--exclude-standard'],cwd=ROOT,capture_output=True,check=True)
+fail=[]
+for raw in r.stdout.split(b'\0'):
+    if not raw: continue
+    rel=raw.decode(); p=ROOT/rel
+    if not p.is_file(): continue
+    if rel.startswith(('build/','disassembly/')) or (rel.startswith('roms/') and p.name!='README.md') or rel.lower().endswith(BANNED_SUFFIXES): fail.append(f'prohibited ROM/generated asset: {rel}'); continue
+    try: t=p.read_text('utf-8')
+    except UnicodeDecodeError: fail.append(f'unreviewed binary file: {rel}'); continue
+    if CJK.search(t): fail.append(f'Japanese/CJK content requires explicit review: {rel}')
+    if HEX.search(t): fail.append(f'suspicious embedded byte array requires review: {rel}')
+if fail:
+    print('Repository policy audit failed:',file=sys.stderr); [print('  - '+x,file=sys.stderr) for x in fail]; raise SystemExit(1)
+print('Repository policy audit passed.')

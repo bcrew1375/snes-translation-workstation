@@ -1,0 +1,12 @@
+{
+  "name": "SNES Translation Workstation",
+  "build": {"dockerfile": "Dockerfile", "context": ".."},
+  "remoteUser": "vscode",
+  "containerEnv": {"DISPLAY": ":1", "PYTHONDONTWRITEBYTECODE": "1", "PYTHONUNBUFFERED": "1"},
+  "remoteEnv": {"PATH": "${containerWorkspaceFolder}/tools/bin:${containerEnv:PATH}"},
+  "forwardPorts": [6080],
+  "portsAttributes": {"6080": {"label": "SNES GUI (noVNC)", "onAutoForward": "notify"}},
+  "postCreateCommand": "chmod +x \"${containerWorkspaceFolder}\"/tools/bin/* && make -C \"${containerWorkspaceFolder}\" self-test",
+  "postStartCommand": "\"${containerWorkspaceFolder}\"/tools/bin/snes-desktop start",
+  "customizations": {"vscode": {"extensions": ["ms-python.python","streetsidesoftware.code-spell-checker"], "settings": {"files.exclude": {"build/**": true}, "editor.rulers": [100]}}}
+}

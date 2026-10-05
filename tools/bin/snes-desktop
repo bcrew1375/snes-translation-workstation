@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export DISPLAY="${DISPLAY:-:1}"
+STATE_DIR="${XDG_RUNTIME_DIR:-/tmp}/snes-gui-$(id -un)"
+CONF="$STATE_DIR/supervisord.conf"
+PIDFILE="$STATE_DIR/supervisord.pid"
+SOCK="$STATE_DIR/supervisor.sock"
+LOG="$STATE_DIR/supervisord.log"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+SERVICE="$ROOT/tools/bin/snes-desktop-service"
+mkdir -p "$STATE_DIR"
+
+write_config() {
+  cat >"$CONF" <<CFG
+[unix_http_server]
+file=$SOCK
+chmod=0700
+
+[supervisord]
+logfile=$LOG
+pidfile=$PIDFILE
+childlogdir=$STATE_DIR
+nodaemon=false
+silent=true
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl=unix://$SOCK
+
+[program:xvfb]
+command=$SERVICE xvfb
+priority=10
+autostart=true
+autorestart=unexpected
+startsecs=1
+stdout_logfile=$STATE_DIR/xvfb.log
+stderr_logfile=$STATE_DIR/xvfb.err.log
+environment=DISPLAY=":1"
+
+[program:openbox]
+command=$SERVICE openbox
+priority=20
+autostart=true
+autorestart=unexpected
+startsecs=1
+stdout_logfile=$STATE_DIR/openbox.log
+stderr_logfile=$STATE_DIR/openbox.err.log
+environment=DISPLAY=":1"
+
+[program:x11vnc]
+command=$SERVICE x11vnc
+priority=30
+autostart=true
+autorestart=unexpected
+startsecs=1
+stdout_logfile=$STATE_DIR/x11vnc.log
+stderr_logfile=$STATE_DIR/x11vnc.err.log
+environment=DISPLAY=":1"
+
+[program:novnc]
+command=$SERVICE novnc
+priority=40
+autostart=true
+autorestart=unexpected
+startsecs=1
+stdout_logfile=$STATE_DIR/novnc.log
+stderr_logfile=$STATE_DIR/novnc.err.log
+environment=DISPLAY=":1"
+CFG
+}
+
+supervisor_up() { [[ -S "$SOCK" ]] && supervisorctl -c "$CONF" pid >/dev/null 2>&1; }
+ctl() { supervisorctl -c "$CONF" "$@"; }
+wait_ready() {
+  for _ in {1..100}; do
+    if supervisor_up && ctl status 2>/dev/null | awk '$2 != "RUNNING" {bad=1} END {exit bad}' \
+       && (exec 3<>/dev/tcp/127.0.0.1/6080) 2>/dev/null; then return 0; fi
+    sleep 0.1
+  done
+  echo 'ERROR: SNES desktop did not become ready.' >&2
+  ctl status >&2 2>/dev/null || true
+  "$0" logs >&2 || true
+  return 1
+}
+
+start() {
+  write_config
+  if ! supervisor_up; then
+    rm -f "$SOCK" "$PIDFILE"
+    supervisord -c "$CONF"
+  fi
+  wait_ready
+  echo 'SNES desktop ready (display :1, noVNC port 6080).'
+}
+
+stop() {
+  if supervisor_up; then ctl shutdown >/dev/null; fi
+  for _ in {1..30}; do [[ ! -S "$SOCK" ]] && break; sleep 0.1; done
+  rm -f "$SOCK" "$PIDFILE"
+  echo 'SNES desktop stopped.'
+}
+
+status() {
+  if ! supervisor_up; then
+    echo 'SNES desktop supervisor: STOPPED'
+    return 1
+  fi
+  ctl status
+  echo 'Display: :1'
+  echo 'noVNC:  forwarded port 6080 (vnc.html)'
+  echo "Logs:    $STATE_DIR"
+}
+
+logs() {
+  for f in supervisord.log xvfb.log xvfb.err.log openbox.log openbox.err.log x11vnc.log x11vnc.err.log novnc.log novnc.err.log; do
+    echo "===== $f ====="
+    [[ -f "$STATE_DIR/$f" ]] && tail -n 80 "$STATE_DIR/$f" || echo '(no log)'
+  done
+}
+
+case "${1:-}" in
+  start) start ;;
+  stop) stop ;;
+  restart) stop; start ;;
+  status) status ;;
+  logs) logs ;;
+  -h|--help|'') echo 'Usage: snes-desktop {start|stop|restart|status|logs}' ;;
+  *) echo "Unknown command: $1" >&2; echo 'Usage: snes-desktop {start|stop|restart|status|logs}' >&2; exit 2 ;;
+esac

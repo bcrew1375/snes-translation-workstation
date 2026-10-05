@@ -1,0 +1,1170 @@
+# SNES Reverse Engineering & Translation Project Rules
+
+## 1. Project Mission
+
+This repository is a SNES / Super Famicom reverse-engineering and translation project.
+
+The goals are to:
+
+1. Preserve a byte-identical rebuild of the original ROM from Asar / project-specific 65C816 source source.
+2. Reverse engineer and document the game's code, data, graphics, text, formats, and behavior.
+3. Identify the Japanese text encoding, fonts, control codes, text pointers, and rendering system.
+4. Translate Japanese content into English using structured translation data.
+5. Produce an English-patched ROM from source.
+6. Keep the reverse-engineered source maintainable, documented, reproducible, and verifiable.
+7. Automate repetitive analysis wherever practical.
+
+The repository and devcontainer should be sufficient to perform the work. Do not assume special host-side tools beyond Docker/Dev Containers and the mounted repository.
+
+---
+
+# 2. Core Safety Rule: Preserve the Original Rebuild
+
+The original ROM currently rebuilds byte-for-byte from the generated Asar / project-specific 65C816 source source.
+
+This is a critical invariant.
+
+Before making reverse-engineering/refactoring changes, establish that the current source still reproduces the original ROM.
+
+Use the project's verification tooling.
+
+A successful original rebuild should result in:
+
+    MATCH
+
+Do not intentionally alter ROM bytes during ordinary reverse engineering, annotation, symbolization, documentation, or refactoring.
+
+Translation work is allowed to intentionally alter ROM bytes, but it must be clearly separated from the byte-identical original-build path.
+
+Never silently accept a changed ROM as equivalent.
+
+If a change causes verification to fail:
+
+1. Stop.
+2. Determine exactly which bytes changed.
+3. Determine why they changed.
+4. Decide whether the difference is intentional.
+5. Restore byte-identical behavior if the task was analysis/refactoring.
+6. Document intentional differences if the task was translation or patch development.
+
+Never use `rgbfix` or another utility merely to hide an unexplained mismatch.
+
+---
+
+# 3. Original ROM
+
+The original ROM is expected at:
+
+    roms/<project-id>/original.sfc
+
+Treat this file as immutable reference material.
+
+Never modify it.
+
+Never overwrite it.
+
+Never generate output into it.
+
+Never commit copyrighted ROM data unless the repository's owner explicitly directs otherwise.
+
+Generated ROMs must use separate paths.
+
+---
+
+# 4. Repository Structure
+
+Important areas include:
+
+    rom/
+        Original/reference ROM input.
+
+    disassembly/
+        Asar / project-specific 65C816 source-compatible reverse-engineered source generated from and refined from mgbdis output.
+
+    analysis/
+        Analysis results, graphics/font scans, databases, notes, and generated exploratory artifacts.
+
+    assets/
+        Extracted/reconstructed project assets when applicable.
+
+    translation/
+        Structured translation data and translation-related source.
+
+    tools/
+        Repository-native analysis/build/reverse-engineering tools.
+
+    build/
+        Generated build output when applicable.
+
+Do not scatter generated files throughout the repository when an appropriate output directory already exists.
+
+Prefer deterministic generated output.
+
+---
+
+# 5. Build Workflow
+
+The fundamental pipeline is:
+
+    original ROM
+        ↓
+    disassembly / reverse-engineered Asar / project-specific 65C816 source source
+        ↓
+    rgbasm
+        ↓
+    rgblink
+        ↓
+    rebuilt ROM
+        ↓
+    byte comparison with original
+
+The generated mgbdis project lives under:
+
+    disassembly/
+
+Its build system is authoritative for rebuilding the disassembly unless deliberately replaced.
+
+Typical commands may include:
+
+    make -C disassembly
+    make verify
+
+Use existing repository commands before inventing replacements.
+
+When modifying build tooling, preserve simple top-level workflows such as:
+
+    make disassemble
+    make build
+    make verify
+    make rebuild
+
+Do not introduce unnecessary build-system complexity.
+
+---
+
+# 6. Reverse-Engineering Methodology
+
+Treat reverse engineering as evidence-driven analysis.
+
+Distinguish clearly between:
+
+- confirmed facts
+- strong inferences
+- tentative hypotheses
+- unknowns
+
+Never turn a guess into a symbol, comment, data type, or architectural claim without making its uncertainty clear.
+
+Prefer names such as:
+
+    UnknownRoutine_1234
+    PossibleTextPointerTable
+    MaybeDecompressTiles
+
+when evidence is incomplete.
+
+Rename them once their purpose is established.
+
+Do not invent semantic names simply because they sound plausible.
+
+---
+
+# 7. Do Not Overinterpret Disassembly
+
+mgbdis output is a starting point, not ground truth about program structure.
+
+Generated distinctions between code and data may be wrong.
+
+Possible problems include:
+
+- data interpreted as instructions
+- instructions interpreted as data
+- embedded pointer tables
+- jump tables
+- text data
+- compressed data
+- graphics
+- lookup tables
+- banked pointers
+- unused/padding data
+
+Before restructuring suspicious regions, gather evidence from:
+
+- control flow
+- references
+- pointer patterns
+- runtime behavior
+- bsnes-plus debugging
+- graphics interpretation
+- text decoding
+- known SNES hardware behavior
+
+Do not assume every sequence that disassembles cleanly is executable code.
+
+---
+
+# 8. Preserve Binary Layout
+
+During byte-identical reverse engineering, preserve:
+
+- bank placement
+- section placement
+- alignment
+- byte ordering
+- padding
+- instruction encodings
+- data representation
+
+A semantically equivalent assembly rewrite may still produce different bytes.
+
+For example, do not replace an instruction sequence merely because another sequence behaves identically.
+
+The original binary representation matters.
+
+When introducing labels or constants, verify that the assembled bytes remain identical.
+
+---
+
+# 9. Symbolization
+
+Meaningful symbols are strongly encouraged when supported by evidence.
+
+Prefer:
+
+    Text_PrintString
+    Input_Update
+    VBlankHandler
+    PlayerState
+    DialoguePointerTable
+
+over raw addresses once their meanings are established.
+
+Use consistent naming.
+
+Suggested convention:
+
+    PascalCase or project-established style for routines/types
+    descriptive names for data
+    hardware-register names from Asar / project-specific 65C816 source hardware definitions where appropriate
+
+Do not rename hundreds of symbols speculatively.
+
+Incremental, evidence-backed symbolization is preferable.
+
+---
+
+# 10. Comments and Documentation
+
+Comments should explain information not obvious from the assembly itself.
+
+Useful comments include:
+
+- routine purpose
+- calling convention
+- register inputs
+- register outputs
+- clobbered registers
+- memory structures
+- bank assumptions
+- hardware behavior
+- text/control-code formats
+- pointer formats
+- compression formats
+- unresolved questions
+
+Avoid comments that merely translate an instruction into English.
+
+Bad:
+
+    ld a, b ; Load B into A
+
+Good:
+
+    ld a, b ; Character index passed to glyph lookup
+
+Document uncertainty explicitly.
+
+Example:
+
+    ; Likely indexes the dialogue pointer table.
+    ; Confirm by tracing callers before renaming.
+
+---
+
+# 11. SNES Memory Model
+
+Always reason using SNES address spaces rather than treating ROM as a flat CPU address space.
+
+Important ROM ranges:
+
+    LoROM/HiROM/ExHiROM mappings vary; always identify the cartridge mapping before converting addresses
+
+ROM file offsets and CPU addresses are not interchangeable.
+
+For a switchable bank N:
+
+    file_offset = N * $4000 + (cpu_address - $4000)
+
+For bank 0:
+
+    file_offset = cpu_address
+
+Use repository tools for address conversion when available.
+
+Do not casually convert a banked address without specifying its bank.
+
+Prefer notation such as:
+
+    04:5A20
+
+rather than merely:
+
+    $5A20
+
+when bank context matters.
+
+---
+
+# 12. Banking
+
+Identify the cartridge/MBC type before making assumptions about bank switching.
+
+Track:
+
+- current ROM bank
+- RAM bank where applicable
+- bank-switch routines
+- far-call mechanisms
+- far-pointer formats
+
+A 16-bit ROM address alone may not uniquely identify data or code.
+
+When analyzing pointers into `$4000-$7FFF`, determine how the bank is selected.
+
+Do not assume pointers are ordinary flat addresses.
+
+---
+
+# 13. SNES Hardware
+
+Prefer official or well-established SNES hardware behavior over assumptions based on generic Z80 knowledge.
+
+The SNES CPU is not a standard Z80.
+
+Be careful about:
+
+- instruction differences
+- flag behavior
+- interrupt handling
+- HALT behavior
+- memory timing
+- VRAM/OAM access restrictions
+- DMA
+- LCD timing
+- CGB-specific behavior
+
+Use Asar / project-specific 65C816 source hardware definitions rather than duplicating register constants unnecessarily.
+
+---
+
+# 14. Dynamic Analysis
+
+bsnes-plus is available for runtime investigation.
+
+Use dynamic analysis when static evidence is ambiguous.
+
+Useful techniques include:
+
+- execution breakpoints
+- memory watchpoints
+- VRAM monitoring
+- tracing reads from ROM
+- tracing writes to VRAM
+- tracing text rendering
+- observing bank switches
+- inspecting registers
+- examining stack/call paths
+
+When runtime evidence establishes a fact, record that knowledge in the source or analysis data rather than leaving it only in an ephemeral debugging session.
+
+---
+
+# 15. Graphics
+
+`snes-tiles` is an exact viewer for data believed to already be stored in SNES-compatible tile format.
+
+Do not assume arbitrary ROM data is tile-aligned.
+
+`snes-tile-scan` is useful for exploratory visualization of conventional tile data but is not proof that data represents graphics.
+
+Generated exploratory PNGs belong under:
+
+    analysis/tiles/
+
+Do not commit large volumes of generated exploratory images unless explicitly useful to the project.
+
+---
+
+# 16. Font Discovery
+
+Do not assume font glyphs:
+
+- begin on byte boundaries
+- begin on tile boundaries
+- are 8x8
+- are 1bpp
+- are 2bpp
+- use SNES VRAM layout
+- have fixed width
+- are uncompressed
+
+Use `snes-font-scan` for hypothesis testing.
+
+It supports concepts including:
+
+- arbitrary bit offsets
+- arbitrary glyph width
+- arbitrary glyph height
+- 1bpp / 2bpp
+- glyph stride
+- row stride
+- packed layouts
+- planar layouts
+- SNES tile layout
+
+Examples:
+
+    snes-font-scan roms/<project-id>/original.sfc \
+        --bank 4 \
+        --all-bit-offsets \
+        --width 8 \
+        --height 8 \
+        --bpp 1
+
+For packed 6x8 glyphs:
+
+    snes-font-scan roms/<project-id>/original.sfc \
+        --bank 4 \
+        --width 6 \
+        --height 8 \
+        --bpp 1 \
+        --glyph-stride-bits 48
+
+If static scanning fails, consider:
+
+- compression
+- runtime glyph construction
+- variable-width representations
+- custom encodings
+
+In that situation, trace VRAM writes dynamically and work backward toward ROM data.
+
+---
+
+# 17. Text Reverse Engineering
+
+Do not assume Japanese text is ASCII, Shift-JIS, UTF-8, or another standard encoding.
+
+SNES games frequently use custom character indexes.
+
+Determine empirically:
+
+- character encoding
+- glyph index mapping
+- control codes
+- terminators
+- line breaks
+- string pointer format
+- bank information
+- dictionary/compression mechanisms
+- variable substitutions
+- text box commands
+
+Build a character table only from evidence.
+
+Unknown byte values should remain explicitly unknown.
+
+Do not force a plausible Japanese character onto an unidentified value.
+
+---
+
+# 18. Translation Data
+
+Translation should eventually be maintained separately from arbitrary assembly edits.
+
+Prefer structured records containing information such as:
+
+- stable text ID
+- ROM/bank location
+- original Japanese
+- English translation
+- status
+- notes
+- constraints
+- pointer/source information
+
+Do not make the translated English text the only surviving representation of the Japanese source.
+
+Preserve original text data or a reproducible representation of it.
+
+Translation tooling should generate assembly/data where practical.
+
+---
+
+# 19. Translation Accuracy
+
+Do not silently invent translations.
+
+If Japanese text is ambiguous:
+
+- preserve the original text
+- note uncertainty
+- provide literal interpretation when useful
+- distinguish translation from interpretation
+
+Game context may change the correct translation.
+
+Prefer contextual accuracy over isolated dictionary substitution.
+
+Do not alter names, terminology, tone, or characterization merely to make English sound more natural unless that choice is intentional and documented.
+
+---
+
+# 20. Text Expansion
+
+English frequently requires more space than Japanese.
+
+Do not solve overflow by blindly overwriting adjacent ROM data.
+
+Before expanding text, determine:
+
+- whether strings can be relocated
+- how pointers work
+- whether pointer tables can reference other banks
+- available free space
+- bank constraints
+- renderer width limitations
+- text-box dimensions
+- line wrapping behavior
+
+Any relocation system must be deterministic and documented.
+
+---
+
+# 21. Free Space
+
+Never assume runs of `$00` or `$FF` are safe free space.
+
+They may be:
+
+- padding
+- lookup data
+- reserved space
+- intentionally empty structures
+- unreachable but referenced data
+
+Mark free space only after establishing that it is not referenced and not semantically required.
+
+Prefer maintaining an explicit free-space map.
+
+---
+
+# 22. Pointers and Cross References
+
+When discovering pointer-like data, validate it.
+
+Useful evidence includes:
+
+- values falling into valid ROM address ranges
+- corresponding bank context
+- repeated structure
+- runtime dereferencing
+- references from known routines
+
+Do not automatically label every 16-bit value resembling `$4000-$7FFF` as a pointer.
+
+Eventually maintain machine-readable cross-reference information where practical.
+
+---
+
+# 23. Analysis Database
+
+Prefer structured, machine-readable analysis over knowledge existing only in chat or comments.
+
+Long-term analysis should be able to represent concepts such as:
+
+- banks
+- symbols
+- routines
+- code ranges
+- data ranges
+- pointers
+- cross references
+- text
+- graphics
+- fonts
+- unknown regions
+- confidence/evidence
+- notes
+
+Do not introduce a complicated database prematurely if a simple structured file is sufficient.
+
+The source code remains authoritative for build behavior.
+
+---
+
+# 24. Tooling Philosophy
+
+Repository tools should be:
+
+- command-line accessible
+- deterministic
+- scriptable
+- LLM-friendly
+- composable
+- documented
+- noninteractive where practical
+
+Prefer:
+
+    snes-something <arguments>
+
+over workflows requiring manual GUI interaction.
+
+GUI/debugger tools remain appropriate where visualization or runtime investigation is genuinely useful.
+
+Do not create a GUI merely because a CLI tool could have one.
+
+---
+
+# 25. Python Tooling
+
+Python is the preferred language for repository-specific analysis tooling unless another language has a clear advantage.
+
+Keep tools small and composable.
+
+Prefer reusable modules under:
+
+    tools/gb/
+
+with thin command entry points under:
+
+    tools/bin/
+
+Do not duplicate ROM-address conversion, tile decoding, or other shared logic across scripts.
+
+Validate command arguments and produce useful errors.
+
+A tool should return a nonzero exit status on failure.
+
+---
+
+# 26. Executable Scripts
+
+Do not assume executable permission bits will always survive packaging or transfer.
+
+Python automation invoked from Makefiles may explicitly use:
+
+    python3 tools/bin/<tool>
+
+Interactive commands may still have executable shebangs.
+
+When adding scripts, set executable permissions where appropriate, but do not make build correctness unnecessarily depend on them.
+
+---
+
+# 27. Generated Files
+
+Generated files must be distinguishable from hand-maintained source.
+
+Do not manually edit generated files unless the project explicitly treats them as promoted source.
+
+If a file can be deterministically regenerated, document how.
+
+Avoid committing:
+
+- built ROMs
+- object files
+- generated maps
+- temporary debugger output
+- exploratory image dumps
+- caches
+
+unless there is a deliberate reason.
+
+---
+
+# 28. Do Not Destroy Evidence
+
+Reverse engineering frequently depends on apparently meaningless bytes.
+
+Never delete, normalize, reorganize, or "clean up" unknown data merely because it looks unused.
+
+Preserve exact bytes until their purpose is understood.
+
+When replacing raw bytes with structured assembly declarations, verify binary identity.
+
+---
+
+# 29. Small Changes
+
+Prefer small, verifiable reverse-engineering changes.
+
+A good cycle is:
+
+    investigate
+        ↓
+    form hypothesis
+        ↓
+    gather evidence
+        ↓
+    make small source change
+        ↓
+    rebuild
+        ↓
+    verify MATCH
+        ↓
+    commit/document
+
+Avoid enormous speculative refactors.
+
+Small commits make incorrect assumptions easier to locate and revert.
+
+---
+
+# 30. Testing
+
+For repository tooling, add focused tests when practical.
+
+Especially test:
+
+- bank/address conversion
+- pointer decoding
+- bit extraction
+- graphics decoding
+- font decoding
+- text encoding/decoding
+- ROM comparison
+- patch generation
+
+Synthetic test data is preferred over requiring the copyrighted ROM for generic tool tests.
+
+The devcontainer should be able to validate its tooling without `roms/<project-id>/original.sfc`.
+
+---
+
+# 31. ROM-Dependent vs ROM-Independent Tests
+
+Do not make container creation depend on the user's ROM.
+
+Separate:
+
+    generic/self tests
+
+from:
+
+    project ROM analysis/verification
+
+A missing `roms/<project-id>/original.sfc` should not prevent the development environment from starting.
+
+ROM-dependent commands should fail clearly and explain what file is required.
+
+---
+
+# 32. Dependencies
+
+Avoid adding dependencies casually.
+
+Before adding one:
+
+1. Determine whether existing tooling already solves the problem.
+2. Prefer maintained, reproducible dependencies.
+3. Pin versions/commits where reproducibility matters.
+4. Update the devcontainer rather than relying on host installation.
+
+Do not require users or agents to install random host-side software.
+
+---
+
+# 33. Reproducibility
+
+Where practical, pin external tools to known versions or commits.
+
+A future rebuild of the devcontainer should not unexpectedly change disassembly output because an upstream repository's `master` branch changed.
+
+If an unpinned dependency remains, treat it as technical debt and document it.
+
+---
+
+# 34. Git Discipline
+
+Before substantial work, inspect:
+
+    git status
+
+Do not overwrite unrelated user changes.
+
+Do not revert user changes simply because they differ from expected baseline.
+
+Do not use destructive commands such as:
+
+    git reset --hard
+    git clean -fd
+    git checkout -- .
+
+unless the user explicitly requests the destructive operation and its consequences are understood.
+
+Do not automatically commit or push unless requested.
+
+Keep generated binaries out of commits unless explicitly intended.
+
+---
+
+# 35. Existing Source Is Evidence
+
+Before implementing new functionality:
+
+1. Search the repository.
+2. Inspect existing tools.
+3. Reuse existing helpers.
+4. Understand existing conventions.
+
+Do not create duplicate implementations because the relevant code was not searched for.
+
+Use tools such as:
+
+    rg
+    find
+    git grep
+
+before assuming functionality does not exist.
+
+---
+
+# 36. Cline Investigation Behavior
+
+When asked to investigate an unknown ROM behavior:
+
+Do not immediately edit source.
+
+First gather evidence.
+
+A preferred sequence is:
+
+    inspect static references
+    inspect surrounding assembly/data
+    identify bank context
+    formulate hypothesis
+    use dynamic debugging if necessary
+    document conclusion
+    then modify symbols/comments/source
+
+For uncertain findings, report uncertainty rather than pretending the task is complete.
+
+---
+
+# 37. Cline Editing Behavior
+
+Before editing:
+
+- identify affected files
+- understand how they participate in the build
+- check repository status
+- preserve unrelated modifications
+
+After editing:
+
+- run the smallest relevant test
+- rebuild if assembly changed
+- run byte-identical verification when original-build source changed
+- report exactly what was changed
+- report verification status
+
+Never claim verification succeeded unless the command was actually run successfully.
+
+---
+
+# 38. Cline Autonomy
+
+Routine investigative commands do not require user confirmation.
+
+Examples:
+
+    rg
+    find
+    grep
+    git diff
+    git status
+    make
+    ROM inspection tools
+    analysis scripts
+    bsnes-plus non-destructive debugging
+    generation of analysis artifacts
+
+Proceed autonomously when these operations are safe.
+
+Ask before operations that:
+
+- destroy data
+- overwrite original ROM/input data
+- discard user modifications
+- rewrite Git history
+- push externally
+- introduce major architectural changes
+- intentionally abandon byte-identical rebuild capability
+
+Do not repeatedly ask permission for harmless inspection.
+
+---
+
+# 39. Failure Handling
+
+When a command fails:
+
+Do not blindly retry variants.
+
+Read the actual error.
+
+Inspect:
+
+- command help
+- installed version
+- relevant files
+- paths
+- permissions
+- generated output
+
+Fix the underlying cause.
+
+Do not hide errors with `|| true` unless failure is explicitly expected and semantically harmless.
+
+---
+
+# 40. bsnes-plus and GUI Services
+
+The graphical desktop environment is infrastructure, not part of ROM correctness.
+
+Supervisor manages the GUI stack.
+
+Use the repository's desktop management commands rather than manually spawning duplicate services.
+
+Typical operations include:
+
+    snes-desktop status
+    snes-desktop start
+    snes-desktop stop
+    snes-desktop restart
+    snes-desktop logs
+
+Do not start redundant Xvfb, x11vnc, noVNC, or window-manager instances unless debugging the infrastructure itself.
+
+---
+
+# 41. Static vs Dynamic Evidence
+
+Prefer static analysis when it conclusively answers a question.
+
+Use dynamic analysis when runtime state matters.
+
+Examples where dynamic analysis is especially valuable:
+
+- determining active ROM bank
+- identifying decompression
+- tracing constructed glyphs
+- discovering text rendering
+- identifying indirect calls
+- confirming pointer tables
+- understanding state machines
+
+Combine both forms of evidence rather than treating either as universally superior.
+
+---
+
+# 42. Japanese Text and Fonts
+
+Remember that visual glyph order does not necessarily equal text encoding order.
+
+A font table might:
+
+- omit characters
+- contain duplicates
+- contain dakuten separately
+- combine kana and symbols
+- use multiple fonts
+- dynamically compose characters
+- use dictionary tokens
+- use multibyte indexes
+
+Do not derive a complete text encoding merely from apparent font order without validating it against actual strings.
+
+---
+
+# 43. Compression
+
+If data is not recognizable directly in ROM, compression or transformation is a possibility, not a conclusion.
+
+Evidence for compression may include:
+
+- runtime expansion into VRAM/WRAM
+- repeated decoder loops
+- bitstream processing
+- dictionary references
+- output significantly larger than input
+
+Identify the decompression routine before attempting to invent a decoder.
+
+Once understood, implement a deterministic repository tool and test it against runtime output.
+
+---
+
+# 44. Translation Build Separation
+
+Long term, preserve two conceptual outputs:
+
+    original rebuild
+    translated rebuild
+
+The original rebuild should continue demonstrating the accuracy of the reverse engineering.
+
+The translated build may intentionally differ.
+
+Do not let translation modifications permanently destroy the ability to reproduce the original ROM.
+
+Prefer conditional/generated translation data over maintaining two divergent copies of the entire assembly project.
+
+---
+
+# 45. Optimization Is Not a Goal
+
+Do not optimize original game code merely because it can be improved.
+
+This project is reverse engineering and translation, not modernization.
+
+Preserving behavior and understanding the original implementation are more important than making the assembly elegant.
+
+Only optimize when required for translation constraints or explicitly requested.
+
+Document such changes.
+
+---
+
+# 46. Unknowns Are Acceptable
+
+It is acceptable for portions of the ROM to remain:
+
+    Unknown
+    Data
+    UnknownRoutine
+    UnknownTable
+
+A correctly labeled unknown is better than an incorrect confident interpretation.
+
+The project should progressively reduce unknown regions as evidence accumulates.
+
+---
+
+# 47. Prefer Evidence Over Volume
+
+Do not generate thousands of speculative labels or comments simply to make the disassembly appear documented.
+
+Quality of understanding matters more than percentage of lines commented.
+
+A small number of well-established routines is more valuable than widespread guessed annotations.
+
+---
+
+# 48. Address Reporting
+
+When reporting ROM findings, include enough information to reproduce them.
+
+Prefer reporting:
+
+    bank
+    CPU address
+    ROM/file offset
+    symbol, if known
+
+Example:
+
+    Bank 04, CPU $5A20, ROM offset $11A20
+
+rather than only:
+
+    address $5A20
+
+This avoids ambiguity in banked ROM space.
+
+---
+
+# 49. Record Discoveries
+
+Important discoveries should not exist only in Cline's conversation history.
+
+Persist durable knowledge into one or more of:
+
+- source labels
+- source comments
+- analysis files
+- structured metadata
+- translation catalogs
+- documentation
+- tests
+
+Cline context is temporary. The repository is the long-term memory of the project.
+
+---
+
+# 50. Definition of Done
+
+A reverse-engineering task is complete when:
+
+1. The requested behavior/data has been investigated.
+2. Conclusions are supported by evidence.
+3. Relevant knowledge has been recorded in the repository.
+4. Changes build successfully.
+5. Original-source changes still produce a byte-identical ROM unless differences were explicitly intended.
+6. Relevant tests pass.
+7. No unrelated user work was overwritten.
+8. Remaining uncertainty is explicitly stated.
+
+A translation task is complete when:
+
+1. The original Japanese is preserved.
+2. The English translation is recorded structurally.
+3. Encoding/build tooling reproduces the intended translated bytes.
+4. Pointers/layout remain valid.
+5. The translated ROM builds.
+6. The affected text is verified in-game where practical.
+7. Intentional differences from the original are understood.
+
+---
+
+# 51. Guiding Principle
+
+When uncertain, preserve information.
+
+When making a claim, seek evidence.
+
+When changing source, verify the binary.
+
+When automating, make it reproducible.
+
+When translating, keep original and translated data separable.
+
+The objective is not merely to create an English ROM.
+
+The objective is to produce a well-understood, reproducible reverse-engineered codebase from which both the original and translated game can be built.
+
+# 52. SNES / 65C816 Specific Rules
+
+Always track 24-bit CPU addresses as bank:address (for example `C2:8120`) and distinguish them from ROM file offsets. Detect LoROM/HiROM/ExHiROM/ExLoROM and special-chip mappings from evidence; never apply a LoROM formula globally. Account for optional 512-byte copier headers.
+
+65C816 instruction decoding is state-dependent. Track emulation/native mode and the M/X flags because immediate operand widths change with processor state. Do not mark an instruction stream confirmed unless the incoming processor state is known or runtime evidence confirms it. Track PBR, DBR, direct-page register D, stack mode, and bank-crossing behavior where relevant.
+
+SNES graphics may be 2bpp, 4bpp, or 8bpp planar data, tilemaps, Mode 7 data, compressed data, or runtime-generated data. Do not assume 8x8 tile alignment when searching fonts. Japanese fonts may use 8x8, 8x12, 12x12, 16x16 or custom packed glyphs.
+
+Treat DMA/HDMA, VRAM/CGRAM/OAM ports, decompression routines, and WRAM staging buffers as first-class reverse-engineering evidence. When graphics or fonts are not visible directly in ROM, trace DMA sources or VRAM writes backward.
+
+Expansion chips (SA-1, Super FX, DSP, S-DD1, SPC7110, etc.) change memory maps and execution models. Identify cartridge hardware before making architectural assumptions.
+
+The SPC700/APU is a separate processor with uploaded code/data. Do not interpret SPC700 binaries as 65C816 code. Preserve CPU/APU address-space distinctions in names, notes and tools.

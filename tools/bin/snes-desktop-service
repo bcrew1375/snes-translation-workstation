@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export DISPLAY="${DISPLAY:-:1}"
+case "${1:-}" in
+  xvfb)
+    rm -f /tmp/.X1-lock
+    exec Xvfb :1 -screen 0 1280x800x24 -nolisten tcp
+    ;;
+  openbox)
+    until xdpyinfo -display :1 >/dev/null 2>&1; do sleep 0.1; done
+    exec openbox
+    ;;
+  x11vnc)
+    until xdpyinfo -display :1 >/dev/null 2>&1; do sleep 0.1; done
+    exec x11vnc -display :1 -rfbport 5901 -localhost -forever -shared -nopw
+    ;;
+  novnc)
+    exec websockify --web=/opt/novnc 6080 localhost:5901
+    ;;
+  *) echo 'Usage: snes-desktop-service {xvfb|openbox|x11vnc|novnc}' >&2; exit 2 ;;
+esac

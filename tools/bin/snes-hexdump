@@ -1,0 +1,7 @@
+#!/usr/bin/env python3
+import argparse,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[2]; sys.path.insert(0,str(ROOT/'toolkit'))
+from snesworkbench.rom import detect_mapping,parse_address
+p=argparse.ArgumentParser(); p.add_argument('rom'); p.add_argument('address'); p.add_argument('length',type=lambda x:int(x,0)); p.add_argument('--mapping',choices=['lorom','hirom']); a=p.parse_args(); d=Path(a.rom).read_bytes(); m=a.mapping or detect_mapping(d)[0]; off=parse_address(a.address,mapping=m); b=d[off:off+a.length]
+for i in range(0,len(b),16): print(f'{off+i:06X}: '+' '.join(f'{x:02X}' for x in b[i:i+16]))

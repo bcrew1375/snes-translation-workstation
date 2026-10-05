@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+import argparse,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[2]; sys.path.insert(0,str(ROOT/'toolkit'))
+from snesworkbench.rom import parse_cpu_address,cpu_to_offset
+p=argparse.ArgumentParser(); p.add_argument('address'); p.add_argument('--mapping',choices=['lorom','hirom'],required=True); a=p.parse_args(); print(f'0x{cpu_to_offset(*parse_cpu_address(a.address),a.mapping):X}')
