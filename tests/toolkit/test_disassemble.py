@@ -93,8 +93,14 @@ class DecodeTest(unittest.TestCase):
         data = bytearray(banks * 0x8000)
         data[0 : len(leading)] = leading
         header = self.HEADER_OFFSET
-        data[header : header + 21] = b"FIDELITYTESTROM\x00\x00\x00\x00"
+        # The title field is exactly 21 bytes; assigning fewer resizes the
+        # bytearray and silently truncates the fixture.
+        data[header : header + 21] = b"FIDELITYTESTROM".ljust(21, b"\x00")
+        self.assertEqual(len(data), banks * 0x8000)
         data[header + 0x15] = 0x00  # LoROM, slow ROM
+        # Asar trusts the ROM size code and rejects reads past it, so a fixture
+        # that omits it is treated as 32 KiB and bank 1 fails to decode.
+        data[header + 0x17] = 0x02  # 128 KiB
         data[header + 0x3C : header + 0x3E] = (0x8000).to_bytes(2, "little")
         checksum = sum(data) & 0xFFFF
         data[header + 0x1C : header + 0x1E] = (checksum ^ 0xFFFF).to_bytes(2, "little")

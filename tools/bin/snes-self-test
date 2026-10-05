@@ -3,8 +3,45 @@ set -uo pipefail
 fail=0; pass(){ printf '[PASS] %s\n' "$1"; }; bad(){ printf '[FAIL] %s\n' "$1" >&2; fail=1; }
 for c in asar bsnes-plus python3 Xvfb openbox x11vnc sleep supervisord supervisorctl; do command -v "$c" >/dev/null && pass "$c available" || bad "$c unavailable"; done
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
-for c in snes-rom-info snes-offset snes-hexdump snes-verify snes-run snes-debug snes-desktop snes-tiles snes-workstation; do "$root/tools/bin/$c" --help >/dev/null 2>&1 && pass "$c --help" || bad "$c --help"; done
+for c in snes-rom-info snes-offset snes-hexdump snes-verify snes-run snes-debug snes-desktop snes-tiles snes-fidelity snes-disassemble snes-workstation; do "$root/tools/bin/$c" --help >/dev/null 2>&1 && pass "$c --help" || bad "$c --help"; done
 [[ $("$root/tools/bin/snes-offset" --mapping lorom 02:8000) == 0x10000 ]] && pass 'LoROM conversion' || bad 'LoROM conversion'
 [[ $("$root/tools/bin/snes-offset" --mapping hirom C1:2345) == 0x12345 ]] && pass 'HiROM conversion' || bad 'HiROM conversion'
 PYTHONPATH="$root/toolkit" python3 -m unittest discover -s "$root/tests/toolkit" -v >/dev/null && pass 'generic toolkit tests' || bad 'generic toolkit tests'
+# Byte-fidelity and disassembly are exercised against a synthetic ROM, so the
+# environment validates itself without requiring a user-supplied ROM.
+tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
+python3 - "$tmp/synthetic.sfc" <<'PY'
+import sys
+# Two LoROM banks with a valid internal header, so Asar will accept the image.
+data = bytearray(0x10000)
+state = 0x1234
+for i in range(0x8000, 0x10000):
+    state = (state * 1103515245 + 12345) & 0xFFFFFFFF
+    data[i] = (state >> 16) & 0xFF
+data[0:4] = bytes([0x78, 0xD8, 0x18, 0xFB])  # SEI CLD CLC XCE
+h = 0x7FC0
+# NB: the title field is exactly 21 bytes. Assigning a shorter sequence to a
+# 21-byte slice resizes the bytearray and silently truncates the ROM.
+data[h:h+21] = b"SELFTESTROM".ljust(21, b"\x00")
+data[h + 0x15] = 0x00  # LoROM, slow ROM
+data[h + 0x17] = 0x02  # ROM size code: 128 KiB. Asar trusts this, and rejects
+                     # reads past it with Esnes_address_out_of_bounds.
+data[h + 0x3C:h + 0x3E] = (0x8000).to_bytes(2, "little")
+ck = sum(data) & 0xFFFF
+data[h + 0x1C:h + 0x1E] = (ck ^ 0xFFFF).to_bytes(2, "little")
+data[h + 0x1E:h + 0x20] = ck.to_bytes(2, "little")
+assert len(data) == 0x10000, f"fixture resized to {len(data)}"
+open(sys.argv[1], "wb").write(bytes(data))
+PY
+"$root/tools/bin/snes-fidelity" "$tmp/synthetic.sfc" >/dev/null \
+  && pass 'byte-faithful round trip on synthetic ROM' \
+  || bad 'byte-faithful round trip on synthetic ROM'
+if "$root/tools/bin/snes-disassemble" "$tmp/synthetic.sfc" --outdir "$tmp/dis" --bank 1 >/dev/null 2>&1 \
+   && grep -q 'CODE_018000' "$tmp"/dis/bank01_01_65816.asm; then
+    pass '65816 disassembly of synthetic ROM'
+else
+    bad '65816 disassembly of synthetic ROM'
+fi
+python3 tools/bin/snes-repo-audit >/dev/null \
+  && pass 'repository source audit' || bad 'repository source audit'
 (( fail == 0 )) && echo 'Environment OK' || { echo 'Environment has failures' >&2; exit 1; }

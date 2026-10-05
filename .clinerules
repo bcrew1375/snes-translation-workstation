@@ -47,7 +47,9 @@ If a change causes verification to fail:
 5. Restore byte-identical behavior if the task was analysis/refactoring.
 6. Document intentional differences if the task was translation or patch development.
 
-Never use `rgbfix` or another utility merely to hide an unexplained mismatch.
+Never use a checksum/header fixer, or any other utility, merely to hide an
+unexplained mismatch. `tools/bin/snes-verify` reports the first differing file
+offset so a real regression is diagnosable rather than papered over.
 
 ---
 
@@ -79,10 +81,14 @@ Important areas include:
         Original/reference ROM input.
 
     disassembly/
-        Asar / project-specific 65C816 source-compatible reverse-engineered source generated from and refined from mgbdis output.
+        Readable 65816/SPC700/Super FX disassembly, regenerated on demand by
+        `make disassemble`. ROM-derived, so it is git-ignored and never
+        committed. It is a review aid, not a byte-exact rebuild source.
 
     analysis/
-        Analysis results, graphics/font scans, databases, notes, and generated exploratory artifacts.
+        Analysis results, graphics/font scans, databases, notes, and generated
+        exploratory artifacts. ROM-derived scan output is git-ignored; reviewed
+        findings may be tracked.
 
     assets/
         Extracted/reconstructed project assets when applicable.
@@ -104,41 +110,49 @@ Prefer deterministic generated output.
 
 # 5. Build Workflow
 
-The fundamental pipeline is:
+There are deliberately two assembly paths, and they must not be conflated.
+
+**1. Readable disassembly (analysis aid).** `make disassemble` drives the
+vendored Asar disassembler in `tools/vendor/snes-rom-framework/` to emit real
+65816/SPC700/Super FX mnemonics into `disassembly/`. It decodes correctly and
+tracks M/X flag state, but it is a linear sweep: it does not separate code from
+data, does not resolve cross-bank references, and is **not** a byte-exact
+rebuild source. Never build a ROM from it and expect `MATCH`.
+
+**2. Byte-faithful assembly (the rebuild guarantee).** `tools/bin/snes-fidelity`
+emits every ROM byte verbatim -- one `org` per bank plus an `incbin` of that
+bank's bytes -- so Asar reproduces the input exactly:
 
     original ROM
         ↓
-    disassembly / reverse-engineered Asar / project-specific 65C816 source source
+    per-bank org + incbin sources
         ↓
-    rgbasm
+    asar
         ↓
-    rgblink
+    rebuilt ROM (Asar's 512-byte copier header stripped)
         ↓
-    rebuilt ROM
-        ↓
-    byte comparison with original
+    byte comparison with original  →  MATCH
 
-The generated mgbdis project lives under:
+Because this path makes no semantic claims, a successful `MATCH` proves only
+that the assembly pipeline is lossless. It never implies the disassembly is
+correct. The two artifacts are intentionally separate so the safety invariant
+does not depend on the disassembler being clever.
 
-    disassembly/
+Authoritative commands:
 
-Its build system is authoritative for rebuilding the disassembly unless deliberately replaced.
+    make disassemble      readable output; BANK=<n> for one bank
+    make rebuild          write and retain the byte-faithful sources
+    make verify           print MATCH or exit nonzero
+    make build            verify, then build the translated ROM
 
-Typical commands may include:
+Asar is the assembler of record. Note the verified constraints encoded in
+`toolkit/snesworkbench/asmbuild.py`: an explicit `lorom`/`hirom` directive is
+required; `incbin` takes no offset or length; each bank needs its own explicit
+`org`; and Asar prepends a 512-byte copier header that must be stripped.
 
-    make -C disassembly
-    make verify
-
-Use existing repository commands before inventing replacements.
-
-When modifying build tooling, preserve simple top-level workflows such as:
-
-    make disassemble
-    make build
-    make verify
-    make rebuild
-
-Do not introduce unnecessary build-system complexity.
+Use existing repository commands before inventing replacements. Keep the
+top-level workflows above simple. Do not introduce unnecessary build-system
+complexity.
 
 ---
 
@@ -171,7 +185,8 @@ Do not invent semantic names simply because they sound plausible.
 
 # 7. Do Not Overinterpret Disassembly
 
-mgbdis output is a starting point, not ground truth about program structure.
+Disassembly output (`make disassemble`) is a starting point, not ground truth
+about program structure.
 
 Generated distinctions between code and data may be wrong.
 
