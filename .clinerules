@@ -94,7 +94,9 @@ Important areas include:
         Extracted/reconstructed project assets when applicable.
 
     translation/
-        Structured translation data and translation-related source.
+        Repository-authored English translations, ROM reference metadata,
+        allocation manifests, and translation-related source. Decoded original
+        dialogue and other substantial ROM-derived text remain local and ignored.
 
     tools/
         Repository-native analysis/build/reverse-engineering tools.
@@ -515,20 +517,32 @@ Do not force a plausible Japanese character onto an unidentified value.
 
 Translation should eventually be maintained separately from arbitrary assembly edits.
 
-Prefer structured records containing information such as:
+Tracked translation records should contain repository-authored English and
+non-expressive metadata needed to find and validate the source stream, such as:
 
 - stable text ID
-- ROM/bank location
-- original Japanese
+- ROM/bank location and file offset
+- pointer table/source and message index
+- original stream length and cryptographic digest
 - English translation
 - status
-- notes
+- non-expressive context and notes
 - constraints
-- pointer/source information
 
-Do not make the translated English text the only surviving representation of the Japanese source.
+Do not commit decoded Japanese dialogue, substantial transliterations, raw original
+stream bytes, or long byte arrays that reconstruct the original text. The immutable,
+user-supplied ROM remains the authoritative source. A local extractor may generate a
+decoded Japanese working catalog under an ignored project path for translation and
+review.
 
-Preserve original text data or a reproducible representation of it.
+Preserve reproducibility through stable ROM references, lengths, hashes, codecs, and
+extraction tooling. A clean checkout plus the supported original ROM must be able to
+regenerate local source-text working data and build the English patch without a
+committed decoded-original catalog.
+
+Compact character lookup tables may contain isolated Japanese characters only when
+they are necessary to document an encoding, explicitly reviewed, and constrained by
+the repository audit. They must not reconstruct dialogue.
 
 Translation tooling should generate assembly/data where practical.
 
@@ -540,10 +554,13 @@ Do not silently invent translations.
 
 If Japanese text is ambiguous:
 
-- preserve the original text
-- note uncertainty
+- preserve the original stream reference and local decoded text
+- note uncertainty in non-expressive tracked metadata where possible
 - provide literal interpretation when useful
 - distinguish translation from interpretation
+
+Literal renderings or detailed source-text notes that reproduce dialogue belong in
+ignored local working data, not tracked repository files.
 
 Game context may change the correct translation.
 
@@ -1152,7 +1169,8 @@ A reverse-engineering task is complete when:
 
 A translation task is complete when:
 
-1. The original Japanese is preserved.
+1. The original source is reproducibly referenced by ROM location, length, and/or
+   digest, while decoded Japanese working data remains local and ignored.
 2. The English translation is recorded structurally.
 3. Encoding/build tooling reproduces the intended translated bytes.
 4. Pointers/layout remain valid.

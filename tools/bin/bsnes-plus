@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Shadows /usr/local/bin/bsnes-plus (tools/bin precedes it on PATH) so that every
+# direct invocation gets the Xvfb frame pacer and video-driver recovery.  Without
+# it bsnes-plus runs roughly 5x too fast on the managed desktop.  Set
+# BSNES_UNTHROTTLED=1 to bypass pacing deliberately.
+set -euo pipefail
+exec "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)/snes-bsnes-launch" bsnes-plus "$@"

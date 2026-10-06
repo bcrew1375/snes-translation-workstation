@@ -1,0 +1,342 @@
+#!/usr/bin/env python3
+"""Inspect Kakusei Hen scenario roots, text selectors, and confirmed commands.
+
+By default this prints non-expressive pointer/range metadata.  --extract-dir
+writes opaque ROM-derived streams for local investigation; use a git-ignored
+directory such as projects/dbz-kakusei-hen/local/scenario.  --command-offset
+decodes one command at an explicitly supplied ROM file offset; it never scans
+forward through commands with unknown lengths. Text extraction and glyph sheets
+are also ROM-derived and must be written to ignored local paths.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+PROJECT_SRC = ROOT / "projects" / "dbz-kakusei-hen" / "src"
+sys.path.insert(0, str(ROOT / "toolkit"))
+sys.path.insert(0, str(PROJECT_SRC))
+
+from dbz_kakusei_hen.scenario import (  # noqa: E402
+    KNOWN_COMMAND_SCHEMAS,
+    ROOT_COUNT,
+    ROOT_TABLE_OFFSET,
+    TEXT_TABLE_RANGES,
+    decode_scenario_command,
+    decode_dispatch_table,
+    decode_scenario_roots,
+    decode_scenario_slots,
+    decode_text_slots,
+    decode_unique_text_streams,
+    encode_root_slots,
+    glyph_source,
+    render_glyph_sheet,
+    restore_candidate_ranges,
+)
+
+
+def parse_offset(value: str) -> int:
+    """Accept decimal, 0x-prefixed, or $-prefixed ROM offsets."""
+
+    source = value.strip()
+    if source.startswith("$"):
+        source = "0x" + source[1:]
+    try:
+        result = int(source, 0)
+    except ValueError as error:
+        raise argparse.ArgumentTypeError(f"invalid ROM offset: {value}") from error
+    if result < 0:
+        raise argparse.ArgumentTypeError("ROM offset must not be negative")
+    return result
+
+
+def text_slot_document(slot, aliases: tuple[int, ...] = ()) -> dict[str, object]:
+    """Return non-expressive metadata for one command-$08 selector slot."""
+
+    presentation = slot.presentation
+    source = None
+    if not slot.is_null:
+        source = {
+            "cpu_address": slot.target_cpu_address,
+            "rom_offset": f"${slot.target_offset:06X}",
+        }
+    return {
+        "selector": f"${slot.selector:04X}",
+        "pointer_entry": {
+            "cpu_address": slot.pointer_cpu_address,
+            "rom_offset": f"${slot.pointer_offset:06X}",
+        },
+        "target": source,
+        "aliases": [f"${selector:04X}" for selector in aliases],
+        "presentation": {
+            "kind": presentation.kind,
+            "raw_hex": None if presentation.raw is None else presentation.raw.hex(),
+            "cpu_address": presentation.cpu_address,
+            "rom_offset": (
+                None
+                if presentation.table_offset is None
+                else f"${presentation.table_offset:06X}"
+            ),
+            "width_cells": presentation.width_cells,
+            "height_cells": presentation.height_cells,
+        },
+    }
+
+
+def text_stream_document(stream) -> dict[str, object]:
+    """Return structural metadata for one stream without decoding characters."""
+
+    glyph_sources = []
+    for code in sorted(set(stream.glyph_codes)):
+        source = glyph_source(code)
+        glyph_sources.append(
+            {
+                "code": f"${code:04X}",
+                "cpu_address": source.cpu_address,
+                "rom_offset": f"${source.offset:06X}",
+                "block_cpu_addresses": [
+                    f"{source.bank:02X}:{address:04X}" for address in source.block_addresses
+                ],
+            }
+        )
+    return {
+        "cpu_address": stream.cpu_address,
+        "rom_start": f"${stream.offset:06X}",
+        "rom_end": f"${stream.end_offset - 1:06X}",
+        "byte_length_including_terminator": len(stream.data),
+        "sha256": stream.sha256,
+        "selectors": [f"${selector:04X}" for selector in stream.selectors],
+        "word_count_excluding_terminator": len(stream.words),
+        "glyph_count": len(stream.glyph_codes),
+        "line_lengths": list(stream.line_lengths),
+        "glyph_sources": glyph_sources,
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        prog="dbz-kakusei-scenario",
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument("rom", type=Path)
+    parser.add_argument(
+        "--extract-dir",
+        type=Path,
+        help="write opaque root_XXX.bin streams and metadata.json locally",
+    )
+    parser.add_argument(
+        "--command-offset",
+        type=parse_offset,
+        help=(
+            "decode one command at an established scenario instruction boundary, "
+            "given as an absolute ROM file offset"
+        ),
+    )
+    parser.add_argument(
+        "--text-selector",
+        type=parse_offset,
+        help="inspect one confirmed command-$08 selector (decimal, 0x..., or $...)",
+    )
+    parser.add_argument(
+        "--extract-text-dir",
+        type=Path,
+        help="write unique zero-terminated command-$08 streams and metadata locally",
+    )
+    parser.add_argument(
+        "--glyph-sheet",
+        type=Path,
+        help=(
+            "write a ROM-derived PNG for the selected stream's glyphs, or all used "
+            "glyphs when --text-selector is omitted"
+        ),
+    )
+    args = parser.parse_args()
+    if not args.rom.is_file():
+        parser.error(f"ROM not found: {args.rom}")
+
+    rom = args.rom.read_bytes()
+    try:
+        slots = decode_scenario_slots(rom)
+        roots = decode_scenario_roots(rom)
+        handlers = decode_dispatch_table(rom)
+        text_slots = decode_text_slots(rom)
+        text_streams = decode_unique_text_streams(rom, text_slots)
+        for schema in KNOWN_COMMAND_SCHEMAS.values():
+            if schema.handler is None:
+                continue
+            actual = handlers[schema.opcode].handler
+            if actual != schema.handler:
+                raise ValueError(
+                    f"command ${schema.opcode:02X} schema handler $83:{schema.handler:04X} "
+                    f"does not match dispatch handler $83:{actual:04X}"
+                )
+        table = rom[ROOT_TABLE_OFFSET : ROOT_TABLE_OFFSET + ROOT_COUNT * 3]
+        if encode_root_slots(slots) != table:
+            raise ValueError("scenario root table failed its encode round trip")
+        if restore_candidate_ranges(rom, roots) != rom:
+            raise ValueError("scenario candidate ranges failed their byte round trip")
+    except ValueError as error:
+        parser.error(str(error))
+
+    document = {
+        "root_table_offset": f"$%06X" % ROOT_TABLE_OFFSET,
+        "root_slot_count": len(slots),
+        "unique_root_count": len(roots),
+        "root_slots": [
+            {
+                "index": slot.index,
+                "cpu_address": slot.cpu_address,
+                "rom_start": None if slot.offset is None else f"$%06X" % slot.offset,
+            }
+            for slot in slots
+        ],
+        "dispatch_entries": [
+            {
+                "opcode": f"$%02X" % entry.opcode,
+                "handler": entry.cpu_address,
+            }
+            for entry in handlers
+        ],
+        "known_command_schemas": [
+            {
+                "opcode": f"$%02X" % schema.opcode,
+                "handler": schema.cpu_address,
+                "operand_size": schema.operand_size,
+                "operand_encoding": schema.operand_encoding,
+                "description": schema.description,
+            }
+            for schema in KNOWN_COMMAND_SCHEMAS.values()
+        ],
+        "roots": [
+            {
+                "index": root.index,
+                "cpu_address": root.cpu_address,
+                "rom_start": f"$%06X" % root.offset,
+                "rom_end": f"$%06X" % (root.end_offset - 1),
+                "length": root.size,
+                "sha256": hashlib.sha256(root.data).hexdigest(),
+            }
+            for root in roots
+        ],
+        "text_tables": {
+            "ranges": [
+                {
+                    "selector_start": f"${table.selector_start:04X}",
+                    "selector_end": f"${table.selector_end:04X}",
+                    "pointer_table_cpu_address": f"{table.bank:02X}:{table.address:04X}",
+                    "entry_count": table.count,
+                }
+                for table in TEXT_TABLE_RANGES
+            ],
+            "slot_count": len(text_slots),
+            "non_null_slot_count": sum(not slot.is_null for slot in text_slots),
+            "null_slot_count": sum(slot.is_null for slot in text_slots),
+            "unique_stream_count": len(text_streams),
+            "distinct_glyph_code_count": len(
+                {code for stream in text_streams for code in stream.glyph_codes}
+            ),
+            "presentation_counts": {
+                kind: sum(slot.presentation.kind == kind for slot in text_slots)
+                for kind in ("default", "wide_marker", "default_marker", "context_pair")
+            },
+        },
+    }
+
+    if args.command_offset is not None:
+        try:
+            command = decode_scenario_command(rom, offset=args.command_offset)
+        except ValueError as error:
+            parser.error(str(error))
+        document["command"] = {
+            "rom_offset": f"$%06X" % command.offset,
+            "opcode": f"$%02X" % command.opcode,
+            "known": command.is_known,
+            "handler": None if command.schema is None else command.schema.cpu_address,
+            "operand_size": None if command.schema is None else command.schema.operand_size,
+            "operand_encoding": (
+                None if command.schema is None else command.schema.operand_encoding
+            ),
+            "operand": None if command.operand is None else f"$%0*X" % (
+                2 if command.schema and command.schema.operand_size == 1 else 4,
+                command.operand,
+            ),
+            "raw_length": len(command.raw),
+            "raw_hex": command.raw.hex() if command.is_known else None,
+            "opaque_sha256": (
+                None if command.is_known else hashlib.sha256(command.raw).hexdigest()
+            ),
+            "opaque_preview_hex": None if command.is_known else command.raw[:16].hex(),
+            "next_rom_offset": (
+                None if command.next_offset is None else f"$%06X" % command.next_offset
+            ),
+            "description": None if command.schema is None else command.schema.description,
+        }
+
+    selected_slot = None
+    selected_stream = None
+    if args.text_selector is not None:
+        if args.text_selector >= len(text_slots):
+            parser.error(
+                f"text selector ${args.text_selector:04X} is outside the confirmed "
+                f"range $0000-${len(text_slots) - 1:04X}"
+            )
+        selected_slot = text_slots[args.text_selector]
+        if not selected_slot.is_null:
+            selected_stream = next(
+                stream
+                for stream in text_streams
+                if stream.bank == selected_slot.pointer_bank
+                and stream.address == selected_slot.target_address
+            )
+        document["text_selector"] = text_slot_document(
+            selected_slot,
+            () if selected_stream is None else selected_stream.selectors,
+        )
+        document["text_stream"] = (
+            None if selected_stream is None else text_stream_document(selected_stream)
+        )
+
+    if args.extract_dir is not None:
+        args.extract_dir.mkdir(parents=True, exist_ok=True)
+        for root in roots:
+            (args.extract_dir / f"root_{root.index:03d}.bin").write_bytes(root.data)
+        metadata = args.extract_dir / "metadata.json"
+        metadata.write_text(json.dumps(document, indent=2) + "\n", encoding="utf-8")
+        print(f"Wrote {len(roots)} unique opaque streams and {metadata.resolve()}")
+
+    if args.extract_text_dir is not None:
+        args.extract_text_dir.mkdir(parents=True, exist_ok=True)
+        catalog = []
+        for stream in text_streams:
+            name = f"text_{stream.bank:02X}_{stream.address:04X}.bin"
+            (args.extract_text_dir / name).write_bytes(stream.data)
+            catalog.append({"file": name, **text_stream_document(stream)})
+        metadata = args.extract_text_dir / "metadata.json"
+        metadata.write_text(json.dumps({"streams": catalog}, indent=2) + "\n", encoding="utf-8")
+        print(f"Wrote {len(text_streams)} unique text streams and {metadata.resolve()}")
+
+    if args.glyph_sheet is not None:
+        if selected_slot is not None and selected_slot.is_null:
+            parser.error(f"text selector ${selected_slot.selector:04X} is null")
+        codes = (
+            selected_stream.glyph_codes
+            if selected_stream is not None
+            else tuple(code for stream in text_streams for code in stream.glyph_codes)
+        )
+        args.glyph_sheet.parent.mkdir(parents=True, exist_ok=True)
+        render_glyph_sheet(rom, codes).save(args.glyph_sheet)
+        print(f"Wrote {len(set(codes))} reconstructed glyphs to {args.glyph_sheet.resolve()}")
+
+    if args.extract_dir is None and args.extract_text_dir is None and args.glyph_sheet is None:
+        print(json.dumps(document, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

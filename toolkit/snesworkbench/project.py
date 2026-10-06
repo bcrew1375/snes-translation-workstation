@@ -10,7 +10,13 @@ from pathlib import Path
 from types import ModuleType
 
 from .errors import WorkstationError
-from .patching import BuildResult, sha256, validate_rom
+from .patching import (
+    BuildResult,
+    changed_offsets,
+    sha256,
+    validate_changed_scope,
+    validate_rom,
+)
 
 
 @dataclass(frozen=True)
@@ -174,6 +180,25 @@ def build_project(
     )
     if result.sha256 != sha256(result.data):
         raise WorkstationError("adapter returned an incorrect output SHA-256")
+    actual_changed = changed_offsets(original, result.data)
+    if result.changed_offsets != actual_changed:
+        missing = actual_changed - result.changed_offsets
+        extra = result.changed_offsets - actual_changed
+        details = []
+        if missing:
+            details.append(f"omitted actual byte at ROM ${min(missing):05X}")
+        if extra:
+            details.append(f"reported unchanged byte at ROM ${min(extra):05X}")
+        raise WorkstationError(
+            "adapter-reported changed offsets do not match the actual ROM diff: "
+            + "; ".join(details)
+        )
+    allowed_offsets = {
+        offset
+        for region in project.approved_ranges
+        for offset in range(region.start, region.end + 1)
+    }
+    validate_changed_scope(actual_changed, allowed_offsets)
     if write_output:
         try:
             target_path.parent.mkdir(parents=True, exist_ok=True)

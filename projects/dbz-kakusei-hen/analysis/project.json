@@ -61,6 +61,66 @@
       "type": "padding",
       "name": "Bank 0 native-mode vectors are entirely $FF; the game installs its own vector table at runtime rather than using the stock LoROM vectors",
       "confidence": "confirmed"
+    },
+    {
+      "bank": 54,
+      "cpu_start": "$80A0",
+      "cpu_end": "$BBBF",
+      "rom_start": "$1B00A0",
+      "rom_end": "$1B3BBF",
+      "type": "graphics",
+      "name": "Command-$08 lower glyph-source region used by stream codes $0100-$02D0; each displayed glyph reads four 16-byte blocks at +$000, +$010, +$100, and +$110",
+      "confidence": "confirmed"
+    },
+    {
+      "bank": 54,
+      "cpu_start": "$BCA0",
+      "cpu_end": "$E3BF",
+      "rom_start": "$1B3CA0",
+      "rom_end": "$1B63BF",
+      "type": "graphics",
+      "name": "Command-$08 upper glyph-source region used by stream codes $0900-$0A30; each displayed glyph reads four 16-byte blocks at +$000, +$010, +$100, and +$110",
+      "confidence": "confirmed"
+    },
+    {
+      "bank": 55,
+      "cpu_start": "$8000",
+      "cpu_end": "$FFFF",
+      "rom_start": "$1B8000",
+      "rom_end": "$1BFFFF",
+      "type": "graphics",
+      "name": "Command-$08 middle glyph-source bank used by stream codes $0500-$08F7; displayed glyphs are assembled from four 16-byte 2bpp blocks",
+      "confidence": "confirmed"
+    },
+    {
+      "bank": 3,
+      "cpu_start": "$B24F",
+      "cpu_end": "$B2A6",
+      "rom_start": "$01B24F",
+      "rom_end": "$01B2A6",
+      "type": "code",
+      "name": "Scenario root selection and byte-command interpreter loop; $49 is the end condition",
+      "confidence": "confirmed"
+    },
+    {
+      "bank": 3,
+      "cpu_start": "$B2A7",
+      "cpu_end": "$B338",
+      "rom_start": "$01B2A7",
+      "rom_end": "$01B338",
+      "type": "pointer_table",
+      "name": "Scenario command dispatch table: 73 little-endian handler words for values $00-$48; entry $00 is unresolved $0000",
+      "confidence": "confirmed"
+    },
+    {
+      "bank": 3,
+      "cpu_start": "$EA41",
+      "cpu_end": "$EE96",
+      "rom_start": "$01EA41",
+      "rom_end": "$01EE96",
+      "type": "pointer_table",
+      "name": "Scenario selector table: 370 three-byte slots; 356 non-null pointers (355 unique targets), 14 null slots, targeting CPU banks $91-$93",
+      "confidence": "confirmed"
     }
   ],
   "findings": {
@@ -72,22 +132,39 @@
       "note": "The character encoding is custom: possibly a flat glyph index, possibly a dictionary or compressed scheme. Rule 17 requires establishing this from evidence before any translation is attempted."
     },
     "hardware_register_access": {
-      "status": "unknown",
-      "confidence": "tentative",
-      "evidence": "No immediate-literal references to VRAM ($2116/$2118/$2119), CGRAM ($2121), BGMODE ($2105), tilemap base ($210C), OAM DMA ($2181/$2182/$2183) or DMA destination registers ($43/$44) were found anywhere in the ROM, even though the reset stub uses plain absolute stores such as STA.w $2100.",
-      "note": "Suggests hardware registers are reached indirectly, or that the access forms searched do not match this title's idiom. Static register hunting is therefore not a reliable discovery method here; dynamic tracing is the expected route."
+      "status": "confirmed_direct_access",
+      "confidence": "confirmed",
+      "evidence": "Bank $00 contains direct absolute stores configuring DMA channels and the VRAM data port. For example, the routine around CPU $00:838A writes DMA B-bus destination $18, meaning PPU register $2118, while the corresponding DMA source bank is $7E (WRAM). Other direct stores set $43x2-$43x4 source fields and $420B DMA enable bits.",
+      "note": "The literal $18 in the DMA setup is a B-bus register number, not ROM bank $18. This confirms WRAM-to-VRAM transfer behavior but does not connect ROM banks $18-$1F to the uploaded data."
+    },
+    "scenario_bytecode": {
+      "status": "confirmed_interpreter_partial_schema",
+      "confidence": "confirmed",
+      "interpreter": "CPU $83:B24F-$83:B2A6, ROM $01B24F-$01B2A6",
+      "dispatch_table": "CPU $83:B2A7-$83:B338, ROM $01B2A7-$01B338; 73 words for command values $00-$48; entry $00 is $0000",
+      "root_table": "CPU $83:EA41-$83:EE96, ROM $01EA41-$01EE96; 370 three-byte selector slots, of which 356 are non-null pointers to 355 unique targets; slots $0161-$016E are null",
+      "targets": "slots $0000-$008F target CPU bank $91, $0090-$0121 target bank $92, and $0122-$0160 plus $016F-$0171 target bank $93; slots $0159-$015A duplicate target $93:BA88",
+      "state": "WRAM $0C39 is the 16-bit stream cursor, $0C3B is the stream bank, and $0C37 is the current command",
+      "terminator": "$49 ends the interpreter loop",
+      "known_commands": "$08 consumes a little-endian 16-bit selector and reaches the zero-terminated 16-bit text/glyph renderer at CPU $80:9A0E; $48 consumes one byte and branches on value $0A",
+      "text_tables": "Command $08 has 3,989 structurally bounded selector slots across $99:8000, $9A:8000, $9B:8000, $9C:8000, $9D:8000, $9E:8000, $9F:8000, and $98:C1C8. There are 3,558 non-null slots, 431 null slots, and 3,553 unique zero-terminated streams. The final plausible selector is $0F94; selector $0F95 reads $0120 and is outside the pointer-table model.",
+      "text_streams": "Across the bounded corpus, $0000 is the terminator, $000A is the only other word below $0100, and 716 distinct glyph codes occur. Unique stream targets do not overlap. Presentation/context data is separate at $98:8000 + (selector-$0200)*2: selectors below $0200 use default 16x8 dimensions, $FF entries select 21x8 dimensions, and ordinary pairs remain opaque while selecting 16x8 dimensions.",
+      "renderer_evidence": "CPU $80:9A0E walks 16-bit words until $0000, treats $000A as a line break, and sends ordinary values to CPU $80:9B2C. CPU $80:9B2C maps $0100-$04FF to FastROM $B6:80A0, $0500-$08FF to $B7:8000, and $0900+ to $B6:BCA0. Each glyph is assembled from four 16-byte SNES 2bpp blocks at source +$000, +$010, +$100, and +$110 into a 16x16 bitmap; glyph origins advance by 12 pixels. A trusted clean boot reached scenario selector $0170, command $08 with text selector $07E1, renderer $80:9A0E, and glyph routine $80:9B2C at frame 436. The selected stream is $9C:9358 / ROM $0E1358, with 56 glyph words in four 14-cell lines, three $000A words, and a $0000 terminator.",
+      "note": "Direct reconstruction of the 40 distinct startup glyphs matches the completed screenshot, confirming the glyph layout and a local provisional mapping. Repository policy keeps the decoded passage and local character map out of tracked files. Runtime transfer evidence shows DMA channel 7 mode 1 uploads from WRAM $7E:8000/$7E:8800 to VRAM through $2118/$2119. Opening selectors $07E1-$07E4 now use confirmed fixed-allocation English streams with two narrow Latin characters per existing cell; no pointer relocation or renderer change is required. General text relocation and replacement-font design remain unresolved."
     },
     "font_regions": {
-      "status": "tentative",
-      "confidence": "tentative",
-      "evidence": "Rendering bank $0C at 4bpp shows Japanese character glyphs. Rendering bank $37 at 4bpp shows a dense glyph sheet of kana-like strokes and symbols whose colour indices are limited to {0, 3, 12, 15}, a four-level palette rather than the full sixteen.",
-      "note": "At least two banks appear to hold glyph data, implying a paged or indexed character system rather than a single flat font table. The character-to-tile mapping is not established. Treat both regions as candidates, not conclusions."
+      "status": "confirmed_graphics",
+      "confidence": "confirmed",
+      "location": "FastROM $B6:80A0-based and $B6:BCA0-based regions in ROM bank $36, plus FastROM $B7:8000-$B7:FFFF / ROM bank $37",
+      "format": "Each displayed character is a 16x16 bitmap assembled from four 16-byte SNES 2bpp blocks at source offsets +$000, +$010, +$100, and +$110. The renderer advances glyph origins by 12 pixels, allowing unused margins to overlap. Bank $37 has identical bitplane bytes in all 16,384 tile rows, so decoded pixels use indices 0 and 3; relevant bank-$36 data is not uniformly duplicated-plane and must not be generalized to the whole bank.",
+      "evidence": "The bounded text corpus uses 716 distinct codes: 185 in $0100-$02D0 from $B6:80A0, 403 in $0500-$08F7 from $B7:8000, and 128 in $0900-$0A30 from $B6:BCA0. Every used code has a complete non-wrapping four-block source. Reconstructing the startup stream's 40 distinct glyphs produces the same four-line image seen at runtime; $0272 is the only fully blank used lower-range glyph in the corpus and is structurally consistent with a space.",
+      "note": "The code-to-character map is only provisional and remains in ignored local working data. The renderer format and source addressing are confirmed; comprehensive character naming and English replacement glyph design remain future work."
     },
     "emulator_automation": {
       "status": "confirmed",
       "confidence": "confirmed",
-      "evidence": "bsnes-plus exposes no headless or batch command line; invoking it with --help launches the GUI. CDL and tracelog capture are interactive operations through the noVNC desktop.",
-      "note": "Dynamic analysis has no scripting path in this container. Budget for interactive work; this is the largest schedule risk in the analysis plan."
+      "evidence": "The pinned mesen-agent backend and snes-automate wrapper passed a redistributable synthetic LoROM test: SNES/S-CPU identification, a 24-bit execute breakpoint at CPU $00:800D, CPU-bus and physical WRAM reads, SNES ROM/WRAM/VRAM/OAM/CGRAM/register memory-space discovery, disassembly, instruction trace, complete state JSON, and a headless screenshot. A read-only project probe also loaded the pinned 2 MiB original ROM, exposed the expected $20000-byte WRAM and $10000-byte VRAM spaces, reported initial PC $00:8001, and captured one decoded frame. bsnes-plus remains available for interactive debugger and visual-viewer cross-checks.",
+      "note": "Clean boot now provides deterministic DBZ-specific Lua callbacks, renderer breakpoint hits, WRAM staging, screenshots, and DMA/VRAM-port correlation without controller input. Agreement with bsnes-plus and input-driven navigation beyond the startup narration remain to be validated."
     }
   }
 }

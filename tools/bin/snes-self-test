@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -uo pipefail
 fail=0; pass(){ printf '[PASS] %s\n' "$1"; }; bad(){ printf '[FAIL] %s\n' "$1" >&2; fail=1; }
-for c in asar bsnes-plus python3 Xvfb openbox x11vnc sleep supervisord supervisorctl; do command -v "$c" >/dev/null && pass "$c available" || bad "$c unavailable"; done
+for c in asar bsnes-plus mesen-agent python3 Xvfb openbox x11vnc sleep supervisord supervisorctl; do command -v "$c" >/dev/null && pass "$c available" || bad "$c unavailable"; done
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
-for c in snes-rom-info snes-offset snes-hexdump snes-verify snes-run snes-debug snes-desktop snes-tiles snes-tile-scan snes-fidelity snes-disassemble snes-workstation; do "$root/tools/bin/$c" --help >/dev/null 2>&1 && pass "$c --help" || bad "$c --help"; done
+for c in snes-rom-info snes-offset snes-hexdump snes-verify snes-run snes-debug snes-automate snes-desktop snes-tiles snes-tile-scan snes-fidelity snes-disassemble snes-workstation dbz-kakusei-scenario; do "$root/tools/bin/$c" --help >/dev/null 2>&1 && pass "$c --help" || bad "$c --help"; done
 [[ $("$root/tools/bin/snes-offset" --mapping lorom 02:8000) == 0x10000 ]] && pass 'LoROM conversion' || bad 'LoROM conversion'
 [[ $("$root/tools/bin/snes-offset" --mapping hirom C1:2345) == 0x12345 ]] && pass 'HiROM conversion' || bad 'HiROM conversion'
 PYTHONPATH="$root/toolkit" python3 -m unittest discover -s "$root/tests/toolkit" -v >/dev/null && pass 'generic toolkit tests' || bad 'generic toolkit tests'
@@ -18,12 +18,20 @@ state = 0x1234
 for i in range(0x8000, 0x10000):
     state = (state * 1103515245 + 12345) & 0xFFFFFFFF
     data[i] = (state >> 16) & 0xFF
-data[0:4] = bytes([0x78, 0xD8, 0x18, 0xFB])  # SEI CLD CLC XCE
+# Executable reset fixture: write two known WRAM bytes, then loop at $00:800D.
+data[0:15] = bytes([
+    0x78, 0xD8,             # SEI; CLD
+    0xA9, 0x42,             # LDA #$42
+    0x8D, 0x10, 0x00,       # STA $0010 (WRAM mirror -> $7E:0010)
+    0xA9, 0xA5,             # LDA #$A5
+    0x8F, 0x34, 0x12, 0x7E, # STA $7E1234
+    0x80, 0xFE,             # BRA $800D
+])
 h = 0x7FC0
 # NB: the title field is exactly 21 bytes. Assigning a shorter sequence to a
 # 21-byte slice resizes the bytearray and silently truncates the ROM.
 data[h:h+21] = b"SELFTESTROM".ljust(21, b"\x00")
-data[h + 0x15] = 0x00  # LoROM, slow ROM
+data[h + 0x15] = 0x20  # LoROM, slow ROM
 data[h + 0x17] = 0x02  # ROM size code: 128 KiB. Asar trusts this, and rejects
                      # reads past it with Esnes_address_out_of_bounds.
 data[h + 0x3C:h + 0x3E] = (0x8000).to_bytes(2, "little")
@@ -47,6 +55,52 @@ if "$root/tools/bin/snes-tile-scan" "$tmp/synthetic.sfc" --offset 0x8000 --count
     pass 'tile contact sheet from synthetic ROM'
 else
     bad 'tile contact sheet from synthetic ROM'
+fi
+capture="$tmp/automation-capture"
+breakpoint="$tmp/automation-breakpoint"
+if "$root/tools/bin/snes-automate" "$tmp/synthetic.sfc" \
+     --artifact-dir "$capture" --frames 1 --timeout 10 \
+     --list-memory --screenshot --state-json >/dev/null \
+   && "$root/tools/bin/snes-automate" "$tmp/synthetic.sfc" \
+     --artifact-dir "$breakpoint" --frames 100 --timeout 10 \
+     --breakpoint 'SnesMemory:0x00800D:x' \
+     --read-memory 'SnesWorkRam:0x10:1' \
+     --read-memory 'SnesWorkRam:0x1234:1' \
+     --pc --trace >/dev/null \
+   && python3 - "$capture" "$breakpoint" <<'PY'
+import json
+import pathlib
+import sys
+
+capture = pathlib.Path(sys.argv[1])
+breakpoint = pathlib.Path(sys.argv[2])
+capture_events = [json.loads(line) for line in (capture / "events.jsonl").read_text().splitlines()]
+break_events = [json.loads(line) for line in (breakpoint / "events.jsonl").read_text().splitlines()]
+capture_metadata = json.loads((capture / "metadata.json").read_text())
+break_metadata = json.loads((breakpoint / "metadata.json").read_text())
+loaded = next(event for event in capture_events if event.get("event") == "loaded")
+spaces = {event["type"] for event in capture_events if event.get("event") == "memory_space"}
+reads = {
+    (event["type"], event["start"]): event["hex"]
+    for event in break_events if event.get("event") == "memory_read"
+}
+pc = next(event["value"] for event in break_events if event.get("event") == "program_counter")
+assert loaded["console"] == "Snes" and loaded["cpu"] == "Snes"
+assert {"SnesMemory", "SnesPrgRom", "SnesWorkRam", "SnesVideoRam", "SnesRegister"} <= spaces
+assert reads[("SnesWorkRam", 0x10)] == "42"
+assert reads[("SnesWorkRam", 0x1234)] == "a5"
+assert pc == 0x00800D
+assert capture_events[-1]["ok"] and capture_events[-1]["reason"] == "frame_limit"
+assert break_events[-1]["ok"] and break_events[-1]["reason"] == "debugger_break"
+assert capture_metadata["trustworthy"] and break_metadata["trustworthy"]
+assert (capture / "frame.png").read_bytes().startswith(b"\x89PNG\r\n\x1a\n")
+assert (capture / "state.json").stat().st_size > 0
+assert (breakpoint / "trace.log").stat().st_size > 0
+PY
+then
+    pass 'headless SNES automation on synthetic ROM'
+else
+    bad 'headless SNES automation on synthetic ROM'
 fi
 if "$root/tools/bin/snes-repo-audit" >/dev/null; then pass 'repository source audit'; else bad 'repository source audit'; fi
 (( fail == 0 )) && echo 'Environment OK' || { echo 'Environment has failures' >&2; exit 1; }

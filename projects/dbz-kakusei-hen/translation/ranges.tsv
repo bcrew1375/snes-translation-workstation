@@ -1,0 +1,24 @@
+name	rom_start	rom_end	cpu_start	cpu_end	bank	alignment	evidence	confidence
+translated_checksum	$007FDC	$007FDF	$FFDC	$FFDF	$00	2	Standard LoROM checksum complement and checksum fields, regenerated after intentional translation changes.	confirmed
+opening_stream_1	$0E1358	$0E13CF	$9358	$93CF	$9C	2	Exact selector $07E1 source allocation; adjacent streams begin immediately before and after.	confirmed
+opening_stream_2	$0E13D0	$0E1443	$93D0	$9443	$9C	2	Exact selector $07E2 source allocation; adjacent streams begin immediately before and after.	confirmed
+opening_stream_3	$0E1444	$0E148B	$9444	$948B	$9C	2	Exact selector $07E3 source allocation; adjacent streams begin immediately before and after.	confirmed
+opening_stream_4	$0E148C	$0E14A5	$948C	$94A5	$9C	2	Exact selector $07E4 source allocation; adjacent streams begin immediately before and after.	confirmed
+opening_recap_shared_0000	$0C87C0	$0C87C9	$87C0	$87C9	$99	2	Exact selector $0000 source allocation used in the traced automatic recap.	confirmed
+opening_recap_shared_0003	$0C87EA	$0C87F5	$87EA	$87F5	$99	2	Exact selector $0003 source allocation used in the traced automatic recap.	confirmed
+opening_recap_shared_0026	$0C8964	$0C8971	$8964	$8971	$99	2	Exact selector $0026 source allocation used in the traced automatic recap.	confirmed
+opening_recap_shared_002e	$0C89D0	$0C89E5	$89D0	$89E5	$99	2	Exact selector $002E source allocation used in the traced automatic recap.	confirmed
+opening_recap_shared_076b	$0DE9D8	$0DEA19	$E9D8	$EA19	$9B	2	Exact selector $076B source allocation used in the traced automatic recap.	confirmed
+opening_recap_07e5_07ef	$0E14A6	$0E1583	$94A6	$9583	$9C	2	Consecutive exact allocations for traced recap selectors $07E5-$07EF.	confirmed
+opening_recap_0800_0805	$0E196E	$0E1A83	$996E	$9A83	$9C	2	Consecutive exact allocations for traced recap selectors $0800-$0805.	confirmed
+opening_glyph_blocks_1	$1B2F00	$1B2F9F	$AF00	$AF9F	$B6	16	Allocated renderer glyph blocks are zero-filled in the pinned ROM and absent from decoded command-$08 streams.	confirmed
+opening_glyph_blocks_2	$1B3000	$1B309F	$B000	$B09F	$B6	16	Allocated renderer glyph blocks are zero-filled in the pinned ROM and absent from decoded command-$08 streams.	confirmed
+opening_orphan_glyph_blocks_lower	$1B30A0	$1B3A1F	$B0A0	$BA1F	$B6	16	Selected renderer records are absent from all 3,553 decoded original text streams, mutually disjoint from every allocated record, and pinned by an aggregate source digest.	confirmed
+opening_glyph_blocks_3	$1B3AC0	$1B3B9F	$BAC0	$BB9F	$B6	16	Allocated renderer glyph blocks are zero-filled in the pinned ROM and absent from decoded command-$08 streams.	confirmed
+opening_glyph_blocks_4	$1B3BC0	$1B3C9F	$BBC0	$BC9F	$B6	16	Allocated renderer glyph blocks are zero-filled in the pinned ROM and absent from decoded command-$08 streams.	confirmed
+opening_glyph_blocks_5	$1B6320	$1B639F	$E320	$E39F	$B6	16	Allocated renderer glyph blocks are zero-filled in the pinned ROM and absent from decoded command-$08 streams.	confirmed
+opening_orphan_glyph_blocks_middle	$1B58C0	$1B641F	$D8C0	$E41F	$B6	16	Selected renderer records are absent from all 3,553 decoded original text streams, mutually disjoint from every allocated record, and pinned by an aggregate source digest.	confirmed
+opening_glyph_blocks_6	$1B6420	$1B775F	$E420	$F75F	$B6	16	Allocated renderer glyph blocks are zero-filled in the pinned ROM, absent from decoded command-$08 streams, and selected with disjoint four-block sources.	confirmed
+opening_glyph_blocks_7	$1B7760	$1B779F	$F760	$F79F	$B6	16	Additional disjoint paired-glyph records are zero-filled in the pinned ROM and absent from decoded command-$08 streams.	confirmed
+opening_glyph_blocks_8	$1B7860	$1B7C9F	$F860	$FC9F	$B6	16	Additional disjoint paired-glyph records are zero-filled in the pinned ROM and absent from decoded command-$08 streams.	confirmed
+opening_orphan_glyph_blocks_upper	$1B7CA0	$1B7FFF	$FCA0	$FFFF	$B6	16	Selected renderer records are absent from all 3,553 decoded original text streams, mutually disjoint from every allocated record, and pinned by an aggregate source digest.	confirmed

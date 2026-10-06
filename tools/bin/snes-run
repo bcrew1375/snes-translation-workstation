@@ -2,4 +2,5 @@
 set -euo pipefail
 [[ ${1:-} == -h || ${1:-} == --help ]] && { echo 'usage: snes-run ROM'; exit 0; }
 [[ $# -eq 1 ]] || { echo 'usage: snes-run ROM' >&2; exit 2; }
-exec bsnes-plus "$1"
+root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
+exec "$root/tools/bin/snes-bsnes-launch" snes-run "$1"

@@ -12,14 +12,92 @@ default_path = "rom/original.sfc"
 size = 2097152
 sha256 = "cc5ab583b5189c3f5b374335edf4b857461278d41ef674f7db31aa100dcb814a"
 
-# The translated ROM does not exist yet, so its size and digest are omitted.
-# The identity check is skipped until both are recorded here. Set them once a
-# real translation is produced so later builds stay pinned.
+# Pin the deterministic translated output so later changes cannot silently
+# alter the patch, custom glyphs, or checksum.
 [output]
 default_path = "build/dbz-kakusei-hen/translated.sfc"
+size = 2097152
+sha256 = "250c80316ec504f28151ead953d5d5446024edab6ff2d7f23e984b257da890b5"
 
 [manifests]
 analysis = "analysis/project.json"
+patches = "translation/patches.tsv"
+references = "translation/references.tsv"
+ranges = "translation/ranges.tsv"
 
-# Regions a translation may modify. Empty until an adapter declares them; the
-# build rejects any changed byte outside these ranges.
+# The build executor independently computes the ROM diff and rejects every
+# changed byte outside these inclusive ranges.
+[[approved_ranges]]
+name = "opening narration streams"
+start = 0x0E1358
+end = 0x0E1583
+
+[[approved_ranges]]
+name = "opening recap shared streams bank 99"
+start = 0x0C87C0
+end = 0x0C89E5
+
+[[approved_ranges]]
+name = "opening recap shared stream bank 9B"
+start = 0x0DE9D8
+end = 0x0DEA19
+
+[[approved_ranges]]
+name = "opening recap final streams bank 9C"
+start = 0x0E196E
+end = 0x0E1A83
+
+[[approved_ranges]]
+name = "translated ROM checksum"
+start = 0x007FDC
+end = 0x007FDF
+
+[[approved_ranges]]
+name = "opening paired glyph blocks 1"
+start = 0x1B2F00
+end = 0x1B2F9F
+
+[[approved_ranges]]
+name = "opening paired glyph blocks 2"
+start = 0x1B3000
+end = 0x1B309F
+
+[[approved_ranges]]
+name = "opening orphan glyph blocks lower"
+start = 0x1B30A0
+end = 0x1B3A1F
+
+[[approved_ranges]]
+name = "opening paired glyph blocks 3"
+start = 0x1B3AC0
+end = 0x1B3B9F
+
+[[approved_ranges]]
+name = "opening paired glyph blocks 4"
+start = 0x1B3BC0
+end = 0x1B3C9F
+
+[[approved_ranges]]
+name = "opening paired glyph blocks 5"
+start = 0x1B6320
+end = 0x1B639F
+
+[[approved_ranges]]
+name = "opening orphan glyph blocks middle"
+start = 0x1B58C0
+end = 0x1B641F
+
+[[approved_ranges]]
+name = "opening paired glyph blocks 6"
+start = 0x1B6420
+end = 0x1B775F
+
+[[approved_ranges]]
+name = "opening paired glyph blocks 7"
+start = 0x1B7760
+end = 0x1B7C9F
+
+[[approved_ranges]]
+name = "opening orphan glyph blocks upper"
+start = 0x1B7CA0
+end = 0x1B7FFF

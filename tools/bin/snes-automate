@@ -1,0 +1,234 @@
+#!/usr/bin/env python3
+"""Run bounded, headless SNES evidence capture through pinned mesen-agent."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_BACKEND = "mesen-agent"
+MANAGED_FILES = {"events.jsonl", "stderr.log", "metadata.json", "state.json", "frame.png", "trace.log"}
+
+
+def parser() -> argparse.ArgumentParser:
+    result = argparse.ArgumentParser(
+        prog="snes-automate",
+        description=__doc__,
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    result.add_argument("rom", type=Path)
+    result.add_argument("--artifact-dir", type=Path, required=True)
+    result.add_argument("--frames", type=int, default=60)
+    result.add_argument("--timeout", type=int, default=30, help="backend and host wall-clock limit")
+    result.add_argument("--script", action="append", default=[], type=Path)
+    result.add_argument(
+        "--input",
+        action="append",
+        default=[],
+        help="deterministic mesen-agent schedule PORT:BUTTONS@START-END",
+    )
+    result.add_argument("--breakpoint", action="append", default=[])
+    result.add_argument("--read-memory", action="append", default=[])
+    result.add_argument("--disassemble", action="append", default=[])
+    result.add_argument("--list-memory", action="store_true")
+    result.add_argument("--pc", action="store_true")
+    result.add_argument("--screenshot", action="store_true")
+    result.add_argument("--state-json", action="store_true")
+    result.add_argument("--trace", action="store_true")
+    return result
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def require_safe_artifact_dir(path: Path) -> Path:
+    resolved = path.expanduser().resolve()
+    try:
+        relative = resolved.relative_to(ROOT)
+    except ValueError:
+        return resolved
+    parts = relative.parts
+    allowed = bool(parts and parts[0] == "build") or (
+        len(parts) >= 4 and parts[0] == "projects" and parts[2] == "local"
+    )
+    if not allowed:
+        raise ValueError(
+            "artifact directory inside the repository must be under build/ or projects/<id>/local/"
+        )
+    return resolved
+
+
+def backend_path() -> Path:
+    requested = os.environ.get("MESEN_AGENT", DEFAULT_BACKEND)
+    found = shutil.which(requested)
+    if found is None:
+        raise ValueError(f"mesen-agent backend is unavailable: {requested}")
+    return Path(found).resolve()
+
+
+def revision_for(backend: Path) -> str | None:
+    candidates = [backend.with_name("mesen-agent.revision"), Path(str(backend) + ".revision")]
+    for candidate in candidates:
+        if candidate.is_file():
+            value = candidate.read_text(encoding="utf-8").strip()
+            if value:
+                return value
+    return None
+
+
+def validate_inputs(args: argparse.Namespace) -> tuple[Path, Path, list[Path]]:
+    if args.frames < 0:
+        raise ValueError("frames must be non-negative")
+    if args.timeout < 1:
+        raise ValueError("timeout must be at least one second")
+    rom = args.rom.expanduser().resolve()
+    if not rom.is_file():
+        raise ValueError(f"ROM does not exist: {rom}")
+    scripts = [script.expanduser().resolve() for script in args.script]
+    missing = [str(script) for script in scripts if not script.is_file()]
+    if missing:
+        raise ValueError(f"Lua script does not exist: {missing[0]}")
+    return rom, require_safe_artifact_dir(args.artifact_dir), scripts
+
+
+def build_command(
+    args: argparse.Namespace, backend: Path, rom: Path, artifact_dir: Path, scripts: list[Path]
+) -> list[str]:
+    command = [
+        str(backend),
+        str(rom),
+        "--home",
+        str(artifact_dir / "home"),
+        "--frames",
+        str(args.frames),
+        "--timeout",
+        str(args.timeout),
+    ]
+    for script in scripts:
+        command.extend(("--lua", str(script)))
+    for value in args.input:
+        command.extend(("--input", value))
+    for value in args.breakpoint:
+        command.extend(("--breakpoint", value))
+    for value in args.read_memory:
+        command.extend(("--read-memory", value))
+    for value in args.disassemble:
+        command.extend(("--disassemble", value))
+    if args.list_memory:
+        command.append("--list-memory")
+    if args.pc:
+        command.append("--pc")
+    if args.screenshot:
+        command.extend(("--screenshot", str(artifact_dir / "frame.png")))
+    if args.state_json:
+        command.extend(("--state-json", str(artifact_dir / "state.json")))
+    if args.trace:
+        command.extend(("--trace", str(artifact_dir / "trace.log")))
+    return command
+
+
+def parse_events(path: Path) -> list[dict[str, object]]:
+    events = []
+    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        try:
+            event = json.loads(line)
+        except json.JSONDecodeError as error:
+            raise ValueError(f"backend emitted invalid JSON on stdout line {number}: {error}") from error
+        if not isinstance(event, dict):
+            raise ValueError(f"backend emitted a non-object JSON value on stdout line {number}")
+        events.append(event)
+    return events
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parser().parse_args(argv)
+    try:
+        rom, artifact_dir, scripts = validate_inputs(args)
+        backend = backend_path()
+        artifact_dir.mkdir(parents=True, exist_ok=True)
+        occupied = sorted(name for name in MANAGED_FILES if (artifact_dir / name).exists())
+        if occupied or (artifact_dir / "home").exists():
+            raise ValueError(
+                f"artifact directory contains managed output from an earlier run: {artifact_dir}"
+            )
+        command = build_command(args, backend, rom, artifact_dir, scripts)
+        events_path = artifact_dir / "events.jsonl"
+        stderr_path = artifact_dir / "stderr.log"
+        started = datetime.now(timezone.utc)
+        with events_path.open("wb") as stdout, stderr_path.open("wb") as stderr:
+            try:
+                completed = subprocess.run(
+                    command,
+                    stdout=stdout,
+                    stderr=stderr,
+                    check=False,
+                    timeout=args.timeout + 5,
+                )
+                returncode = completed.returncode
+                host_timeout = False
+            except subprocess.TimeoutExpired:
+                returncode = 124
+                host_timeout = True
+        finished = datetime.now(timezone.utc)
+        events = parse_events(events_path)
+        summaries = [event for event in events if event.get("event") == "summary"]
+        lua_logs = [event for event in events if event.get("event") == "lua_log"]
+        summary = summaries[-1] if summaries else None
+        trustworthy = bool(
+            returncode == 0
+            and not host_timeout
+            and isinstance(summary, dict)
+            and summary.get("ok") is True
+            and all(log.get("error_count") == 0 for log in lua_logs)
+        )
+        metadata = {
+            "schema_version": 1,
+            "started_utc": started.isoformat(),
+            "finished_utc": finished.isoformat(),
+            "backend": str(backend),
+            "backend_revision": revision_for(backend),
+            "command": command,
+            "rom": {"path": str(rom), "size": rom.stat().st_size, "sha256": sha256(rom)},
+            "scripts": [
+                {"path": str(script), "size": script.stat().st_size, "sha256": sha256(script)}
+                for script in scripts
+            ],
+            "returncode": returncode,
+            "host_timeout": host_timeout,
+            "event_count": len(events),
+            "summary": summary,
+            "lua_error_counts": [log.get("error_count") for log in lua_logs],
+            "trustworthy": trustworthy,
+        }
+        (artifact_dir / "metadata.json").write_text(
+            json.dumps(metadata, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        print(artifact_dir)
+        if trustworthy:
+            return 0
+        print(
+            f"automation run did not produce trustworthy evidence; inspect {artifact_dir}",
+            file=sys.stderr,
+        )
+        return returncode if returncode != 0 else 1
+    except (OSError, ValueError) as error:
+        print(f"snes-automate: {error}", file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

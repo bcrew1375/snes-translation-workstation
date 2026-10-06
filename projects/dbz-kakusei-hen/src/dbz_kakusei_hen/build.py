@@ -1,41 +1,25 @@
-"""Build entry point for the Kakusei Hen project.
-
-This is currently a **scaffold**, not a translation. It returns the original ROM
-unchanged so the surrounding plumbing (input validation, output identity checks,
-changed-byte auditing, manifest loading) can be exercised end to end before any
-game-specific translation logic exists.
-
-It deliberately does not modify a single byte. A pass-through build reports an
-empty change set, which is the correct and honest result: it means "no
-translation has been applied yet", and it must not be mistaken for a finished
-English ROM.
-
-When real translation logic lands, replace ``build`` and declare the regions it
-writes in ``project.toml`` under ``[[approved_ranges]]``; the toolkit rejects any
-changed byte outside those ranges.
-"""
+"""Build entry point for the Kakusei Hen English translation."""
 
 from __future__ import annotations
 
-from snesworkbench.patching import BuildResult, sha256
+from snesworkbench.patching import BuildResult, changed_offsets, sha256, write_snes_checksum
+
+from .opening_translation import OPENING_TEXTS, apply_opening_translation
 
 
 def build(original: bytes, project) -> BuildResult:
-    """Return the original ROM unchanged.
+    """Apply the validated complete automatic-opening translation."""
 
-    Parameters
-    ----------
-    original:
-        The validated source ROM, already checked against ``project.input``.
-    project:
-        The loaded :class:`~snesworkbench.project.ProjectConfig`.
-    """
+    translated_bytes = bytearray(apply_opening_translation(original))
+    write_snes_checksum(translated_bytes, 0x7FDE)
+    translated = bytes(translated_bytes)
     return BuildResult(
-        data=original,
-        sha256=sha256(original),
-        changed_offsets=frozenset(),
+        data=translated,
+        sha256=sha256(translated),
+        changed_offsets=changed_offsets(original, translated),
         metadata={
-            "translated": False,
-            "note": "scaffold build: no translation applied",
+            "translated": True,
+            "opening_selectors": [f"${record.selector:04X}" for record in OPENING_TEXTS],
+            "opening_lines": [list(record.lines) for record in OPENING_TEXTS],
         },
     )

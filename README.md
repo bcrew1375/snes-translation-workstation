@@ -9,6 +9,9 @@ The repository does **not** distribute ROMs, extracted media, disassemblies, dec
 The devcontainer includes:
 
 - **bsnes-plus** for SNES emulation and debugger-oriented analysis (VRAM/tilemap/sprite viewers, breakpoints, usage logging).
+- **mesen-agent** for bounded, windowless automation with JSON Lines evidence,
+  24-bit S-CPU breakpoints, physical/CPU-relative memory inspection, traces,
+  state dumps, and screenshots. It supplements rather than replaces bsnes-plus.
 - **Asar 1.91** for 65C816/SPC700/Super FX assembly and patch workflows.
 - **A vendored Asar disassembler** from `Yoshifanatic1/SNES-ROM-Framework`
   (`tools/vendor/snes-rom-framework/`) that decodes 65816, SPC700 and Super FX.
@@ -31,6 +34,25 @@ projects/<project-id>/
     translation/
     tests/
 ```
+
+Tracked translation files contain repository-authored English plus non-expressive ROM
+references such as stable IDs, 24-bit CPU addresses, file offsets, pointer locations,
+stream lengths, and source hashes. Full decoded Japanese catalogs, raw source streams,
+and text-layout dumps are generated locally from the user-supplied ROM and remain
+git-ignored.
+
+The intended separation is:
+
+```text
+original ROM -> local extractor -> ignored decoded-source working catalog
+
+original ROM + tracked references/hashes + tracked English patches
+    -> translated ROM
+```
+
+The original ROM is therefore authoritative for the Japanese source. A clean checkout
+plus the supported ROM must be able to regenerate local analysis data and build the
+translation without distributing decoded original dialogue.
 
 ## Core commands
 
@@ -59,8 +81,40 @@ snes-disassemble ROM --outdir disassembly --bank 0
 snes-fidelity ROM
 snes-run ROM
 snes-debug ROM
+# Direct `bsnes-plus ROM` is shadowed by tools/bin and receives the same 60 Hz pacing.
+# BSNES_UNTHROTTLED=1 disables pacing; BSNES_FRAME_HZ=50 selects a PAL cap.
+snes-automate ROM --artifact-dir build/runtime/probe --frames 600 --timeout 30 \
+  --breakpoint 'SnesMemory:0x008000:x' --pc --screenshot --state-json
 snes-desktop status
 ```
+
+## Headless runtime evidence
+
+`snes-automate` wraps the pinned `mesen-agent` backend. Every run receives an
+isolated emulator home plus finite frame and wall-clock limits. Standard output
+is retained as `events.jsonl`; diagnostics go to `stderr.log`; and
+`metadata.json` records the backend revision, exact command, source-ROM size and
+SHA-256, script hashes, exit status, final summary, and whether the run met the
+wrapper's trust conditions.
+
+Repeatable `--input 'PORT:BUTTONS@START-END'` options provide deterministic
+controller schedules. Repeatable `--script` options load sandboxed debugger Lua
+for state-aware callbacks; filesystem and network access remain disabled.
+
+Within the repository, runtime artifacts are accepted only under `build/` or
+`projects/<id>/local/`, both of which are ignored. The wrapper refuses to reuse
+an artifact directory containing an earlier managed run.
+
+A run is marked trustworthy only when the backend exits successfully, emits a
+final successful summary, does not hit the host timeout, and reports zero Lua
+errors. This establishes reproducible emulator evidence; it does not by itself
+prove that an inferred game-specific meaning is correct. Important findings
+should still be cross-checked against static evidence and, where useful,
+bsnes-plus.
+
+Screenshots require a decoded video frame. An execute breakpoint reached during
+reset may stop too early for capture; use a separate finite-frame run for the
+screenshot rather than weakening the breakpoint evidence.
 
 ## Two assembly paths, kept separate
 
@@ -87,9 +141,14 @@ encoded in `toolkit/snesworkbench/asmbuild.py`:
 ## Repository policy
 
 `make audit` rejects ROMs, generated binaries, extracted media, disassemblies,
-and decoded original-language catalogs. Disassembly output is reproducible via
-`make disassemble` but is never committed, because it is ROM-derived. See
+decoded original-language catalogs, unreviewed Japanese/CJK content, and suspicious
+embedded byte arrays. It permits validated English patch, ROM-reference, and allocation
+manifests. Narrowly reviewed character/encoding tables may eventually allow isolated
+CJK characters in a designated column, but never dialogue. Disassembly and decoded
+source output are reproducible and remain local because they are ROM-derived. See
 `.gitignore` and `tools/bin/snes-repo-audit`.
+
+The audit is a technical safeguard and is not legal advice.
 
 ## Addressing
 

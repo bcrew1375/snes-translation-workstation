@@ -3,4 +3,5 @@ set -euo pipefail
 [[ ${1:-} == -h || ${1:-} == --help ]] && { echo 'usage: snes-debug ROM'; exit 0; }
 [[ $# -eq 1 ]] || { echo 'usage: snes-debug ROM' >&2; exit 2; }
 # bsnes-plus is debugger-oriented; open ROM, then Tools -> Debugger.
-exec bsnes-plus "$1"
+root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
+exec "$root/tools/bin/snes-bsnes-launch" snes-debug "$1"
