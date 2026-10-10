@@ -82,11 +82,32 @@ snes-fidelity ROM
 snes-run ROM
 snes-debug ROM
 # Direct `bsnes-plus ROM` is shadowed by tools/bin and receives the same 60 Hz pacing.
-# BSNES_UNTHROTTLED=1 disables pacing; BSNES_FRAME_HZ=50 selects a PAL cap.
+# Paced launches select OpenGL because the Xvfb pacer hooks GLX frame presentation.
+# BSNES_UNTHROTTLED=1 disables pacing and preserves the configured video driver;
+# BSNES_FRAME_HZ=50 selects a PAL cap.
 snes-automate ROM --artifact-dir build/runtime/probe --frames 600 --timeout 30 \
   --breakpoint 'SnesMemory:0x008000:x' --pc --screenshot --state-json
 snes-desktop status
 ```
+
+### bsnes-plus controller input
+
+The browser-accessible noVNC desktop forwards keyboard and mouse input to X11,
+but it does not forward a host/browser gamepad into the devcontainer as a Linux
+joystick. The default Player 1 keyboard bindings are:
+
+```text
+D-pad: arrow keys        B/A: Z/X        Y/X: A/S
+L/R: D/C                 Select: '       Start: Enter
+```
+
+For a physical controller, bsnes-plus must use the **SDL** input driver rather
+than **X-Windows** (`Settings -> Configuration -> Advanced`, followed by an
+emulator restart), and the corresponding host `/dev/input` device nodes must be
+passed through when the devcontainer is created. The X-Windows driver supports
+keyboard input only. If `/dev/input` is absent inside the container, physical
+controller input is unavailable regardless of the mappings selected in
+bsnes-plus.
 
 ## Headless runtime evidence
 

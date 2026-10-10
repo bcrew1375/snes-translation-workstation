@@ -76,7 +76,15 @@ def backend_path() -> Path:
     requested = os.environ.get("MESEN_AGENT", DEFAULT_BACKEND)
     found = shutil.which(requested)
     if found is None:
-        raise ValueError(f"mesen-agent backend is unavailable: {requested}")
+        if "MESEN_AGENT" in os.environ:
+            raise ValueError(
+                f"mesen-agent backend configured by MESEN_AGENT is unavailable: {requested}"
+            )
+        raise ValueError(
+            "mesen-agent backend is unavailable on PATH; rebuild the devcontainer "
+            "if it predates the mesen-agent Dockerfile installation, or set "
+            "MESEN_AGENT=/absolute/path/to/mesen-agent for an explicit temporary build"
+        )
     return Path(found).resolve()
 
 
@@ -87,6 +95,19 @@ def revision_for(backend: Path) -> str | None:
             value = candidate.read_text(encoding="utf-8").strip()
             if value:
                 return value
+    for directory in backend.parents:
+        if not (directory / ".git").exists():
+            continue
+        try:
+            value = subprocess.check_output(
+                ["git", "-C", str(directory), "rev-parse", "HEAD"],
+                stderr=subprocess.DEVNULL,
+                text=True,
+                timeout=5,
+            ).strip()
+        except (OSError, subprocess.SubprocessError):
+            return None
+        return value or None
     return None
 
 

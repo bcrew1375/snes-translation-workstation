@@ -2,24 +2,40 @@
 
 from __future__ import annotations
 
-from snesworkbench.patching import BuildResult, changed_offsets, sha256, write_snes_checksum
+from .opening_translation import OPENING_TEXTS
+from .translation_build import (
+    build_translation,
+    load_reviewed_free_regions,
+    load_translation_manifests,
+)
 
-from .opening_translation import OPENING_TEXTS, apply_opening_translation
 
+def build(original: bytes, project):
+    """Build from tracked manifests through the validated generic text path."""
 
-def build(original: bytes, project) -> BuildResult:
-    """Apply the validated complete automatic-opening translation."""
+    if project is None:
+        # Tests may call the adapter directly; resolve the project-owned files
+        # without weakening normal ProjectConfig-based builds.
+        from pathlib import Path
 
-    translated_bytes = bytearray(apply_opening_translation(original))
-    write_snes_checksum(translated_bytes, 0x7FDE)
-    translated = bytes(translated_bytes)
-    return BuildResult(
-        data=translated,
-        sha256=sha256(translated),
-        changed_offsets=changed_offsets(original, translated),
-        metadata={
-            "translated": True,
+        root = Path(__file__).resolve().parents[2]
+        patches = root / "translation" / "patches.tsv"
+        references = root / "translation" / "references.tsv"
+        ranges = root / "translation" / "ranges.tsv"
+    else:
+        patches = project.manifests["patches"]
+        references = project.manifests["references"]
+        ranges = project.manifests["ranges"]
+
+    result = build_translation(
+        original,
+        load_translation_manifests(patches, references),
+        load_reviewed_free_regions(ranges),
+    )
+    result.metadata.update(
+        {
             "opening_selectors": [f"${record.selector:04X}" for record in OPENING_TEXTS],
             "opening_lines": [list(record.lines) for record in OPENING_TEXTS],
-        },
+        }
     )
+    return result

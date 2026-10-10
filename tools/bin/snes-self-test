@@ -1,9 +1,27 @@
 #!/usr/bin/env bash
 set -uo pipefail
 fail=0; pass(){ printf '[PASS] %s\n' "$1"; }; bad(){ printf '[FAIL] %s\n' "$1" >&2; fail=1; }
-for c in asar bsnes-plus mesen-agent python3 Xvfb openbox x11vnc sleep supervisord supervisorctl; do command -v "$c" >/dev/null && pass "$c available" || bad "$c unavailable"; done
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
-for c in snes-rom-info snes-offset snes-hexdump snes-verify snes-run snes-debug snes-automate snes-desktop snes-tiles snes-tile-scan snes-fidelity snes-disassemble snes-workstation dbz-kakusei-scenario; do "$root/tools/bin/$c" --help >/dev/null 2>&1 && pass "$c --help" || bad "$c --help"; done
+for c in asar bsnes-plus python3 Xvfb openbox x11vnc sleep supervisord supervisorctl; do command -v "$c" >/dev/null && pass "$c available" || bad "$c unavailable"; done
+mesen_backend=${MESEN_AGENT:-mesen-agent}
+if mesen_path=$(command -v "$mesen_backend"); then
+  pass 'mesen-agent available'
+  expected=$(sed -n 's/^ARG MESEN_AGENT_COMMIT=//p' "$root/.devcontainer/Dockerfile" | head -1)
+  revision_file=$(dirname "$mesen_path")/mesen-agent.revision
+  if [[ -n "$expected" && -f "$revision_file" ]]; then
+    actual=$(tr -d '[:space:]' < "$revision_file")
+    [[ "$actual" == "$expected" ]] \
+      && pass 'mesen-agent revision matches Dockerfile' \
+      || bad "mesen-agent revision mismatch: installed ${actual:-unknown}, expected $expected"
+  fi
+else
+  if [[ -n ${MESEN_AGENT:-} ]]; then
+    bad "mesen-agent configured by MESEN_AGENT is unavailable: $MESEN_AGENT"
+  else
+    bad 'mesen-agent unavailable; this container may predate its Dockerfile installation -- rebuild the devcontainer'
+  fi
+fi
+for c in snes-rom-info snes-offset snes-hexdump snes-verify snes-run snes-debug snes-automate snes-desktop snes-tiles snes-tile-scan snes-fidelity snes-disassemble snes-workstation dbz-kakusei-scenario dbz-kakusei-glyphs dbz-kakusei-translate; do "$root/tools/bin/$c" --help >/dev/null 2>&1 && pass "$c --help" || bad "$c --help"; done
 [[ $("$root/tools/bin/snes-offset" --mapping lorom 02:8000) == 0x10000 ]] && pass 'LoROM conversion' || bad 'LoROM conversion'
 [[ $("$root/tools/bin/snes-offset" --mapping hirom C1:2345) == 0x12345 ]] && pass 'HiROM conversion' || bad 'HiROM conversion'
 PYTHONPATH="$root/toolkit" python3 -m unittest discover -s "$root/tests/toolkit" -v >/dev/null && pass 'generic toolkit tests' || bad 'generic toolkit tests'

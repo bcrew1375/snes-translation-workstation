@@ -105,9 +105,21 @@ Unique zero-terminated stream ranges do not overlap.
 For selectors `$0200+`, the handler separately indexes two bytes at
 `$98:8000 + (selector - $0200) * 2`. Selectors below `$0200` bypass this table
 and use a 16x8 rendering area. An entry beginning with `$FF` selects a 21x8
-area. Ordinary pairs are copied to WRAM and invoke additional setup before a
-16x8 area is used; their semantic meaning remains unknown. No `$FE` entry occurs
-within the bounded selector corpus.
+area. Ordinary pairs are portrait resource metadata: the first byte selects a
+graphics-resource descriptor through CPU `$83:EE97`, and the second selects a
+variant within that descriptor. The pair is copied to WRAM `$0272/$0278` and
+`$027E/$0284`; CPU `$83:E2A8` then decompresses/assembles two `$0400`-byte
+graphics pieces and updates associated palette/object state before a 16x8 area
+is used. No `$FE` entry occurs within the bounded selector corpus.
+
+A trusted 1,500-frame trace on October 6, 2026 confirmed all three paths in the
+automatic opening. Wide selectors `$07E1-$07E4` and low selectors `$0026/$002E`
+reached the renderer in their command-entry frame. Selector `$07E5` copied pair
+`$21,$01` and reached the renderer five frames later; the visible frame showed
+the corresponding blond-character portrait. Selector `$07E6` copied pair
+`$00,$09` and reached the renderer six frames later; the visible frame showed
+the corresponding Goku portrait. These observations establish resource/variant
+behavior without assigning names to the complete numeric portrait catalog.
 
 CPU `$80:9A0E` walks a zero-terminated stream of 16-bit words. Word `$000A`
 advances line state, while ordinary values are passed to CPU `$80:9B2C`. The
@@ -254,5 +266,7 @@ project-local analysis area; persist only reviewed conclusions here.
   decoded original text remains untracked.
 - The complete automatic opening is implemented with fixed-size replacement
   streams and paired Latin glyphs; no stream relocation, pointer changes, or
-  renderer changes are required. General relocation constraints and the semantic
-  meaning of ordinary presentation pairs remain unresolved.
+  renderer changes are required. General relocation constraints remain unresolved.
+- Ordinary command-`$08` presentation pairs are confirmed portrait
+  resource/variant selectors, but the complete numeric portrait catalog is not
+  yet named or documented.

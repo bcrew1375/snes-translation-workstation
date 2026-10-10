@@ -47,6 +47,41 @@ class SnesAutomateTest(unittest.TestCase):
             ROOT / "build" / "evidence",
         )
 
+    def test_missing_default_backend_recommends_rebuilding_container(self):
+        with patch.dict(os.environ, {}, clear=True), patch.object(
+            self.tool.shutil, "which", return_value=None
+        ):
+            with self.assertRaisesRegex(ValueError, "rebuild the devcontainer"):
+                self.tool.backend_path()
+
+    def test_missing_explicit_backend_identifies_environment_override(self):
+        with patch.dict(os.environ, {"MESEN_AGENT": "/missing/mesen-agent"}), patch.object(
+            self.tool.shutil, "which", return_value=None
+        ):
+            with self.assertRaisesRegex(ValueError, "configured by MESEN_AGENT"):
+                self.tool.backend_path()
+
+    def test_revision_prefers_installed_sidecar(self):
+        (self.directory / "mesen-agent.revision").write_text("pinned-revision\n")
+        self.assertEqual(self.tool.revision_for(self.backend), "pinned-revision")
+
+    def test_revision_uses_git_checkout_for_temporary_build(self):
+        checkout = self.directory / "checkout"
+        backend = checkout / "bin" / "linux-x64" / "Release" / "mesen-agent"
+        backend.parent.mkdir(parents=True)
+        backend.write_text("backend", encoding="utf-8")
+        (checkout / ".git").mkdir()
+        with patch.object(
+            self.tool.subprocess, "check_output", return_value="temporary-revision\n"
+        ) as check_output:
+            self.assertEqual(self.tool.revision_for(backend), "temporary-revision")
+        check_output.assert_called_once_with(
+            ["git", "-C", str(checkout), "rev-parse", "HEAD"],
+            stderr=self.tool.subprocess.DEVNULL,
+            text=True,
+            timeout=5,
+        )
+
     def test_command_has_isolated_home_and_bounds(self):
         args = self.tool.parser().parse_args(
             [

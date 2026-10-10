@@ -73,16 +73,31 @@ class BsnesLauncherTest(unittest.TestCase):
                 self.assertIn("system.crashedOnLastRun = false", settings)
                 self.assertIn('system.audio = "None"', settings)
                 self.assertIn('system.input = "None"', settings)
-                self.assertIn("restored bsnes-plus OpenGL video output", result.stderr)
+                self.assertIn("selected bsnes-plus OpenGL video output", result.stderr)
                 self.assertEqual(self.capture.read_text().splitlines()[0], str(self.rom))
 
-    def test_existing_video_driver_is_not_changed(self):
+    def test_paced_launch_replaces_non_gl_driver(self):
         original = (
             'system.video = "Qt-Raster"\n'
             'system.crashedOnLastRun = true\n'
         )
         self.config.write_text(original, encoding="utf-8")
-        result = self.run_launcher("snes-run")
+        result = self.run_launcher("snes-run", unthrottled=False)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(
+            self.config.read_text(encoding="utf-8"),
+            'system.video = "OpenGL"\n'
+            'system.crashedOnLastRun = false\n',
+        )
+        self.assertIn("required for frame pacing", result.stderr)
+
+    def test_unthrottled_launch_preserves_non_gl_driver(self):
+        original = (
+            'system.video = "Qt-Raster"\n'
+            'system.crashedOnLastRun = false\n'
+        )
+        self.config.write_text(original, encoding="utf-8")
+        result = self.run_launcher("snes-run", unthrottled=True)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(self.config.read_text(encoding="utf-8"), original)
         self.assertEqual(result.stderr, "")

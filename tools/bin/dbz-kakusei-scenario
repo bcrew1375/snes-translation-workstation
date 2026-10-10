@@ -37,6 +37,7 @@ from dbz_kakusei_hen.scenario import (  # noqa: E402
     glyph_source,
     render_glyph_sheet,
     restore_candidate_ranges,
+    scan_root_text_selectors,
 )
 
 
@@ -84,6 +85,8 @@ def text_slot_document(slot, aliases: tuple[int, ...] = ()) -> dict[str, object]
             ),
             "width_cells": presentation.width_cells,
             "height_cells": presentation.height_cells,
+            "portrait_resource": presentation.portrait_resource,
+            "portrait_variant": presentation.portrait_variant,
         },
     }
 
@@ -155,6 +158,16 @@ def main() -> int:
             "write a ROM-derived PNG for the selected stream's glyphs, or all used "
             "glyphs when --text-selector is omitted"
         ),
+    )
+    parser.add_argument(
+        "--catalog-text",
+        type=Path,
+        help="write a comprehensive TSV catalog of all text streams to PATH",
+    )
+    parser.add_argument(
+        "--scan-roots",
+        action="store_true",
+        help="scan all scenario roots for $08 text commands and report summary",
     )
     args = parser.parse_args()
     if not args.rom.is_file():
@@ -333,7 +346,78 @@ def main() -> int:
         render_glyph_sheet(rom, codes).save(args.glyph_sheet)
         print(f"Wrote {len(set(codes))} reconstructed glyphs to {args.glyph_sheet.resolve()}")
 
-    if args.extract_dir is None and args.extract_text_dir is None and args.glyph_sheet is None:
+    if args.scan_roots:
+        root_commands = scan_root_text_selectors(rom)
+        selector_set: set[int] = set()
+        root_counts: dict[int, int] = {}
+        for cmd in root_commands:
+            selector_set.add(cmd.selector)
+            root_counts[cmd.root_index] = root_counts.get(cmd.root_index, 0) + 1
+        print(f"Scenario roots with $08 commands: {len(root_counts)}")
+        print(f"Total $08 commands: {len(root_commands)}")
+        print(f"Unique text selectors referenced: {len(selector_set)}")
+        print(f"Non-null text slots in tables: {sum(not s.is_null for s in text_slots)}")
+        print(f"Orphan streams (unreferenced): {sum(not s.is_null for s in text_slots) - len(selector_set)}")
+        print()
+        print("Text-heavy roots:")
+        for idx, count in sorted(root_counts.items(), key=lambda x: -x[1])[:30]:
+            cmds = [c for c in root_commands if c.root_index == idx]
+            sample = ", ".join(f"${c.selector:04X}" for c in cmds[:5])
+            print(f"  Root ${idx:03X}: {count} text selectors ({sample}...)")
+
+    if args.catalog_text is not None:
+        root_commands = scan_root_text_selectors(rom)
+        # Build lookup: selector -> list of root indices that use it
+        selector_roots: dict[int, list[int]] = {}
+        for cmd in root_commands:
+            selector_roots.setdefault(cmd.selector, []).append(cmd.root_index)
+        args.catalog_text.parent.mkdir(parents=True, exist_ok=True)
+        with args.catalog_text.open("w", encoding="utf-8", newline="") as out:
+            out.write(
+                "selector\t"
+                "pointer_cpu_address\t"
+                "target_cpu_address\t"
+                "target_rom_offset\t"
+                "word_count\t"
+                "glyph_count\t"
+                "byte_length\t"
+                "sha256\t"
+                "presentation_kind\t"
+                "presentation_raw\t"
+                "portrait_resource\t"
+                "portrait_variant\t"
+                "root_count\t"
+                "root_indices\n"
+            )
+            for slot in text_slots:
+                if slot.is_null:
+                    continue
+                stream = next(
+                    s for s in text_streams
+                    if s.bank == slot.pointer_bank
+                    and s.address == slot.target_address
+                )
+                roots_using = selector_roots.get(slot.selector, [])
+                pres = slot.presentation
+                out.write(
+                    f"${slot.selector:04X}\t"
+                    f"{slot.pointer_cpu_address}\t"
+                    f"{slot.target_cpu_address}\t"
+                    f"${slot.target_offset:06X}\t"
+                    f"{len(stream.words)}\t"
+                    f"{len(stream.glyph_codes)}\t"
+                    f"{len(stream.data)}\t"
+                    f"{stream.sha256}\t"
+                    f"{pres.kind}\t"
+                    f"{'' if pres.raw is None else pres.raw.hex()}\t"
+                    f"{'' if pres.portrait_resource is None else str(pres.portrait_resource)}\t"
+                    f"{'' if pres.portrait_variant is None else str(pres.portrait_variant)}\t"
+                    f"{len(roots_using)}\t"
+                    f"{','.join(f'${r:03X}' for r in roots_using)}\n"
+                )
+        print(f"Wrote text catalog to {args.catalog_text.resolve()}")
+
+    if args.extract_dir is None and args.extract_text_dir is None and args.glyph_sheet is None and args.catalog_text is None and not args.scan_roots:
         print(json.dumps(document, indent=2))
     return 0
 

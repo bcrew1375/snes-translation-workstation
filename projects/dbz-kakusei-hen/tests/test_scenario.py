@@ -202,6 +202,9 @@ class TextTableTest(unittest.TestCase):
         self.assertEqual((wide.kind, wide.width_cells), ("wide_marker", 21))
         self.assertEqual(marker.kind, "default_marker")
         self.assertEqual((pair.kind, pair.raw), ("context_pair", bytes.fromhex("12 34")))
+        self.assertIsNone(default.portrait_resource)
+        self.assertIsNone(wide.portrait_variant)
+        self.assertEqual((pair.portrait_resource, pair.portrait_variant), (0x12, 0x34))
 
 
 class GlyphDecoderTest(unittest.TestCase):
@@ -292,6 +295,12 @@ class OriginalRomTextTest(unittest.TestCase):
             stream.sha256,
             "1fc79be8e4185536a5e87ab8aaab3aa04ed7806a6fec92f2b876316f3f72ff38",
         )
+
+    def test_opening_recap_portrait_pairs(self):
+        first = self.slots[0x07E5].presentation
+        second = self.slots[0x07E6].presentation
+        self.assertEqual((first.portrait_resource, first.portrait_variant), (0x21, 0x01))
+        self.assertEqual((second.portrait_resource, second.portrait_variant), (0x00, 0x09))
 
     def test_all_corpus_glyph_sources_are_safe(self):
         for code in {code for stream in self.streams for code in stream.glyph_codes}:

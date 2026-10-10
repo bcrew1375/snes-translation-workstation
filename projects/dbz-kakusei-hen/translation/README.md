@@ -14,6 +14,24 @@ raw source streams, or long byte arrays capable of reconstructing original text.
   dialogue.
 - `ranges.tsv` records reviewed allocation ranges for translated streams and custom
   glyph storage.
+- `glossary.tsv` records the project's canonical English terminology for names,
+  terms, techniques, places, races, organizations, and story arcs. Each record
+  contains a stable `id`, a `category`, the `canonical` English form, pipe-separated
+  `aliases` for lookup, `usage_notes` on capitalization and context, and a `status`
+  field. The glossary contains no decoded Japanese text, no raw ROM data, and no
+  reconstructed dialogue. It uses the modern North American anime and game
+  localization as the primary standard: Frieza, Krillin, Jeice, King Kai, Grand
+  Elder Guru, World Tournament, Special Beam Cannon, Destructo Disc, Tri-Beam,
+  Spirit Bomb, Kaio-ken, and related forms. Aliases column may contain manga-
+  oriented or source-name alternatives (for example Freeza, Kuririn, Tenshinhan,
+  Kaio, Kienzan, Makankosappo, Tenkaichi Budokai) for identification purposes,
+  but the canonical column is the required output form.
+
+The translation builder joins `patches.tsv` and `references.tsv` by stable `id`;
+selectors are not inferred from patch-column positions. Only confirmed ranges whose
+names begin with `free_text_` are eligible for relocated text allocation. No such
+production range is currently declared. Structural gaps and streams lacking a known
+scenario-root reference remain reserved until all reference paths are validated.
 
 The implemented automatic opening covers the four narration panels at command-`$08`
 selectors `$07E1-$07E4` and all 22 text records shown in the following recap before

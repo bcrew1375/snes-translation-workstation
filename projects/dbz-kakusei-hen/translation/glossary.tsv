@@ -1,0 +1,121 @@
+id	category	canonical	aliases	usage_notes	status
+character_goku	character	Goku	Son Goku|Kakarot	Use "Goku" in dialogue and narration. Use "Kakarot" only as Goku's Saiyan name when spoken by Vegeta or other Saiyans.	approved
+character_piccolo	character	Piccolo	—	Normal name after the tournament.	approved
+character_piccolo_jr	character	Piccolo Jr.	Majunior|Demon King Piccolo	Use for identity or roster label during the 23rd World Tournament.	approved
+character_king_piccolo	character	King Piccolo	Piccolo Daimaou|Demon King Piccolo	Use for the evil predecessor only. Do not conflate with Piccolo Jr.	approved
+character_krillin	character	Krillin	Kuririn	Never use "Kuririn" in translated dialogue.	approved
+character_yamcha	character	Yamcha	—	Standard form.	approved
+character_tien	character	Tien	Tien Shinhan|Tenshinhan	Use "Tien" in dialogue. Retain longer forms as lookup aliases only.	approved
+character_chiaotzu	character	Chiaotzu	Chaozu	Use "Chiaotzu."	approved
+character_master_roshi	character	Master Roshi	Muten Roshi|Kame-Sen'nin|Kamesennin|Turtle Hermit	Use "Master Roshi."	approved
+character_mercenary_tao	character	Mercenary Tao	Tao Pai Pai|Cyber Tao	Use "Mercenary Tao" for his pre-cyborg form; "Cyborg Tao" specifically for his reconstructed tournament form.	approved
+character_chichi	character	Chi-Chi	—	Standard form with hyphen.	approved
+character_bulma	character	Bulma	—	Standard form.	approved
+character_gohan	character	Gohan	—	Standard form. Use "Son Gohan" only in formal narration if the source explicitly uses it.	approved
+character_raditz	character	Raditz	Radditz|Raditz	Never use "Radditz" in translated dialogue.	approved
+character_vegeta	character	Vegeta	—	Standard form.	approved
+character_nappa	character	Nappa	—	Standard form.	approved
+character_frieza	character	Frieza	Freeza	Never use "Freeza" in translated dialogue. This project uses "Frieza."	approved
+character_zarbon	character	Zarbon	—	Standard form.	approved
+character_dodoria	character	Dodoria	—	Standard form.	approved
+character_cui	character	Cui	Cui|Kyui	Use "Cui."	approved
+character_appule	character	Appule	Apule|Apple	Use "Appule."	approved
+character_dende	character	Dende	—	Standard form.	approved
+character_nail	character	Nail	—	Standard form.	approved
+character_moori	character	Moori	Muri	Use "Moori."	approved
+character_cargo	character	Cargo	Tsuno	Use "Cargo."	approved
+character_grand_elder_guru	character	Grand Elder Guru	Guru|Saichoro|Great Elder|Namekian Elder	Full form on introduction. "Guru" or "Grand Elder" when space or context requires it.	approved
+character_captain_ginyu	character	Captain Ginyu	Ginyu|Captain Ginyu	Always capitalize "Captain" before "Ginyu" when used as title. Standalone "Ginyu" is acceptable for direct address.	approved
+character_recoome	character	Recoome	—	Standard form.	approved
+character_burter	character	Burter	—	Standard form.	approved
+character_jeice	character	Jeice	Jiece|Jeice	Never use "Jiece" in translated dialogue. This project uses "Jeice."	approved
+character_guldo	character	Guldo	Gurdo	Use "Guldo."	approved
+character_shenron	character	Shenron	Eternal Dragon|Shenlong	Use "Shenron" as the name. "Eternal Dragon" only as a descriptive title.	approved
+character_porunga	character	Porunga	Namekian Eternal Dragon|Porunga	Use "Porunga."	approved
+character_kami	character	Kami	God|Earth's Kami	Use "Kami" as the name. Lowercase "guardian" for descriptive references.	approved
+character_mr_popo	character	Mr. Popo	—	Standard form with period.	approved
+character_korin	character	Korin	Karin|Karin-sama	Use "Korin."	approved
+character_yajirobe	character	Yajirobe	—	Standard form.	approved
+character_oolong	character	Oolong	—	Standard form.	approved
+character_puar	character	Puar	—	Standard form.	approved
+character_oxking	character	Ox-King	Gyumao	Use "Ox-King" with hyphen.	approved
+character_king_kai	character	King Kai	North Kai|Kaio|Lord Kaio	Use "King Kai."	approved
+character_bubbles	character	Bubbles	—	Gregory the monkey on King Kai's planet.	approved
+character_announcer	character	World Tournament Announcer	Announcer	Use for the tournament MC.	approved
+character_hero	character	Hero	—	Use for the 23rd World Tournament masked fighter (Kami's vessel).	approved
+character_saibaman	character	Saibaman	Cultivar	Standard form.	approved
+race_saiyan	race	Saiyan	Saiya-jin|Sayajin	Use "Saiyan." Plural: "Saiyans." Never use "Saiya-jin" in output.	approved
+race_half_saiyan	race	half-Saiyan	hybrid Saiyan|half-blood	Use lowercase "half-Saiyan" in prose. Capitalize only at sentence start.	approved
+race_namekian	race	Namekian	Namek-seijin|Namek	Use for both noun and adjective.	approved
+race_earthling	race	Earthling	human|Terran	Use "Earthling" for the race. Lowercase "human" for generic usage.	approved
+race_saibamen	race	Saibamen	Cultivars	Plural form. Singular: "Saibaman."	approved
+group_ginyu_force	group	Ginyu Force	—	Capitalize both words. "Ginyu Force" is the proper name.	approved
+group_frieza_force	group	Frieza Force	Frieza's army|Planet Trade Organization	Use "Frieza Force." Do not use "Planet Trade Organization."	approved
+group_dragon_clan	group	Dragon Clan	—	Use for the Namekian elder lineage.	approved
+group_warrior_type_namekian	group	warrior-type Namekian	Warrior Namekian	Lowercase in prose unless used as a formal label.	approved
+group_z_fighters	group	Z Fighters	Z-senshi|Z Warriors	Use only where the source actually refers to the group. Do not insert into dialogue merely for franchise flavor.	approved
+place_earth	place	Earth	—	Prefer "Earth," not "Planet Earth," unless the sentence benefits from the formal construction.	approved
+place_planet_namek	place	Planet Namek	Namek	Use "Planet Namek" on first introduction or formal narration. Use "Namek" in ordinary dialogue.	approved
+place_planet_vegeta	place	Planet Vegeta	—	Standard form.	approved
+place_papaya_island	place	Papaya Island	—	Use for the tournament island.	approved
+place_world_tournament_arena	place	World Tournament arena	Tenkaichi Budokai arena|tournament ring	Use "World Tournament arena" or "tournament arena."	approved
+place_mount_paozu	place	Mount Paozu	Paozu Mountain	Use "Mount Paozu."	approved
+place_kame_house	place	Kame House	Turtle House|Master Roshi's house	Use "Kame House."	approved
+place_kami_lookout	place	Kami's Lookout	Lookout|Kami's Palace	Use "Kami's Lookout."	approved
+place_capsule_corporation	place	Capsule Corporation	Capsule Corp.	Use full form on first mention. "Capsule Corp." acceptable in dialogue.	approved
+place_other_world	place	Other World	—	Standard form.	approved
+place_snake_way	place	Snake Way	Serpent Road	Use "Snake Way."	approved
+place_king_kai_planet	place	King Kai's Planet	—	Standard form.	approved
+place_guru_house	place	Grand Elder Guru's house	Grand Elder's village|Namekian village	Use full form on introduction. Shorten to "Guru's house" or "the village" thereafter.	approved
+place_frieza_ship	place	Frieza's spaceship	Frieza's ship|enemy ship	Use "Frieza's spaceship" or context-appropriate shorter form.	approved
+object_dragon_ball	object	Dragon Ball	—	Capitalize "Dragon Ball" when referring to the wish-granting artifacts. Use lowercase for a generic ball only if context demands it.	approved
+object_dragon_balls	object	Dragon Balls	—	Plural form.	approved
+object_earth_dragon_balls	object	Earth Dragon Balls	—	Use for the original seven.	approved
+object_namekian_dragon_balls	object	Namekian Dragon Balls	—	Use for the Namekian set.	approved
+object_four_star_ball	object	Four-Star Ball	Four-Star Dragon Ball|Suu Shin Chuu	Use "Four-Star Ball."	approved
+object_dragon_radar	object	Dragon Radar	—	Standard form.	approved
+object_scouter	object	scouter	Scouter|Battle Scanner|Tag|Arum	Use lowercase "scouter" in prose. Capitalize only in UI labels or titles.	approved
+object_senzu_bean	object	Senzu Bean	Senzu	Standard form.	approved
+object_senzu_beans	object	Senzu Beans	—	Plural form.	approved
+object_flying_nimbus	object	Flying Nimbus	Kinto'un|Somersault Cloud	Use "Flying Nimbus."	approved
+object_power_pole	object	Power Pole	Nyoibou|Extendable Pole	Use "Power Pole."	approved
+object_capsule	object	Capsule	Hoi-Poi Capsule	Use "Capsule" in dialogue. "Hoi-Poi Capsule" acceptable as a descriptive label.	approved
+object_space_pod	object	Space Pod	Attack Ball|Pod	Use "Space Pod."	approved
+object_medical_machine	object	Medical Machine	Rejuvenation Tank|Healing Tank	Use "Medical Machine."	approved
+form_great_ape	form	Great Ape	Oozaru|Saiyan Ape	Never use "Oozaru" in translated dialogue.	approved
+form_super_saiyan	form	Super Saiyan	Super Saiya-jin|Super Saiyajin	Never use "Super Saiya-jin" in translated dialogue.	approved
+concept_ki	concept	ki	chi|energy	Use lowercase "ki" in prose except at the beginning of a sentence. Translate generic energy references naturally as "energy" when the source does not specifically name ki.	approved
+concept_power_level	concept	Power Level	battle power|fighting power	Use "Power Level" for a named statistic or UI concept. Lowercase "power level" in ordinary dialogue may remain acceptable.	approved
+concept_hidden_potential	concept	hidden potential	latent power	Use lowercase unless used as a formal label.	approved
+concept_immortality	concept	immortality	eternal life	Use lowercase in dialogue.	approved
+concept_resurrection	concept	resurrection	revival	Use lowercase in dialogue.	approved
+concept_fusion	concept	fusion	—	Use lowercase in dialogue unless the source uses it as a formal name.	approved
+concept_namekian_fusion	concept	Namekian fusion	—	Use lowercase in dialogue.	approved
+concept_gravity_training	concept	gravity training	—	Use lowercase in dialogue.	approved
+concept_tail	concept	tail	Saiyan tail	Use lowercase in dialogue.	approved
+concept_wish	concept	wish	Dragon Ball wish	Use lowercase in dialogue unless "Wish" is used as a formal label.	approved
+concept_dragon_ball_wish	concept	Dragon Ball wish	—	Use when referring to the act of wish-granting.	approved
+technique_kamehameha	technique	Kamehameha	—	Do not translate. Always capitalize.	approved
+technique_super_kamehameha	technique	Super Kamehameha	—	Standard form.	approved
+technique_solar_flare	technique	Solar Flare	Taiyoken	Use "Solar Flare."	approved
+technique_destructo_disc	technique	Destructo Disc	Kienzan	Use "Destructo Disc."	approved
+technique_tri_beam	technique	Tri-Beam	Kikoho	Use "Tri-Beam" with hyphen.	approved
+technique_dodon_ray	technique	Dodon Ray	Dodon Pa	Use "Dodon Ray."	approved
+technique_multi_form	technique	Multi-Form	Shishin no Ken	Use "Multi-Form."	approved
+technique_four_witches	technique	Four Witches Technique	Evil Containment Wave|Mafuba	Use "Four Witches Technique" per established localization.	approved
+technique_special_beam_cannon	technique	Special Beam Cannon	Makankosappo	Use "Special Beam Cannon."	approved
+technique_explosive_wave	technique	Explosive Wave	Bakuratsuzanpa	Use "Explosive Wave."	approved
+technique_masenko	technique	Masenko	—	Do not translate. Always capitalize.	approved
+technique_kaioken	technique	Kaio-ken	Kaioken|King Kai Fist	Preserve hyphenation: "Kaio-ken," not "Kaioken."	approved
+technique_spirit_bomb	technique	Spirit Bomb	Genki Dama	Use "Spirit Bomb."	approved
+technique_galick_gun	technique	Galick Gun	Galick Ho	Use "Galick Gun."	approved
+technique_body_change	technique	Body Change	Body Change Technique|Change!	Use "Body Change."	approved
+technique_crusher_ball	technique	Crusher Ball	—	Standard form.	approved
+technique_recoome_eraser_gun	technique	Recoome Eraser Gun	—	Standard form.	approved
+technique_death_beam	technique	Death Beam	—	Standard form.	approved
+technique_death_ball	technique	Death Ball	—	Standard form.	approved
+arc_23rd_world_tournament	arc	23rd World Tournament	Tenkaichi Budokai|World Martial Arts Tournament|23rd Tenkaichi Budokai	Use "23rd World Tournament" for this game's tournament.	approved
+arc_saiyan_saga	arc	Saiyan Saga	Saiyan Arc	Use "Saiyan Saga."	approved
+arc_namek_saga	arc	Namek Saga	Namek Arc	Use "Namek Saga."	approved
+arc_captain_ginyu_saga	arc	Captain Ginyu Saga	Ginyu Saga	Use "Captain Ginyu Saga."	approved
+arc_frieza_saga	arc	Frieza Saga	—	Use "Frieza Saga."	approved

@@ -15,7 +15,7 @@ class RepositoryPathPolicyTest(unittest.TestCase):
         )
 
     def test_english_translation_manifests_are_allowed(self):
-        for name in ("patches.tsv", "references.tsv", "ranges.tsv"):
+        for name in ("patches.tsv", "references.tsv", "ranges.tsv", "glossary.tsv"):
             self.assertIsNone(prohibited_path(f"projects/example/translation/{name}"))
 
     def test_rom_and_extracted_artwork_are_prohibited(self):
@@ -40,6 +40,9 @@ class RepositoryContentPolicyTest(unittest.TestCase):
             "ranges.tsv": (
                 "name\trom_start\trom_end\tcpu_start\tcpu_end\tbank\talignment\t"
                 "evidence\tconfidence\n"
+            ),
+            "glossary.tsv": (
+                "id\tcategory\tcanonical\taliases\tusage_notes\tstatus\n"
             ),
         }
         for name, text in fixtures.items():

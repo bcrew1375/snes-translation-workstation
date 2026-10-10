@@ -1,0 +1,166 @@
+#!/usr/bin/env python3
+"""Safely inspect Kakusei Hen text expansion and relocation plans.
+
+Automatic gaps are reported only as unverified candidates. Production plans
+consume only confirmed ``free_text_*`` ranges from the tracked ranges manifest.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+PROJECT_ROOT = ROOT / "projects" / "dbz-kakusei-hen"
+PROJECT_SRC = PROJECT_ROOT / "src"
+sys.path.insert(0, str(ROOT / "toolkit"))
+sys.path.insert(0, str(PROJECT_SRC))
+
+from snesworkbench.errors import WorkstationError  # noqa: E402
+
+from dbz_kakusei_hen.scenario import (  # noqa: E402
+    decode_text_slots,
+    decode_unique_text_streams,
+    scan_root_text_selectors,
+)
+from dbz_kakusei_hen.translation_build import (  # noqa: E402
+    load_reviewed_free_regions,
+    load_translation_manifests,
+    map_unverified_candidate_gaps,
+    plan_translations,
+)
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(prog="dbz-kakusei-translate", description=__doc__)
+    parser.add_argument("rom", type=Path, help="Path to the supported original ROM")
+    parser.add_argument("--patches", type=Path, default=PROJECT_ROOT / "translation/patches.tsv")
+    parser.add_argument("--references", type=Path, default=PROJECT_ROOT / "translation/references.tsv")
+    parser.add_argument("--ranges", type=Path, default=PROJECT_ROOT / "translation/ranges.tsv")
+    parser.add_argument(
+        "--analyze-unreferenced",
+        "--analyze-orphans",
+        dest="analyze_unreferenced",
+        action="store_true",
+        help="Report streams not seen in the current scenario-root scan; never reclaim them",
+    )
+    parser.add_argument(
+        "--map-candidate-gaps",
+        "--map-free-space",
+        dest="map_candidate_gaps",
+        action="store_true",
+        help="Report unverified structural gaps; these are not allocation pools",
+    )
+    parser.add_argument(
+        "--plan",
+        "--plan-relocation",
+        dest="plan",
+        action="store_true",
+        help="Validate tracked translations and plan from reviewed free_text_* ranges",
+    )
+    parser.add_argument("--minimum-gap", type=int, default=64)
+    parser.add_argument("--output-dir", type=Path, help="Write JSON/TSV analysis here")
+    parser.add_argument("--verbose", action="store_true")
+    return parser.parse_args(argv)
+
+
+def analyze_unreferenced(rom: bytes) -> dict[str, object]:
+    slots = decode_text_slots(rom)
+    streams = decode_unique_text_streams(rom, slots)
+    root_selectors = {command.selector for command in scan_root_text_selectors(rom)}
+    unreferenced = [
+        stream
+        for stream in streams
+        if not root_selectors.intersection(stream.selectors)
+    ]
+    return {
+        "classification": "unvalidated_root_unreferenced_not_reclaimable",
+        "unique_stream_count": len(streams),
+        "root_referenced_count": len(streams) - len(unreferenced),
+        "root_unreferenced_count": len(unreferenced),
+        "root_unreferenced_bytes": sum(len(stream.data) for stream in unreferenced),
+        "note": (
+            "Scenario-root command-$08 coverage alone does not prove a stream unused; "
+            "these bytes remain reserved."
+        ),
+    }
+
+
+def write_outputs(
+    output_dir: Path,
+    *,
+    unreferenced: dict[str, object] | None,
+    gaps,
+    plans,
+) -> None:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    if unreferenced is not None:
+        (output_dir / "root-unreferenced.json").write_text(
+            json.dumps(unreferenced, indent=2) + "\n", encoding="utf-8"
+        )
+    if gaps is not None:
+        with (output_dir / "candidate-gaps.tsv").open("w", encoding="utf-8", newline="") as out:
+            out.write("classification\tbank\trom_start\trom_end_exclusive\tsize\tcpu_start\tcpu_end\n")
+            for gap in gaps:
+                out.write(
+                    f"unverified_not_allocatable\t${gap.bank:02X}\t${gap.rom_start:06X}\t"
+                    f"${gap.rom_end:06X}\t{gap.size}\t{gap.cpu_start}\t{gap.cpu_end}\n"
+                )
+    if plans is not None:
+        with (output_dir / "translation-plan.tsv").open("w", encoding="utf-8", newline="") as out:
+            out.write("id\tselector\tbank\tstrategy\trom_start\tlength\tregion\n")
+            for plan in plans:
+                out.write(
+                    f"{plan.record.id}\t${plan.record.selector:04X}\t${plan.allocation.bank:02X}\t"
+                    f"{plan.allocation.strategy}\t${plan.allocation.new_offset:06X}\t"
+                    f"{plan.allocation.new_length}\t{plan.allocation.region_name or ''}\n"
+                )
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    if not args.rom.is_file():
+        print(f"Error: ROM not found: {args.rom}", file=sys.stderr)
+        return 1
+    if not (args.analyze_unreferenced or args.map_candidate_gaps or args.plan):
+        print("Error: select at least one analysis option", file=sys.stderr)
+        return 2
+
+    try:
+        rom = args.rom.read_bytes()
+        unreferenced = analyze_unreferenced(rom) if args.analyze_unreferenced else None
+        gaps = (
+            map_unverified_candidate_gaps(rom, args.minimum_gap)
+            if args.map_candidate_gaps
+            else None
+        )
+        plans = None
+        if args.plan:
+            records = load_translation_manifests(args.patches, args.references)
+            reviewed = load_reviewed_free_regions(args.ranges)
+            plans = plan_translations(rom, records, reviewed)
+
+        if args.verbose:
+            if unreferenced is not None:
+                print(json.dumps(unreferenced, indent=2))
+            if gaps is not None:
+                print(f"Unverified candidate gaps: {len(gaps)} ({sum(gap.size for gap in gaps):,} bytes)")
+            if plans is not None:
+                strategies: dict[str, int] = {}
+                for plan in plans:
+                    strategies[plan.allocation.strategy] = strategies.get(plan.allocation.strategy, 0) + 1
+                print(f"Validated translation plans: {len(plans)}; strategies: {strategies}")
+        if args.output_dir:
+            write_outputs(
+                args.output_dir, unreferenced=unreferenced, gaps=gaps, plans=plans
+            )
+        return 0
+    except (OSError, WorkstationError, ValueError) as error:
+        print(f"Error: {error}", file=sys.stderr)
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

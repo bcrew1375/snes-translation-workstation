@@ -63,6 +63,14 @@ TRANSLATION_HEADERS = {
         "evidence",
         "confidence",
     ],
+    "glossary.tsv": [
+        "id",
+        "category",
+        "canonical",
+        "aliases",
+        "usage_notes",
+        "status",
+    ],
 }
 
 

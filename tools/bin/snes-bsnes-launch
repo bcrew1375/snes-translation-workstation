@@ -22,12 +22,26 @@ emulator=$(PATH=$filtered_path command -v bsnes-plus) || {
 }
 
 config=${BSNES_CONFIG:-${HOME:?}/.bsnes/bsnes-qt.cfg}
-if [[ -f $config ]] && grep -q '^system\.video = "None"' "$config"; then
-  sed -i \
-    -e 's/^system\.video = "None"/system.video = "OpenGL"/' \
-    -e 's/^system\.crashedOnLastRun = true/system.crashedOnLastRun = false/' \
-    "$config"
-  echo "$command_name: restored bsnes-plus OpenGL video output after disabled-driver recovery" >&2
+if [[ -f $config ]]; then
+  repaired_video=0
+  if [[ ${BSNES_UNTHROTTLED:-0} != 1 ]] \
+     && grep -q '^system\.video = ' "$config" \
+     && ! grep -q '^system\.video = "OpenGL"' "$config"; then
+    # The preload pacer hooks glXSwapBuffers. Qt-Raster and other software
+    # drivers never call it, so accepting those drivers silently disables the
+    # speed limit on Xvfb.
+    sed -i 's/^system\.video = .*/system.video = "OpenGL"/' "$config"
+    repaired_video=1
+  elif grep -q '^system\.video = "None"' "$config"; then
+    sed -i 's/^system\.video = "None"/system.video = "OpenGL"/' "$config"
+    repaired_video=1
+  fi
+  if grep -q '^system\.crashedOnLastRun = true' "$config"; then
+    sed -i 's/^system\.crashedOnLastRun = true/system.crashedOnLastRun = false/' "$config"
+  fi
+  if (( repaired_video )); then
+    echo "$command_name: selected bsnes-plus OpenGL video output required for frame pacing" >&2
+  fi
 fi
 
 # bsnes-plus relies on audio output or vertical blanking to pace emulation.  The

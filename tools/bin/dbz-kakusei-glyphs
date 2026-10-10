@@ -1,0 +1,93 @@
+#!/usr/bin/env python3
+"""Inspect the strict paired-glyph encoder used by Kakusei Hen."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+PROJECT_SRC = ROOT / "projects" / "dbz-kakusei-hen" / "src"
+sys.path.insert(0, str(ROOT / "toolkit"))
+sys.path.insert(0, str(PROJECT_SRC))
+
+from snesworkbench.errors import WorkstationError  # noqa: E402
+
+from dbz_kakusei_hen.glyphs import (  # noqa: E402
+    EXTENDED_VOCABULARY,
+    decode_glyph_codes,
+    encode_text_layout,
+)
+from dbz_kakusei_hen.opening_translation import SPACE_GLYPH_CODE  # noqa: E402
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(prog="dbz-kakusei-glyphs", description=__doc__)
+    parser.add_argument("--encode", help="Encode explicit English lines")
+    parser.add_argument("--decode", help="Decode comma-separated hexadecimal glyph codes")
+    parser.add_argument("--max-line-width", type=int, default=14, help="Maximum cells per line")
+    parser.add_argument("--max-lines", type=int, help="Maximum line count")
+    parser.add_argument("--vocabulary", action="store_true", help="Show the allocated vocabulary")
+    parser.add_argument("--output-file", type=Path, help="Write JSON output to this file")
+    return parser.parse_args(argv)
+
+
+def emit(document: dict[str, object], output_file: Path | None) -> None:
+    text = json.dumps(document, indent=2) + "\n"
+    if output_file:
+        output_file.write_text(text, encoding="utf-8")
+        print(f"Wrote output to {output_file}")
+    else:
+        print(text, end="")
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    try:
+        if args.vocabulary:
+            emit(
+                {
+                    "space_code": f"${SPACE_GLYPH_CODE:04X}",
+                    "pairs": {
+                        pair: f"${code:04X}"
+                        for pair, code in sorted(EXTENDED_VOCABULARY.items())
+                    },
+                },
+                args.output_file,
+            )
+            return 0
+        if args.encode is not None:
+            encoded = encode_text_layout(
+                args.encode,
+                max_line_width=args.max_line_width,
+                max_lines=args.max_lines,
+                context="command-line text",
+            )
+            emit(
+                {
+                    "text": args.encode,
+                    "codes": [f"${code:04X}" for code in encoded.words],
+                    "line_cells": list(encoded.line_cells),
+                    "byte_length": len(encoded.data),
+                },
+                args.output_file,
+            )
+            return 0
+        if args.decode is not None:
+            codes = [int(value.strip().removeprefix("$"), 16) for value in args.decode.split(",")]
+            emit(
+                {"codes": [f"${code:04X}" for code in codes], "text": decode_glyph_codes(codes)},
+                args.output_file,
+            )
+            return 0
+    except (ValueError, WorkstationError) as error:
+        print(f"Error: {error}", file=sys.stderr)
+        return 1
+    parse_args(["--help"])
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
