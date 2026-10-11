@@ -15,7 +15,10 @@ class RepositoryPathPolicyTest(unittest.TestCase):
         )
 
     def test_english_translation_manifests_are_allowed(self):
-        for name in ("patches.tsv", "references.tsv", "ranges.tsv", "glossary.tsv"):
+        for name in (
+            "patches.tsv", "references.tsv", "ranges.tsv", "glossary.tsv", "menu.tsv",
+            "name_entry.tsv",
+        ):
             self.assertIsNone(prohibited_path(f"projects/example/translation/{name}"))
 
     def test_rom_and_extracted_artwork_are_prohibited(self):
@@ -44,6 +47,14 @@ class RepositoryContentPolicyTest(unittest.TestCase):
             "glossary.tsv": (
                 "id\tcategory\tcanonical\taliases\tusage_notes\tstatus\n"
             ),
+            "menu.tsv": (
+                "id\toriginal_address\toriginal_offset\toriginal_length\t"
+                "source_sha256\trecord_type\tcharacter_offsets\tenglish\tstatus\tnotes\n"
+            ),
+            "name_entry.tsv": (
+                "id\toriginal_address\toriginal_offset\toriginal_length\t"
+                "source_sha256\trecord_type\tenglish\tstatus\tnotes\n"
+            ),
         }
         for name, text in fixtures.items():
             with self.subTest(name=name):
@@ -63,6 +74,55 @@ class RepositoryContentPolicyTest(unittest.TestCase):
         )
         self.assertEqual(
             validate_source_text("projects/example/translation/patches.tsv", header + row), []
+        )
+
+    def test_menu_record_type_and_character_offsets_are_validated(self):
+        header = (
+            "id\toriginal_address\toriginal_offset\toriginal_length\t"
+            "source_sha256\trecord_type\tcharacter_offsets\tenglish\tstatus\tnotes\n"
+        )
+        valid = (
+            "title_menu\t84:A1D8\t0x0221D8\t34\t" + "a" * 64
+            + "\tterminated\t5,6\tNew Game\\nOptions\timplemented\tOpening menu\n"
+        )
+        self.assertEqual(
+            validate_source_text("projects/example/translation/menu.tsv", header + valid), []
+        )
+        invalid = valid.replace("\tterminated\t5,6\t", "\tunknown\t-1\t")
+        failures = validate_source_text(
+            "projects/example/translation/menu.tsv", header + invalid
+        )
+        self.assertTrue(any("invalid record type" in failure for failure in failures))
+        self.assertTrue(any("invalid character offsets" in failure for failure in failures))
+
+    def test_name_entry_record_type_is_validated(self):
+        header = (
+            "id\toriginal_address\toriginal_offset\toriginal_length\t"
+            "source_sha256\trecord_type\tenglish\tstatus\tnotes\n"
+        )
+        valid = (
+            "picker_page_1\t84:A3E0\t0x0223E0\t240\t" + "a" * 64
+            + "\tpicker_page\tletters_and_pairs\timplemented\tName picker\n"
+        )
+        self.assertEqual(
+            validate_source_text("projects/example/translation/name_entry.tsv", header + valid), []
+        )
+        failures = validate_source_text(
+            "projects/example/translation/name_entry.tsv",
+            header + valid.replace("\tpicker_page\t", "\tunknown\t"),
+        )
+        self.assertTrue(any("invalid record type" in failure for failure in failures))
+
+        default_names = (
+            "default_names\t84:A048\t0x022048\t50\t" + "a" * 64
+            + "\tdefault_names\tAiyah\\nBuddy\\nMeanie\\nSally\\nTeach\timplemented\t"
+            "Localized defaults\n"
+        )
+        self.assertEqual(
+            validate_source_text(
+                "projects/example/translation/name_entry.tsv", header + default_names
+            ),
+            [],
         )
 
     def test_japanese_dialogue_is_rejected(self):

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Inspect the strict paired-glyph encoder used by Kakusei Hen."""
+"""Inspect Kakusei Hen's packed two-character Latin text format."""
 
 from __future__ import annotations
 
@@ -16,11 +16,11 @@ sys.path.insert(0, str(PROJECT_SRC))
 from snesworkbench.errors import WorkstationError  # noqa: E402
 
 from dbz_kakusei_hen.glyphs import (  # noqa: E402
-    EXTENDED_VOCABULARY,
+    LATIN_CHARACTER_IDS,
+    LATIN_MARKER,
     decode_glyph_codes,
     encode_text_layout,
 )
-from dbz_kakusei_hen.opening_translation import SPACE_GLYPH_CODE  # noqa: E402
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -29,7 +29,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--decode", help="Decode comma-separated hexadecimal glyph codes")
     parser.add_argument("--max-line-width", type=int, default=14, help="Maximum cells per line")
     parser.add_argument("--max-lines", type=int, help="Maximum line count")
-    parser.add_argument("--vocabulary", action="store_true", help="Show the allocated vocabulary")
+    parser.add_argument("--vocabulary", action="store_true", help="Show packed Latin character IDs")
     parser.add_argument("--output-file", type=Path, help="Write JSON output to this file")
     return parser.parse_args(argv)
 
@@ -49,11 +49,9 @@ def main(argv: list[str] | None = None) -> int:
         if args.vocabulary:
             emit(
                 {
-                    "space_code": f"${SPACE_GLYPH_CODE:04X}",
-                    "pairs": {
-                        pair: f"${code:04X}"
-                        for pair, code in sorted(EXTENDED_VOCABULARY.items())
-                    },
+                    "marker": f"${LATIN_MARKER:04X}",
+                    "blank_id": 0,
+                    "characters": LATIN_CHARACTER_IDS,
                 },
                 args.output_file,
             )

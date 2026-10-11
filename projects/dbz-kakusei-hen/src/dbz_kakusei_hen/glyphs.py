@@ -1,18 +1,30 @@
-"""Strict paired-glyph text encoding for Kakusei Hen."""
+"""Packed Latin text encoding for Kakusei Hen's dual-format compositor."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Mapping, Sequence
+from typing import Sequence
 
 from snesworkbench.errors import WorkstationError
 
-from .opening_translation import PAIR_GLYPH_CODES, SPACE_GLYPH_CODE
 from .scenario import TEXT_LINE_BREAK, TEXT_TERMINATOR
 
 
 CHARACTERS_PER_CELL = 2
-EXTENDED_VOCABULARY: dict[str, int] = dict(PAIR_GLYPH_CODES)
+LATIN_MARKER = 0x8000
+LATIN_ID_MASK = 0x007F
+LATIN_SECOND_SHIFT = 7
+BASIC_LATIN_CHARACTERS = tuple(
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'-.!,?:"
+)
+EXTENDED_LATIN_CHARACTERS = tuple(
+    "ÁÉÍÓÚÀÈÌÒÙÄËÏÖÜÑÇáéíóúàèìòùäëïöüñçĀĒĪŌŪāēīōū&/()+\""
+)
+LATIN_CHARACTERS = BASIC_LATIN_CHARACTERS + EXTENDED_LATIN_CHARACTERS
+LATIN_CHARACTER_IDS = {
+    character: index for index, character in enumerate(LATIN_CHARACTERS, start=1)
+}
+LATIN_ID_CHARACTERS = {identifier: character for character, identifier in LATIN_CHARACTER_IDS.items()}
 
 
 @dataclass(frozen=True)
@@ -23,6 +35,46 @@ class EncodedText:
     @property
     def data(self) -> bytes:
         return b"".join(word.to_bytes(2, "little") for word in self.words)
+
+
+def encode_latin_cell(first: str = " ", second: str = " ") -> int:
+    """Pack two independent Latin characters into one marked 16-bit word."""
+
+    identifiers = []
+    for character in (first, second):
+        if character == " ":
+            identifiers.append(0)
+            continue
+        try:
+            identifiers.append(LATIN_CHARACTER_IDS[character])
+        except KeyError as error:
+            raise WorkstationError(f"unsupported Latin character {character!r}") from error
+    return LATIN_MARKER | identifiers[0] | (identifiers[1] << LATIN_SECOND_SHIFT)
+
+
+def decode_latin_cell(word: int) -> str:
+    if not word & LATIN_MARKER:
+        raise WorkstationError(f"word ${word:04X} is not packed Latin data")
+    first = word & LATIN_ID_MASK
+    second = (word >> LATIN_SECOND_SHIFT) & LATIN_ID_MASK
+    try:
+        return "".join(
+            " " if identifier == 0 else LATIN_ID_CHARACTERS[identifier]
+            for identifier in (first, second)
+        )
+    except KeyError as error:
+        raise WorkstationError(f"unknown packed Latin character id {error.args[0]}") from error
+
+
+def encode_latin_line(line: str, cells: int, *, context: str) -> tuple[int, ...]:
+    width = cells * CHARACTERS_PER_CELL
+    if len(line) > width:
+        raise WorkstationError(f"{context} exceeds its {width}-character allocation")
+    padded = line.ljust(width)
+    return tuple(
+        encode_latin_cell(padded[index], padded[index + 1])
+        for index in range(0, width, CHARACTERS_PER_CELL)
+    )
 
 
 def _split_lines(text: str) -> tuple[str, ...]:
@@ -40,18 +92,15 @@ def encode_text_layout(
     max_line_width: int,
     max_lines: int | None = None,
     line_cells: Sequence[int] | None = None,
-    vocabulary: Mapping[str, int] = EXTENDED_VOCABULARY,
     context: str = "translation",
 ) -> EncodedText:
-    """Encode explicit lines, reporting unsupported pairs and exact positions."""
+    """Encode explicit lines as marked, two-character Latin words."""
 
     if max_line_width < 1:
         raise WorkstationError("maximum line width must be positive")
     lines = _split_lines(text)
     if max_lines is not None and len(lines) > max_lines:
-        raise WorkstationError(
-            f"{context} has {len(lines)} lines; presentation permits {max_lines}"
-        )
+        raise WorkstationError(f"{context} has {len(lines)} lines; presentation permits {max_lines}")
     if line_cells is not None and len(line_cells) != len(lines):
         raise WorkstationError(
             f"{context} has {len(lines)} lines but {len(line_cells)} line-cell allocations"
@@ -68,27 +117,9 @@ def encode_text_layout(
             )
         if cells > max_line_width:
             raise WorkstationError(
-                f"{context} line {line_index + 1} uses {cells} cells; presentation permits "
-                f"{max_line_width}"
+                f"{context} line {line_index + 1} uses {cells} cells; presentation permits {max_line_width}"
             )
-        padded = line.ljust(cells * CHARACTERS_PER_CELL)
-        for cell_index in range(cells):
-            pair = padded[cell_index * 2 : cell_index * 2 + 2]
-            if pair == "  ":
-                words.append(SPACE_GLYPH_CODE)
-                continue
-            try:
-                words.append(vocabulary[pair])
-            except KeyError as error:
-                unsupported = [character for character in pair if character != " "]
-                detail = (
-                    f"unsupported character {unsupported[0]!r}"
-                    if any(not any(character in known for known in vocabulary) for character in unsupported)
-                    else f"unsupported pair {pair!r}"
-                )
-                raise WorkstationError(
-                    f"{context} line {line_index + 1}, cell {cell_index + 1}: {detail}"
-                ) from error
+        words.extend(encode_latin_line(line, cells, context=f"{context} line {line_index + 1}"))
         encoded_widths.append(cells)
         if line_index != len(lines) - 1:
             words.append(TEXT_LINE_BREAK)
@@ -97,19 +128,16 @@ def encode_text_layout(
 
 
 def encode_text(text: str, max_line_width: int = 14) -> list[int]:
-    """Compatibility API returning encoded words with strict validation."""
-
     return list(encode_text_layout(text, max_line_width=max_line_width).words)
 
 
-def decode_glyph_codes(
-    codes: Sequence[int], vocabulary: Mapping[str, int] = EXTENDED_VOCABULARY
-) -> str:
-    reverse = {code: pair for pair, code in vocabulary.items()}
-    reverse[SPACE_GLYPH_CODE] = "  "
-    reverse[TEXT_LINE_BREAK] = "\n"
-    reverse[TEXT_TERMINATOR] = ""
-    unknown = [code for code in codes if code not in reverse]
-    if unknown:
-        raise WorkstationError(f"unknown paired-glyph code ${unknown[0]:04X}")
-    return "".join(reverse[code] for code in codes)
+def decode_glyph_codes(codes: Sequence[int]) -> str:
+    decoded: list[str] = []
+    for code in codes:
+        if code == TEXT_LINE_BREAK:
+            decoded.append("\n")
+        elif code == TEXT_TERMINATOR:
+            continue
+        else:
+            decoded.append(decode_latin_cell(code))
+    return "".join(decoded)

@@ -23,7 +23,7 @@ from snesworkbench.errors import WorkstationError  # noqa: E402
 from dbz_kakusei_hen.scenario import (  # noqa: E402
     decode_text_slots,
     decode_unique_text_streams,
-    scan_root_text_selectors,
+    decode_root_entry_text_commands,
 )
 from dbz_kakusei_hen.translation_build import (  # noqa: E402
     load_reviewed_free_regions,
@@ -44,7 +44,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--analyze-orphans",
         dest="analyze_unreferenced",
         action="store_true",
-        help="Report streams not seen in the current scenario-root scan; never reclaim them",
+        help="Report streams absent from confirmed root-entry $08 references; never reclaim them",
     )
     parser.add_argument(
         "--map-candidate-gaps",
@@ -69,21 +69,24 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 def analyze_unreferenced(rom: bytes) -> dict[str, object]:
     slots = decode_text_slots(rom)
     streams = decode_unique_text_streams(rom, slots)
-    root_selectors = {command.selector for command in scan_root_text_selectors(rom)}
-    unreferenced = [
+    root_entry_selectors = {
+        command.selector for command in decode_root_entry_text_commands(rom)
+    }
+    unmatched = [
         stream
         for stream in streams
-        if not root_selectors.intersection(stream.selectors)
+        if not root_entry_selectors.intersection(stream.selectors)
     ]
     return {
-        "classification": "unvalidated_root_unreferenced_not_reclaimable",
+        "classification": "partial_confirmed_root_entry_coverage_not_usage_evidence",
         "unique_stream_count": len(streams),
-        "root_referenced_count": len(streams) - len(unreferenced),
-        "root_unreferenced_count": len(unreferenced),
-        "root_unreferenced_bytes": sum(len(stream.data) for stream in unreferenced),
+        "root_entry_matched_count": len(streams) - len(unmatched),
+        "root_entry_unmatched_count": len(unmatched),
+        "root_entry_unmatched_bytes": sum(len(stream.data) for stream in unmatched),
         "note": (
-            "Scenario-root command-$08 coverage alone does not prove a stream unused; "
-            "these bytes remain reserved."
+            "Only command-$08 instructions located directly at root pointers are counted. "
+            "Later commands are not parsed, so matches and misses are not exhaustive usage "
+            "evidence; every text stream remains reserved."
         ),
     }
 

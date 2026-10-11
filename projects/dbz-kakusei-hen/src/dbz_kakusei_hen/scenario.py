@@ -626,27 +626,9 @@ def encode_root_table(roots: tuple[ScenarioRoot, ...]) -> bytes:
     return bytes(encoded)
 
 
-# Runtime-confirmed operand sizes for scenario commands.
-# Derived from interpreter trace: delta = (post_cursor - pre_cursor), operand_size = delta - 1.
-# Commands with variable deltas use the minimum observed delta as baseline.
-RUNTIME_OPERAND_SIZES: dict[int, int] = {
-    0x01: 0, 0x02: 0, 0x03: 0, 0x04: 0, 0x05: 0, 0x06: 2, 0x07: 2,
-    0x08: 2, 0x09: 0, 0x0A: 0, 0x0B: 1, 0x0C: 2, 0x0D: 0, 0x0E: 0,
-    0x0F: 1, 0x10: 0, 0x11: 1, 0x12: 1, 0x13: 0, 0x14: 0, 0x15: 0,
-    0x16: 0, 0x17: 0, 0x18: 0, 0x19: 0, 0x1A: 0, 0x1B: 0, 0x1C: 0,
-    0x1D: 3, 0x1E: 0, 0x1F: 2, 0x20: 1, 0x21: 0, 0x22: 1, 0x23: 2,
-    0x24: 2, 0x25: 2, 0x26: 3, 0x27: 0, 0x28: 3, 0x29: 3, 0x2A: 0,
-    0x2B: 3, 0x2C: 3, 0x2D: 0, 0x2E: 3, 0x2F: 3, 0x30: 3, 0x31: 3,
-    0x32: 3, 0x33: 0, 0x34: 3, 0x35: 3, 0x36: 0, 0x37: 2, 0x38: 0,
-    0x39: 2, 0x3A: 2, 0x3B: 3, 0x3C: 0, 0x3D: 3, 0x3E: 1, 0x3F: 3,
-    0x40: 0, 0x41: 0, 0x42: 0, 0x43: 1, 0x44: 1, 0x45: 0, 0x46: 4,
-    0x47: 3, 0x48: 1, 0x49: 0,
-}
-
-
 @dataclass(frozen=True)
 class RootTextCommand:
-    """One $08 command found in a scenario root."""
+    """One confirmed command-$08 instruction at a scenario root entry."""
 
     root_index: int
     rom_offset: int
@@ -659,55 +641,33 @@ class RootTextCommand:
         return f"{bank:02X}:{address:04X}"
 
 
-def scan_root_text_selectors(
+def decode_root_entry_text_commands(
     rom: bytes,
     *,
     table_offset: int = ROOT_TABLE_OFFSET,
     count: int = ROOT_COUNT,
-    operand_sizes: dict[int, int] | None = None,
 ) -> tuple[RootTextCommand, ...]:
-    """Scan all scenario roots for $08 text-selector commands.
+    """Decode only roots whose pointer lands directly on command $08.
 
-    Uses runtime-confirmed operand sizes to parse command boundaries.
-    Returns every $08 command found, in root order.
+    The root table establishes the instruction boundary, and command $08's
+    two-byte selector operand is confirmed from its handler.  No attempt is made
+    to parse later commands or infer lengths for any other opcode.
     """
 
-    if operand_sizes is None:
-        operand_sizes = RUNTIME_OPERAND_SIZES
-    slots = decode_scenario_slots(rom, table_offset=table_offset, count=count)
     results: list[RootTextCommand] = []
-    seen_offsets: set[tuple[int, int]] = set()
-    for slot in slots:
-        if slot.is_null or slot.offset is None:
+    for root in decode_scenario_roots(rom, table_offset=table_offset, count=count):
+        if rom[root.offset] != 0x08:
             continue
-        if (slot.bank, slot.address) in seen_offsets:
-            continue
-        seen_offsets.add((slot.bank, slot.address))
-        # Scan commands until terminator or out of range
-        pos = slot.offset
-        bank_end = min(((slot.bank & 0x7F) + 1) * 0x8000, len(rom))
-        while pos < bank_end:
-            if pos >= len(rom):
-                break
-            op = rom[pos]
-            if op == TERMINATOR:
-                break
-            if op == 0x08 and pos + 2 < len(rom):
-                sel = rom[pos + 1] | (rom[pos + 2] << 8)
-                results.append(RootTextCommand(slot.index, pos, sel))
-            size = operand_sizes.get(op)
-            if size is None:
-                # Unknown command; skip one byte to avoid infinite loop
-                pos += 1
-                continue
-            pos += 1 + size
+        if root.offset + 3 > root.end_offset:
+            raise ValueError(f"scenario root ${root.index:03X} has a truncated command $08")
+        selector = int.from_bytes(rom[root.offset + 1 : root.offset + 3], "little")
+        if selector > TEXT_SELECTOR_LAST:
+            raise ValueError(
+                f"scenario root ${root.index:03X} command $08 selector ${selector:04X} "
+                "is outside the confirmed range"
+            )
+        results.append(RootTextCommand(root.index, root.offset, selector))
     return tuple(results)
-
-    encoded = bytearray()
-    for root in roots:
-        encoded.extend(root.address.to_bytes(2, "little"))
-        encoded.append(root.bank)
-    return bytes(encoded)
 
 
 def encode_root_slots(slots: tuple[ScenarioRootSlot, ...]) -> bytes:

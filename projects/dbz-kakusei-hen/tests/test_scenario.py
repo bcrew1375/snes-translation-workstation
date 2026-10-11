@@ -18,6 +18,7 @@ from dbz_kakusei_hen.scenario import (  # noqa: E402
     KNOWN_COMMAND_SCHEMAS,
     TextTableRange,
     decode_glyph,
+    decode_root_entry_text_commands,
     decode_scenario_command,
     decode_dispatch_table,
     decode_scenario_roots,
@@ -133,6 +134,40 @@ class ScenarioRootTest(unittest.TestCase):
         self.assertEqual(command.raw, bytes.fromhex("12 08 34 12 49"))
         self.assertIsNone(command.operand)
         self.assertIsNone(command.next_offset)
+
+    def test_root_entry_text_decode_ignores_later_command_08_bytes(self):
+        rom = bytearray(self.fixture())
+        rom[0x8000:0x8010] = bytes.fromhex(
+            "21 00 00 00 08 35 02 49 00 00 00 00 00 00 00 00"
+        )
+        commands = decode_root_entry_text_commands(
+            bytes(rom), table_offset=self.TABLE_OFFSET, count=3
+        )
+        self.assertFalse([command for command in commands if command.root_index == 0])
+
+    def test_root_entry_text_decode_reports_each_direct_command_08(self):
+        rom = bytearray(self.fixture())
+        rom[0x8000:0x8010] = bytes.fromhex(
+            "08 34 02 49 00 00 00 00 00 00 00 00 00 00 00 00"
+        )
+        rom[0x8010:0x8014] = bytes.fromhex("08 35 02 49")
+        commands = decode_root_entry_text_commands(
+            bytes(rom), table_offset=self.TABLE_OFFSET, count=3
+        )
+        self.assertEqual(
+            [(command.root_index, command.selector) for command in commands],
+            [(0, 0x0234), (1, 0x0235)],
+        )
+
+    def test_root_entry_text_decode_rejects_out_of_range_selector(self):
+        rom = bytearray(self.fixture())
+        rom[0x8000:0x8010] = bytes.fromhex(
+            "08 FF FF 08 34 02 49 00 00 00 00 00 00 00 00 00"
+        )
+        with self.assertRaisesRegex(ValueError, r"root \$000.*selector \$FFFF"):
+            decode_root_entry_text_commands(
+                bytes(rom), table_offset=self.TABLE_OFFSET, count=3
+            )
 
 
 class TextTableTest(unittest.TestCase):
@@ -301,6 +336,32 @@ class OriginalRomTextTest(unittest.TestCase):
         second = self.slots[0x07E6].presentation
         self.assertEqual((first.portrait_resource, first.portrait_variant), (0x21, 0x01))
         self.assertEqual((second.portrait_resource, second.portrait_variant), (0x00, 0x09))
+
+    def test_confirmed_root_entry_dialogue_shape(self):
+        commands = decode_root_entry_text_commands(self.rom)
+        self.assertEqual(len(commands), 100)
+        self.assertEqual(len({command.selector for command in commands}), 95)
+
+        streams_by_target = {
+            (stream.bank, stream.address): stream for stream in self.streams
+        }
+        selected_streams = []
+        for command in commands:
+            slot = self.slots[command.selector]
+            self.assertFalse(slot.is_null)
+            self.assertEqual(slot.presentation.kind, "context_pair")
+            selected_streams.append(
+                streams_by_target[(slot.pointer_bank, slot.target_address)]
+            )
+        self.assertEqual(sum(len(stream.line_lengths) > 1 for stream in selected_streams), 82)
+        self.assertEqual(sum(len(stream.glyph_codes) >= 16 for stream in selected_streams), 69)
+
+    def test_every_unique_root_begins_with_a_dispatchable_command(self):
+        roots = decode_scenario_roots(self.rom)
+        self.assertEqual(len(roots), 355)
+        self.assertFalse(
+            [root for root in roots if not 0x01 <= self.rom[root.offset] <= 0x49]
+        )
 
     def test_all_corpus_glyph_sources_are_safe(self):
         for code in {code for stream in self.streams for code in stream.glyph_codes}:

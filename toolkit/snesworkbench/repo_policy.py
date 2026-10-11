@@ -71,6 +71,29 @@ TRANSLATION_HEADERS = {
         "usage_notes",
         "status",
     ],
+    "menu.tsv": [
+        "id",
+        "original_address",
+        "original_offset",
+        "original_length",
+        "source_sha256",
+        "record_type",
+        "character_offsets",
+        "english",
+        "status",
+        "notes",
+    ],
+    "name_entry.tsv": [
+        "id",
+        "original_address",
+        "original_offset",
+        "original_length",
+        "source_sha256",
+        "record_type",
+        "english",
+        "status",
+        "notes",
+    ],
 }
 
 
@@ -143,7 +166,7 @@ def validate_translation_manifest(relative: str, text: str) -> list[str]:
         if identifier in identifiers:
             failures.append(f"{relative} line {line_number} repeats {identifier_column} {identifier}")
         identifiers.add(identifier)
-        if name == "patches.tsv":
+        if name in ("patches.tsv", "menu.tsv", "name_entry.tsv"):
             digest = row["source_sha256"]
             if digest and not re.fullmatch(r"[0-9a-f]{64}", digest):
                 failures.append(f"{relative} line {line_number} has an invalid source SHA-256")
@@ -155,6 +178,21 @@ def validate_translation_manifest(relative: str, text: str) -> list[str]:
                 failures.append(f"{relative} line {line_number} has an invalid original length")
             if not row["english"]:
                 failures.append(f"{relative} line {line_number} has empty English text")
+            if name == "menu.tsv":
+                if row["record_type"] not in {"terminated", "fixed", "fixed_native_suffix"}:
+                    failures.append(f"{relative} line {line_number} has an invalid record type")
+                try:
+                    offsets = [int(value, 0) for value in row["character_offsets"].split(",")]
+                except ValueError:
+                    offsets = []
+                if not offsets or any(offset < 0 for offset in offsets):
+                    failures.append(
+                        f"{relative} line {line_number} has invalid character offsets"
+                    )
+            if name == "name_entry.tsv" and row["record_type"] not in {
+                "picker_page", "selection_map", "fixed_text", "default_names"
+            }:
+                failures.append(f"{relative} line {line_number} has an invalid record type")
     return failures
 
 

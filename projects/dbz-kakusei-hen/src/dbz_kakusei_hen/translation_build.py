@@ -19,11 +19,6 @@ from .allocator import (
     validate_allocation,
 )
 from .glyphs import EncodedText, encode_text_layout
-from .opening_translation import (
-    OPENING_GLYPH_SOURCE_SHA256,
-    PAIR_GLYPH_CODES,
-    encode_pair_glyph,
-)
 from .pointer_update import write_pointer
 from .scenario import (
     TEXT_PRESENTATION_ADDRESS,
@@ -393,18 +388,7 @@ def build_translation(
     free_regions: list[FreeSpaceRegion],
 ) -> BuildResult:
     plans = plan_translations(original, records, free_regions)
-    glyph_source_bytes = b"".join(
-        original[offset : offset + 16]
-        for code in PAIR_GLYPH_CODES.values()
-        for offset in glyph_source(code).block_offsets
-    )
-    if hashlib.sha256(glyph_source_bytes).hexdigest() != OPENING_GLYPH_SOURCE_SHA256:
-        raise WorkstationError("paired-glyph source records do not match the supported ROM")
     rom = bytearray(original)
-    for pair, code in PAIR_GLYPH_CODES.items():
-        source = glyph_source(code)
-        for offset, block in zip(source.block_offsets, encode_pair_glyph(pair)):
-            bounded_write(rom, offset, block, f"paired glyph ${code:04X}")
     for plan in plans:
         bounded_write(rom, plan.allocation.new_offset, plan.encoded.data, plan.record.id)
         if plan.needs_pointer_update:

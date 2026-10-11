@@ -21,10 +21,9 @@ from dbz_kakusei_hen.allocator import (  # noqa: E402
     StreamAllocator,
     allocate_streams,
 )
-from dbz_kakusei_hen.glyphs import encode_text_layout  # noqa: E402
+from dbz_kakusei_hen.glyphs import encode_latin_cell, encode_text_layout  # noqa: E402
 from dbz_kakusei_hen.opening_translation import (  # noqa: E402
     OPENING_TEXTS,
-    PAIR_GLYPH_CODES,
     apply_opening_translation,
     encode_opening_stream,
 )
@@ -45,14 +44,8 @@ from dbz_kakusei_hen.translation_build import (  # noqa: E402
 
 
 class GlyphEncodingTest(unittest.TestCase):
-    def test_unsupported_pair_reports_line_and_cell(self):
-        with self.assertRaisesRegex(
-            WorkstationError, r"line 1, cell 1: unsupported pair 'AB'"
-        ):
-            encode_text_layout("AB", max_line_width=1)
-
     def test_unsupported_character_is_not_silently_replaced(self):
-        with self.assertRaisesRegex(WorkstationError, r"unsupported character '@'"):
+        with self.assertRaisesRegex(WorkstationError, r"unsupported Latin character '@'"):
             encode_text_layout("@ ", max_line_width=1)
 
     def test_width_and_height_are_enforced(self):
@@ -62,9 +55,8 @@ class GlyphEncodingTest(unittest.TestCase):
             encode_text_layout("It\nIt", max_line_width=1, max_lines=1)
 
     def test_odd_line_is_padded_to_one_complete_cell(self):
-        code = next(code for pair, code in PAIR_GLYPH_CODES.items() if pair == "I ")
         encoded = encode_text_layout("I", max_line_width=1)
-        self.assertEqual(encoded.words, (code, 0))
+        self.assertEqual(encoded.words, (encode_latin_cell("I"), 0))
         self.assertEqual(encoded.line_cells, (1,))
 
 

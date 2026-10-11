@@ -134,6 +134,46 @@ latter maps three value ranges to graphics sources:
 All 716 distinct glyph codes in the bounded corpus have complete, non-wrapping
 sources. No stream word below `$0100` occurs except `$000A` and `$0000`.
 
+### Dialogue-oriented corpus inventory
+
+The separate presentation table provides a strong structural dialogue signal even
+before every scenario root can be parsed. Of the 3,558 non-null selector slots:
+
+- 3,394 use ordinary two-byte portrait resource/variant pairs, resolving to 3,389
+  unique streams; 2,794 of these slots are multiline and 2,261 contain at least
+  16 glyph cells;
+- 83 use the `$FF` wide marker and each resolves to a distinct 21x8 stream;
+- 81 are low selectors `$0000-$0056` that bypass the presentation table and use
+  the default 16x8 area.
+
+Across all 3,553 unique streams, the longest decoded structure contains 214 glyph
+cells, the maximum observed line width is 14 cells, and the largest stream has 36
+line records. Empty line records occur inside some long streams, so `$000A` can
+represent layout spacing as well as ordinary line progression. These counts are
+structural and do not reproduce or translate the Japanese source.
+
+There are 272 distinct ordinary presentation pairs. Repeated pairs are consistent
+with recurring speakers or portrait states, but only `$21,$01` and `$00,$09` have
+currently been visually correlated. Names must not be assigned to the remaining
+pairs without runtime evidence.
+
+### Static root-scan limitation
+
+All 355 unique root pointers land on values `$01-$49`, consistent with a command
+at each root entry. Root `$0170` begins with command `$21` at `$93:BF38`; that
+handler consumes its three-byte operand and advances to `$93:BF3C`. The earlier
+claim that `$BF38-$BF3B` was pre-command framing came from a shifted runtime trace:
+the callback sampled stale WRAM `$0C37` at the top of the next loop iteration and
+therefore attributed each cursor delta to the preceding logged value.
+
+The corrected conservative scan decodes only roots that begin directly with
+command `$08`, whose two-byte operand is independently confirmed from its handler.
+There are 100 such roots referencing 95 distinct, valid, non-null selectors. All
+100 use ordinary portrait resource/variant presentation; 82 are multiline and 69
+contain at least 16 glyph cells. These are confirmed root-to-text associations,
+but they are only root-entry coverage: later commands remain unparsed, so unmatched
+streams are not orphaned or free space.
+
 One displayed glyph is a 16x16 bitmap assembled from four 16-byte SNES 2bpp
 blocks at source offsets `+$000`, `+$010`, `+$100`, and `+$110`. The compositor
 ORs shifted source bytes into the WRAM staging buffer and places glyph origins
@@ -231,6 +271,43 @@ replacement are recorded in `translation/references.tsv` and
 `translation/patches.tsv`. Decoded Japanese source dialogue remains local and
 untracked.
 
+### Opening menu family
+
+Deterministic input on October 10, 2026 reached the title menu by pressing A after
+the first opening panel, after the title appeared, and once more after its
+transition. The menu does not use scenario command `$08`. CPU `$81:85DF-$81:8629`
+copies one of two zero-terminated 16-bit streams from FastROM `$84:A1D8` / ROM
+`$0221D8` or `$84:A1FA` / ROM `$0221FA` into WRAM `$0A00`, then calls
+`$80:997B`; individual glyphs reach the shared compositor at `$80:9B2C`.
+
+The first stream is the no-save menu and has line-cell structure `(8, 7)`. The
+second is selected when a valid save is present and has structure `(8, 8, 7)`.
+The translated fixed allocations are `New Game / Options` and
+`Continue / New Game / Options`, respectively. Explicit character offsets retain
+the original visual centers. `Options` requires a half-character correction that
+the six-pixel stream offset cannot express by itself, so its four menu-only paired
+glyphs are shifted three pixels inside their 16-pixel generated bitmaps.
+
+The title dispatch table at CPU `$81:831B` routes New Game to CPU `$81:8373` and
+Options to CPU `$81:8463`. New Game copies the two-line stream at FastROM
+`$84:A22E` / ROM `$02222E-$022253`, whose structure is `(9, 8)`; it is translated
+as `Start New Game / Enter Password`. Options copies one of two nine-word records
+from `$84:A254` or `$84:A266` for `Sound Stereo` / `Sound Mono`, appends `$000A`,
+then indexes one of twenty 18-byte BGM records at `$84:A278 + value*$12`. The BGM
+records are translated with dedicated `BG` / `M ` paired glyphs while preserving
+their final two native numeral words for values `00-19`.
+
+Trusted Mesen captures of translated ROM SHA-256
+`e07fe21c5979b1d79f894321c65bd37fbee3bb80ac0d8c38a14a4c4d02fba520`
+confirmed the centered title, both New Game choices, `Sound Stereo`, `Sound Mono`,
+and BGM values `00`, `01`, and `19`. Measured lit-pixel bounds are `Options`
+x=`105-145` (midpoint `125`), BGM `00/01` x=`72-177` (midpoint `124.5`), and BGM
+`19` x=`72-178` (midpoint `125`). All measured non-BGM labels remain centered at
+x=`125`. Runtime DMA evidence shows the rendered 2bpp menu tiles staged under WRAM
+`$7E:8000` before channel 7 uploads them to VRAM. Exact source digests, record
+types, character offsets, and repository-authored English are tracked in
+`translation/menu.tsv`; decoded Japanese source text remains untracked.
+
 The desktop services are managed with `snes-desktop`; do not start duplicate
 X11 or noVNC processes. Use bsnes-plus to cross-check the first automated hit
 and for its interactive VRAM/tilemap/sprite viewers. Load the immutable original
@@ -259,6 +336,9 @@ project-local analysis area; persist only reviewed conclusions here.
 - Scenario root `$0170` is confirmed to drive the complete automatic opening:
   four narration selectors and 22 post-fade recap selectors are visually
   correlated through the title-screen return.
+- All 355 unique roots begin with dispatchable command values. One hundred roots
+  begin directly with command `$08`, confirming 100 root-entry references to 95
+  distinct non-null text selectors; this does not cover later commands.
 - The 16x16 four-block glyph format, 12-pixel pitch, three source ranges, and
   716-code corpus usage are confirmed.
 - A conflict-free 40-code startup mapping is confirmed locally from the

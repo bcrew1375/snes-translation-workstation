@@ -1,9 +1,4 @@
-"""Deterministic English patch for the complete automatic opening sequence.
-
-The original renderer advances by 12 pixels for each 16x16 glyph. To retain
-the original stream addresses, line structures, and allocations, each custom
-glyph below contains two narrow 5x7 Latin characters separated by one pixel.
-"""
+"""Deterministic English patch for the complete automatic opening sequence."""
 
 from __future__ import annotations
 
@@ -11,10 +6,10 @@ import hashlib
 from dataclasses import dataclass
 
 from snesworkbench.errors import WorkstationError
-from snesworkbench.graphics import encode_tiles
 from snesworkbench.patching import bounded_write
 
-from .scenario import TEXT_LINE_BREAK, TEXT_TERMINATOR, glyph_source
+from .glyphs import CHARACTERS_PER_CELL, encode_latin_line
+from .scenario import TEXT_LINE_BREAK, TEXT_TERMINATOR
 
 
 @dataclass(frozen=True)
@@ -124,251 +119,6 @@ OPENING_STREAM_LENGTH = OPENING_NARRATIONS[0].length
 OPENING_SOURCE_SHA256 = OPENING_NARRATIONS[0].source_sha256
 OPENING_LINES = OPENING_NARRATIONS[0].lines
 CELLS_PER_LINE = OPENING_NARRATIONS[0].line_cells[0]
-CHARACTERS_PER_CELL = 2
-SPACE_GLYPH_CODE = 0x0272
-
-# This vocabulary documents every pair used by the current English text. The
-# physical codes are assigned below from records proven absent from every
-# decoded command-$08 stream in the pinned original ROM.
-_PAIR_GLYPH_VOCABULARY = {
-    " B": 0x0273,
-    " a": 0x0274,
-    " g": 0x0275,
-    " m": 0x0276,
-    " s": 0x0277,
-    " w": 0x02D1,
-    ", ": 0x02D2,
-    "..": 0x02D3,
-    "Dr": 0x02D4,
-    "Lo": 0x02D5,
-    "Ga": 0x02D6,
-    "Sh": 0x02D7,
-    "ag": 0x0414,
-    "ai": 0x0415,
-    "al": 0x0416,
-    "ap": 0x0417,
-    "ar": 0x0420,
-    "as": 0x0421,
-    "d ": 0x0422,
-    "e ": 0x0423,
-    "en": 0x0424,
-    "er": 0x0425,
-    "io": 0x0426,
-    "ls": 0x0427,
-    "go": 0x0430,
-    "h.": 0x0431,
-    "ic": 0x0432,
-    "my": 0x0433,
-    "is": 0x0434,
-    "it": 0x0435,
-    "lo": 0x0436,
-    "rb": 0x0437,
-    "n ": 0x0441,
-    "nd": 0x0442,
-    "ng": 0x0443,
-    "nt": 0x0444,
-    "ny": 0x0445,
-    "on": 0x0446,
-    "pe": 0x0447,
-    "ra": 0x0450,
-    "ro": 0x0451,
-    "se": 0x0452,
-    "st": 0x0453,
-    "th": 0x0454,
-    "ve": 0x0455,
-    " b": 0x0456,
-    " c": 0x0457,
-    " e": 0x0460,
-    " f": 0x0461,
-    " t": 0x0462,
-    ". ": 0x0463,
-    "Go": 0x0464,
-    "It": 0x0465,
-    "Th": 0x0466,
-    "a ": 0x0467,
-    "ac": 0x0470,
-    "an": 0x0471,
-    "ba": 0x0472,
-    "ds": 0x0473,
-    "ed": 0x0474,
-    "eg": 0x0475,
-    "es": 0x0476,
-    "ev": 0x0477,
-    "ey": 0x0480,
-    "fo": 0x0481,
-    "ge": 0x0482,
-    "h ": 0x0483,
-    "he": 0x0484,
-    "ht": 0x0485,
-    "ig": 0x0486,
-    "ku": 0x0487,
-    "l.": 0x0490,
-    "le": 0x0491,
-    "ll": 0x0492,
-    "ma": 0x0493,
-    "mo": 0x0494,
-    "no": 0x0495,
-    "nu": 0x0496,
-    "os": 0x0497,
-    "r.": 0x04A0,
-    "re": 0x04A1,
-    "ri": 0x04A2,
-    "s ": 0x04A3,
-    "s,": 0x04A4,
-    "si": 0x04A5,
-    "ss": 0x04A6,
-    "ti": 0x04A7,
-    "tr": 0x04B0,
-    "tt": 0x04B1,
-    "ug": 0x04B2,
-    "w ": 0x04B3,
-    "w.": 0x04B4,
-    "y ": 0x04B5,
-    " h": 0x04B6,
-    "bu": 0x04B7,
-    "ce": 0x04C0,
-    "co": 0x04C1,
-    "do": 0x04C2,
-    "na": 0x04C3,
-    "iy": 0x04C4,
-    "je": 0x04C5,
-    "ki": 0x04C6,
-    "om": 0x04C7,
-    "or": 0x04D0,
-    "rt": 0x04D1,
-    "sa": 0x04D2,
-    "me": 0x04D3,
-    "to": 0x04D4,
-    "ul": 0x04D5,
-    "us": 0x04D6,
-    "yu": 0x04D7,
-    " d": 0x041C,
-    " i": 0x041D,
-    " o": 0x041E,
-    " y": 0x041F,
-    "! ": 0x0428,
-    "!!": 0x0429,
-    "'s": 0x042A,
-    "? ": 0x042B,
-    "?!": 0x042C,
-    "A-": 0x042D,
-    "Al": 0x042E,
-    "An": 0x042F,
-    "Bu": 0x0438,
-    "Ea": 0x0439,
-    "Fo": 0x043A,
-    "Gi": 0x043B,
-    "Gu": 0x043C,
-    "H-": 0x043D,
-    "Ha": 0x043E,
-    "Ho": 0x043F,
-    "I ": 0x0448,
-    "I'": 0x0449,
-    "Je": 0x044A,
-    "Ka": 0x044B,
-    "Li": 0x044C,
-    "Ma": 0x044D,
-    "N-": 0x044E,
-    "Na": 0x044F,
-    "Re": 0x0458,
-    "Sa": 0x0459,
-    "St": 0x045A,
-    "W-": 0x045B,
-    "Wh": 0x045C,
-    "Yo": 0x045D,
-    "a!": 0x045E,
-    "a-": 0x045F,
-    "aa": 0x0468,
-    "at": 0x0469,
-    "ay": 0x046A,
-    "be": 0x046B,
-    "ck": 0x046C,
-    "e!": 0x046D,
-    "fi": 0x046E,
-    "gh": 0x046F,
-    "gr": 0x0478,
-    "h!": 0x0479,
-    "ha": 0x047A,
-    "im": 0x047B,
-    "ka": 0x047C,
-    "ke": 0x047D,
-    "l ": 0x047E,
-    "ld": 0x047F,
-    "m ": 0x0488,
-    "n!": 0x0489,
-    "n?": 0x048A,
-    "o!": 0x048B,
-    "oi": 0x048C,
-    "ou": 0x048D,
-    "po": 0x048E,
-    "r ": 0x048F,
-    "rc": 0x0498,
-    "s.": 0x0499,
-    "sh": 0x049A,
-    "t ": 0x049B,
-    "t?": 0x049C,
-    "u ": 0x049D,
-    "u!": 0x049E,
-    "u'": 0x049F,
-    "ur": 0x04A8,
-    "w'": 0x04A9,
-    "w-": 0x04AA,
-    "wh": 0x04AB,
-    "wi": 0x04AC,
-    "yo": 0x04AD,
-}
-
-
-def _required_pair_glyphs() -> set[str]:
-    required = set()
-    for narration in OPENING_TEXTS:
-        for line, cells in zip(narration.lines, narration.line_cells):
-            padded = line.ljust(cells * CHARACTERS_PER_CELL)
-            required.update(
-                pair
-                for index in range(0, len(padded), CHARACTERS_PER_CELL)
-                if (pair := padded[index : index + CHARACTERS_PER_CELL]) != "  "
-            )
-    return required
-
-
-PAIR_GLYPH_CODES = {
-    pair: code
-    for pair, code in zip(
-        sorted(_required_pair_glyphs()),
-        (
-            *range(0x0273, 0x0278),
-            *range(0x0280, 0x0285),
-            0x0287,
-            *range(0x0290, 0x0292),
-            *range(0x0293, 0x0296),
-            0x0297,
-            *range(0x02A0, 0x02A2),
-            0x02A3,
-            *range(0x02A5, 0x02A7),
-            *range(0x02B1, 0x02B8),
-            *range(0x02C0, 0x02C4),
-            *range(0x02D1, 0x02D8),
-            *range(0x03C1, 0x03C8),
-            *range(0x03D0, 0x03D5),
-            *range(0x03E1, 0x03E7),
-            *range(0x0402, 0x0405),
-            0x0407,
-            *range(0x0411, 0x0418),
-            *(code for start in range(0x0420, 0x04E0, 0x10) for code in range(start, start + 8)),
-            *range(0x04E0, 0x04E7),
-        ),
-        strict=True,
-    )
-}
-
-# Concatenating the four 16-byte source blocks for each allocated code in the
-# mapping order above produces this digest in the pinned original ROM. This
-# permits use of 60 nonblank orphan records while rejecting any unsupported ROM
-# revision or unexpected source-data change.
-OPENING_GLYPH_SOURCE_SHA256 = "a3fc54b1727c7b175cab3d4656233251e15cb79504dcf922a5d50e3367f41fb5"
-
-
 FONT_5X7 = {
     " ": ("00000",) * 7,
     "!": ("00100", "00100", "00100", "00100", "00100", "00000", "00100"),
@@ -379,6 +129,7 @@ FONT_5X7 = {
     "?": ("01110", "10001", "00001", "00010", "00100", "00000", "00100"),
     "A": ("01110", "10001", "10001", "11111", "10001", "10001", "10001"),
     "B": ("11110", "10001", "10001", "11110", "10001", "10001", "11110"),
+    "C": ("01110", "10001", "10000", "10000", "10000", "10001", "01110"),
     "D": ("11110", "10001", "10001", "10001", "10001", "10001", "11110"),
     "E": ("11111", "10000", "10000", "11110", "10000", "10000", "11111"),
     "F": ("11111", "10000", "10000", "11110", "10000", "10000", "10000"),
@@ -389,6 +140,8 @@ FONT_5X7 = {
     "K": ("10001", "10010", "10100", "11000", "10100", "10010", "10001"),
     "L": ("10000", "10000", "10000", "10000", "10000", "10000", "11111"),
     "M": ("10001", "11011", "10101", "10101", "10001", "10001", "10001"),
+    "O": ("01110", "10001", "10001", "10001", "10001", "10001", "01110"),
+    "P": ("11110", "10001", "10001", "11110", "10000", "10000", "10000"),
     "N": ("10001", "11001", "10101", "10011", "10001", "10001", "10001"),
     "R": ("11110", "10001", "10001", "11110", "10100", "10010", "10001"),
     "S": ("01111", "10000", "10000", "01110", "00001", "00001", "11110"),
@@ -421,40 +174,17 @@ FONT_5X7 = {
 }
 
 
-def opening_pairs(
-    narration: OpeningNarration = OPENING_NARRATIONS[0],
-) -> tuple[tuple[str, ...], ...]:
-    """Return the narration as fixed-width two-character cells."""
-
-    if len(narration.lines) != len(narration.line_cells):
-        raise WorkstationError(f"selector ${narration.selector:04X} line metadata is inconsistent")
-    rows = []
-    for line, cells in zip(narration.lines, narration.line_cells):
-        width = cells * CHARACTERS_PER_CELL
-        if len(line) > width:
-            raise WorkstationError(
-                f"selector ${narration.selector:04X} line exceeds {width} narrow characters: {line!r}"
-            )
-        padded = line.ljust(width)
-        rows.append(tuple(padded[index : index + 2] for index in range(0, width, 2)))
-    return tuple(rows)
-
-
 def encode_opening_stream(narration: OpeningNarration = OPENING_NARRATIONS[0]) -> bytes:
     """Encode one English opening stream in the original 16-bit structure."""
 
     words = []
-    rows = opening_pairs(narration)
-    for line_number, row in enumerate(rows):
-        for pair in row:
-            if pair == "  ":
-                words.append(SPACE_GLYPH_CODE)
-            else:
-                try:
-                    words.append(PAIR_GLYPH_CODES[pair])
-                except KeyError as error:
-                    raise WorkstationError(f"opening pair {pair!r} has no glyph allocation") from error
-        if line_number != len(rows) - 1:
+    for line_number, (line, cells) in enumerate(zip(narration.lines, narration.line_cells)):
+        words.extend(
+            encode_latin_line(
+                line, cells, context=f"opening selector ${narration.selector:04X} line {line_number + 1}"
+            )
+        )
+        if line_number != len(narration.lines) - 1:
             words.append(TEXT_LINE_BREAK)
     words.append(TEXT_TERMINATOR)
     encoded = b"".join(word.to_bytes(2, "little") for word in words)
@@ -464,40 +194,6 @@ def encode_opening_stream(narration: OpeningNarration = OPENING_NARRATIONS[0]) -
             f"expected {narration.length}"
         )
     return encoded
-
-
-def render_pair(pair: str) -> tuple[tuple[int, ...], ...]:
-    """Render two 5x7 characters as one 16x16, palette-index-3 glyph."""
-
-    if len(pair) != 2:
-        raise WorkstationError(f"paired glyph must contain exactly two characters: {pair!r}")
-    missing = [character for character in pair if character not in FONT_5X7]
-    if missing:
-        raise WorkstationError(f"unsupported opening-font character {missing[0]!r}")
-    bitmap = [[0] * 16 for _ in range(16)]
-    for character_index, character in enumerate(pair):
-        origin_x = character_index * 6
-        for source_y, pattern in enumerate(FONT_5X7[character]):
-            for source_x, pixel in enumerate(pattern):
-                if pixel == "1":
-                    # Double the seven source rows vertically for a 5x14 glyph.
-                    bitmap[1 + source_y * 2][origin_x + source_x] = 3
-                    bitmap[2 + source_y * 2][origin_x + source_x] = 3
-    return tuple(tuple(row) for row in bitmap)
-
-
-def encode_pair_glyph(pair: str) -> tuple[bytes, bytes, bytes, bytes]:
-    """Encode one paired glyph in the renderer's TL/TR/BL/BR block order."""
-
-    bitmap = render_pair(pair)
-    tiles = (
-        tuple(row[:8] for row in bitmap[:8]),
-        tuple(row[8:] for row in bitmap[:8]),
-        tuple(row[:8] for row in bitmap[8:]),
-        tuple(row[8:] for row in bitmap[8:]),
-    )
-    encoded = encode_tiles(tiles, bpp=2)
-    return tuple(encoded[index : index + 16] for index in range(0, 64, 16))
 
 
 def apply_opening_translation(original: bytes) -> bytes:
@@ -513,19 +209,7 @@ def apply_opening_translation(original: bytes) -> bytes:
                 f"selector ${narration.selector:04X} source stream does not match the supported original"
             )
 
-    glyph_source_bytes = b"".join(
-        original[offset : offset + 16]
-        for code in PAIR_GLYPH_CODES.values()
-        for offset in glyph_source(code).block_offsets
-    )
-    if hashlib.sha256(glyph_source_bytes).hexdigest() != OPENING_GLYPH_SOURCE_SHA256:
-        raise WorkstationError("opening glyph source records do not match the supported original")
-
     patched = bytearray(original)
-    for pair, code in PAIR_GLYPH_CODES.items():
-        glyph = glyph_source(code)
-        for offset, block in zip(glyph.block_offsets, encode_pair_glyph(pair)):
-            bounded_write(patched, offset, block, f"opening glyph ${code:04X}")
     for narration in OPENING_TEXTS:
         bounded_write(
             patched,

@@ -17,13 +17,15 @@ sha256 = "cc5ab583b5189c3f5b374335edf4b857461278d41ef674f7db31aa100dcb814a"
 [output]
 default_path = "build/dbz-kakusei-hen/translated.sfc"
 size = 2097152
-sha256 = "250c80316ec504f28151ead953d5d5446024edab6ff2d7f23e984b257da890b5"
+sha256 = "1091629245703d49d2b447ddde511559b84db12ba9847a44dfececb32890e73f"
 
 [manifests]
 analysis = "analysis/project.json"
 patches = "translation/patches.tsv"
 references = "translation/references.tsv"
 ranges = "translation/ranges.tsv"
+menu = "translation/menu.tsv"
+name_entry = "translation/name_entry.tsv"
 
 # The build executor independently computes the ROM diff and rejects every
 # changed byte outside these inclusive ranges.
@@ -48,56 +50,121 @@ start = 0x0E196E
 end = 0x0E1A83
 
 [[approved_ranges]]
+name = "opening menu streams"
+start = 0x0221D8
+end = 0x0223DF
+
+[[approved_ranges]]
+name = "name editor default names"
+start = 0x022048
+end = 0x022079
+
+[[approved_ranges]]
+name = "name picker page 1"
+start = 0x0223E0
+end = 0x0224CF
+
+[[approved_ranges]]
+name = "name picker page 2"
+start = 0x0224D0
+end = 0x0225BF
+
+[[approved_ranges]]
+name = "name editor fixed UI"
+start = 0x0225C0
+end = 0x0226B3
+
+[[approved_ranges]]
+name = "name picker selection maps"
+start = 0x008D56
+end = 0x008EA9
+
+[[approved_ranges]]
+name = "dual-format compositor hook"
+start = 0x001B2C
+end = 0x001B2F
+
+[[approved_ranges]]
+name = "dual-format compositor code"
+start = 0x006BCF
+end = 0x006DB2
+
+[[approved_ranges]]
+name = "opening menu selector rows"
+start = 0x008685
+end = 0x00868A
+
+[[approved_ranges]]
+name = "fresh name insertion hook"
+start = 0x008AD7
+end = 0x008ADA
+
+[[approved_ranges]]
+name = "name picker cursor hook"
+start = 0x008BDD
+end = 0x008BE1
+
+[[approved_ranges]]
+name = "name field cursor hook"
+start = 0x008C38
+end = 0x008C3C
+
+[[approved_ranges]]
+name = "name editor routines"
+start = 0x00FE00
+end = 0x00FFA0
+
+[[approved_ranges]]
 name = "translated ROM checksum"
 start = 0x007FDC
 end = 0x007FDF
 
 [[approved_ranges]]
-name = "opening paired glyph blocks 1"
+name = "Latin glyph records lower"
+start = 0x1B40C0
+end = 0x1B515F
+
+[[approved_ranges]]
+name = "Latin glyph records upper"
+start = 0x1B51C0
+end = 0x1B525F
+
+[[approved_ranges]]
+name = "Extended Latin glyph records 0273-0277 upper blocks"
 start = 0x1B2F00
 end = 0x1B2F9F
 
 [[approved_ranges]]
-name = "opening paired glyph blocks 2"
+name = "Extended Latin glyph records 0273-0277 lower blocks"
 start = 0x1B3000
 end = 0x1B309F
 
 [[approved_ranges]]
-name = "opening orphan glyph blocks lower"
-start = 0x1B30A0
-end = 0x1B3A1F
-
-[[approved_ranges]]
-name = "opening paired glyph blocks 3"
+name = "Extended Latin glyph records 02D1-02D7 upper blocks"
 start = 0x1B3AC0
 end = 0x1B3B9F
 
 [[approved_ranges]]
-name = "opening paired glyph blocks 4"
+name = "Extended Latin glyph records 02D1-02D7 lower blocks"
 start = 0x1B3BC0
 end = 0x1B3C9F
 
 [[approved_ranges]]
-name = "opening paired glyph blocks 5"
+name = "Extended Latin glyph records 0414-0417 upper blocks"
 start = 0x1B6320
 end = 0x1B639F
 
 [[approved_ranges]]
-name = "opening orphan glyph blocks middle"
-start = 0x1B58C0
-end = 0x1B641F
-
-[[approved_ranges]]
-name = "opening paired glyph blocks 6"
+name = "Extended Latin glyph records 0414-0417 lower blocks"
 start = 0x1B6420
-end = 0x1B775F
+end = 0x1B649F
 
 [[approved_ranges]]
-name = "opening paired glyph blocks 7"
-start = 0x1B7760
-end = 0x1B7C9F
+name = "Extended Latin glyph records 0420-0461 primary run"
+start = 0x1B64A0
+end = 0x1B6CDF
 
 [[approved_ranges]]
-name = "opening orphan glyph blocks upper"
-start = 0x1B7CA0
-end = 0x1B7FFF
+name = "Extended Latin glyph records 0460-0461 lower blocks"
+start = 0x1B6DA0
+end = 0x1B6DDF

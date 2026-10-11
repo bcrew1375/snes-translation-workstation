@@ -29,6 +29,7 @@ from dbz_kakusei_hen.scenario import (  # noqa: E402
     TEXT_TABLE_RANGES,
     decode_scenario_command,
     decode_dispatch_table,
+    decode_root_entry_text_commands,
     decode_scenario_roots,
     decode_scenario_slots,
     decode_text_slots,
@@ -37,7 +38,6 @@ from dbz_kakusei_hen.scenario import (  # noqa: E402
     glyph_source,
     render_glyph_sheet,
     restore_candidate_ranges,
-    scan_root_text_selectors,
 )
 
 
@@ -167,7 +167,7 @@ def main() -> int:
     parser.add_argument(
         "--scan-roots",
         action="store_true",
-        help="scan all scenario roots for $08 text commands and report summary",
+        help="report confirmed command-$08 instructions at scenario root entries",
     )
     args = parser.parse_args()
     if not args.rom.is_file():
@@ -347,27 +347,25 @@ def main() -> int:
         print(f"Wrote {len(set(codes))} reconstructed glyphs to {args.glyph_sheet.resolve()}")
 
     if args.scan_roots:
-        root_commands = scan_root_text_selectors(rom)
+        root_commands = decode_root_entry_text_commands(rom)
         selector_set: set[int] = set()
-        root_counts: dict[int, int] = {}
         for cmd in root_commands:
             selector_set.add(cmd.selector)
-            root_counts[cmd.root_index] = root_counts.get(cmd.root_index, 0) + 1
-        print(f"Scenario roots with $08 commands: {len(root_counts)}")
-        print(f"Total $08 commands: {len(root_commands)}")
-        print(f"Unique text selectors referenced: {len(selector_set)}")
+        print(f"Roots beginning with confirmed command $08: {len(root_commands)}")
+        print(f"Unique confirmed root-entry text selectors: {len(selector_set)}")
         print(f"Non-null text slots in tables: {sum(not s.is_null for s in text_slots)}")
-        print(f"Orphan streams (unreferenced): {sum(not s.is_null for s in text_slots) - len(selector_set)}")
+        print("This is partial root-entry coverage, not an exhaustive usage or orphan scan.")
         print()
-        print("Text-heavy roots:")
-        for idx, count in sorted(root_counts.items(), key=lambda x: -x[1])[:30]:
-            cmds = [c for c in root_commands if c.root_index == idx]
-            sample = ", ".join(f"${c.selector:04X}" for c in cmds[:5])
-            print(f"  Root ${idx:03X}: {count} text selectors ({sample}...)")
+        print("Confirmed root-entry references:")
+        for command in root_commands:
+            print(
+                f"  Root ${command.root_index:03X}: {command.cpu_address} -> "
+                f"selector ${command.selector:04X}"
+            )
 
     if args.catalog_text is not None:
-        root_commands = scan_root_text_selectors(rom)
-        # Build lookup: selector -> list of root indices that use it
+        root_commands = decode_root_entry_text_commands(rom)
+        # Confirmed but partial lookup: selectors used directly at root entries.
         selector_roots: dict[int, list[int]] = {}
         for cmd in root_commands:
             selector_roots.setdefault(cmd.selector, []).append(cmd.root_index)
@@ -386,8 +384,8 @@ def main() -> int:
                 "presentation_raw\t"
                 "portrait_resource\t"
                 "portrait_variant\t"
-                "root_count\t"
-                "root_indices\n"
+                "root_entry_count\t"
+                "root_entry_indices\n"
             )
             for slot in text_slots:
                 if slot.is_null:

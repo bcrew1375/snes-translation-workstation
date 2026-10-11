@@ -50,7 +50,7 @@ class ProjectDescriptorTest(unittest.TestCase):
         self.assertTrue(manifest.is_file(), f"missing analysis manifest {manifest}")
 
     def test_translation_manifests_exist(self):
-        for name in ("patches", "references", "ranges"):
+        for name in ("patches", "references", "ranges", "menu", "name_entry"):
             manifest = PROJECT_ROOT / self.data["manifests"][name]
             self.assertTrue(manifest.is_file(), f"missing translation manifest {manifest}")
 
@@ -60,6 +60,14 @@ class TranslationManifestTest(unittest.TestCase):
         "patches.tsv": [
             "id", "original_address", "original_offset", "original_length",
             "source_sha256", "english", "status", "notes",
+        ],
+        "menu.tsv": [
+            "id", "original_address", "original_offset", "original_length",
+            "source_sha256", "record_type", "character_offsets", "english", "status", "notes",
+        ],
+        "name_entry.tsv": [
+            "id", "original_address", "original_offset", "original_length",
+            "source_sha256", "record_type", "english", "status", "notes",
         ],
         "references.tsv": [
             "id", "reference_type", "reference_address", "reference_offset",
@@ -119,6 +127,42 @@ class TranslationManifestTest(unittest.TestCase):
                 "$0003", "$0803", "$0804", "$0805",
             ],
         )
+
+        with (PROJECT_ROOT / "translation" / "menu.tsv").open(
+            encoding="utf-8", newline=""
+        ) as source:
+            menu = list(csv.DictReader(source, delimiter="\t"))
+        self.assertEqual(
+            [record["id"] for record in menu],
+            [
+                "title_menu_no_save", "title_menu_with_save", "new_game_start_method",
+                "options_sound_stereo", "options_sound_mono",
+            ] + [f"options_bgm_{index:02d}" for index in range(20)],
+        )
+        self.assertEqual(
+            [record["original_offset"] for record in menu],
+            ["$0221D8", "$0221FA", "$02222E", "$022254", "$022266"]
+            + [f"${0x022278 + index * 18:06X}" for index in range(20)],
+        )
+        self.assertTrue(all(record["status"] == "implemented" for record in menu))
+
+        with (PROJECT_ROOT / "translation" / "name_entry.tsv").open(
+            encoding="utf-8", newline=""
+        ) as source:
+            name_entry = list(csv.DictReader(source, delimiter="\t"))
+        self.assertEqual(
+            [record["id"] for record in name_entry],
+            [
+                "picker_page_1", "picker_page_2", "selection_map_1", "selection_map_2",
+                "default_names", "name_controls", "name_labels", "name_confirmation",
+                "name_status", "password_name_retry",
+            ],
+        )
+        self.assertEqual(
+            [record["original_offset"] for record in name_entry[:4]],
+            ["$0223E0", "$0224D0", "$008D56", "$008E00"],
+        )
+        self.assertTrue(all(record["status"] == "implemented" for record in name_entry))
 
     def test_local_decoded_catalog_names_remain_ignored(self):
         ignore = (PROJECT_ROOT.parents[1] / ".gitignore").read_text(encoding="utf-8")
@@ -206,12 +250,18 @@ class AnalysisManifestTest(unittest.TestCase):
         self.assertIn("3,989", finding["text_tables"])
         self.assertIn("3,553 unique", finding["text_tables"])
         self.assertIn("716 distinct glyph codes", finding["text_streams"])
-        self.assertIn("portrait graphics resource and variant", finding["text_streams"])
+        self.assertIn("portrait resource/variant pairs", finding["text_streams"])
+        self.assertIn("3,389 unique streams", finding["text_streams"])
+        self.assertIn("2,794 are multiline", finding["text_streams"])
+        self.assertIn("100 roots", finding["root_entry_text"])
+        self.assertIn("95 distinct", finding["root_entry_text"])
+        self.assertIn("82 are multiline", finding["root_entry_text"])
         self.assertIn("text selector $07E1", finding["renderer_evidence"])
         self.assertIn("$9C:9358", finding["renderer_evidence"])
         self.assertIn("four 14-cell lines", finding["renderer_evidence"])
         self.assertIn("decoded passage", finding["note"])
         self.assertIn("CPU $83:E2A8", finding["note"])
+        self.assertIn("sampled stale $0C37", finding["note"])
 
     def test_direct_dma_access_correction_is_recorded(self):
         finding = self.document["findings"]["hardware_register_access"]
