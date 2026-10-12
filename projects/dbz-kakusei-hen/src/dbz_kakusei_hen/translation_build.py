@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from snesworkbench.errors import WorkstationError
-from snesworkbench.manifests import read_tsv, require_columns
+from snesworkbench.manifests import manifest_int, read_manifest
 from snesworkbench.patching import BuildResult, bounded_write, changed_offsets, sha256, write_snes_checksum
 from snesworkbench.rom import cpu_to_offset, parse_cpu_address
 
@@ -26,6 +26,7 @@ from .scenario import (
     TEXT_PRESENTATION_FIRST_SELECTOR,
     TEXT_SELECTOR_LAST,
     TEXT_TABLE_RANGES,
+    TextPresentation,
     TextSelectorSlot,
     TextStream,
     decode_text_slots,
@@ -35,25 +36,41 @@ from .scenario import (
 )
 
 
-PATCH_COLUMNS = {
-    "id", "original_address", "original_offset", "original_length",
-    "source_sha256", "english", "status", "notes",
+PATCH_FIELDS = {
+    "id": str,
+    "original_address": str,
+    "original_offset": int,
+    "original_length": int,
+    "source_sha256": str,
+    "english": str,
+    "status": str,
+    "notes": str,
 }
-REFERENCE_COLUMNS = {
-    "id", "reference_type", "reference_address", "reference_offset",
-    "message_index", "pointer_format", "target_address", "target_offset",
+REFERENCE_FIELDS = {
+    "id": str,
+    "reference_type": str,
+    "reference_address": str,
+    "reference_offset": int,
+    "message_index": int,
+    "pointer_format": str,
+    "target_address": str,
+    "target_offset": int,
 }
-RANGE_COLUMNS = {
-    "name", "rom_start", "rom_end", "cpu_start", "cpu_end", "bank",
-    "alignment", "evidence", "confidence",
+RANGE_FIELDS = {
+    "name": str,
+    "rom_start": int,
+    "rom_end": int,
+    "cpu_start": str,
+    "cpu_end": str,
+    "bank": int,
+    "alignment": int,
+    "evidence": str,
+    "confidence": str,
 }
 
 
-def _hex(value: str, field: str) -> int:
-    try:
-        return int(value.removeprefix("$"), 16)
-    except ValueError as error:
-        raise WorkstationError(f"invalid {field}: {value!r}") from error
+def _hex(value: object, field: str) -> int:
+    return manifest_int(value, field, hexadecimal=True)
 
 
 @dataclass(frozen=True)
@@ -87,17 +104,43 @@ class TranslationPlan:
         return self.allocation.strategy != "in-place"
 
 
+def visible_line_character_limit(presentation: TextPresentation) -> int | None:
+    """Return the confirmed packed-Latin visual width for a presentation."""
+
+    if presentation.kind == "wide_marker":
+        return 28
+    if presentation.kind == "context_pair":
+        return 21
+    return None
+
+
+def validate_visible_line_width(
+    record: TranslationRecord, presentation: TextPresentation
+) -> None:
+    """Reject authored lines that would wrap mid-word in the visible text box."""
+
+    limit = visible_line_character_limit(presentation)
+    if limit is None:
+        return
+    for line_number, line in enumerate(record.english.split("\n"), start=1):
+        if len(line) > limit:
+            raise WorkstationError(
+                f"{record.id} selector ${record.selector:04X} line {line_number} "
+                f"has {len(line)} characters; {presentation.kind} permits {limit}"
+            )
+
+
 def load_translation_manifests(
     patches_path: str | Path, references_path: str | Path
 ) -> list[TranslationRecord]:
     """Join tracked patch and reference manifests by stable ``id``."""
 
-    patches = read_tsv(patches_path)
-    references = read_tsv(references_path)
-    require_columns(patches_path, patches, PATCH_COLUMNS)
-    require_columns(references_path, references, REFERENCE_COLUMNS)
+    patches = read_manifest(patches_path, PATCH_FIELDS)
+    references = read_manifest(references_path, REFERENCE_FIELDS)
     by_id: dict[str, dict[str, str]] = {}
     for reference in references:
+        if reference["reference_type"] != "command_08_selector":
+            continue
         identifier = reference["id"]
         if identifier in by_id:
             raise WorkstationError(f"duplicate reference id {identifier!r}")
@@ -114,8 +157,6 @@ def load_translation_manifests(
             reference = by_id.pop(identifier)
         except KeyError as error:
             raise WorkstationError(f"patch {identifier!r} has no reference record") from error
-        if reference["reference_type"] != "command_08_selector":
-            raise WorkstationError(f"patch {identifier!r} is not a command-$08 selector reference")
         selector = _hex(reference["message_index"], f"{identifier} selector")
         bank, address = parse_cpu_address(patch["original_address"].removeprefix("$"))
         target_bank, target_address = parse_cpu_address(reference["target_address"].removeprefix("$"))
@@ -124,8 +165,8 @@ def load_translation_manifests(
         if (bank, address, offset) != (target_bank, target_address, target_offset):
             raise WorkstationError(f"patch and reference locations disagree for {identifier!r}")
         try:
-            length = int(patch["original_length"], 0)
-        except ValueError as error:
+            length = manifest_int(patch["original_length"], f"{identifier} original length")
+        except WorkstationError as error:
             raise WorkstationError(f"invalid original length for {identifier!r}") from error
         records.append(
             TranslationRecord(
@@ -161,11 +202,10 @@ def load_reviewed_free_regions(ranges_path: str | Path) -> list[FreeSpaceRegion]
 
     Existing translated-stream and glyph-storage ranges are intentionally not
     allocation pools. A future allocation range must use a ``free_text_`` name,
-    ``confirmed`` confidence, and half-open conversion of its inclusive TSV end.
+    ``confirmed`` confidence, and half-open conversion of its inclusive manifest end.
     """
 
-    rows = read_tsv(ranges_path)
-    require_columns(ranges_path, rows, RANGE_COLUMNS)
+    rows = read_manifest(ranges_path, RANGE_FIELDS)
     regions = []
     for row in rows:
         if not row["name"].startswith("free_text_"):
@@ -178,8 +218,8 @@ def load_reviewed_free_regions(ranges_path: str | Path) -> list[FreeSpaceRegion]
         start = _hex(row["rom_start"], f"{row['name']} ROM start")
         end = _hex(row["rom_end"], f"{row['name']} ROM end") + 1
         try:
-            alignment = int(row["alignment"], 0)
-        except ValueError as error:
+            alignment = manifest_int(row["alignment"], f"{row['name']} alignment")
+        except WorkstationError as error:
             raise WorkstationError(f"invalid alignment for {row['name']!r}") from error
         regions.append(
             FreeSpaceRegion(bank, start, end, alignment, row["name"])
@@ -325,6 +365,7 @@ def plan_translations(
             raise WorkstationError(f"selector ${record.selector:04X} is outside the text tables")
         slot = slots[record.selector]
         stream = _validate_record(original, record, slot)
+        validate_visible_line_width(record, slot.presentation)
         lines = record.english.split("\n")
         needed_cells = tuple((len(line) + 1) // 2 for line in lines)
         exact_cells = None

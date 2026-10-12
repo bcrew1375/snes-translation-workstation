@@ -1,0 +1,463 @@
+schema_version = 1
+
+[[record]]
+name = "translated_checksum"
+rom_start = 0x7FDC
+rom_end = 0x7FDF
+cpu_start = "$FFDC"
+cpu_end = "$FFDF"
+bank = 0x0
+alignment = 2
+evidence = "Standard LoROM checksum complement and checksum fields, regenerated after intentional translation changes."
+confidence = "confirmed"
+
+[[record]]
+name = "name_editor_default_names"
+rom_start = 0x22048
+rom_end = 0x22079
+cpu_start = "$A048"
+cpu_end = "$A079"
+bank = 0x84
+alignment = 2
+evidence = "Five consecutive five-word default names copied into WRAM $0C00-$0C31 by the fresh-start path; localized role-appropriate joke names preserve the 50-byte layout."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_menu_streams"
+rom_start = 0x221D8
+rom_end = 0x223DF
+cpu_start = "$A1D8"
+cpu_end = "$A3DF"
+bank = 0x84
+alignment = 2
+evidence = "Fixed title, New Game submenu, Stereo/Mono, and twenty BGM records copied to WRAM $0A00 before rendering; native numeral words are preserved."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_menu_selector_rows"
+rom_start = 0x8685
+rom_end = 0x868A
+cpu_start = "$8685"
+cpu_end = "$868A"
+bank = 0x81
+alignment = 2
+evidence = "Three shared title, New Game, and Options selector Y coordinates are moved two pixels upward; all static and dynamic callers belong to the opening menu family."
+confidence = "confirmed"
+
+[[record]]
+name = "name_editor_fixed_ui"
+rom_start = 0x225C0
+rom_end = 0x2262B
+cpu_start = "$A5C0"
+cpu_end = "$A62B"
+bank = 0x84
+alignment = 2
+evidence = "Fresh-name control hints and five role labels retain source line widths, line breaks, terminators, and call-site coordinates; password-owned records at $84:A630-$84:A6B3 remain original."
+confidence = "confirmed"
+
+[[record]]
+name = "latin_name_picker_resources"
+rom_start = 0x27142
+rom_end = 0x27475
+cpu_start = "$F142"
+cpu_end = "$F475"
+bank = 0x84
+alignment = 2
+evidence = "Reviewed original all-$FF padding holds two $F0-byte Latin picker streams and two 85-word selection maps. The original password pages at $84:A3E0/$84:A4D0 and maps at $81:8D56/$81:8E00 remain byte-identical."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_stream_1"
+rom_start = 0xE1358
+rom_end = 0xE13CF
+cpu_start = "$9358"
+cpu_end = "$93CF"
+bank = 0x9C
+alignment = 2
+evidence = "Exact selector $07E1 source allocation; adjacent streams begin immediately before and after."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_stream_2"
+rom_start = 0xE13D0
+rom_end = 0xE1443
+cpu_start = "$93D0"
+cpu_end = "$9443"
+bank = 0x9C
+alignment = 2
+evidence = "Exact selector $07E2 source allocation; adjacent streams begin immediately before and after."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_stream_3"
+rom_start = 0xE1444
+rom_end = 0xE148B
+cpu_start = "$9444"
+cpu_end = "$948B"
+bank = 0x9C
+alignment = 2
+evidence = "Exact selector $07E3 source allocation; adjacent streams begin immediately before and after."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_stream_4"
+rom_start = 0xE148C
+rom_end = 0xE14A5
+cpu_start = "$948C"
+cpu_end = "$94A5"
+bank = 0x9C
+alignment = 2
+evidence = "Exact selector $07E4 source allocation; adjacent streams begin immediately before and after."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_recap_shared_0000"
+rom_start = 0xC87C0
+rom_end = 0xC87C9
+cpu_start = "$87C0"
+cpu_end = "$87C9"
+bank = 0x99
+alignment = 2
+evidence = "Exact selector $0000 source allocation used in the traced automatic recap."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_recap_shared_0003"
+rom_start = 0xC87EA
+rom_end = 0xC87F5
+cpu_start = "$87EA"
+cpu_end = "$87F5"
+bank = 0x99
+alignment = 2
+evidence = "Exact selector $0003 source allocation used in the traced automatic recap."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_recap_shared_0026"
+rom_start = 0xC8964
+rom_end = 0xC8971
+cpu_start = "$8964"
+cpu_end = "$8971"
+bank = 0x99
+alignment = 2
+evidence = "Exact selector $0026 source allocation used in the traced automatic recap."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_recap_shared_002e"
+rom_start = 0xC89D0
+rom_end = 0xC89E5
+cpu_start = "$89D0"
+cpu_end = "$89E5"
+bank = 0x99
+alignment = 2
+evidence = "Exact selector $002E source allocation used in the traced automatic recap."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_recap_shared_076b"
+rom_start = 0xDE9D8
+rom_end = 0xDEA19
+cpu_start = "$E9D8"
+cpu_end = "$EA19"
+bank = 0x9B
+alignment = 2
+evidence = "Exact selector $076B source allocation used in the traced automatic recap."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_recap_07e5_07ef"
+rom_start = 0xE14A6
+rom_end = 0xE1583
+cpu_start = "$94A6"
+cpu_end = "$9583"
+bank = 0x9C
+alignment = 2
+evidence = "Consecutive exact allocations for traced recap selectors $07E5-$07EF."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_recap_0800_0805"
+rom_start = 0xE196E
+rom_end = 0xE1A83
+cpu_start = "$996E"
+cpu_end = "$9A83"
+bank = 0x9C
+alignment = 2
+evidence = "Consecutive exact allocations for traced recap selectors $0800-$0805."
+confidence = "confirmed"
+
+[[record]]
+name = "dual_format_compositor_hook"
+rom_start = 0x1B2C
+rom_end = 0x1B2F
+cpu_start = "$9B2C"
+cpu_end = "$9B2F"
+bank = 0x80
+alignment = 1
+evidence = "Four-byte JML replaces the shared compositor entry; bit 15 dispatches packed Latin while the legacy path reproduces the displaced prologue and rejoins at $80:9B30."
+confidence = "confirmed"
+
+[[record]]
+name = "dual_format_compositor_code"
+rom_start = 0x6BCF
+rom_end = 0x6DB2
+cpu_start = "$EBCF"
+cpu_end = "$EDB2"
+bank = 0x80
+alignment = 1
+evidence = "484 assembled bytes in a verified all-$FF padding run implement two independent six-pixel Latin renders, blank-ID compositor elision, the 120-entry ID-to-glyph table, and bounded one-row name redraw with explicit compositor dimensions, DMA source, end, and VRAM base."
+confidence = "confirmed"
+
+[[record]]
+name = "mode_aware_entry_insertion_hook"
+rom_start = 0x8AD7
+rom_end = 0x8ADA
+cpu_start = "$8AD7"
+cpu_end = "$8ADA"
+bank = 0x81
+alignment = 1
+evidence = "Four-byte JML dispatches shared A-button handling without adding a return address. WRAM $0216 zero selects packed Latin editing; nonzero reproduces the displaced LDA/CMP and rejoins the original password map/store/redraw path at $81:8ADD."
+confidence = "confirmed"
+
+[[record]]
+name = "mode_aware_picker_page_hook"
+rom_start = 0x8B5E
+rom_end = 0x8B62
+cpu_start = "$8B5E"
+cpu_end = "$8B62"
+bank = 0x81
+alignment = 1
+evidence = "Five-byte JSL/RTS wrapper replaces the shared page loader. WRAM $0216 zero selects relocated Latin streams; nonzero selects the original password streams."
+confidence = "confirmed"
+
+[[record]]
+name = "name_picker_cursor_hook"
+rom_start = 0x8BDD
+rom_end = 0x8BE1
+cpu_start = "$8BDD"
+cpu_end = "$8BE1"
+bank = 0x81
+alignment = 1
+evidence = "Calls a mode-aware selector wrapper: fresh name entry gets the six-pixel Latin cursor, while password mode reproduces the original selector coordinates and widths."
+confidence = "confirmed"
+
+[[record]]
+name = "name_field_cursor_hook"
+rom_start = 0x8C38
+rom_end = 0x8C3C
+cpu_start = "$8C38"
+cpu_end = "$8C3C"
+bank = 0x81
+alignment = 1
+evidence = "Calls a mode-aware field-cursor wrapper: fresh name entry uses character-indexed six-pixel positions, while password mode reproduces the original coordinate-table path."
+confidence = "confirmed"
+
+[[record]]
+name = "name_editor_routines"
+rom_start = 0xDA50
+rom_end = 0xDD13
+cpu_start = "$DA50"
+cpu_end = "$DD13"
+bank = 0x81
+alignment = 1
+evidence = "708 assembled bytes in reviewed Bank 01 all-$FF padding implement the mode-aware insertion dispatcher and picker loader, character-level Latin overwrite, exact DONE return semantics, bounded field redraw, fresh-name selectors, and byte-equivalent password selector paths. Password insertion rejoins the original path at $81:8ADD; the original navigation-only B handler remains unmodified."
+confidence = "confirmed"
+
+[[record]]
+name = "latin_glyph_records_lower"
+rom_start = 0x1B40C0
+rom_end = 0x1B515F
+cpu_start = "$C0C0"
+cpu_end = "$D15F"
+bank = 0xB6
+alignment = 16
+evidence = "Contiguous renderer source blocks for single-character Latin IDs; original bytes are pinned by the aggregate glyph-source digest."
+confidence = "confirmed"
+
+[[record]]
+name = "latin_glyph_records_upper"
+rom_start = 0x1B51C0
+rom_end = 0x1B525F
+cpu_start = "$D1C0"
+cpu_end = "$D25F"
+bank = 0xB6
+alignment = 16
+evidence = "Remaining contiguous renderer source blocks for single-character Latin IDs; disjoint four-block records share the aggregate glyph-source digest."
+confidence = "confirmed"
+
+[[record]]
+name = "extended_latin_glyph_blocks_0273_upper"
+rom_start = 0x1B2F00
+rom_end = 0x1B2F9F
+cpu_start = "$AF00"
+cpu_end = "$AF9F"
+bank = 0xB6
+alignment = 16
+evidence = "Zero-filled, unreferenced upper source blocks for extended Latin renderer records $0273-$0277."
+confidence = "confirmed"
+
+[[record]]
+name = "extended_latin_glyph_blocks_0273_lower"
+rom_start = 0x1B3000
+rom_end = 0x1B309F
+cpu_start = "$B000"
+cpu_end = "$B09F"
+bank = 0xB6
+alignment = 16
+evidence = "Zero-filled, unreferenced lower source blocks for extended Latin renderer records $0273-$0277."
+confidence = "confirmed"
+
+[[record]]
+name = "extended_latin_glyph_blocks_02d1_upper"
+rom_start = 0x1B3AC0
+rom_end = 0x1B3B9F
+cpu_start = "$BAC0"
+cpu_end = "$BB9F"
+bank = 0xB6
+alignment = 16
+evidence = "Zero-filled, unreferenced upper source blocks for extended Latin renderer records $02D1-$02D7."
+confidence = "confirmed"
+
+[[record]]
+name = "extended_latin_glyph_blocks_02d1_lower"
+rom_start = 0x1B3BC0
+rom_end = 0x1B3C9F
+cpu_start = "$BBC0"
+cpu_end = "$BC9F"
+bank = 0xB6
+alignment = 16
+evidence = "Zero-filled, unreferenced lower source blocks for extended Latin renderer records $02D1-$02D7."
+confidence = "confirmed"
+
+[[record]]
+name = "extended_latin_glyph_blocks_0414_upper"
+rom_start = 0x1B6320
+rom_end = 0x1B639F
+cpu_start = "$E320"
+cpu_end = "$E39F"
+bank = 0xB6
+alignment = 16
+evidence = "Zero-filled, unreferenced upper source blocks for extended Latin renderer records $0414-$0417."
+confidence = "confirmed"
+
+[[record]]
+name = "extended_latin_glyph_blocks_0414_lower"
+rom_start = 0x1B6420
+rom_end = 0x1B649F
+cpu_start = "$E420"
+cpu_end = "$E49F"
+bank = 0xB6
+alignment = 16
+evidence = "Zero-filled, unreferenced lower source blocks for extended Latin renderer records $0414-$0417."
+confidence = "confirmed"
+
+[[record]]
+name = "extended_latin_glyph_blocks_0420_0461_primary"
+rom_start = 0x1B64A0
+rom_end = 0x1B6CDF
+cpu_start = "$E4A0"
+cpu_end = "$ECDF"
+bank = 0xB6
+alignment = 16
+evidence = "Zero-filled, unreferenced disjoint source blocks for extended Latin renderer records $0420-$0461, excluding renderer-invalid code gaps."
+confidence = "confirmed"
+
+[[record]]
+name = "extended_latin_glyph_blocks_0460_lower"
+rom_start = 0x1B6DA0
+rom_end = 0x1B6DDF
+cpu_start = "$EDA0"
+cpu_end = "$EDDF"
+bank = 0xB6
+alignment = 16
+evidence = "Zero-filled, unreferenced lower source blocks completing extended Latin renderer records $0460-$0461."
+confidence = "confirmed"
+
+[[record]]
+name = "free_text_bank_99_tail"
+rom_start = 0xCF8EE
+rom_end = 0xCFFFF
+cpu_start = "$F8EE"
+cpu_end = "$FFFF"
+bank = 0x99
+alignment = 2
+evidence = "All-$FF tail after the final structurally decoded bank-$99 text stream at $99:F8C6-$99:F8ED; no command-$08 selector target enters the range, and it remains wholly inside bank $99."
+confidence = "confirmed"
+
+[[record]]
+name = "tournament_opening_streams"
+rom_start = 0xC8BB4
+rom_end = 0xC905F
+cpu_start = "$8BB4"
+cpu_end = "$905F"
+bank = 0x99
+alignment = 2
+evidence = "Exact consecutive source allocations for opening 23rd World Tournament selectors $0200-$021A; pointer slots are $99:8400-$99:8435."
+confidence = "confirmed"
+
+[[record]]
+name = "world_tournament_arena_pointer"
+rom_start = 0x40018
+rom_end = 0x40019
+cpu_start = "$8018"
+cpu_end = "$8019"
+bank = 0x88
+alignment = 2
+evidence = "Fixed bank-$88 table entry 12 is updated from its pinned source at $88:80C0 to the reviewed same-bank relocation at $88:FFB4."
+confidence = "confirmed"
+
+[[record]]
+name = "papaya_island_pointer"
+rom_start = 0x40046
+rom_end = 0x40047
+cpu_start = "$8046"
+cpu_end = "$8047"
+bank = 0x88
+alignment = 2
+evidence = "Fixed bank-$88 table entry 35 is updated from its pinned source at $88:81EC to the reviewed same-bank relocation at $88:FFCC."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_fixed_label_relocations"
+rom_start = 0x47FB4
+rom_end = 0x47FDB
+cpu_start = "$FFB4"
+cpu_end = "$FFDB"
+bank = 0x88
+alignment = 2
+evidence = "The final reviewed all-$FF run in bank $88 holds non-overlapping packed-Latin World Tournament Arena and Papaya Island streams with terminators."
+confidence = "confirmed"
+
+[[record]]
+name = "quiz_option_pointers"
+rom_start = 0xC1B2A
+rom_end = 0xC1B2F
+cpu_start = "$9B2A"
+cpu_end = "$9B2F"
+bank = 0x98
+alignment = 2
+evidence = "Three consecutive fixed resource pointers preserve X/Y/B row order while X and B are redirected to reviewed bank-$98 tail space."
+confidence = "confirmed"
+
+[[record]]
+name = "quiz_option_y"
+rom_start = 0xC1E3A
+rom_end = 0xC1E4F
+cpu_start = "$9E3A"
+cpu_end = "$9E4F"
+bank = 0x98
+alignment = 2
+evidence = "Original Y option allocation; native Y icon/spacer words are retained and the eight-cell field holds the English text in place."
+confidence = "confirmed"
+
+[[record]]
+name = "quiz_option_relocations"
+rom_start = 0xC74D8
+rom_end = 0xC7501
+cpu_start = "$F4D8"
+cpu_end = "$F501"
+bank = 0x98
+alignment = 2
+evidence = "Reviewed bank-$98 all-$FF tail holds relocated X and B option streams with their native icon/spacer words and terminators."
+confidence = "confirmed"

@@ -4,6 +4,10 @@ from __future__ import annotations
 
 from snesworkbench.patching import BuildResult, changed_offsets, sha256, write_snes_checksum
 
+from .fixed_resource_translation import (
+    apply_fixed_resource_translation,
+    load_fixed_resource_records,
+)
 from .name_entry_translation import apply_name_entry_translation, load_name_entry_records
 from .opening_translation import OPENING_TEXTS
 from .title_menu_translation import apply_title_menu_translation, load_title_menu_records
@@ -12,6 +16,27 @@ from .translation_build import (
     load_reviewed_free_regions,
     load_translation_manifests,
 )
+
+
+def summarize(project) -> dict[str, object]:
+    """Return concise DBZ-specific facts for the generic project summary."""
+
+    records = load_translation_manifests(
+        project.manifests["patches"], project.manifests["references"]
+    )
+    menu = load_title_menu_records(project.manifests["menu"])
+    names = load_name_entry_records(project.manifests["name_entry"])
+    fixed_resources = load_fixed_resource_records(project.manifests["choices"])
+    return {
+        "implemented_records": {
+            "command_08": sum(record.status == "implemented" for record in records),
+            "title_menu": sum(record.status == "implemented" for record in menu),
+            "name_entry": sum(record.status == "implemented" for record in names),
+            "fixed_resources": sum(record.status == "implemented" for record in fixed_resources),
+        },
+        "dialogue_line_limits": {"portrait_free": 28, "portrait": 21},
+        "documentation": "translation/README.md",
+    }
 
 
 def build(original: bytes, project):
@@ -23,17 +48,19 @@ def build(original: bytes, project):
         from pathlib import Path
 
         root = Path(__file__).resolve().parents[2]
-        patches = root / "translation" / "patches.tsv"
-        references = root / "translation" / "references.tsv"
-        ranges = root / "translation" / "ranges.tsv"
-        menu = root / "translation" / "menu.tsv"
-        name_entry = root / "translation" / "name_entry.tsv"
+        patches = root / "translation" / "patches.toml"
+        references = root / "translation" / "references.toml"
+        ranges = root / "translation" / "ranges.toml"
+        menu = root / "translation" / "menu.toml"
+        name_entry = root / "translation" / "name_entry.toml"
+        fixed_resources = root / "translation" / "choices.toml"
     else:
         patches = project.manifests["patches"]
         references = project.manifests["references"]
         ranges = project.manifests["ranges"]
         menu = project.manifests["menu"]
         name_entry = project.manifests["name_entry"]
+        fixed_resources = project.manifests["choices"]
 
     result = build_translation(
         original,
@@ -44,7 +71,13 @@ def build(original: bytes, project):
         apply_name_entry_translation(
             original,
             apply_title_menu_translation(
-                original, result.data, load_title_menu_records(menu)
+                original,
+                apply_fixed_resource_translation(
+                    original,
+                    result.data,
+                    load_fixed_resource_records(fixed_resources),
+                ),
+                load_title_menu_records(menu),
             ),
             load_name_entry_records(name_entry),
         )
@@ -71,6 +104,16 @@ def build(original: bytes, project):
                 for record in load_name_entry_records(name_entry)
                 if record.status == "implemented" and record.record_type == "default_names"
             ),
+            "fixed_labels": {
+                record.id: record.english
+                for record in load_fixed_resource_records(fixed_resources)
+                if record.status == "implemented" and record.record_type == "fixed_label"
+            },
+            "opening_choices": {
+                record.button: record.english
+                for record in load_fixed_resource_records(fixed_resources)
+                if record.status == "implemented" and record.record_type == "option"
+            },
         }
     )
     return BuildResult(

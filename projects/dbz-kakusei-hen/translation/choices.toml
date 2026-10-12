@@ -1,0 +1,86 @@
+schema_version = 1
+
+[[record]]
+id = "tournament_arena_label"
+record_type = "fixed_label"
+button = ""
+pointer_address = "88:8018"
+pointer_offset = 0x40018
+original_address = "88:80C0"
+original_offset = 0x400C0
+original_length = 16
+source_sha256 = "989610d305cfe9b1c1fb88f89b8cbff7a015c8df1fe1a99cb06a340946cccdfe"
+destination_address = "88:FFB4"
+destination_offset = 0x47FB4
+prefix_words = 0
+english = "World Tournament Arena"
+status = "implemented"
+notes = "Fixed bank-$88 table entry 12; approved glossary terminology replaces the inaccurate prior quiz description."
+
+[[record]]
+id = "papaya_island_label"
+record_type = "fixed_label"
+button = ""
+pointer_address = "88:8046"
+pointer_offset = 0x40046
+original_address = "88:81EC"
+original_offset = 0x401EC
+original_length = 12
+source_sha256 = "6b8bf6d0ea789d6de68251073cf471d6037ded516075ad90cfa3596de8dc1e3a"
+destination_address = "88:FFCC"
+destination_offset = 0x47FCC
+prefix_words = 0
+english = "Papaya Island"
+status = "implemented"
+notes = "Fixed bank-$88 table entry 35; approved glossary place name."
+
+[[record]]
+id = "tournament_quiz_x"
+record_type = "option"
+button = "X"
+pointer_address = "98:9B2A"
+pointer_offset = 0xC1B2A
+original_address = "98:9E2A"
+original_offset = 0xC1E2A
+original_length = 16
+source_sha256 = "2da4dd8a35c72c40031b5a8361510bd92f0b4f0db89bb12ae64c10c81fb75bb8"
+destination_address = "98:F4D8"
+destination_offset = 0xC74D8
+prefix_words = 2
+english = "You're bleeding!"
+status = "implemented"
+notes = "Preserves native X icon and spacer words; relocated for the longer English option."
+
+[[record]]
+id = "tournament_quiz_y"
+record_type = "option"
+button = "Y"
+pointer_address = "98:9B2C"
+pointer_offset = 0xC1B2C
+original_address = "98:9E3A"
+original_offset = 0xC1E3A
+original_length = 22
+source_sha256 = "57be9564c5a53e7f53021ac613cfc4750889da8f2da8f9ff8289307d3936811d"
+destination_address = "98:9E3A"
+destination_offset = 0xC1E3A
+prefix_words = 2
+english = "Are you sick?"
+status = "implemented"
+notes = "Preserves native Y icon and spacer words and retains the original eight-cell text field."
+
+[[record]]
+id = "tournament_quiz_b"
+record_type = "option"
+button = "B"
+pointer_address = "98:9B2E"
+pointer_offset = 0xC1B2E
+original_address = "98:9E50"
+original_offset = 0xC1E50
+original_length = 16
+source_sha256 = "35895a2d9967c5ec4b8895150462b8a97d477fa943bc22162af27c45a5c3fa95"
+destination_address = "98:F4EE"
+destination_offset = 0xC74EE
+prefix_words = 2
+english = "You look sexy."
+status = "implemented"
+notes = "Preserves native B icon and spacer words; relocated for the longer English option."

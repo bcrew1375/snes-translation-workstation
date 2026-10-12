@@ -11,7 +11,7 @@ from typing import Sequence
 
 from snesworkbench.errors import WorkstationError
 from snesworkbench.graphics import encode_tiles
-from snesworkbench.manifests import read_tsv, require_columns
+from snesworkbench.manifests import manifest_int, read_manifest
 from snesworkbench.patching import bounded_write, changed_offsets
 from snesworkbench.rom import parse_cpu_address
 
@@ -29,9 +29,16 @@ from .opening_translation import FONT_5X7
 from .scenario import TEXT_LINE_BREAK, TEXT_TERMINATOR, glyph_source
 
 
-NAME_ENTRY_COLUMNS = {
-    "id", "original_address", "original_offset", "original_length",
-    "source_sha256", "record_type", "english", "status", "notes",
+NAME_ENTRY_FIELDS = {
+    "id": str,
+    "original_address": str,
+    "original_offset": int,
+    "original_length": int,
+    "source_sha256": str,
+    "record_type": str,
+    "english": str,
+    "status": str,
+    "notes": str,
 }
 
 PICKER_PAGE_1_OFFSET = 0x0223E0
@@ -200,16 +207,12 @@ class NameEntryRecord:
     notes: str
 
 
-def _hex(value: str, field: str) -> int:
-    try:
-        return int(value.removeprefix("$"), 16)
-    except ValueError as error:
-        raise WorkstationError(f"invalid {field}: {value!r}") from error
+def _hex(value: object, field: str) -> int:
+    return manifest_int(value, field, hexadecimal=True)
 
 
 def load_name_entry_records(path: str | Path) -> list[NameEntryRecord]:
-    rows = read_tsv(path)
-    require_columns(path, rows, NAME_ENTRY_COLUMNS)
+    rows = read_manifest(path, NAME_ENTRY_FIELDS)
     records: list[NameEntryRecord] = []
     seen: set[str] = set()
     for row in rows:
@@ -223,7 +226,7 @@ def load_name_entry_records(path: str | Path) -> list[NameEntryRecord]:
             bank=bank,
             address=address,
             offset=_hex(row["original_offset"], f"{identifier} original offset"),
-            length=int(row["original_length"], 0),
+            length=manifest_int(row["original_length"], f"{identifier} original length"),
             source_sha256=row["source_sha256"],
             record_type=row["record_type"],
             english=row["english"].replace("\\n", "\n"),

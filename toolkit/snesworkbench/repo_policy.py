@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
-import csv
-import io
 import re
 from pathlib import Path, PurePosixPath
+
+from .errors import WorkstationError
+from .manifests import manifest_int, manifest_int_list, parse_manifest_text
 
 
 BANNED_PREFIXES = ("analysis/", "build/", "disassembly/")
@@ -31,69 +32,43 @@ CJK = re.compile(r"[\u3040-\u30ff\u3400-\u9fff]")
 LONG_HEX_ARRAY = re.compile(r"(?:0x[0-9a-fA-F]{2}\s*,\s*){16,}")
 LONG_BYTE_ESCAPE = re.compile(r"(?:\\x[0-9a-fA-F]{2}){16,}")
 
-TRANSLATION_HEADERS = {
-    "patches.tsv": [
-        "id",
-        "original_address",
-        "original_offset",
-        "original_length",
-        "source_sha256",
-        "english",
-        "status",
-        "notes",
-    ],
-    "references.tsv": [
-        "id",
-        "reference_type",
-        "reference_address",
-        "reference_offset",
-        "message_index",
-        "pointer_format",
-        "target_address",
-        "target_offset",
-    ],
-    "ranges.tsv": [
-        "name",
-        "rom_start",
-        "rom_end",
-        "cpu_start",
-        "cpu_end",
-        "bank",
-        "alignment",
-        "evidence",
-        "confidence",
-    ],
-    "glossary.tsv": [
-        "id",
-        "category",
-        "canonical",
-        "aliases",
-        "usage_notes",
-        "status",
-    ],
-    "menu.tsv": [
-        "id",
-        "original_address",
-        "original_offset",
-        "original_length",
-        "source_sha256",
-        "record_type",
-        "character_offsets",
-        "english",
-        "status",
-        "notes",
-    ],
-    "name_entry.tsv": [
-        "id",
-        "original_address",
-        "original_offset",
-        "original_length",
-        "source_sha256",
-        "record_type",
-        "english",
-        "status",
-        "notes",
-    ],
+TRANSLATION_SCHEMAS = {
+    "patches.toml": ("record", {
+        "id": str, "original_address": str, "original_offset": int,
+        "original_length": int, "source_sha256": str, "english": str,
+        "status": str, "notes": str,
+    }),
+    "references.toml": ("record", {
+        "id": str, "reference_type": str, "reference_address": str,
+        "reference_offset": int, "message_index": int, "pointer_format": str,
+        "target_address": str, "target_offset": int,
+    }),
+    "ranges.toml": ("record", {
+        "name": str, "rom_start": int, "rom_end": int, "cpu_start": str,
+        "cpu_end": str, "bank": int, "alignment": int, "evidence": str,
+        "confidence": str,
+    }),
+    "glossary.toml": ("term", {
+        "id": str, "category": str, "canonical": str, "aliases": list,
+        "usage_notes": str, "status": str,
+    }),
+    "menu.toml": ("record", {
+        "id": str, "original_address": str, "original_offset": int,
+        "original_length": int, "source_sha256": str, "record_type": str,
+        "character_offsets": list, "english": str, "status": str, "notes": str,
+    }),
+    "name_entry.toml": ("record", {
+        "id": str, "original_address": str, "original_offset": int,
+        "original_length": int, "source_sha256": str, "record_type": str,
+        "english": str, "status": str, "notes": str,
+    }),
+    "choices.toml": ("record", {
+        "id": str, "record_type": str, "button": str, "pointer_address": str,
+        "pointer_offset": int, "original_address": str, "original_offset": int,
+        "original_length": int, "source_sha256": str,
+        "destination_address": str, "destination_offset": int,
+        "prefix_words": int, "english": str, "status": str, "notes": str,
+    }),
 }
 
 
@@ -136,7 +111,7 @@ def prohibited_path(relative: str) -> str | None:
 def _translation_manifest_name(relative: str) -> str | None:
     path = PurePosixPath(relative)
     if len(path.parts) == 4 and path.parts[0] == "projects" and path.parts[2] == "translation":
-        if path.name in TRANSLATION_HEADERS:
+        if path.name in TRANSLATION_SCHEMAS:
             return path.name
     return None
 
@@ -146,53 +121,72 @@ def validate_translation_manifest(relative: str, text: str) -> list[str]:
     name = _translation_manifest_name(relative)
     if name is None:
         return []
+    table, fields = TRANSLATION_SCHEMAS[name]
     try:
-        reader = csv.DictReader(io.StringIO(text), delimiter="\t")
-        if reader.fieldnames != TRANSLATION_HEADERS[name]:
-            return [f"translation manifest has an invalid header: {relative}"]
-        rows = list(reader)
-    except (csv.Error, TypeError):
-        return [f"translation manifest is not valid TSV: {relative}"]
+        rows = parse_manifest_text(relative, text, fields, table=table)
+    except WorkstationError as error:
+        return [str(error)]
 
     failures: list[str] = []
     identifiers: set[str] = set()
-    for line_number, row in enumerate(rows, start=2):
-        identifier_column = "name" if name == "ranges.tsv" else "id"
+    for record_number, row in enumerate(rows, start=1):
+        identifier_column = "name" if name == "ranges.toml" else "id"
         identifier = row[identifier_column]
         if not re.fullmatch(r"[a-z0-9]+(?:_[a-z0-9]+)*", identifier):
             failures.append(
-                f"{relative} line {line_number} has an invalid {identifier_column}"
+                f"{relative} record {record_number} has an invalid {identifier_column}"
             )
         if identifier in identifiers:
-            failures.append(f"{relative} line {line_number} repeats {identifier_column} {identifier}")
+            failures.append(
+                f"{relative} record {record_number} repeats {identifier_column} {identifier}"
+            )
         identifiers.add(identifier)
-        if name in ("patches.tsv", "menu.tsv", "name_entry.tsv"):
+        if name in ("patches.toml", "menu.toml", "name_entry.toml", "choices.toml"):
             digest = row["source_sha256"]
             if digest and not re.fullmatch(r"[0-9a-f]{64}", digest):
-                failures.append(f"{relative} line {line_number} has an invalid source SHA-256")
-            try:
-                length = int(row["original_length"], 0)
-            except ValueError:
-                length = 0
+                failures.append(
+                    f"{relative} record {record_number} has an invalid source SHA-256"
+                )
+            length = manifest_int(row["original_length"], "original length")
             if length <= 0:
-                failures.append(f"{relative} line {line_number} has an invalid original length")
+                failures.append(
+                    f"{relative} record {record_number} has an invalid original length"
+                )
             if not row["english"]:
-                failures.append(f"{relative} line {line_number} has empty English text")
-            if name == "menu.tsv":
+                failures.append(f"{relative} record {record_number} has empty English text")
+            if name == "menu.toml":
                 if row["record_type"] not in {"terminated", "fixed", "fixed_native_suffix"}:
-                    failures.append(f"{relative} line {line_number} has an invalid record type")
+                    failures.append(
+                        f"{relative} record {record_number} has an invalid record type"
+                    )
                 try:
-                    offsets = [int(value, 0) for value in row["character_offsets"].split(",")]
-                except ValueError:
+                    offsets = manifest_int_list(row["character_offsets"], "character offsets")
+                except WorkstationError:
                     offsets = []
                 if not offsets or any(offset < 0 for offset in offsets):
                     failures.append(
-                        f"{relative} line {line_number} has invalid character offsets"
+                        f"{relative} record {record_number} has invalid character offsets"
                     )
-            if name == "name_entry.tsv" and row["record_type"] not in {
+            if name == "name_entry.toml" and row["record_type"] not in {
                 "picker_page", "selection_map", "fixed_text", "default_names"
             }:
-                failures.append(f"{relative} line {line_number} has an invalid record type")
+                failures.append(
+                    f"{relative} record {record_number} has an invalid record type"
+                )
+            if name == "choices.toml":
+                if row["record_type"] not in {"fixed_label", "option"}:
+                    failures.append(
+                        f"{relative} record {record_number} has an invalid record type"
+                    )
+                if row["button"] not in {"", "X", "Y", "B"}:
+                    failures.append(f"{relative} record {record_number} has an invalid button")
+                if row["prefix_words"] < 0:
+                    failures.append(
+                        f"{relative} record {record_number} has invalid prefix words"
+                    )
+        if name == "glossary.toml":
+            if any(not isinstance(alias, str) for alias in row["aliases"]):
+                failures.append(f"{relative} record {record_number} has invalid aliases")
     return failures
 
 

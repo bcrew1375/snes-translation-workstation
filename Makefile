@@ -4,21 +4,41 @@ OUTPUT ?= $(if $(PROJECT),build/$(PROJECT)/translated.sfc,)
 DISASSEMBLY ?= disassembly
 BANK ?=
 BANKFLAG = $(if $(strip $(BANK)),--bank $(strip $(BANK)),)
+VERBOSEFLAG = $(if $(filter 1 true yes,$(VERBOSE)),--verbose,)
+UNITTESTFLAG = $(if $(filter 1 true yes,$(VERBOSE)),-v,-q)
 
-.PHONY: self-test projects validate test test-toolkit test-project analysis translated audit clean info run debug gui disassemble rebuild verify build
+.PHONY: help self-test projects summary validate check check-rom test test-toolkit test-project analysis translated audit clean info run debug gui disassemble rebuild verify build
+help:
+	@printf '%s\n' \
+	  'make projects' \
+	  'make summary PROJECT=<id>' \
+	  'make validate PROJECT=<id>' \
+	  'make check PROJECT=<id>          # ROM-independent validation, tests, audit' \
+	  'make check-rom PROJECT=<id>      # original MATCH and translated build' \
+	  'make test PROJECT=<id> [VERBOSE=1]' \
+	  'make disassemble PROJECT=<id> [BANK=<n>]' \
+	  'make rebuild PROJECT=<id>' \
+	  'make verify PROJECT=<id>' \
+	  'make build PROJECT=<id>' \
+	  'make audit'
 self-test:
 	tools/bin/snes-self-test
 projects:
 	python3 tools/bin/snes-workstation list
+summary:
+	@test -n "$(PROJECT)" || (echo 'Set PROJECT=<project-id>' >&2; exit 2)
+	python3 tools/bin/snes-workstation summary $(PROJECT)
 validate:
 	@test -n "$(PROJECT)" || (echo 'Set PROJECT=<project-id>' >&2; exit 2)
 	python3 tools/bin/snes-workstation validate $(PROJECT)
 test: test-toolkit
 	@if [ -n "$(PROJECT)" ]; then $(MAKE) test-project PROJECT=$(PROJECT); fi
 test-toolkit:
-	PYTHONPATH=toolkit python3 -m unittest discover -s tests/toolkit -v
+	PYTHONPATH=toolkit python3 -m unittest discover -s tests/toolkit $(UNITTESTFLAG)
 test-project:
-	python3 tools/bin/snes-workstation test $(PROJECT)
+	python3 tools/bin/snes-workstation test $(PROJECT) $(VERBOSEFLAG)
+check: validate test-project audit
+check-rom: build
 analysis:
 	@test -n "$(PROJECT)" || (echo 'Set PROJECT=<project-id>' >&2; exit 2)
 	python3 tools/bin/snes-workstation analyze $(PROJECT)

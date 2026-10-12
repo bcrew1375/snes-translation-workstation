@@ -57,6 +57,10 @@ translation without distributing decoded original dialogue.
 ## Core commands
 
 ```sh
+make help                         # concise command index
+make summary   PROJECT=<id>       # current phase, tasks, and project facts
+make check     PROJECT=<id>       # ROM-independent validation, tests, and audit
+make check-rom PROJECT=<id>       # original MATCH, then translated build
 make self-test                    # environment + synthetic-ROM checks, no ROM needed
 make disassemble PROJECT=<id>     # readable 65816 disassembly -> disassembly/
 make disassemble PROJECT=<id> BANK=3
@@ -67,6 +71,13 @@ make test      PROJECT=<id>
 make analysis  PROJECT=<id>
 make audit
 ```
+
+Project status is optional and lives in `projects/<id>/status.toml`. The generic
+summary remains useful for older projects without that file; adapters may add a small
+`summarize(project)` dictionary for game-specific counts or constraints. Use
+`snes-workstation summary <project> --full` for every status entry or `--json` for
+machine-readable output. Test output is concise by default; pass `VERBOSE=1` to the
+Make targets or `--verbose` to the CLI.
 
 Direct tool use:
 

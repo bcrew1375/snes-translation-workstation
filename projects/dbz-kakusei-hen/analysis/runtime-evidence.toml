@@ -1,0 +1,85 @@
+schema_version = 1
+artifact_policy = "Raw captures are local and ignored; this ledger preserves reviewed conclusions and reproducibility metadata."
+
+[[evidence]]
+id = "opening_selector_order"
+date = "2026-10-11"
+system = "mesen-agent"
+rom = "original"
+status = "confirmed"
+summary = "Scenario root $0170 reaches opening selectors $07E1-$07E4 and the 22-record recap in the tracked order."
+addresses = ["93:BF38", "83:B9EC", "80:9A0E", "80:9B2C"]
+
+[[evidence]]
+id = "name_navigation_only"
+date = "2026-10-11"
+system = "mesen-agent"
+rom_sha256 = "f60cb9d4c6c1b01d70c9275526bdad1e88b86eba494339145b0fb39f40ea8ce6"
+status = "superseded_rom_confirmed_behavior"
+summary = "B navigation after inserted characters moved each tested cursor left by one and did not alter WRAM $0C00-$0C31."
+
+[[evidence]]
+id = "name_overwrite_and_extended_page"
+date = "2026-10-11"
+system = "mesen-agent"
+rom_sha256 = "1091629245703d49d2b447ddde511559b84db12ba9847a44dfececb32890e73f"
+status = "superseded_rom_confirmed_behavior"
+summary = "Page-one B and page-two accented-character selection overwrote only the selected name position while preserving renderer state."
+
+[[evidence]]
+id = "password_mode_isolation"
+date = "2026-10-11"
+system = "mesen-agent"
+rom_sha256 = "e30ea874ddc4bf1d18966e3e818747ae9f61c68c1a22974ea78ae839db803371"
+status = "partial"
+summary = "The initial password screen and matched WRAM regions were equivalent to the original; symbol insertion timing was not reached."
+unknown = "A successful password-symbol insertion still requires runtime capture."
+
+[[evidence]]
+id = "current_mode_aware_static_validation"
+date = "2026-10-12"
+system = "static_tests"
+rom_sha256 = "359ea57bd4bab983efcf527dba7a9e5465c3e27e1c0bce51e07487ed152bce80"
+status = "confirmed"
+summary = "The mode-aware dispatcher bypasses translated name insertion in password mode; static tests pin the unchanged original continuation through $81:8B4F. Fixed-resource tests also pin the World Tournament Arena and Papaya Island source hashes, pointers, encodings, relocation bounds, and non-overlap."
+addresses = ["81:8AD7", "81:8ADD", "81:8B4F", "81:8BAA"]
+
+[[evidence]]
+id = "papaya_island_fixed_label_runtime"
+date = "2026-10-12"
+system = "mesen-agent"
+rom_sha256 = "359ea57bd4bab983efcf527dba7a9e5465c3e27e1c0bce51e07487ed152bce80"
+status = "confirmed"
+summary = "A deterministic clean-boot run rendered the relocated fixed label as 'Papaya Island' at frame 2300. The managed capture is trustworthy and did not inherit label tiles from a save state."
+addresses = ["88:8046", "88:FFCC"]
+capture = "local/runtime/fixed-label-papaya-20261012/frame.png"
+capture_sha256 = "7648d579141e7fdbed16d1bfdbe0ac0e6ac33f402f0ab3c3594386a6c8449c6e"
+events = "local/runtime/fixed-label-papaya-20261012/events.jsonl"
+events_sha256 = "3149f3bdff2c14f14f83ec2d7d5516423345e02d54848b8a23a2cec44e581aea"
+metadata = "local/runtime/fixed-label-papaya-20261012/metadata.json"
+metadata_sha256 = "a72f03af4abe78736eb0b521020b9f14b3bb15e6893f33027d5a31c7c5f2089a"
+start_frame = 0
+capture_frame = 2300
+
+[[evidence]]
+id = "world_tournament_arena_fixed_label_runtime"
+date = "2026-10-12"
+system = "mesen-agent"
+rom_sha256 = "359ea57bd4bab983efcf527dba7a9e5465c3e27e1c0bce51e07487ed152bce80"
+status = "confirmed"
+summary = "After loading the Papaya dialogue state, deterministic port-0 A-button edges cleared the wait and forced a fresh fixed-label lookup. By frame 2900 the prior Japanese VRAM label had been replaced with 'World Tournament Arena'."
+addresses = ["88:8018", "88:FFB4"]
+capture = "local/runtime/fixed-label-chain-20261012/segment-02/frame.png"
+capture_sha256 = "d36cc18421fb52a49ca291c62fb1b2b093dd02551b9319f1e4b35d24461f5602"
+events = "local/runtime/fixed-label-chain-20261012/segment-02/events.jsonl"
+events_sha256 = "6813e07bb6fdd802f7be6a1667fe807efc1fdebf96b4b2e37c6bf43ed35cfe67"
+state = "local/runtime/fixed-label-chain-20261012/segment-02/state.json"
+state_sha256 = "7780c222fba61d5daf79cd30bb1adeb05ed98c6744be135c3298fdd4f0b7a59c"
+prerequisite_state = "local/runtime/gameplay-start-20261012/gameplay-start.mss"
+prerequisite_state_sha256 = "eecb6bf914e38a3fa9e5ce2f2b8c6a81c1b505ef8c65c72628890890ee12cc5d"
+segment_00_state = "local/runtime/fixed-label-chain-20261012/segment-00/end.mss"
+segment_00_state_sha256 = "a10a3df43558ba89c1d4b6bf34c54b7ddfe43756777fa32bb69dfb015fe5db14"
+start_frame = 2300
+capture_frame = 2900
+segment_00_input_schedule = ["0:A@15-16", "0:A@75-76", "0:A@135-136", "0:A@195-196", "0:A@255-256"]
+segment_02_input_schedule = ["0:A@15-18", "0:A@75-78", "0:A@135-138", "0:A@195-198", "0:A@255-258"]

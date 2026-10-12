@@ -8,40 +8,77 @@ raw source streams, or long byte arrays capable of reconstructing original text.
 
 ## Tracked manifests
 
-- `patches.tsv` records stable IDs, source locations/lengths/hashes, English text,
+All tracked translation manifests are schema-versioned TOML. Record order is
+authoritative and preserved by the loaders. ROM offsets, lengths, selectors,
+banks, alignments, and indexes use native TOML integers; hexadecimal notation is
+preferred where it reflects an address. CPU addresses remain explicit
+`BANK:ADDRESS` strings. Arrays are used for structured values such as menu
+character offsets and glossary aliases, and multiline English text uses real
+line breaks rather than escaped `\\n` sequences.
+
+- `patches.toml` records stable IDs, source locations/lengths/hashes, English text,
   workflow status, and non-expressive notes.
-- `references.tsv` records pointer-table or direct-reference metadata without source
+- `references.toml` records pointer-table or direct-reference metadata without source
   dialogue.
-- `ranges.tsv` records reviewed allocation ranges for translated streams and custom
+- `ranges.toml` records reviewed allocation ranges for translated streams and custom
   glyph storage.
-- `menu.tsv` records the fixed title, New Game, sound-mode, and indexed BGM menu
+- `menu.toml` records the fixed title, New Game, sound-mode, and indexed BGM menu
   records, including record type and reviewed character-level alignment offsets.
-- `name_entry.tsv` records both 85-entry name-picker pages, their selection maps,
+- `name_entry.toml` records both 85-entry name-picker pages, their selection maps,
   the five localized default names, and the fixed English name-editor prompts.
-- `glossary.tsv` records the project's canonical English terminology for names,
+- `choices.toml` records pointer-selected fixed labels and opening choices, source
+  hashes, pointer locations, preserved native icon prefixes where applicable, and
+  deterministic same-bank relocation destinations.
+- `glossary.toml` records the project's canonical English terminology for names,
   terms, techniques, places, races, organizations, and story arcs. Each record
-  contains a stable `id`, a `category`, the `canonical` English form, pipe-separated
-  `aliases` for lookup, `usage_notes` on capitalization and context, and a `status`
+  contains a stable `id`, a `category`, the `canonical` English form, the
+  `aliases` array for lookup, `usage_notes` on capitalization and context, and a `status`
   field. The glossary contains no decoded Japanese text, no raw ROM data, and no
   reconstructed dialogue. It uses the modern North American anime and game
   localization as the primary standard: Frieza, Krillin, Jeice, King Kai, Grand
   Elder Guru, World Tournament, Special Beam Cannon, Destructo Disc, Tri-Beam,
-  Spirit Bomb, Kaio-ken, and related forms. Aliases column may contain manga-
+  Spirit Bomb, Kaio-ken, and related forms. The aliases array may contain manga-
   oriented or source-name alternatives (for example Freeza, Kuririn, Tenshinhan,
   Kaio, Kienzan, Makankosappo, Tenkaichi Budokai) for identification purposes,
-  but the canonical column is the required output form.
+  but the canonical field is the required output form.
 
-The translation builder joins `patches.tsv` and `references.tsv` by stable `id`;
+The translation builder joins `patches.toml` and `references.toml` by stable `id`;
 selectors are not inferred from patch-column positions. Only confirmed ranges whose
-names begin with `free_text_` are eligible for relocated text allocation. No such
-production range is currently declared. Structural gaps and streams lacking a known
-scenario-root reference remain reserved until all reference paths are validated.
+names begin with `free_text_` are eligible for relocated text allocation. The reviewed
+`free_text_bank_99_tail` range is the production allocation used by longer tournament
+records. Other structural gaps and streams lacking a known scenario-root reference
+remain reserved until all reference paths are validated.
 
 The implemented automatic opening covers the four narration panels at command-`$08`
 selectors `$07E1-$07E4` and all 22 text records shown in the following recap before
 the title screen returns. Runtime tracing of scenario root `$0170` established the
 post-fade selector order; the tracked reference manifest records every selector and
 target without reproducing source dialogue.
+
+The opening 23rd World Tournament scene is implemented for command-`$08`
+selectors `$0200-$021A`. Sixteen records fit their original bank-$99
+allocations; eleven longer records relocate deterministically into the reviewed
+all-`$FF` tail at CPU `$99:F8EE-$99:FAA1` / ROM `$0CF8EE-$0CFAA1`, with only
+their same-bank selector pointers updated.
+
+Two opening location bars use a separate fixed bank-`$88` pointer table rather
+than command-`$08` dialogue selectors. Table entry 12 is translated as
+`World Tournament Arena`, and entry 35 as `Papaya Island`; both source streams
+and pointers are hash-pinned and relocate into reviewed bank-`$88` tail space.
+
+Packed-Latin dialogue is authored to the confirmed visible box widths rather
+than the larger legacy-cell storage capacity: portrait-free `wide_marker`
+records permit 28 characters per line, while portrait-bearing `context_pair`
+records permit 21. The build rejects longer explicit lines before allocation so
+the game cannot split a word at the right edge of a box.
+
+The following X/Y/B choice is also a fixed resource rather than a command-`$08`
+text stream. Its option pointers at `$98:9B2A-$98:9B2E` retain X/Y/B order, and
+each option preserves the original colored button-icon and spacer words. The
+localized rows are `You're bleeding!`, `Are you sick?`, and `You look sexy.`
+Command `$07` at CPU `$91:8179` / ROM `$088179` and its following scenario
+branch bytes are unchanged. The bank-`$88` entry at `$88:8018` is the separate
+`World Tournament Arena` location bar, not a quiz heading.
 
 The opening menu family is implemented separately because it bypasses command `$08`.
 CPU `$81:85DF-$81:8629` copies one of two fixed title streams from `$84:A1D8` or
@@ -119,43 +156,12 @@ is retained byte-for-byte. The original
 bytes for every hook and padding allocation are pinned by an aggregate SHA-256 before
 Asar applies the tracked patch.
 
-Earlier trusted October 11, 2026 Mesen captures against translated ROM SHA-256
-`f60cb9d4c6c1b01d70c9275526bdad1e88b86eba494339145b0fb39f40ea8ce6` exercised
-ordinary B navigation after inserted characters in all five rows. The cursor
-transitions were `3 -> 2`, `11 -> 10`, `21 -> 20`, `31 -> 30`, and `41 -> 40`.
-Paired before/after captures confirmed that WRAM `$0C00-$0C31` remained
-byte-identical in every case. The local evidence and comparison report are under
-`/tmp/dbz-name-navigation-only-trusted-20261011`.
-
-The previous translated ROM SHA-256 was
-`1091629245703d49d2b447ddde511559b84db12ba9847a44dfececb32890e73f`.
-Trusted October 11, 2026 Mesen captures against that ROM confirmed the two corrected
-paths. Selecting page-one `B` at the first position changed `Aiyah` to `Biyah` while
-preserving the remaining nine positions and all four other fields. Switching to page
-two and selecting `Á` changed it to `Áiyah`; captured WRAM showed page `$0001`, restored
-compositor dimensions `$020E=$0008` and `$0210=$000A`, and nonblank data in both halves
-of the complete `$0100`-byte staged name row. The screenshots and comparison report are
-under `/tmp/dbz-name-overwrite-fix-20261011`.
-
-That ROM globally replaced resources also used by password entry and was therefore
-superseded. The previous mode-aware translated ROM SHA-256 was
-`e30ea874ddc4bf1d18966e3e818747ae9f61c68c1a22974ea78ae839db803371`.
-Trusted October 11, 2026 Mesen captures against this ROM confirmed that the initial
-password screen is pixel-identical to the original and that matched WRAM regions at
-`$0200`, `$0440`, `$0A00`, `$5000`, and `$8000` have identical digests. A second
-matched run moved the password cursor and reached a matching pre-insertion state, but
-did not insert a symbol: `$1F00-$1F87` remained filled with blank `$0272` words and the
-screenshot still showed an empty password field. It therefore provides visual/state
-equivalence evidence only, not insertion timing evidence. Evidence is under
-`/tmp/dbz-password-mode-aware-capture-20261011`,
-`/tmp/dbz-password-insert-original-20261011`, and
-`/tmp/dbz-password-insert-fixed-20261011`. A fresh-name capture at
-`/tmp/dbz-name-mode-aware-overwrite-b-20261011` independently confirmed that the
-Latin picker remains active in mode zero and selecting page-one `B` still changes
-`Aiyah` to `Biyah` without replacing the remaining characters.
+Reviewed runtime conclusions, the exact historical ROM identities they apply to, and
+remaining limitations are recorded in `analysis/runtime-evidence.toml`. Raw captures
+remain local and ignored; documentation does not rely on ephemeral `/tmp` paths.
 
 The current translated ROM SHA-256 is
-`4760d51eaf4ed35d45e4de588e025465df0221dac84beaa114ae40094b85453e`.
+`359ea57bd4bab983efcf527dba7a9e5465c3e27e1c0bce51e07487ed152bce80`.
 Its mode-aware `$81:8AD7` dispatcher bypasses translated name-only insertion work in
 password mode and rejoins the original path at `$81:8ADD`. Static binary tests pin the
 unchanged original password continuation through `$81:8B4F`, including the original

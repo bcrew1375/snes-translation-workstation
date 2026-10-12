@@ -28,7 +28,7 @@ from dbz_kakusei_hen.title_menu_translation import (  # noqa: E402
 class TitleMenuTranslationTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.records = load_title_menu_records(PROJECT_ROOT / "translation" / "menu.tsv")
+        cls.records = load_title_menu_records(PROJECT_ROOT / "translation" / "menu.toml")
 
     def test_all_reachable_opening_menu_records_are_tracked(self):
         fixed_ids = [
@@ -76,7 +76,7 @@ class OriginalRomTitleMenuTranslationTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.original = (PROJECT_ROOT / "rom" / "original.sfc").read_bytes()
-        cls.records = load_title_menu_records(PROJECT_ROOT / "translation" / "menu.tsv")
+        cls.records = load_title_menu_records(PROJECT_ROOT / "translation" / "menu.toml")
         cls.translated = apply_title_menu_translation(cls.original, cls.original, cls.records)
 
     def test_source_locations_lengths_digests_and_structures(self):

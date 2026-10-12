@@ -84,6 +84,19 @@ tables across CPU banks `$98-$9F`; the selected word is stored in WRAM `$0214`.
 After optional metadata handling through bank `$98`, it calls CPU `$80:9A0E`
 with the selected value and then advances the cursor by the two parameter bytes.
 
+## Commands `$07` and `$10`
+
+The opening tournament quiz establishes that command `$10` at CPU `$91:8178` /
+ROM `$088178` and command `$07` at CPU `$91:8179` / ROM `$088179` are both
+zero-operand commands. Command `$10` dispatches to CPU `$83:BFDE` / ROM
+`$01BFDE`, clears its direct-page menu arguments, calls CPU `$83:E600`, and
+increments the scenario cursor by one byte. Command `$07` dispatches to CPU
+`$83:B9AA` / ROM `$01B9AA`; it sets WRAM `$0C3F` to one, clears the tile work
+area, configures a 21-by-8 presentation, calls CPU `$81:8000`, and likewise
+increments the cursor by one byte. The bytes following `$07` are therefore
+subsequent scenario control/branch data, not inline option text or `$07`
+operands.
+
 The structurally bounded selector tables are:
 
 | Text selectors | Pointer table | Entries |
@@ -267,8 +280,8 @@ attract-mode cycles rather than extending the recap.
 
 All 26 selected streams were correlated with visible scenes. Their exact selector,
 pointer, CPU-address, ROM-offset, length, digest, and repository-authored English
-replacement are recorded in `translation/references.tsv` and
-`translation/patches.tsv`. Decoded Japanese source dialogue remains local and
+replacement are recorded in `translation/references.toml` and
+`translation/patches.toml`. Decoded Japanese source dialogue remains local and
 untracked.
 
 ### Opening menu family
@@ -306,7 +319,7 @@ x=`105-145` (midpoint `125`), BGM `00/01` x=`72-177` (midpoint `124.5`), and BGM
 x=`125`. Runtime DMA evidence shows the rendered 2bpp menu tiles staged under WRAM
 `$7E:8000` before channel 7 uploads them to VRAM. Exact source digests, record
 types, character offsets, and repository-authored English are tracked in
-`translation/menu.tsv`; decoded Japanese source text remains untracked.
+`translation/menu.toml`; decoded Japanese source text remains untracked.
 
 The desktop services are managed with `snes-desktop`; do not start duplicate
 X11 or noVNC processes. Use bsnes-plus to cross-check the first automated hit
@@ -344,9 +357,12 @@ project-local analysis area; persist only reviewed conclusions here.
 - A conflict-free 40-code startup mapping is confirmed locally from the
   reconstructed image, but comprehensive character mapping is incomplete and
   decoded original text remains untracked.
-- The complete automatic opening is implemented with fixed-size replacement
-  streams and paired Latin glyphs; no stream relocation, pointer changes, or
-  renderer changes are required. General relocation constraints remain unresolved.
+- The complete automatic opening recap remains implemented with fixed-size
+  replacement streams and no pointer changes. The later 23rd World Tournament
+  opening validates deterministic same-bank relocation: eleven selectors from
+  `$0200-$021A` use reviewed bank-$99 tail space at `$99:F8EE-$99:FAA1` and
+  update only their own pointer-table words. Packed-Latin lines are additionally
+  bounded to 28 visible characters without a portrait and 21 with a portrait.
 - Ordinary command-`$08` presentation pairs are confirmed portrait
   resource/variant selectors, but the complete numeric portrait catalog is not
   yet named or documented.

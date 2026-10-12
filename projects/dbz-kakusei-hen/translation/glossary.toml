@@ -1,0 +1,961 @@
+schema_version = 1
+
+[[term]]
+id = "character_goku"
+category = "character"
+canonical = "Goku"
+aliases = ["Son Goku", "Kakarot"]
+usage_notes = "Use \"Goku\" in dialogue and narration. Use \"Kakarot\" only as Goku's Saiyan name when spoken by Vegeta or other Saiyans."
+status = "approved"
+
+[[term]]
+id = "character_piccolo"
+category = "character"
+canonical = "Piccolo"
+aliases = []
+usage_notes = "Normal name after the tournament."
+status = "approved"
+
+[[term]]
+id = "character_piccolo_jr"
+category = "character"
+canonical = "Piccolo Jr."
+aliases = ["Majunior", "Demon King Piccolo"]
+usage_notes = "Use for identity or roster label during the 23rd World Tournament."
+status = "approved"
+
+[[term]]
+id = "character_king_piccolo"
+category = "character"
+canonical = "King Piccolo"
+aliases = ["Piccolo Daimaou", "Demon King Piccolo"]
+usage_notes = "Use for the evil predecessor only. Do not conflate with Piccolo Jr."
+status = "approved"
+
+[[term]]
+id = "character_krillin"
+category = "character"
+canonical = "Krillin"
+aliases = ["Kuririn"]
+usage_notes = "Never use \"Kuririn\" in translated dialogue."
+status = "approved"
+
+[[term]]
+id = "character_yamcha"
+category = "character"
+canonical = "Yamcha"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "character_tien"
+category = "character"
+canonical = "Tien"
+aliases = ["Tien Shinhan", "Tenshinhan"]
+usage_notes = "Use \"Tien\" in dialogue. Retain longer forms as lookup aliases only."
+status = "approved"
+
+[[term]]
+id = "character_chiaotzu"
+category = "character"
+canonical = "Chiaotzu"
+aliases = ["Chaozu"]
+usage_notes = "Use \"Chiaotzu.\""
+status = "approved"
+
+[[term]]
+id = "character_master_roshi"
+category = "character"
+canonical = "Master Roshi"
+aliases = ["Muten Roshi", "Kame-Sen'nin", "Kamesennin", "Turtle Hermit"]
+usage_notes = "Use \"Master Roshi.\""
+status = "approved"
+
+[[term]]
+id = "character_mercenary_tao"
+category = "character"
+canonical = "Mercenary Tao"
+aliases = ["Tao Pai Pai", "Cyber Tao"]
+usage_notes = "Use \"Mercenary Tao\" for his pre-cyborg form; \"Cyborg Tao\" specifically for his reconstructed tournament form."
+status = "approved"
+
+[[term]]
+id = "character_chichi"
+category = "character"
+canonical = "Chi-Chi"
+aliases = []
+usage_notes = "Standard form with hyphen."
+status = "approved"
+
+[[term]]
+id = "character_bulma"
+category = "character"
+canonical = "Bulma"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "character_gohan"
+category = "character"
+canonical = "Gohan"
+aliases = []
+usage_notes = "Standard form. Use \"Son Gohan\" only in formal narration if the source explicitly uses it."
+status = "approved"
+
+[[term]]
+id = "character_raditz"
+category = "character"
+canonical = "Raditz"
+aliases = ["Radditz", "Raditz"]
+usage_notes = "Never use \"Radditz\" in translated dialogue."
+status = "approved"
+
+[[term]]
+id = "character_vegeta"
+category = "character"
+canonical = "Vegeta"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "character_nappa"
+category = "character"
+canonical = "Nappa"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "character_frieza"
+category = "character"
+canonical = "Frieza"
+aliases = ["Freeza"]
+usage_notes = "Never use \"Freeza\" in translated dialogue. This project uses \"Frieza.\""
+status = "approved"
+
+[[term]]
+id = "character_zarbon"
+category = "character"
+canonical = "Zarbon"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "character_dodoria"
+category = "character"
+canonical = "Dodoria"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "character_cui"
+category = "character"
+canonical = "Cui"
+aliases = ["Cui", "Kyui"]
+usage_notes = "Use \"Cui.\""
+status = "approved"
+
+[[term]]
+id = "character_appule"
+category = "character"
+canonical = "Appule"
+aliases = ["Apule", "Apple"]
+usage_notes = "Use \"Appule.\""
+status = "approved"
+
+[[term]]
+id = "character_dende"
+category = "character"
+canonical = "Dende"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "character_nail"
+category = "character"
+canonical = "Nail"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "character_moori"
+category = "character"
+canonical = "Moori"
+aliases = ["Muri"]
+usage_notes = "Use \"Moori.\""
+status = "approved"
+
+[[term]]
+id = "character_cargo"
+category = "character"
+canonical = "Cargo"
+aliases = ["Tsuno"]
+usage_notes = "Use \"Cargo.\""
+status = "approved"
+
+[[term]]
+id = "character_grand_elder_guru"
+category = "character"
+canonical = "Grand Elder Guru"
+aliases = ["Guru", "Saichoro", "Great Elder", "Namekian Elder"]
+usage_notes = "Full form on introduction. \"Guru\" or \"Grand Elder\" when space or context requires it."
+status = "approved"
+
+[[term]]
+id = "character_captain_ginyu"
+category = "character"
+canonical = "Captain Ginyu"
+aliases = ["Ginyu", "Captain Ginyu"]
+usage_notes = "Always capitalize \"Captain\" before \"Ginyu\" when used as title. Standalone \"Ginyu\" is acceptable for direct address."
+status = "approved"
+
+[[term]]
+id = "character_recoome"
+category = "character"
+canonical = "Recoome"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "character_burter"
+category = "character"
+canonical = "Burter"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "character_jeice"
+category = "character"
+canonical = "Jeice"
+aliases = ["Jiece", "Jeice"]
+usage_notes = "Never use \"Jiece\" in translated dialogue. This project uses \"Jeice.\""
+status = "approved"
+
+[[term]]
+id = "character_guldo"
+category = "character"
+canonical = "Guldo"
+aliases = ["Gurdo"]
+usage_notes = "Use \"Guldo.\""
+status = "approved"
+
+[[term]]
+id = "character_shenron"
+category = "character"
+canonical = "Shenron"
+aliases = ["Eternal Dragon", "Shenlong"]
+usage_notes = "Use \"Shenron\" as the name. \"Eternal Dragon\" only as a descriptive title."
+status = "approved"
+
+[[term]]
+id = "character_porunga"
+category = "character"
+canonical = "Porunga"
+aliases = ["Namekian Eternal Dragon", "Porunga"]
+usage_notes = "Use \"Porunga.\""
+status = "approved"
+
+[[term]]
+id = "character_kami"
+category = "character"
+canonical = "Kami"
+aliases = ["God", "Earth's Kami"]
+usage_notes = "Use \"Kami\" as the name. Lowercase \"guardian\" for descriptive references."
+status = "approved"
+
+[[term]]
+id = "character_mr_popo"
+category = "character"
+canonical = "Mr. Popo"
+aliases = []
+usage_notes = "Standard form with period."
+status = "approved"
+
+[[term]]
+id = "character_korin"
+category = "character"
+canonical = "Korin"
+aliases = ["Karin", "Karin-sama"]
+usage_notes = "Use \"Korin.\""
+status = "approved"
+
+[[term]]
+id = "character_yajirobe"
+category = "character"
+canonical = "Yajirobe"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "character_oolong"
+category = "character"
+canonical = "Oolong"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "character_puar"
+category = "character"
+canonical = "Puar"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "character_oxking"
+category = "character"
+canonical = "Ox-King"
+aliases = ["Gyumao"]
+usage_notes = "Use \"Ox-King\" with hyphen."
+status = "approved"
+
+[[term]]
+id = "character_king_kai"
+category = "character"
+canonical = "King Kai"
+aliases = ["North Kai", "Kaio", "Lord Kaio"]
+usage_notes = "Use \"King Kai.\""
+status = "approved"
+
+[[term]]
+id = "character_bubbles"
+category = "character"
+canonical = "Bubbles"
+aliases = []
+usage_notes = "Gregory the monkey on King Kai's planet."
+status = "approved"
+
+[[term]]
+id = "character_announcer"
+category = "character"
+canonical = "World Tournament Announcer"
+aliases = ["Announcer"]
+usage_notes = "Use for the tournament MC."
+status = "approved"
+
+[[term]]
+id = "character_hero"
+category = "character"
+canonical = "Hero"
+aliases = []
+usage_notes = "Use for the 23rd World Tournament masked fighter (Kami's vessel)."
+status = "approved"
+
+[[term]]
+id = "character_saibaman"
+category = "character"
+canonical = "Saibaman"
+aliases = ["Cultivar"]
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "race_saiyan"
+category = "race"
+canonical = "Saiyan"
+aliases = ["Saiya-jin", "Sayajin"]
+usage_notes = "Use \"Saiyan.\" Plural: \"Saiyans.\" Never use \"Saiya-jin\" in output."
+status = "approved"
+
+[[term]]
+id = "race_half_saiyan"
+category = "race"
+canonical = "half-Saiyan"
+aliases = ["hybrid Saiyan", "half-blood"]
+usage_notes = "Use lowercase \"half-Saiyan\" in prose. Capitalize only at sentence start."
+status = "approved"
+
+[[term]]
+id = "race_namekian"
+category = "race"
+canonical = "Namekian"
+aliases = ["Namek-seijin", "Namek"]
+usage_notes = "Use for both noun and adjective."
+status = "approved"
+
+[[term]]
+id = "race_earthling"
+category = "race"
+canonical = "Earthling"
+aliases = ["human", "Terran"]
+usage_notes = "Use \"Earthling\" for the race. Lowercase \"human\" for generic usage."
+status = "approved"
+
+[[term]]
+id = "race_saibamen"
+category = "race"
+canonical = "Saibamen"
+aliases = ["Cultivars"]
+usage_notes = "Plural form. Singular: \"Saibaman.\""
+status = "approved"
+
+[[term]]
+id = "group_ginyu_force"
+category = "group"
+canonical = "Ginyu Force"
+aliases = []
+usage_notes = "Capitalize both words. \"Ginyu Force\" is the proper name."
+status = "approved"
+
+[[term]]
+id = "group_frieza_force"
+category = "group"
+canonical = "Frieza Force"
+aliases = ["Frieza's army", "Planet Trade Organization"]
+usage_notes = "Use \"Frieza Force.\" Do not use \"Planet Trade Organization.\""
+status = "approved"
+
+[[term]]
+id = "group_dragon_clan"
+category = "group"
+canonical = "Dragon Clan"
+aliases = []
+usage_notes = "Use for the Namekian elder lineage."
+status = "approved"
+
+[[term]]
+id = "group_warrior_type_namekian"
+category = "group"
+canonical = "warrior-type Namekian"
+aliases = ["Warrior Namekian"]
+usage_notes = "Lowercase in prose unless used as a formal label."
+status = "approved"
+
+[[term]]
+id = "group_z_fighters"
+category = "group"
+canonical = "Z Fighters"
+aliases = ["Z-senshi", "Z Warriors"]
+usage_notes = "Use only where the source actually refers to the group. Do not insert into dialogue merely for franchise flavor."
+status = "approved"
+
+[[term]]
+id = "place_earth"
+category = "place"
+canonical = "Earth"
+aliases = []
+usage_notes = "Prefer \"Earth,\" not \"Planet Earth,\" unless the sentence benefits from the formal construction."
+status = "approved"
+
+[[term]]
+id = "place_planet_namek"
+category = "place"
+canonical = "Planet Namek"
+aliases = ["Namek"]
+usage_notes = "Use \"Planet Namek\" on first introduction or formal narration. Use \"Namek\" in ordinary dialogue."
+status = "approved"
+
+[[term]]
+id = "place_planet_vegeta"
+category = "place"
+canonical = "Planet Vegeta"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "place_papaya_island"
+category = "place"
+canonical = "Papaya Island"
+aliases = []
+usage_notes = "Use for the tournament island."
+status = "approved"
+
+[[term]]
+id = "place_world_tournament_arena"
+category = "place"
+canonical = "World Tournament arena"
+aliases = ["Tenkaichi Budokai arena", "tournament ring"]
+usage_notes = "Use \"World Tournament arena\" or \"tournament arena.\""
+status = "approved"
+
+[[term]]
+id = "place_mount_paozu"
+category = "place"
+canonical = "Mount Paozu"
+aliases = ["Paozu Mountain"]
+usage_notes = "Use \"Mount Paozu.\""
+status = "approved"
+
+[[term]]
+id = "place_kame_house"
+category = "place"
+canonical = "Kame House"
+aliases = ["Turtle House", "Master Roshi's house"]
+usage_notes = "Use \"Kame House.\""
+status = "approved"
+
+[[term]]
+id = "place_kami_lookout"
+category = "place"
+canonical = "Kami's Lookout"
+aliases = ["Lookout", "Kami's Palace"]
+usage_notes = "Use \"Kami's Lookout.\""
+status = "approved"
+
+[[term]]
+id = "place_capsule_corporation"
+category = "place"
+canonical = "Capsule Corporation"
+aliases = ["Capsule Corp."]
+usage_notes = "Use full form on first mention. \"Capsule Corp.\" acceptable in dialogue."
+status = "approved"
+
+[[term]]
+id = "place_other_world"
+category = "place"
+canonical = "Other World"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "place_snake_way"
+category = "place"
+canonical = "Snake Way"
+aliases = ["Serpent Road"]
+usage_notes = "Use \"Snake Way.\""
+status = "approved"
+
+[[term]]
+id = "place_king_kai_planet"
+category = "place"
+canonical = "King Kai's Planet"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "place_guru_house"
+category = "place"
+canonical = "Grand Elder Guru's house"
+aliases = ["Grand Elder's village", "Namekian village"]
+usage_notes = "Use full form on introduction. Shorten to \"Guru's house\" or \"the village\" thereafter."
+status = "approved"
+
+[[term]]
+id = "place_frieza_ship"
+category = "place"
+canonical = "Frieza's spaceship"
+aliases = ["Frieza's ship", "enemy ship"]
+usage_notes = "Use \"Frieza's spaceship\" or context-appropriate shorter form."
+status = "approved"
+
+[[term]]
+id = "object_dragon_ball"
+category = "object"
+canonical = "Dragon Ball"
+aliases = []
+usage_notes = "Capitalize \"Dragon Ball\" when referring to the wish-granting artifacts. Use lowercase for a generic ball only if context demands it."
+status = "approved"
+
+[[term]]
+id = "object_dragon_balls"
+category = "object"
+canonical = "Dragon Balls"
+aliases = []
+usage_notes = "Plural form."
+status = "approved"
+
+[[term]]
+id = "object_earth_dragon_balls"
+category = "object"
+canonical = "Earth Dragon Balls"
+aliases = []
+usage_notes = "Use for the original seven."
+status = "approved"
+
+[[term]]
+id = "object_namekian_dragon_balls"
+category = "object"
+canonical = "Namekian Dragon Balls"
+aliases = []
+usage_notes = "Use for the Namekian set."
+status = "approved"
+
+[[term]]
+id = "object_four_star_ball"
+category = "object"
+canonical = "Four-Star Ball"
+aliases = ["Four-Star Dragon Ball", "Suu Shin Chuu"]
+usage_notes = "Use \"Four-Star Ball.\""
+status = "approved"
+
+[[term]]
+id = "object_dragon_radar"
+category = "object"
+canonical = "Dragon Radar"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "object_scouter"
+category = "object"
+canonical = "scouter"
+aliases = ["Scouter", "Battle Scanner", "Tag", "Arum"]
+usage_notes = "Use lowercase \"scouter\" in prose. Capitalize only in UI labels or titles."
+status = "approved"
+
+[[term]]
+id = "object_senzu_bean"
+category = "object"
+canonical = "Senzu Bean"
+aliases = ["Senzu"]
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "object_senzu_beans"
+category = "object"
+canonical = "Senzu Beans"
+aliases = []
+usage_notes = "Plural form."
+status = "approved"
+
+[[term]]
+id = "object_flying_nimbus"
+category = "object"
+canonical = "Flying Nimbus"
+aliases = ["Kinto'un", "Somersault Cloud"]
+usage_notes = "Use \"Flying Nimbus.\""
+status = "approved"
+
+[[term]]
+id = "object_power_pole"
+category = "object"
+canonical = "Power Pole"
+aliases = ["Nyoibou", "Extendable Pole"]
+usage_notes = "Use \"Power Pole.\""
+status = "approved"
+
+[[term]]
+id = "object_capsule"
+category = "object"
+canonical = "Capsule"
+aliases = ["Hoi-Poi Capsule"]
+usage_notes = "Use \"Capsule\" in dialogue. \"Hoi-Poi Capsule\" acceptable as a descriptive label."
+status = "approved"
+
+[[term]]
+id = "object_space_pod"
+category = "object"
+canonical = "Space Pod"
+aliases = ["Attack Ball", "Pod"]
+usage_notes = "Use \"Space Pod.\""
+status = "approved"
+
+[[term]]
+id = "object_medical_machine"
+category = "object"
+canonical = "Medical Machine"
+aliases = ["Rejuvenation Tank", "Healing Tank"]
+usage_notes = "Use \"Medical Machine.\""
+status = "approved"
+
+[[term]]
+id = "form_great_ape"
+category = "form"
+canonical = "Great Ape"
+aliases = ["Oozaru", "Saiyan Ape"]
+usage_notes = "Never use \"Oozaru\" in translated dialogue."
+status = "approved"
+
+[[term]]
+id = "form_super_saiyan"
+category = "form"
+canonical = "Super Saiyan"
+aliases = ["Super Saiya-jin", "Super Saiyajin"]
+usage_notes = "Never use \"Super Saiya-jin\" in translated dialogue."
+status = "approved"
+
+[[term]]
+id = "concept_ki"
+category = "concept"
+canonical = "ki"
+aliases = ["chi", "energy"]
+usage_notes = "Use lowercase \"ki\" in prose except at the beginning of a sentence. Translate generic energy references naturally as \"energy\" when the source does not specifically name ki."
+status = "approved"
+
+[[term]]
+id = "concept_power_level"
+category = "concept"
+canonical = "Power Level"
+aliases = ["battle power", "fighting power"]
+usage_notes = "Use \"Power Level\" for a named statistic or UI concept. Lowercase \"power level\" in ordinary dialogue may remain acceptable."
+status = "approved"
+
+[[term]]
+id = "concept_hidden_potential"
+category = "concept"
+canonical = "hidden potential"
+aliases = ["latent power"]
+usage_notes = "Use lowercase unless used as a formal label."
+status = "approved"
+
+[[term]]
+id = "concept_immortality"
+category = "concept"
+canonical = "immortality"
+aliases = ["eternal life"]
+usage_notes = "Use lowercase in dialogue."
+status = "approved"
+
+[[term]]
+id = "concept_resurrection"
+category = "concept"
+canonical = "resurrection"
+aliases = ["revival"]
+usage_notes = "Use lowercase in dialogue."
+status = "approved"
+
+[[term]]
+id = "concept_fusion"
+category = "concept"
+canonical = "fusion"
+aliases = []
+usage_notes = "Use lowercase in dialogue unless the source uses it as a formal name."
+status = "approved"
+
+[[term]]
+id = "concept_namekian_fusion"
+category = "concept"
+canonical = "Namekian fusion"
+aliases = []
+usage_notes = "Use lowercase in dialogue."
+status = "approved"
+
+[[term]]
+id = "concept_gravity_training"
+category = "concept"
+canonical = "gravity training"
+aliases = []
+usage_notes = "Use lowercase in dialogue."
+status = "approved"
+
+[[term]]
+id = "concept_tail"
+category = "concept"
+canonical = "tail"
+aliases = ["Saiyan tail"]
+usage_notes = "Use lowercase in dialogue."
+status = "approved"
+
+[[term]]
+id = "concept_wish"
+category = "concept"
+canonical = "wish"
+aliases = ["Dragon Ball wish"]
+usage_notes = "Use lowercase in dialogue unless \"Wish\" is used as a formal label."
+status = "approved"
+
+[[term]]
+id = "concept_dragon_ball_wish"
+category = "concept"
+canonical = "Dragon Ball wish"
+aliases = []
+usage_notes = "Use when referring to the act of wish-granting."
+status = "approved"
+
+[[term]]
+id = "technique_kamehameha"
+category = "technique"
+canonical = "Kamehameha"
+aliases = []
+usage_notes = "Do not translate. Always capitalize."
+status = "approved"
+
+[[term]]
+id = "technique_super_kamehameha"
+category = "technique"
+canonical = "Super Kamehameha"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "technique_solar_flare"
+category = "technique"
+canonical = "Solar Flare"
+aliases = ["Taiyoken"]
+usage_notes = "Use \"Solar Flare.\""
+status = "approved"
+
+[[term]]
+id = "technique_destructo_disc"
+category = "technique"
+canonical = "Destructo Disc"
+aliases = ["Kienzan"]
+usage_notes = "Use \"Destructo Disc.\""
+status = "approved"
+
+[[term]]
+id = "technique_tri_beam"
+category = "technique"
+canonical = "Tri-Beam"
+aliases = ["Kikoho"]
+usage_notes = "Use \"Tri-Beam\" with hyphen."
+status = "approved"
+
+[[term]]
+id = "technique_dodon_ray"
+category = "technique"
+canonical = "Dodon Ray"
+aliases = ["Dodon Pa"]
+usage_notes = "Use \"Dodon Ray.\""
+status = "approved"
+
+[[term]]
+id = "technique_multi_form"
+category = "technique"
+canonical = "Multi-Form"
+aliases = ["Shishin no Ken"]
+usage_notes = "Use \"Multi-Form.\""
+status = "approved"
+
+[[term]]
+id = "technique_four_witches"
+category = "technique"
+canonical = "Four Witches Technique"
+aliases = ["Evil Containment Wave", "Mafuba"]
+usage_notes = "Use \"Four Witches Technique\" per established localization."
+status = "approved"
+
+[[term]]
+id = "technique_special_beam_cannon"
+category = "technique"
+canonical = "Special Beam Cannon"
+aliases = ["Makankosappo"]
+usage_notes = "Use \"Special Beam Cannon.\""
+status = "approved"
+
+[[term]]
+id = "technique_explosive_wave"
+category = "technique"
+canonical = "Explosive Wave"
+aliases = ["Bakuratsuzanpa"]
+usage_notes = "Use \"Explosive Wave.\""
+status = "approved"
+
+[[term]]
+id = "technique_masenko"
+category = "technique"
+canonical = "Masenko"
+aliases = []
+usage_notes = "Do not translate. Always capitalize."
+status = "approved"
+
+[[term]]
+id = "technique_kaioken"
+category = "technique"
+canonical = "Kaio-ken"
+aliases = ["Kaioken", "King Kai Fist"]
+usage_notes = "Preserve hyphenation: \"Kaio-ken,\" not \"Kaioken.\""
+status = "approved"
+
+[[term]]
+id = "technique_spirit_bomb"
+category = "technique"
+canonical = "Spirit Bomb"
+aliases = ["Genki Dama"]
+usage_notes = "Use \"Spirit Bomb.\""
+status = "approved"
+
+[[term]]
+id = "technique_galick_gun"
+category = "technique"
+canonical = "Galick Gun"
+aliases = ["Galick Ho"]
+usage_notes = "Use \"Galick Gun.\""
+status = "approved"
+
+[[term]]
+id = "technique_body_change"
+category = "technique"
+canonical = "Body Change"
+aliases = ["Body Change Technique", "Change!"]
+usage_notes = "Use \"Body Change.\""
+status = "approved"
+
+[[term]]
+id = "technique_crusher_ball"
+category = "technique"
+canonical = "Crusher Ball"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "technique_recoome_eraser_gun"
+category = "technique"
+canonical = "Recoome Eraser Gun"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "technique_death_beam"
+category = "technique"
+canonical = "Death Beam"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "technique_death_ball"
+category = "technique"
+canonical = "Death Ball"
+aliases = []
+usage_notes = "Standard form."
+status = "approved"
+
+[[term]]
+id = "arc_23rd_world_tournament"
+category = "arc"
+canonical = "23rd World Tournament"
+aliases = ["Tenkaichi Budokai", "World Martial Arts Tournament", "23rd Tenkaichi Budokai"]
+usage_notes = "Use \"23rd World Tournament\" for this game's tournament."
+status = "approved"
+
+[[term]]
+id = "arc_saiyan_saga"
+category = "arc"
+canonical = "Saiyan Saga"
+aliases = ["Saiyan Arc"]
+usage_notes = "Use \"Saiyan Saga.\""
+status = "approved"
+
+[[term]]
+id = "arc_namek_saga"
+category = "arc"
+canonical = "Namek Saga"
+aliases = ["Namek Arc"]
+usage_notes = "Use \"Namek Saga.\""
+status = "approved"
+
+[[term]]
+id = "arc_captain_ginyu_saga"
+category = "arc"
+canonical = "Captain Ginyu Saga"
+aliases = ["Ginyu Saga"]
+usage_notes = "Use \"Captain Ginyu Saga.\""
+status = "approved"
+
+[[term]]
+id = "arc_frieza_saga"
+category = "arc"
+canonical = "Frieza Saga"
+aliases = []
+usage_notes = "Use \"Frieza Saga.\""
+status = "approved"

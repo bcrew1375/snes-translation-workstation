@@ -36,9 +36,9 @@ from dbz_kakusei_hen.translation_build import (  # noqa: E402
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(prog="dbz-kakusei-translate", description=__doc__)
     parser.add_argument("rom", type=Path, help="Path to the supported original ROM")
-    parser.add_argument("--patches", type=Path, default=PROJECT_ROOT / "translation/patches.tsv")
-    parser.add_argument("--references", type=Path, default=PROJECT_ROOT / "translation/references.tsv")
-    parser.add_argument("--ranges", type=Path, default=PROJECT_ROOT / "translation/ranges.tsv")
+    parser.add_argument("--patches", type=Path, default=PROJECT_ROOT / "translation/patches.toml")
+    parser.add_argument("--references", type=Path, default=PROJECT_ROOT / "translation/references.toml")
+    parser.add_argument("--ranges", type=Path, default=PROJECT_ROOT / "translation/ranges.toml")
     parser.add_argument(
         "--analyze-unreferenced",
         "--analyze-orphans",

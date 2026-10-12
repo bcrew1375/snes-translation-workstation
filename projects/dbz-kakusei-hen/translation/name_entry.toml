@@ -1,0 +1,89 @@
+schema_version = 1
+
+[[record]]
+id = "picker_page_1"
+original_address = "84:A3E0"
+original_offset = 0x223E0
+original_length = 240
+source_sha256 = "e1b10f1bee992e6b5670306d011b4ac0e3debe5d9ac1bc9484a58235fb400390"
+record_type = "picker_page"
+english = "latin_characters"
+status = "implemented"
+notes = "Original password page retained byte-for-byte as the structural template; generated Latin page 1 is relocated to $84:F142 and selected only when WRAM $0216 is zero."
+
+[[record]]
+id = "picker_page_2"
+original_address = "84:A4D0"
+original_offset = 0x224D0
+original_length = 240
+source_sha256 = "69fe5ca302337273114c217da3b288b6f0f90400aa01a746bfd8cd09ac5bc19d"
+record_type = "picker_page"
+english = "latin_characters"
+status = "implemented"
+notes = "Original password page retained byte-for-byte as the structural template; generated Latin page 2 is relocated to $84:F232 and selected only when WRAM $0216 is zero."
+
+[[record]]
+id = "selection_map_1"
+original_address = "81:8D56"
+original_offset = 0x8D56
+original_length = 170
+source_sha256 = "078be6e87b0f4808fcfd37a2a093ab159afe199d761e73cb0a33c8f860d02a92"
+record_type = "selection_map"
+english = "page_1_glyph_codes"
+status = "implemented"
+notes = "Original password map retained byte-for-byte; generated Latin page-1 map is relocated to $84:F322 for fresh name entry only."
+
+[[record]]
+id = "selection_map_2"
+original_address = "81:8E00"
+original_offset = 0x8E00
+original_length = 170
+source_sha256 = "bb27a5556b86f0fadfe65d4f4cb991522be232c28a6d6964e7a18bd58c1a3436"
+record_type = "selection_map"
+english = "page_2_glyph_codes"
+status = "implemented"
+notes = "Original password map retained byte-for-byte; generated Latin page-2 map is relocated to $84:F3CC for fresh name entry only."
+
+[[record]]
+id = "default_names"
+original_address = "84:A048"
+original_offset = 0x22048
+original_length = 50
+source_sha256 = "cfb1e7e406061ee394d6312486785464590d15e542424f22975b55a7ceb09d75"
+record_type = "default_names"
+english = """Aiyah
+Buddy
+Meanie
+Sally
+Teach"""
+status = "implemented"
+notes = "Localized joke defaults for the player, friend, bully, girl, and teacher fields; each remains exactly five stored words."
+
+[[record]]
+id = "name_controls"
+original_address = "84:A5C0"
+original_offset = 0x225C0
+original_length = 40
+source_sha256 = "c221e5057b3715e71d01e2120b0e183766a0f01ae5f22b905a0bc229193fca71"
+record_type = "fixed_text"
+english = """A:Pick
+B:Back
+X:Page
+Y:Clr"""
+status = "implemented"
+notes = "Four fixed four-cell control-hint lines shown by the five-name editor; Y blanks all 25 cells across the five fields."
+
+[[record]]
+id = "name_labels"
+original_address = "84:A5F0"
+original_offset = 0x225F0
+original_length = 60
+source_sha256 = "ea44b0902db5ea1075c2bf84bcddf2edd9a245e75b4a91f72f2959527a8cf725"
+record_type = "fixed_text"
+english = """Player
+Friend
+Bully
+Girl
+Teacher"""
+status = "implemented"
+notes = "Role labels translated from the original player, friendly boy, mean boy, girl, and teacher prompts."

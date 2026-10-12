@@ -36,10 +36,13 @@ from dbz_kakusei_hen.scenario import (  # noqa: E402
 from dbz_kakusei_hen.translation_build import (  # noqa: E402
     TranslationRecord,
     build_translation,
+    load_reviewed_free_regions,
     load_translation_manifests,
     map_unverified_candidate_gaps,
     plan_translations,
+    validate_visible_line_width,
     validate_reviewed_free_regions,
+    visible_line_character_limit,
 )
 
 
@@ -144,12 +147,49 @@ class PointerUpdateTest(unittest.TestCase):
 
 
 class ManifestTest(unittest.TestCase):
+    @staticmethod
+    def translation_record(english: str) -> TranslationRecord:
+        return TranslationRecord(
+            id="width_test",
+            selector=0x0200,
+            original_bank=0x99,
+            original_address=0x8000,
+            original_offset=0,
+            original_length=2,
+            source_sha256="0" * 64,
+            english=english,
+            status="implemented",
+            notes="",
+            reference_offset=0,
+            pointer_format="16-bit same-bank LoROM pointer",
+        )
+
+    def test_confirmed_visible_line_limits(self):
+        wide = TextPresentation("wide_marker", b"\xFF\xFF", 0x8000, 0, 21, 8)
+        portrait = TextPresentation("context_pair", b"\x01\x00", 0x8002, 2, 16, 8)
+        default = TextPresentation("default", None, None, None, 16, 8)
+        self.assertEqual(visible_line_character_limit(wide), 28)
+        self.assertEqual(visible_line_character_limit(portrait), 21)
+        self.assertIsNone(visible_line_character_limit(default))
+        validate_visible_line_width(self.translation_record("W" * 28), wide)
+        validate_visible_line_width(self.translation_record("P" * 21), portrait)
+        with self.assertRaisesRegex(
+            WorkstationError,
+            r"width_test selector \$0200 line 1 has 29 characters; wide_marker permits 28",
+        ):
+            validate_visible_line_width(self.translation_record("W" * 29), wide)
+        with self.assertRaisesRegex(
+            WorkstationError,
+            r"width_test selector \$0200 line 2 has 22 characters; context_pair permits 21",
+        ):
+            validate_visible_line_width(self.translation_record("ok\n" + "P" * 22), portrait)
+
     def test_manifests_join_by_id_and_preserve_real_banks(self):
         records = load_translation_manifests(
-            PROJECT_ROOT / "translation" / "patches.tsv",
-            PROJECT_ROOT / "translation" / "references.tsv",
+            PROJECT_ROOT / "translation" / "patches.toml",
+            PROJECT_ROOT / "translation" / "references.toml",
         )
-        self.assertEqual(len(records), 26)
+        self.assertEqual(len(records), 53)
         self.assertEqual(records[0].selector, 0x07E1)
         self.assertEqual({record.original_bank for record in records}, {0x99, 0x9B, 0x9C})
         self.assertIn("\n", records[0].english)
@@ -179,18 +219,49 @@ class OriginalRomExpansionTest(unittest.TestCase):
     def setUpClass(cls):
         cls.original = (PROJECT_ROOT / "rom" / "original.sfc").read_bytes()
         cls.records = load_translation_manifests(
-            PROJECT_ROOT / "translation" / "patches.tsv",
-            PROJECT_ROOT / "translation" / "references.tsv",
+            PROJECT_ROOT / "translation" / "patches.toml",
+            PROJECT_ROOT / "translation" / "references.toml",
         )
 
     def test_existing_records_plan_without_relocation_and_match_opening_bytes(self):
-        plans = plan_translations(self.original, self.records, [])
+        plans = plan_translations(self.original, self.records[:len(OPENING_TEXTS)], [])
         self.assertEqual(len(plans), len(OPENING_TEXTS))
         self.assertTrue(all(plan.allocation.strategy == "in-place" for plan in plans))
         for plan, opening in zip(plans, OPENING_TEXTS):
             with self.subTest(id=plan.record.id):
                 self.assertEqual(plan.record.selector, opening.selector)
                 self.assertEqual(plan.encoded.data, encode_opening_stream(opening))
+
+    def test_tournament_lines_fit_confirmed_visible_presentations(self):
+        from dbz_kakusei_hen.scenario import decode_text_slots
+
+        slots = decode_text_slots(self.original)
+        tournament = [
+            record for record in self.records
+            if record.id.startswith("tournament_opening_")
+        ]
+        self.assertEqual(len(tournament), 27)
+        for record in tournament:
+            presentation = slots[record.selector].presentation
+            limit = visible_line_character_limit(presentation)
+            with self.subTest(id=record.id, kind=presentation.kind):
+                self.assertIsNotNone(limit)
+                lines = record.english.split("\n")
+                self.assertLessEqual(len(lines), presentation.height_cells)
+                self.assertTrue(all(len(line) <= limit for line in lines))
+                validate_visible_line_width(record, presentation)
+
+    def test_tournament_relocation_count_and_span_are_stable(self):
+        regions = load_reviewed_free_regions(PROJECT_ROOT / "translation" / "ranges.toml")
+        tournament = [
+            record for record in self.records
+            if record.id.startswith("tournament_opening_")
+        ]
+        plans = plan_translations(self.original, tournament, regions)
+        relocated = [plan for plan in plans if plan.needs_pointer_update]
+        self.assertEqual(len(relocated), 11)
+        self.assertEqual(relocated[0].allocation.new_offset, 0x0CF8EE)
+        self.assertEqual(relocated[-1].allocation.end_offset - 1, 0x0CFAA1)
 
     def test_candidate_gaps_exclude_all_confirmed_text_structures(self):
         from dbz_kakusei_hen.scenario import (
@@ -248,7 +319,7 @@ class OriginalRomExpansionTest(unittest.TestCase):
         from snesworkbench.patching import write_snes_checksum
 
         write_snes_checksum(expected, 0x7FDE)
-        result = build_translation(self.original, self.records, [])
+        result = build_translation(self.original, self.records[:len(OPENING_TEXTS)], [])
         self.assertEqual(result.data, bytes(expected))
         self.assertEqual(result.metadata["translation_count"], len(OPENING_TEXTS))
 

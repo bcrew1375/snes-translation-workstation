@@ -9,8 +9,9 @@ copyrighted input present.
 import re
 import tomllib
 import unittest
-import csv
 from pathlib import Path
+
+from snesworkbench.status import load_project_status
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -50,88 +51,90 @@ class ProjectDescriptorTest(unittest.TestCase):
         self.assertTrue(manifest.is_file(), f"missing analysis manifest {manifest}")
 
     def test_translation_manifests_exist(self):
-        for name in ("patches", "references", "ranges", "menu", "name_entry"):
+        for name in (
+            "patches", "references", "ranges", "menu", "name_entry", "choices", "glossary"
+        ):
             manifest = PROJECT_ROOT / self.data["manifests"][name]
             self.assertTrue(manifest.is_file(), f"missing translation manifest {manifest}")
 
+    def test_status_manifest_is_valid(self):
+        status = load_project_status(PROJECT_ROOT / self.data["manifests"]["status"])
+        self.assertEqual(status.phase, "opening_tournament_quiz")
+        self.assertTrue(status.milestones)
+        self.assertTrue(status.recommended_tasks)
+
+    def test_runtime_evidence_ledger_exists(self):
+        ledger = PROJECT_ROOT / self.data["manifests"]["runtime_evidence"]
+        self.assertTrue(ledger.is_file(), f"missing runtime evidence ledger {ledger}")
+
 
 class TranslationManifestTest(unittest.TestCase):
-    EXPECTED_HEADERS = {
-        "patches.tsv": [
-            "id", "original_address", "original_offset", "original_length",
-            "source_sha256", "english", "status", "notes",
-        ],
-        "menu.tsv": [
-            "id", "original_address", "original_offset", "original_length",
-            "source_sha256", "record_type", "character_offsets", "english", "status", "notes",
-        ],
-        "name_entry.tsv": [
-            "id", "original_address", "original_offset", "original_length",
-            "source_sha256", "record_type", "english", "status", "notes",
-        ],
-        "references.tsv": [
-            "id", "reference_type", "reference_address", "reference_offset",
-            "message_index", "pointer_format", "target_address", "target_offset",
-        ],
-        "ranges.tsv": [
-            "name", "rom_start", "rom_end", "cpu_start", "cpu_end", "bank",
-            "alignment", "evidence", "confidence",
-        ],
-    }
+    @staticmethod
+    def load(name: str, table: str = "record") -> list[dict[str, object]]:
+        with (PROJECT_ROOT / "translation" / name).open("rb") as source:
+            return tomllib.load(source)[table]
 
-    def test_tracked_manifests_have_expected_headers_and_opening_records(self):
-        for name, expected in self.EXPECTED_HEADERS.items():
+    def test_tracked_manifests_are_versioned_toml_with_records(self):
+        for name, table in (
+            ("patches.toml", "record"), ("references.toml", "record"),
+            ("ranges.toml", "record"), ("menu.toml", "record"),
+            ("name_entry.toml", "record"), ("choices.toml", "record"),
+            ("glossary.toml", "term"),
+        ):
             with self.subTest(name=name):
-                path = PROJECT_ROOT / "translation" / name
-                with path.open(encoding="utf-8", newline="") as source:
-                    reader = csv.DictReader(source, delimiter="\t")
-                    self.assertEqual(reader.fieldnames, expected)
-                    rows = list(reader)
-                    self.assertTrue(rows)
-        with (PROJECT_ROOT / "translation" / "patches.tsv").open(
-            encoding="utf-8", newline=""
-        ) as source:
-            patches = list(csv.DictReader(source, delimiter="\t"))
-        self.assertEqual(len(patches), 26)
+                with (PROJECT_ROOT / "translation" / name).open("rb") as source:
+                    document = tomllib.load(source)
+                self.assertEqual(document["schema_version"], 1)
+                self.assertTrue(document[table])
+
+    def test_tracked_manifests_preserve_opening_records(self):
+        patches = self.load("patches.toml")
+        self.assertEqual(len(patches), 53)
         self.assertEqual(
             [patch["id"] for patch in patches[:4]],
             ["opening_narration", "opening_narration_2", "opening_narration_3", "opening_narration_4"],
         )
         self.assertEqual(
-            [patch["id"] for patch in patches[4:]],
+            [patch["id"] for patch in patches[4:26]],
             [f"opening_recap_{index:02d}" for index in range(1, 23)],
         )
         self.assertEqual(
-            [patch["original_address"] for patch in patches[:4]],
-            ["$9C:9358", "$9C:93D0", "$9C:9444", "$9C:948C"],
+            [patch["id"] for patch in patches[26:]],
+            [f"tournament_opening_{index:02d}" for index in range(27)],
         )
         self.assertEqual(
-            [int(patch["original_offset"].removeprefix("$"), 16) for patch in patches[:4]],
+            [patch["original_address"] for patch in patches[:4]],
+            ["9C:9358", "9C:93D0", "9C:9444", "9C:948C"],
+        )
+        self.assertEqual(
+            [patch["original_offset"] for patch in patches[:4]],
             [0x0E1358, 0x0E13D0, 0x0E1444, 0x0E148C],
         )
-        self.assertEqual([int(patch["original_length"], 0) for patch in patches[:4]], [120, 116, 72, 26])
+        self.assertEqual([patch["original_length"] for patch in patches[:4]], [120, 116, 72, 26])
         self.assertTrue(all(patch["status"] == "implemented" for patch in patches))
-        self.assertEqual([len(patch["english"].split("\\n")) for patch in patches[:4]], [4, 4, 3, 1])
+        self.assertEqual([len(patch["english"].split("\n")) for patch in patches[:4]], [4, 4, 3, 1])
 
-        with (PROJECT_ROOT / "translation" / "references.tsv").open(
-            encoding="utf-8", newline=""
-        ) as source:
-            references = list(csv.DictReader(source, delimiter="\t"))
-        self.assertEqual(len(references), 26)
+        references = self.load("references.toml")
+        self.assertEqual(len(references), 55)
         self.assertEqual(
-            [reference["message_index"] for reference in references[4:]],
+            [reference["message_index"] for reference in references[4:26]],
             [
-                "$0026", "$07E5", "$07E6", "$002E", "$07E7", "$076B",
-                "$07E8", "$07E9", "$07EA", "$07EB", "$07EC", "$07ED",
-                "$07EE", "$07EF", "$0000", "$0800", "$0801", "$0802",
-                "$0003", "$0803", "$0804", "$0805",
+                0x0026, 0x07E5, 0x07E6, 0x002E, 0x07E7, 0x076B,
+                0x07E8, 0x07E9, 0x07EA, 0x07EB, 0x07EC, 0x07ED,
+                0x07EE, 0x07EF, 0x0000, 0x0800, 0x0801, 0x0802,
+                0x0003, 0x0803, 0x0804, 0x0805,
             ],
         )
+        self.assertEqual(
+            [reference["id"] for reference in references[-2:]],
+            ["tournament_arena_label", "papaya_island_label"],
+        )
+        self.assertEqual(
+            [reference["reference_type"] for reference in references[-2:]],
+            ["fixed_resource_pointer", "fixed_resource_pointer"],
+        )
 
-        with (PROJECT_ROOT / "translation" / "menu.tsv").open(
-            encoding="utf-8", newline=""
-        ) as source:
-            menu = list(csv.DictReader(source, delimiter="\t"))
+        menu = self.load("menu.toml")
         self.assertEqual(
             [record["id"] for record in menu],
             [
@@ -141,15 +144,12 @@ class TranslationManifestTest(unittest.TestCase):
         )
         self.assertEqual(
             [record["original_offset"] for record in menu],
-            ["$0221D8", "$0221FA", "$02222E", "$022254", "$022266"]
-            + [f"${0x022278 + index * 18:06X}" for index in range(20)],
+            [0x0221D8, 0x0221FA, 0x02222E, 0x022254, 0x022266]
+            + [0x022278 + index * 18 for index in range(20)],
         )
         self.assertTrue(all(record["status"] == "implemented" for record in menu))
 
-        with (PROJECT_ROOT / "translation" / "name_entry.tsv").open(
-            encoding="utf-8", newline=""
-        ) as source:
-            name_entry = list(csv.DictReader(source, delimiter="\t"))
+        name_entry = self.load("name_entry.toml")
         self.assertEqual(
             [record["id"] for record in name_entry],
             [
@@ -159,9 +159,17 @@ class TranslationManifestTest(unittest.TestCase):
         )
         self.assertEqual(
             [record["original_offset"] for record in name_entry[:4]],
-            ["$0223E0", "$0224D0", "$008D56", "$008E00"],
+            [0x0223E0, 0x0224D0, 0x008D56, 0x008E00],
         )
         self.assertTrue(all(record["status"] == "implemented" for record in name_entry))
+
+        choices = self.load("choices.toml")
+        self.assertEqual(len(choices), 5)
+        self.assertEqual([row["button"] for row in choices], ["", "", "X", "Y", "B"])
+        self.assertEqual([row["english"] for row in choices], [
+            "World Tournament Arena", "Papaya Island",
+            "You're bleeding!", "Are you sick?", "You look sexy.",
+        ])
 
     def test_local_decoded_catalog_names_remain_ignored(self):
         ignore = (PROJECT_ROOT.parents[1] / ".gitignore").read_text(encoding="utf-8")
@@ -330,16 +338,16 @@ class GlossaryTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        path = PROJECT_ROOT / "translation" / "glossary.tsv"
-        with path.open(encoding="utf-8", newline="") as source:
-            reader = csv.DictReader(source, delimiter="\t")
-            cls.fieldnames = reader.fieldnames
-            cls.rows = list(reader)
+        path = PROJECT_ROOT / "translation" / "glossary.toml"
+        with path.open("rb") as source:
+            document = tomllib.load(source)
+        cls.fieldnames = list(document["term"][0])
+        cls.rows = document["term"]
 
     def test_glossary_exists(self):
         self.assertTrue(
-            (PROJECT_ROOT / "translation" / "glossary.tsv").is_file(),
-            "glossary.tsv must exist",
+            (PROJECT_ROOT / "translation" / "glossary.toml").is_file(),
+            "glossary.toml must exist",
         )
 
     def test_glossary_has_expected_columns(self):
@@ -411,9 +419,9 @@ class GlossaryTest(unittest.TestCase):
                     )
 
     def test_existing_patches_do_not_use_prohibited_spellings(self):
-        path = PROJECT_ROOT / "translation" / "patches.tsv"
-        with path.open(encoding="utf-8", newline="") as source:
-            rows = list(csv.DictReader(source, delimiter="\t"))
+        path = PROJECT_ROOT / "translation" / "patches.toml"
+        with path.open("rb") as source:
+            rows = tomllib.load(source)["record"]
         for row in rows:
             text = row.get("english", "")
             for prohibited in self.PROHIBITED_CANONICAL:

@@ -75,6 +75,17 @@ class CommandSchema:
 
 
 KNOWN_COMMAND_SCHEMAS = {
+    0x07: CommandSchema(
+        opcode=0x07,
+        handler=0xB9AA,
+        operand_size=0,
+        operand_encoding=None,
+        description=(
+            "opens the prepared X/Y/B choice prompt; the handler sets WRAM $0C3F "
+            "to one, clears the tile work area, invokes CPU $81:8000 with a 21x8 "
+            "presentation, and advances by only the opcode byte"
+        ),
+    ),
     0x08: CommandSchema(
         opcode=0x08,
         handler=0xB9EC,
@@ -83,6 +94,16 @@ KNOWN_COMMAND_SCHEMAS = {
         description=(
             "selects a zero-terminated 16-bit text/glyph stream and passes it "
             "to the renderer at CPU $80:9A0E"
+        ),
+    ),
+    0x10: CommandSchema(
+        opcode=0x10,
+        handler=0xBFDE,
+        operand_size=0,
+        operand_encoding=None,
+        description=(
+            "invokes CPU $83:E600 to prepare a menu/choice presentation and "
+            "advances by only the opcode byte"
         ),
     ),
     0x48: CommandSchema(

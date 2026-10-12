@@ -1,0 +1,34 @@
+schema_version = 1
+phase = "opening_tournament_quiz"
+summary = "The opening through the tournament trivia quiz is translated and builds reproducibly."
+
+[[milestones]]
+id = "automatic_opening"
+status = "complete"
+summary = "The automatic narration and recap are translated."
+
+[[milestones]]
+id = "opening_menus"
+status = "complete"
+summary = "Title, New Game, options, and name-entry resources are localized."
+
+[[milestones]]
+id = "tournament_dialogue"
+status = "complete"
+summary = "Tournament selectors $0200-$021A are translated with validated visible line widths."
+
+[[milestones]]
+id = "tournament_quiz"
+status = "partial"
+summary = "Quiz resources are localized; authoritative branch-input runtime validation remains."
+
+[[unknowns]]
+id = "portrait_catalog"
+summary = "The complete numeric portrait-resource catalog is not yet named."
+priority = "low"
+
+[[recommended_tasks]]
+id = "validate_quiz_branches"
+summary = "Confirm X, Y, and B branch behavior and that A does not select the quiz."
+requires_rom = true
+requires_runtime = true

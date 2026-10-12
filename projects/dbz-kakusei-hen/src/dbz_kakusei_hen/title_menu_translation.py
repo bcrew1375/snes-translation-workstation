@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from snesworkbench.errors import WorkstationError
-from snesworkbench.manifests import read_tsv, require_columns
+from snesworkbench.manifests import manifest_int, manifest_int_list, read_manifest
 from snesworkbench.patching import bounded_write
 from snesworkbench.rom import parse_cpu_address
 
@@ -15,9 +15,17 @@ from .glyphs import encode_latin_line
 from .scenario import TEXT_LINE_BREAK, TEXT_TERMINATOR
 
 
-MENU_COLUMNS = {
-    "id", "original_address", "original_offset", "original_length",
-    "source_sha256", "record_type", "character_offsets", "english", "status", "notes",
+MENU_FIELDS = {
+    "id": str,
+    "original_address": str,
+    "original_offset": int,
+    "original_length": int,
+    "source_sha256": str,
+    "record_type": str,
+    "character_offsets": list,
+    "english": str,
+    "status": str,
+    "notes": str,
 }
 TERMINATED_RECORD = "terminated"
 FIXED_RECORD = "fixed"
@@ -39,16 +47,12 @@ class TitleMenuRecord:
     notes: str
 
 
-def _hex(value: str, field: str) -> int:
-    try:
-        return int(value.removeprefix("$"), 16)
-    except ValueError as error:
-        raise WorkstationError(f"invalid {field}: {value!r}") from error
+def _hex(value: object, field: str) -> int:
+    return manifest_int(value, field, hexadecimal=True)
 
 
 def load_title_menu_records(path: str | Path) -> list[TitleMenuRecord]:
-    rows = read_tsv(path)
-    require_columns(path, rows, MENU_COLUMNS)
+    rows = read_manifest(path, MENU_FIELDS)
     records: list[TitleMenuRecord] = []
     seen: set[str] = set()
     for row in rows:
@@ -58,15 +62,17 @@ def load_title_menu_records(path: str | Path) -> list[TitleMenuRecord]:
         seen.add(identifier)
         bank, address = parse_cpu_address(row["original_address"].removeprefix("$"))
         try:
-            length = int(row["original_length"], 0)
-        except ValueError as error:
+            length = manifest_int(row["original_length"], f"{identifier} original length")
+        except WorkstationError as error:
             raise WorkstationError(f"invalid original length for {identifier!r}") from error
         record_type = row["record_type"]
         if record_type not in {TERMINATED_RECORD, FIXED_RECORD, FIXED_NATIVE_SUFFIX_RECORD}:
             raise WorkstationError(f"invalid record type for {identifier!r}: {record_type!r}")
         try:
-            character_offsets = tuple(int(value, 0) for value in row["character_offsets"].split(","))
-        except ValueError as error:
+            character_offsets = manifest_int_list(
+                row["character_offsets"], f"{identifier} character offsets"
+            )
+        except WorkstationError as error:
             raise WorkstationError(f"invalid character offsets for {identifier!r}") from error
         if not character_offsets or any(offset < 0 for offset in character_offsets):
             raise WorkstationError(f"invalid character offsets for {identifier!r}")

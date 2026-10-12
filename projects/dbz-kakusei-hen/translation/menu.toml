@@ -1,0 +1,305 @@
+schema_version = 1
+
+[[record]]
+id = "title_menu_no_save"
+original_address = "84:A1D8"
+original_offset = 0x221D8
+original_length = 34
+source_sha256 = "2ecd1715411f431c705965506051a7318b8e06b17ace476bafe1f900db441682"
+record_type = "terminated"
+character_offsets = [5, 5]
+english = """New Game
+Options"""
+status = "implemented"
+notes = "Opening title menu when no valid save is present; copied by CPU $81:85DF from fixed source $84:A1D8 to WRAM $0A00 and encoded as packed Latin characters."
+
+[[record]]
+id = "title_menu_with_save"
+original_address = "84:A1FA"
+original_offset = 0x221FA
+original_length = 52
+source_sha256 = "dab8418a87ad5fe7831092d685245335a4227eec03a8a060b5eb8fe9fe56ece3"
+record_type = "terminated"
+character_offsets = [5, 5, 5]
+english = """Continue
+New Game
+Options"""
+status = "implemented"
+notes = "Opening title menu when a valid save is present; copied by CPU $81:8611 from fixed source $84:A1FA to WRAM $0A00 and encoded as packed Latin characters."
+
+[[record]]
+id = "new_game_start_method"
+original_address = "84:A22E"
+original_offset = 0x2222E
+original_length = 38
+source_sha256 = "498e428694c3343a8119fc5d3e46da3295923379f7bc00e4fc776752427f338b"
+record_type = "terminated"
+character_offsets = [2, 2]
+english = """Start New Game
+Enter Password"""
+status = "implemented"
+notes = "Two-choice submenu reached by confirming New Game; copied by CPU $81:8384 to WRAM $0A00."
+
+[[record]]
+id = "options_sound_stereo"
+original_address = "84:A254"
+original_offset = 0x22254
+original_length = 18
+source_sha256 = "eefe51b6c3128318d8667c499f006c63b160ac36f808f19f8988f0cade6a6153"
+record_type = "fixed"
+character_offsets = [3]
+english = "Sound Stereo"
+status = "implemented"
+notes = "Nine-word fixed record selected when the sound mode flag at WRAM $012C is clear."
+
+[[record]]
+id = "options_sound_mono"
+original_address = "84:A266"
+original_offset = 0x22266
+original_length = 18
+source_sha256 = "72c59b40fc517549063ab3d9428cbea9625ab6c5a7bae6df5c746d97735ee1e9"
+record_type = "fixed"
+character_offsets = [4]
+english = "Sound Mono"
+status = "implemented"
+notes = "Nine-word fixed record selected when the sound mode flag at WRAM $012C is set."
+
+[[record]]
+id = "options_bgm_00"
+original_address = "84:A278"
+original_offset = 0x22278
+original_length = 18
+source_sha256 = "f689954e904dc293655f59f64cd05e62358741fd52c20930a75d74e8e69fdef0"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 00; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_01"
+original_address = "84:A28A"
+original_offset = 0x2228A
+original_length = 18
+source_sha256 = "00e858e6fdc78eef6d2faee86121fb3a138c73b48e1f21a9bcd4bca832530ee1"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 01; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_02"
+original_address = "84:A29C"
+original_offset = 0x2229C
+original_length = 18
+source_sha256 = "477d2c5362e02f025439d4dc45693912763c565e71dd37c3507d3b00bbc8bbc6"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 02; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_03"
+original_address = "84:A2AE"
+original_offset = 0x222AE
+original_length = 18
+source_sha256 = "a2a3841756b92c1183b0cc04c84dea54368326112193acc5c81358f356fc5b26"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 03; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_04"
+original_address = "84:A2C0"
+original_offset = 0x222C0
+original_length = 18
+source_sha256 = "4619a2f169de953a93fdb917d7ed603525b42fb2a590cdfda0a7466a915b0a14"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 04; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_05"
+original_address = "84:A2D2"
+original_offset = 0x222D2
+original_length = 18
+source_sha256 = "d5e543f0134b4faed3794a00fec1e0efdc86d02cde2533ee7b60d3b5a43b67c0"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 05; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_06"
+original_address = "84:A2E4"
+original_offset = 0x222E4
+original_length = 18
+source_sha256 = "3076ffa41604799602b2cde3460c47723c116650a7dbae7102871933591f5e20"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 06; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_07"
+original_address = "84:A2F6"
+original_offset = 0x222F6
+original_length = 18
+source_sha256 = "2a52accbea1c18d1db421e617a264554486c0409f64b816589106c087149cf02"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 07; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_08"
+original_address = "84:A308"
+original_offset = 0x22308
+original_length = 18
+source_sha256 = "b9c708bfac8ac6015e7394382aa3961fa5d681cf5622fde15e818d03e263f52b"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 08; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_09"
+original_address = "84:A31A"
+original_offset = 0x2231A
+original_length = 18
+source_sha256 = "7d854def9f4966e0d042402af2aabcb19b749ce534e8e31152a105d61316e4d7"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 09; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_10"
+original_address = "84:A32C"
+original_offset = 0x2232C
+original_length = 18
+source_sha256 = "990339b1f3f4327018249c7baf90adcf0914a4eb9d2f7f089adc3839498f975d"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 10; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_11"
+original_address = "84:A33E"
+original_offset = 0x2233E
+original_length = 18
+source_sha256 = "7d83a653881f66b14e6588cd0a3364c13e5c81117c8e842b95de104036c8a036"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 11; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_12"
+original_address = "84:A350"
+original_offset = 0x22350
+original_length = 18
+source_sha256 = "e1abd6359d66c7a342eced1a85532d3bec6b829e4b6296a7deedccb2d85922dc"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 12; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_13"
+original_address = "84:A362"
+original_offset = 0x22362
+original_length = 18
+source_sha256 = "7c40550fdfacbd330544fc94711be62ea2f3c5b234c813889e49bdf330135111"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 13; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_14"
+original_address = "84:A374"
+original_offset = 0x22374
+original_length = 18
+source_sha256 = "0825df32aa986333dddf49a00ad66303a9a6c33f05233395f57fac0a9af7e95b"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 14; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_15"
+original_address = "84:A386"
+original_offset = 0x22386
+original_length = 18
+source_sha256 = "ba2dfb661778eeae6a643003b0077087b669b34a2dade6b9e8231b1b3a400251"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 15; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_16"
+original_address = "84:A398"
+original_offset = 0x22398
+original_length = 18
+source_sha256 = "fed7e21d7d8dd82238a55ff242486c4f86d551a9612f2cac660d3767d99983e6"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 16; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_17"
+original_address = "84:A3AA"
+original_offset = 0x223AA
+original_length = 18
+source_sha256 = "70dd987a9a983ab6c750de5861b8a11d6cea433bb5134102e8d26fafcb6a0fa2"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 17; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_18"
+original_address = "84:A3BC"
+original_offset = 0x223BC
+original_length = 18
+source_sha256 = "1fe92c641c0464cb31724522246f629eca326d92ab7ec18328fb4c7d8b3a7426"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 18; the label occupies the original left field and the final two native numeral glyph words are preserved."
+
+[[record]]
+id = "options_bgm_19"
+original_address = "84:A3CE"
+original_offset = 0x223CE
+original_length = 18
+source_sha256 = "dcff0201154dc4a1f3f2e172e807cf14e336bdae20f6338a7730e9ed6fe99217"
+record_type = "fixed_native_suffix"
+character_offsets = [0]
+english = "BGM"
+status = "implemented"
+notes = "Nine-word BGM record for value 19; the label occupies the original left field and the final two native numeral glyph words are preserved."

@@ -179,7 +179,7 @@ class OriginalRomNameEntryTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.original = (PROJECT_ROOT / "rom" / "original.sfc").read_bytes()
-        cls.records = load_name_entry_records(PROJECT_ROOT / "translation" / "name_entry.tsv")
+        cls.records = load_name_entry_records(PROJECT_ROOT / "translation" / "name_entry.toml")
         cls.translated = build(cls.original, None).data
 
     def test_marker_is_unused_by_all_original_compositor_inputs(self):

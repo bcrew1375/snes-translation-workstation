@@ -17,15 +17,19 @@ sha256 = "cc5ab583b5189c3f5b374335edf4b857461278d41ef674f7db31aa100dcb814a"
 [output]
 default_path = "build/dbz-kakusei-hen/translated.sfc"
 size = 2097152
-sha256 = "4760d51eaf4ed35d45e4de588e025465df0221dac84beaa114ae40094b85453e"
+sha256 = "359ea57bd4bab983efcf527dba7a9e5465c3e27e1c0bce51e07487ed152bce80"
 
 [manifests]
 analysis = "analysis/project.json"
-patches = "translation/patches.tsv"
-references = "translation/references.tsv"
-ranges = "translation/ranges.tsv"
-menu = "translation/menu.tsv"
-name_entry = "translation/name_entry.tsv"
+status = "status.toml"
+runtime_evidence = "analysis/runtime-evidence.toml"
+patches = "translation/patches.toml"
+references = "translation/references.toml"
+ranges = "translation/ranges.toml"
+menu = "translation/menu.toml"
+name_entry = "translation/name_entry.toml"
+choices = "translation/choices.toml"
+glossary = "translation/glossary.toml"
 
 # The build executor independently computes the ROM diff and rejects every
 # changed byte outside these inclusive ranges.
@@ -163,3 +167,48 @@ end = 0x1B6CDF
 name = "Extended Latin glyph records 0460-0461 lower blocks"
 start = 0x1B6DA0
 end = 0x1B6DDF
+
+[[approved_ranges]]
+name = "23rd World Tournament opening streams"
+start = 0x0C8BB4
+end = 0x0C905F
+
+[[approved_ranges]]
+name = "bank 99 translated text relocation pool"
+start = 0x0CF8EE
+end = 0x0CFFFF
+
+[[approved_ranges]]
+name = "23rd World Tournament opening selector pointers"
+start = 0x0C8400
+end = 0x0C8435
+
+[[approved_ranges]]
+name = "World Tournament Arena fixed-label pointer"
+start = 0x040018
+end = 0x040019
+
+[[approved_ranges]]
+name = "Papaya Island fixed-label pointer"
+start = 0x040046
+end = 0x040047
+
+[[approved_ranges]]
+name = "opening fixed-label relocations"
+start = 0x047FB4
+end = 0x047FDB
+
+[[approved_ranges]]
+name = "quiz option pointers"
+start = 0x0C1B2A
+end = 0x0C1B2F
+
+[[approved_ranges]]
+name = "quiz option Y stream"
+start = 0x0C1E3A
+end = 0x0C1E4F
+
+[[approved_ranges]]
+name = "quiz option X and B relocations"
+start = 0x0C74D8
+end = 0x0C7501
