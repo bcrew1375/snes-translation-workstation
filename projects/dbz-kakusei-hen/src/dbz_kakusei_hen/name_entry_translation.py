@@ -40,6 +40,10 @@ PICKER_PAGE_LENGTH = 0xF0
 SELECTION_MAP_1_OFFSET = 0x008D56
 SELECTION_MAP_2_OFFSET = 0x008E00
 SELECTION_MAP_LENGTH = 85 * 2
+LATIN_PICKER_PAGE_1_OFFSET = 0x027142
+LATIN_PICKER_PAGE_2_OFFSET = 0x027232
+LATIN_SELECTION_MAP_1_OFFSET = 0x027322
+LATIN_SELECTION_MAP_2_OFFSET = 0x0273CC
 DEFAULT_NAMES_OFFSET = 0x022048
 DEFAULT_NAMES_LENGTH = 50
 DEFAULT_NAME_COUNT = 5
@@ -53,11 +57,12 @@ NAME_RENDER_PATCH_RANGES = (
     (0x006BCF, 0x006DB3),
     (0x008685, 0x00868B),
     (0x008AD7, 0x008ADB),
+    (0x008B5E, 0x008B63),
     (0x008BDD, 0x008BE2),
     (0x008C38, 0x008C3D),
-    (0x00FE00, 0x00FFA1),
+    (0x00DA50, 0x00DD14),
 )
-NAME_RENDER_PATCH_SOURCE_SHA256 = "f67683861445edbe4eeb805b462d08b4f2b2f060d43267827a105b5a8a26c823"
+NAME_RENDER_PATCH_SOURCE_SHA256 = "a21a335db7e8014ff9f06081054f1429efd4bf5a3f6bdad6edfb972202144df9"
 
 PICKER_STREAM_ENTRY_INDICES = (
     1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17,
@@ -397,7 +402,7 @@ def apply_name_entry_translation(
     original: bytes, translated: bytes, records: Sequence[NameEntryRecord]
 ) -> bytes:
     implemented = [record for record in records if record.status == "implemented"]
-    for record in implemented:
+    for record in records:
         source = original[record.offset:record.offset + record.length]
         if len(source) != record.length or hashlib.sha256(source).hexdigest() != record.source_sha256:
             raise WorkstationError(f"{record.id} source does not match the supported original")
@@ -418,13 +423,19 @@ def apply_name_entry_translation(
         for offset, block in zip(glyph_source(code).block_offsets, encode_latin_glyph(character), strict=True):
             bounded_write(patched, offset, block, f"Latin glyph ${code:04X}")
 
-    for identifier, characters in (("picker_page_1", PAGE_1_CHARACTERS), ("picker_page_2", PAGE_2_CHARACTERS)):
+    for identifier, offset, characters in (
+        ("picker_page_1", LATIN_PICKER_PAGE_1_OFFSET, PAGE_1_CHARACTERS),
+        ("picker_page_2", LATIN_PICKER_PAGE_2_OFFSET, PAGE_2_CHARACTERS),
+    ):
         record = _record_by_id(records, identifier)
-        bounded_write(patched, record.offset, _patch_picker_page(original[record.offset:record.offset + record.length], characters), identifier)
-    for identifier, characters in (("selection_map_1", PAGE_1_CHARACTERS), ("selection_map_2", PAGE_2_CHARACTERS)):
-        record = _record_by_id(records, identifier)
+        bounded_write(patched, offset, _patch_picker_page(original[record.offset:record.offset + record.length], characters), identifier)
+    for identifier, offset, characters in (
+        ("selection_map_1", LATIN_SELECTION_MAP_1_OFFSET, PAGE_1_CHARACTERS),
+        ("selection_map_2", LATIN_SELECTION_MAP_2_OFFSET, PAGE_2_CHARACTERS),
+    ):
+        _record_by_id(records, identifier)
         encoded = b"".join(picker_word(character).to_bytes(2, "little") for character in characters)
-        bounded_write(patched, record.offset, encoded, identifier)
+        bounded_write(patched, offset, encoded, identifier)
 
     for record in implemented:
         if record.record_type == "fixed_text":

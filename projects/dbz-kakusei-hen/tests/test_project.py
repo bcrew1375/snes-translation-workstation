@@ -154,8 +154,7 @@ class TranslationManifestTest(unittest.TestCase):
             [record["id"] for record in name_entry],
             [
                 "picker_page_1", "picker_page_2", "selection_map_1", "selection_map_2",
-                "default_names", "name_controls", "name_labels", "name_confirmation",
-                "name_status", "password_name_retry",
+                "default_names", "name_controls", "name_labels",
             ],
         )
         self.assertEqual(

@@ -72,10 +72,11 @@ original text stream. Original source blocks are pinned by a cryptographic diges
 before the translation builder overwrites them.
 
 The five-name editor at CPU `$81:8739` keeps each field at five stored words but now
-uses those words as ten independent character positions. The first picker page and
-CPU `$81:8D56` selection map provide 69 basic Latin characters. `X:Page` selects a
-distinct second page and `$81:8E00` map with 50 accented letters, macron vowels, and
-name-friendly symbols. Insertion updates either half of the selected
+uses those words as ten independent character positions. Fresh name entry uses a
+relocated first picker page at CPU `$84:F142` / ROM `$027142` and selection map at
+`$84:F322` / `$027322`, providing 69 basic Latin characters. `X:Page` selects the
+relocated second page at `$84:F232` / `$027232` and map at `$84:F3CC` / `$0273CC`,
+with 50 accented letters, macron vowels, and name-friendly symbols. Insertion updates either half of the selected
 packed word, and the cursor advances six pixels per position. B is navigation-only:
 at cursor zero it is a no-op, while at every other position it moves back one character
 without modifying any of the five fields. This includes moving from the first position
@@ -86,15 +87,22 @@ positions. A legacy bit-15-clear field is blanked and converted before its first
 packed-character insertion; other fields remain intact.
 
 Save/load continues copying the original 50-byte `$0C00-$0C31` block verbatim. The
-password editor uses a separate sparse one-character-per-word layout, so its existing
-position logic is not changed; its picker selections remain compatible because each
-picker entry stores a packed word whose first ID is the selected character and whose
-second ID is blank.
+password editor uses a separate sparse one-character-per-word layout and requires its
+original symbol values. WRAM `$0216` is the mode discriminator: zero selects the
+relocated Latin pages, maps, insertion behavior, and six-pixel cursors; nonzero selects
+the original pages at `$84:A3E0/$84:A4D0`, original maps at `$81:8D56/$81:8E00`, and
+the original password cursor geometry. The password-owned records at `$84:A630`,
+`$84:A660`, and `$84:A690` also remain byte-identical. `$84:A630` is confirmed as the
+password control legend; the exact meanings of the latter two status records remain
+to be classified before translation.
 
-The compositor hook at CPU `$80:9B2C`, its `$80:EBCF-$80:EDB2` implementation, the fresh
-name insertion hook at `$81:8AD7`, and the picker/name cursor hooks
-at `$81:8BDD/$81:8C38` are assembled from `asm/dual_format_text.asm`. Ordinary picker
-entries retain the original 12-pixel navigation grid but use a six-pixel red selector;
+The compositor hook at CPU `$80:9B2C`, its `$80:EBCF-$80:EDB2` implementation, the
+mode-aware insertion hook at `$81:8AD7`, shared page-loader hook at `$81:8B5E`, and the
+picker/name cursor hooks at `$81:8BDD/$81:8C38` are assembled from
+`asm/dual_format_text.asm`. WRAM `$0216` zero sends insertion through the packed-Latin
+fresh-name editor; nonzero reproduces the hook's displaced comparison and rejoins the
+original password map/store/redraw path at `$81:8ADD`. Fresh-name picker entries retain the original 12-pixel
+navigation grid but use a six-pixel red selector;
 the name-field character selector uses the same six-pixel width, while the wider DONE
 selector remains unchanged. Both selector types are positioned two pixels above their
 original Y coordinates. Fifth-field DONE preserves the original
@@ -104,8 +112,9 @@ restores the name surface to 8 tiles wide and 10 tiles high before rendering, th
 DMA source offset `$EF`, exclusive end `$ED`, and name-surface VRAM base `$1120`. This
 keeps both halves of each 16-pixel glyph inside the transferred `$0100`-byte row even
 after a picker-page redraw changed the shared compositor dimensions.
-Supporting editor code occupies reviewed trailing all-`$FF` padding at
-`$81:FE00-$81:FFA0`. The original navigation-only B handler at `$81:8B50-$81:8B5C`
+Supporting editor code occupies reviewed all-`$FF` padding at `$81:DA50-$81:DD13`,
+and relocated Latin resources occupy `$84:F142-$84:F475`. The original navigation-only
+B handler at `$81:8B50-$81:8B5C`
 is retained byte-for-byte. The original
 bytes for every hook and padding allocation are pinned by an aggregate SHA-256 before
 Asar applies the tracked patch.
@@ -118,7 +127,7 @@ Paired before/after captures confirmed that WRAM `$0C00-$0C31` remained
 byte-identical in every case. The local evidence and comparison report are under
 `/tmp/dbz-name-navigation-only-trusted-20261011`.
 
-The current translated ROM SHA-256 is
+The previous translated ROM SHA-256 was
 `1091629245703d49d2b447ddde511559b84db12ba9847a44dfececb32890e73f`.
 Trusted October 11, 2026 Mesen captures against that ROM confirmed the two corrected
 paths. Selecting page-one `B` at the first position changed `Aiyah` to `Biyah` while
@@ -127,6 +136,30 @@ two and selecting `Á` changed it to `Áiyah`; captured WRAM showed page `$0001`
 compositor dimensions `$020E=$0008` and `$0210=$000A`, and nonblank data in both halves
 of the complete `$0100`-byte staged name row. The screenshots and comparison report are
 under `/tmp/dbz-name-overwrite-fix-20261011`.
+
+That ROM globally replaced resources also used by password entry and was therefore
+superseded. The previous mode-aware translated ROM SHA-256 was
+`e30ea874ddc4bf1d18966e3e818747ae9f61c68c1a22974ea78ae839db803371`.
+Trusted October 11, 2026 Mesen captures against this ROM confirmed that the initial
+password screen is pixel-identical to the original and that matched WRAM regions at
+`$0200`, `$0440`, `$0A00`, `$5000`, and `$8000` have identical digests. A second
+matched run moved the password cursor and reached a matching pre-insertion state, but
+did not insert a symbol: `$1F00-$1F87` remained filled with blank `$0272` words and the
+screenshot still showed an empty password field. It therefore provides visual/state
+equivalence evidence only, not insertion timing evidence. Evidence is under
+`/tmp/dbz-password-mode-aware-capture-20261011`,
+`/tmp/dbz-password-insert-original-20261011`, and
+`/tmp/dbz-password-insert-fixed-20261011`. A fresh-name capture at
+`/tmp/dbz-name-mode-aware-overwrite-b-20261011` independently confirmed that the
+Latin picker remains active in mode zero and selecting page-one `B` still changes
+`Aiyah` to `Biyah` without replacing the remaining characters.
+
+The current translated ROM SHA-256 is
+`4760d51eaf4ed35d45e4de588e025465df0221dac84beaa114ae40094b85453e`.
+Its mode-aware `$81:8AD7` dispatcher bypasses translated name-only insertion work in
+password mode and rejoins the original path at `$81:8ADD`. Static binary tests pin the
+unchanged original password continuation through `$81:8B4F`, including the original
+selection maps, one-word store, `$81:8BAA` redraw call, and 25-position cursor limit.
 
 The original role prompts are translated as `Player`, `Friend`, `Bully`, `Girl`, and
 `Teacher`. Their joke defaults are localized as `Aiyah`, `Buddy`, `Meanie`, `Sally`,

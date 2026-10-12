@@ -14,25 +14,40 @@ lorom
 !TextSurfaceHeight = $0210
 !NamePickerCursor = $0229
 !NameCursor = $022B
+!EntryMode = $0216
+
+!LatinPickerPage1 = $84F142
+!LatinPickerPage2 = $84F232
+!LatinSelectionMap1 = $84F322
+!LatinSelectionMap2 = $84F3CC
 
 ; Replace the compositor prologue with a long dispatch. Legacy calls reproduce
 ; the displaced PHP/PHB/REP instructions and rejoin at $80:9B30.
 org $809B2C
     jml RenderDualFormatWord
 
-; Fresh-start A-button handler. A long jump preserves the original subroutine
-; return address so fifth-field DONE can execute the original RTS semantics.
+; The A-button handler is shared by fresh-name and password entry. Dispatch by
+; mode without adding a return address: fresh names use packed Latin editing,
+; while password mode reproduces the displaced LDA/CMP and rejoins the original
+; one-word insertion path at its BCS.
 org $818AD7
-    jml EditFreshNameAtCursor
+    jml EditModeAwareEntryAtCursor
+
+; The page loader is shared with password entry. Fresh name entry uses the
+; relocated Latin streams; password mode retains the original streams and
+; therefore the original password alphabet.
+org $818B5E
+    jsl LoadModeAwarePickerPage
+    rts
 
 ; Character-oriented field cursor.
 org $818C38
-    jsl PositionLatinNameCursor
+    jsl PositionModeAwareNameCursor
     rts
 
 ; Six-pixel ordinary picker selector. DONE retains its original wider cursor.
 org $818BDD
-    jsl PositionLatinPickerCursor
+    jsl PositionModeAwarePickerCursor
     rts
 
 ; Opening title, New Game, and Options menus share this three-row selector
@@ -208,8 +223,82 @@ RedrawLatinNameField:
     plp
     rtl
 
-; Bank 01 trailing all-$FF padding in the pinned original.
-org $81FE00
+; Bank 01 all-$FF padding in the pinned original.
+org $81DA50
+EditModeAwareEntryAtCursor:
+    lda !EntryMode
+    bne .password
+    jml EditFreshNameAtCursor
+.password:
+    lda !NamePickerCursor
+    cmp #$0055
+    jml $818ADD
+
+LoadModeAwarePickerPage:
+    rep #$30
+    ldy #$0000
+    lda !EntryMode
+    bne .password
+    lda $0212
+    bit #$0001
+    bne .latin_page2
+    ldx #$0000
+.latin_page1_loop:
+    lda.l !LatinPickerPage1,x
+    sta $0A00,y
+    beq .render
+    inx
+    inx
+    iny
+    iny
+    bra .latin_page1_loop
+.latin_page2:
+    ldx #$0000
+.latin_page2_loop:
+    lda.l !LatinPickerPage2,x
+    sta $0A00,y
+    beq .render
+    inx
+    inx
+    iny
+    iny
+    bra .latin_page2_loop
+.password:
+    lda $0212
+    bit #$0001
+    bne .password_page2
+    ldx #$0000
+.password_page1_loop:
+    lda.l $84A3E0,x
+    sta $0A00,y
+    beq .render
+    inx
+    inx
+    iny
+    iny
+    bra .password_page1_loop
+.password_page2:
+    ldx #$0000
+.password_page2_loop:
+    lda.l $84A4D0,x
+    sta $0A00,y
+    beq .render
+    inx
+    inx
+    iny
+    iny
+    bra .password_page2_loop
+.render:
+    lda #$001C
+    sta !TextSurfaceWidth
+    lda #$000C
+    sta !TextSurfaceHeight
+    lda #$0100
+    sta $EB
+    lda #$0A00
+    jsl $80997B
+    rtl
+
 EditFreshNameAtCursor:
     php
     rep #$30
@@ -223,10 +312,10 @@ EditFreshNameAtCursor:
     lda $0212
     bit #$0001
     bne .page2
-    lda.l $818D56,x
+    lda.l !LatinSelectionMap1,x
     bra .selected
 .page2:
-    lda.l $818E00,x
+    lda.l !LatinSelectionMap2,x
 .selected:
     and #$007F
     sta $04
@@ -320,9 +409,11 @@ EnsureNameFieldIsLatin:
 .ready:
     rts
 
-PositionLatinNameCursor:
+PositionModeAwareNameCursor:
     php
     rep #$30
+    lda !EntryMode
+    bne PositionLegacyNameCursor
     lda !NameCursor
     ldx #$0000
 .field:
@@ -367,9 +458,36 @@ PositionLatinNameCursor:
     plp
     rtl
 
-PositionLatinPickerCursor:
+PositionLegacyNameCursor:
+    lda !NameCursor
+    asl
+    tax
+    lda.l $818D24,x
+    and #$00FF
+    sta $45
+    lda.l $818D25,x
+    and #$00FF
+    sta $48
+    lda $0218
+    bit #$0001
+    bne .alternate
+    lda #$0006
+    bra .draw
+.alternate:
+    lda #$0007
+.draw:
+    sta $4E
+    lda #$3000
+    sta $0119
+    jsl $8095FB
+    plp
+    rtl
+
+PositionModeAwarePickerCursor:
     php
     rep #$30
+    lda !EntryMode
+    bne PositionLegacyPickerCursor
     lda !NamePickerCursor
     asl
     tax
@@ -402,6 +520,7 @@ PositionLatinPickerCursor:
     jsr NarrowLastSelector
     plp
     rtl
+
 .action:
     lda $0218
     bit #$0001
@@ -411,6 +530,46 @@ PositionLatinPickerCursor:
 .action_alternate:
     lda #$000D
 .draw_action:
+    sta $4E
+    lda #$3000
+    sta $0119
+    stz $0115
+    jsl $8095FB
+    plp
+    rtl
+
+PositionLegacyPickerCursor:
+    lda !NamePickerCursor
+    asl
+    tax
+    lda.l $818C70,x
+    and #$00FF
+    clc
+    adc #$0003
+    sta $45
+    lda.l $818C71,x
+    and #$00FF
+    sta $48
+    lda !NamePickerCursor
+    cmp #$0055
+    bcs .action
+    lda $0218
+    bit #$0001
+    bne .ordinary_alternate
+    lda #$0006
+    bra .draw
+.ordinary_alternate:
+    lda #$0007
+    bra .draw
+.action:
+    lda $0218
+    bit #$0001
+    bne .action_alternate
+    lda #$000C
+    bra .draw
+.action_alternate:
+    lda #$000D
+.draw:
     sta $4E
     lda #$3000
     sta $0119

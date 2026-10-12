@@ -74,12 +74,22 @@
     },
     {
       "bank": 1,
-      "cpu_start": "$FE00",
-      "cpu_end": "$FFA0",
-      "rom_start": "$00FE00",
-      "rom_end": "$00FFA0",
+      "cpu_start": "$DA50",
+      "cpu_end": "$DD13",
+      "rom_start": "$00DA50",
+      "rom_end": "$00DD13",
       "type": "padding",
-      "name": "Reviewed portion of Bank 01's trailing 9,649-byte all-$FF run allocated to translated name insertion and cursor routines, including character-level overwrite for packed defaults and conversion only for legacy fields; the original navigation-only B-button handler remains unchanged, and decoded Bank 01 control flow has no original target in this interval",
+      "name": "Reviewed portion of Bank 01's trailing all-$FF run allocated to the mode-aware name/password insertion dispatcher, picker loader, translated name insertion, and cursor routines. WRAM $0216 selects translated packed-Latin insertion only for fresh name entry; password mode reproduces the displaced comparison and rejoins the original insertion/redraw path at $81:8ADD. Decoded Bank 01 control flow has no original target in this interval",
+      "confidence": "confirmed"
+    },
+    {
+      "bank": 4,
+      "cpu_start": "$F142",
+      "cpu_end": "$F475",
+      "rom_start": "$027142",
+      "rom_end": "$027475",
+      "type": "padding",
+      "name": "Reviewed all-$FF padding allocated to two relocated Latin name-picker streams and two 85-word Latin selection maps; original password pages and maps remain at $84:A3E0/$84:A4D0 and $81:8D56/$81:8E00",
       "confidence": "confirmed"
     },
     {

@@ -17,7 +17,7 @@ sha256 = "cc5ab583b5189c3f5b374335edf4b857461278d41ef674f7db31aa100dcb814a"
 [output]
 default_path = "build/dbz-kakusei-hen/translated.sfc"
 size = 2097152
-sha256 = "1091629245703d49d2b447ddde511559b84db12ba9847a44dfececb32890e73f"
+sha256 = "4760d51eaf4ed35d45e4de588e025465df0221dac84beaa114ae40094b85453e"
 
 [manifests]
 analysis = "analysis/project.json"
@@ -60,24 +60,14 @@ start = 0x022048
 end = 0x022079
 
 [[approved_ranges]]
-name = "name picker page 1"
-start = 0x0223E0
-end = 0x0224CF
-
-[[approved_ranges]]
-name = "name picker page 2"
-start = 0x0224D0
-end = 0x0225BF
-
-[[approved_ranges]]
 name = "name editor fixed UI"
 start = 0x0225C0
-end = 0x0226B3
+end = 0x02262B
 
 [[approved_ranges]]
-name = "name picker selection maps"
-start = 0x008D56
-end = 0x008EA9
+name = "relocated Latin name picker resources"
+start = 0x027142
+end = 0x027475
 
 [[approved_ranges]]
 name = "dual-format compositor hook"
@@ -95,9 +85,14 @@ start = 0x008685
 end = 0x00868A
 
 [[approved_ranges]]
-name = "fresh name insertion hook"
+name = "mode-aware entry insertion hook"
 start = 0x008AD7
 end = 0x008ADA
+
+[[approved_ranges]]
+name = "mode-aware picker page hook"
+start = 0x008B5E
+end = 0x008B62
 
 [[approved_ranges]]
 name = "name picker cursor hook"
@@ -111,8 +106,8 @@ end = 0x008C3C
 
 [[approved_ranges]]
 name = "name editor routines"
-start = 0x00FE00
-end = 0x00FFA0
+start = 0x00DA50
+end = 0x00DD13
 
 [[approved_ranges]]
 name = "translated ROM checksum"
