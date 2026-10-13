@@ -35,40 +35,40 @@ LONG_BYTE_ESCAPE = re.compile(r"(?:\\x[0-9a-fA-F]{2}){16,}")
 TRANSLATION_SCHEMAS = {
     "patches.toml": ("record", {
         "id": str, "original_address": str, "original_offset": int,
-        "original_length": int, "source_sha256": str, "english": str,
+        "original_length": int, "source_sha256": str, "english": list,
         "status": str, "notes": str,
-    }),
+    }, {"max_line_length": int}),
     "references.toml": ("record", {
         "id": str, "reference_type": str, "reference_address": str,
         "reference_offset": int, "message_index": int, "pointer_format": str,
         "target_address": str, "target_offset": int,
-    }),
+    }, {}),
     "ranges.toml": ("record", {
         "name": str, "rom_start": int, "rom_end": int, "cpu_start": str,
         "cpu_end": str, "bank": int, "alignment": int, "evidence": str,
         "confidence": str,
-    }),
+    }, {}),
     "glossary.toml": ("term", {
         "id": str, "category": str, "canonical": str, "aliases": list,
         "usage_notes": str, "status": str,
-    }),
+    }, {}),
     "menu.toml": ("record", {
         "id": str, "original_address": str, "original_offset": int,
         "original_length": int, "source_sha256": str, "record_type": str,
         "character_offsets": list, "english": str, "status": str, "notes": str,
-    }),
+    }, {}),
     "name_entry.toml": ("record", {
         "id": str, "original_address": str, "original_offset": int,
         "original_length": int, "source_sha256": str, "record_type": str,
         "english": str, "status": str, "notes": str,
-    }),
+    }, {}),
     "choices.toml": ("record", {
         "id": str, "record_type": str, "button": str, "pointer_address": str,
         "pointer_offset": int, "original_address": str, "original_offset": int,
         "original_length": int, "source_sha256": str,
         "destination_address": str, "destination_offset": int,
         "prefix_words": int, "english": str, "status": str, "notes": str,
-    }),
+    }, {}),
 }
 
 
@@ -113,6 +113,13 @@ def _translation_manifest_name(relative: str) -> str | None:
     if len(path.parts) == 4 and path.parts[0] == "projects" and path.parts[2] == "translation":
         if path.name in TRANSLATION_SCHEMAS:
             return path.name
+    if (
+        len(path.parts) == 5
+        and path.parts[0] == "projects"
+        and path.parts[2:4] == ("translation", "patches")
+        and path.suffix == ".toml"
+    ):
+        return "patches.toml"
     return None
 
 
@@ -121,9 +128,11 @@ def validate_translation_manifest(relative: str, text: str) -> list[str]:
     name = _translation_manifest_name(relative)
     if name is None:
         return []
-    table, fields = TRANSLATION_SCHEMAS[name]
+    table, fields, optional_fields = TRANSLATION_SCHEMAS[name]
     try:
-        rows = parse_manifest_text(relative, text, fields, table=table)
+        rows = parse_manifest_text(
+            relative, text, fields, table=table, optional_fields=optional_fields
+        )
     except WorkstationError as error:
         return [str(error)]
 
@@ -154,6 +163,33 @@ def validate_translation_manifest(relative: str, text: str) -> list[str]:
                 )
             if not row["english"]:
                 failures.append(f"{relative} record {record_number} has empty English text")
+            if name == "patches.toml":
+                lines = row["english"]
+                if any(not isinstance(line, str) for line in lines):
+                    failures.append(
+                        f"{relative} record {record_number} has a non-string English line"
+                    )
+                else:
+                    if any(not line for line in lines):
+                        failures.append(
+                            f"{relative} record {record_number} has an empty English line"
+                        )
+                    if any("\n" in line or "\r" in line for line in lines):
+                        failures.append(
+                            f"{relative} record {record_number} has an embedded English line break"
+                        )
+                    limit = row.get("max_line_length")
+                    if limit is not None and limit not in {21, 28}:
+                        failures.append(
+                            f"{relative} record {record_number} has invalid max_line_length"
+                        )
+                    elif limit is not None:
+                        for line_number, line in enumerate(lines, start=1):
+                            if len(line) > limit:
+                                failures.append(
+                                    f"{relative} record {record_number} line {line_number} "
+                                    f"has {len(line)} characters; max_line_length is {limit}"
+                                )
             if name == "menu.toml":
                 if row["record_type"] not in {"terminated", "fixed", "fixed_native_suffix"}:
                     failures.append(

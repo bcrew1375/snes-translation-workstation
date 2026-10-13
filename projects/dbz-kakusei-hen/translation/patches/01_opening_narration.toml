@@ -1,0 +1,61 @@
+schema_version = 1
+
+[[record]]
+id = "opening_narration"
+original_address = "9C:9358"
+original_offset = 0xE1358
+original_length = 120
+source_sha256 = "1fc79be8e4185536a5e87ab8aaab3aa04ed7806a6fec92f2b876316f3f72ff38"
+english = [
+  "Long ago, it was said that",
+  "when all seven Dragon Balls",
+  "were gathered, Shenron would",
+  "appear and grant any wish...",
+]
+max_line_length = 28
+status = "implemented"
+notes = "opening narration panel; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_narration_2"
+original_address = "9C:93D0"
+original_offset = 0xE13D0
+original_length = 116
+source_sha256 = "ee3c88a822fde30fe192b24309935df94948bced8df1241775ab2d0b20f92b10"
+english = [
+  "Because of the Dragon Balls,",
+  "young Goku met many friends",
+  "and fought many enemies,",
+  "growing ever stronger...",
+]
+max_line_length = 28
+status = "implemented"
+notes = "opening narration panel; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_narration_3"
+original_address = "9C:9444"
+original_offset = 0xE1444
+original_length = 72
+source_sha256 = "ca0554babf3af2d796e4790cb9ab3bdacaf3841503e253f9289b05c16a4a73fe"
+english = [
+  "It all began with",
+  "a single Dragon Ball...",
+  "And...",
+]
+max_line_length = 28
+status = "implemented"
+notes = "opening narration panel; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_narration_4"
+original_address = "9C:948C"
+original_offset = 0xE148C
+original_length = 26
+source_sha256 = "2bde7cbd0979fce47aa7f639e0534718471b40364e1fca6bc86e51f4bb568ab1"
+english = [
+  "It continues even now...",
+]
+max_line_length = 28
+status = "implemented"
+notes = "opening narration panel; fixed original line-cell allocation, no relocation."

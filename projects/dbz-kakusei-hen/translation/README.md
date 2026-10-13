@@ -12,12 +12,14 @@ All tracked translation manifests are schema-versioned TOML. Record order is
 authoritative and preserved by the loaders. ROM offsets, lengths, selectors,
 banks, alignments, and indexes use native TOML integers; hexadecimal notation is
 preferred where it reflects an address. CPU addresses remain explicit
-`BANK:ADDRESS` strings. Arrays are used for structured values such as menu
-character offsets and glossary aliases, and multiline English text uses real
-line breaks rather than escaped `\\n` sequences.
+`BANK:ADDRESS` strings. Arrays are used for structured values such as patch
+English lines, menu character offsets, and glossary aliases; escaped `\\n`
+sequences are not used to define patch line breaks.
 
-- `patches.toml` records stable IDs, source locations/lengths/hashes, English text,
-  workflow status, and non-expressive notes.
+- `patches/*.toml` records stable IDs, source locations/lengths/hashes, English text,
+  workflow status, and non-expressive notes. The `english` value is an array in
+  which each string is one explicit displayed line. Files are loaded in lexical
+  filename order, and records retain their declared order within each file.
 - `references.toml` records pointer-table or direct-reference metadata without source
   dialogue.
 - `ranges.toml` records reviewed allocation ranges for translated streams and custom
@@ -42,7 +44,8 @@ line breaks rather than escaped `\\n` sequences.
   Kaio, Kienzan, Makankosappo, Tenkaichi Budokai) for identification purposes,
   but the canonical field is the required output form.
 
-The translation builder joins `patches.toml` and `references.toml` by stable `id`;
+The translation builder concatenates the ordered `patches/*.toml` collection and
+joins it to `references.toml` by stable `id`;
 selectors are not inferred from patch-column positions. Only confirmed ranges whose
 names begin with `free_text_` are eligible for relocated text allocation. The reviewed
 `free_text_bank_99_tail` range is the production allocation used by longer tournament
@@ -69,8 +72,12 @@ and pointers are hash-pinned and relocate into reviewed bank-`$88` tail space.
 Packed-Latin dialogue is authored to the confirmed visible box widths rather
 than the larger legacy-cell storage capacity: portrait-free `wide_marker`
 records permit 28 characters per line, while portrait-bearing `context_pair`
-records permit 21. The build rejects longer explicit lines before allocation so
-the game cannot split a word at the right edge of a box.
+records permit 21. Confirmed records declare that value as `max_line_length`;
+the build checks it against the ROM presentation metadata and rejects longer
+explicit lines before allocation so the game cannot split a word at the right
+edge of a box. Four short opening-recap records use the unclassified `default`
+presentation and intentionally omit `max_line_length` until their visible width
+is confirmed; their encoded cell capacity and box height remain validated.
 
 The following X/Y/B choice is also a fixed resource rather than a command-`$08`
 text stream. Its option pointers at `$98:9B2A-$98:9B2E` retain X/Y/B order, and

@@ -48,7 +48,7 @@ def build(original: bytes, project):
         from pathlib import Path
 
         root = Path(__file__).resolve().parents[2]
-        patches = root / "translation" / "patches.toml"
+        patches = root / "translation" / "patches"
         references = root / "translation" / "references.toml"
         ranges = root / "translation" / "ranges.toml"
         menu = root / "translation" / "menu.toml"

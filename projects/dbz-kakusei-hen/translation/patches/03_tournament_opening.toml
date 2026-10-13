@@ -1,0 +1,394 @@
+schema_version = 1
+
+[[record]]
+id = "tournament_opening_00"
+original_address = "99:8BB4"
+original_offset = 0xC8BB4
+original_length = 146
+source_sha256 = "13d119942cdef47c23ad32d34f5fde6afb55f6fc6ee2169bbd39509208a6232e"
+english = [
+  "Three years had passed since",
+  "Goku defeated",
+  "King Piccolo...",
+  "Crowds gathered on Papaya",
+  "Island for the 23rd World",
+  "Martial Arts Tournament.",
+]
+max_line_length = 28
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Narrator; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_01"
+original_address = "99:8C46"
+original_offset = 0xC8C46
+original_length = 10
+source_sha256 = "b45a7c5734cecf5be7a2c749f35f25ef4004ac5aeadf795ae1069aea3a6c7cbb"
+english = [
+  "Hmm...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_02"
+original_address = "99:8C50"
+original_offset = 0xC8C50
+original_length = 26
+source_sha256 = "089343c32cc2c346d240e8dad5809c1a24a8af22ff6b46114cf6868d05198864"
+english = [
+  "They're all late...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_03"
+original_address = "99:8C6A"
+original_offset = 0xC8C6A
+original_length = 8
+source_sha256 = "34ba7ee305b77f207f8b393111dac44dd5ef8e8ba5ad75a1f462f08ee820c172"
+english = [
+  "Oh?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_04"
+original_address = "99:8C72"
+original_offset = 0xC8C72
+original_length = 60
+source_sha256 = "f5240499a25ff2f8172490f1891ce3f2001641f9638fb2284c87504f536d67c6"
+english = [
+  "Eee!",
+  "Long time no see!",
+  "Where is everyone?",
+  "Not here yet?!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Oolong; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_05"
+original_address = "99:8CAE"
+original_offset = 0xC8CAE
+original_length = 62
+source_sha256 = "630f5d6b7e17e8583ba77d5cf617d23ebc244558ff38a2665b78b654cebfd895"
+english = [
+  "Well, I'll be!",
+  "You're even more of a",
+  "woman now!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Master Roshi; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_06"
+original_address = "99:8CEC"
+original_offset = 0xC8CEC
+original_length = 28
+source_sha256 = "a322f692d0f3c28d24b2f4e32faa7ac1165fe3be49eb0a470ed30e294c77178a"
+english = [
+  "Don't touch my butt!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_07"
+original_address = "99:8D08"
+original_offset = 0xC8D08
+original_length = 48
+source_sha256 = "3cb322fdec386a944e5347506918391b84a16f8c5b74b219c6e6c7d5eaaee134"
+english = [
+  "B-by the way,",
+  "where is Yamcha?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Master Roshi; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_08"
+original_address = "99:8D38"
+original_offset = 0xC8D38
+original_length = 38
+source_sha256 = "69e3435e59341ebce11f19f87177d2f34a64694d6ab2ff54e5660af1d4d7a372"
+english = [
+  "He went off somewhere",
+  "on his own.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_09"
+original_address = "99:8D5E"
+original_offset = 0xC8D5E
+original_length = 22
+source_sha256 = "21b0280ab1ede08bc27972c7e50c8f751c8a83324ff104fdafa5b716f6c2d3a4"
+english = [
+  "On a training",
+  "journey.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_10"
+original_address = "99:8D74"
+original_offset = 0xC8D74
+original_length = 22
+source_sha256 = "3d12c016f26b70d9fd3f590f6007408298c47e1936af3a9cb6fc226569facfbc"
+english = [
+  "And left me behind...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_11"
+original_address = "99:8D8A"
+original_offset = 0xC8D8A
+original_length = 156
+source_sha256 = "a27655db6064ec481faac075cc0261c4d981cc90c41f3ee664fa8739964b088f"
+english = [
+  "Ho ho ho! Yamcha too,",
+  "eh? Krillin also",
+  "left to train.",
+  "They must have been",
+  "inspired by Goku",
+  "three years ago...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Master Roshi; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_12"
+original_address = "99:8E26"
+original_offset = 0xC8E26
+original_length = 10
+source_sha256 = "f0d7486eee3f6ed7ccb3c26007d5b933a280c0bcb8fd13d394d11f7ee1b3e724"
+english = [
+  "Hey!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_13"
+original_address = "99:8E30"
+original_offset = 0xC8E30
+original_length = 22
+source_sha256 = "9c2716ecaa3c1ec31c8d2977f723f784f6cf71bf091350fde10caff1fac9f0e5"
+english = [
+  "A friend of yours,",
+  "Bulma?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Oolong; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_14"
+original_address = "99:8E46"
+original_offset = 0xC8E46
+original_length = 10
+source_sha256 = "15f62a183a107458cf9931b2348a69d6f46748bc9ebfbb91de17969e3614e45c"
+english = [
+  "No...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_15"
+original_address = "99:8E50"
+original_offset = 0xC8E50
+original_length = 156
+source_sha256 = "5067e40b35375a965fb4c161371f03eddbb15a70dbdf101f162a894c554cf61c"
+english = [
+  "Gramps! You're alive",
+  "again!",
+  "Everyone looks well!",
+  " ",
+  "Where are Krillin,",
+  "Yamcha, and Tien?",
+  "Did they already go",
+  "to the preliminaries?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_16"
+original_address = "99:8EEC"
+original_offset = 0xC8EEC
+original_length = 12
+source_sha256 = "62b71f173798e035580748394cbdf46b08162417c197f6eb882c5625c6b60d13"
+english = [
+  "N-no...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_17"
+original_address = "99:8EF8"
+original_offset = 0xC8EF8
+original_length = 10
+source_sha256 = "7fbef86006edd9a961fe4858f950cddde285bc652e44ce116d2f34e43bdccb41"
+english = [
+  "It can't be...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Master Roshi; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_18"
+original_address = "99:8F02"
+original_offset = 0xC8F02
+original_length = 12
+source_sha256 = "388b868342adbebc5497dc670058427795ee439e0c94efb19bf2646bcbef7674"
+english = [
+  "G-Goku...?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Oolong; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_19"
+original_address = "99:8F0E"
+original_offset = 0xC8F0E
+original_length = 6
+source_sha256 = "fe278812efdbd9e13af6910fbfc11852c80fbda0b3570f0ec6997126951bf25c"
+english = [
+  "Huh?!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_20"
+original_address = "99:8F14"
+original_offset = 0xC8F14
+original_length = 38
+source_sha256 = "953181eec4bae17c04e445d2a45dae70563944f14e040689b63b001708d5341d"
+english = [
+  "Huh? What do you",
+  "mean?",
+  "Of course it's me!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_21"
+original_address = "99:8F3A"
+original_offset = 0xC8F3A
+original_length = 46
+source_sha256 = "e36a0d4bd2129984f70d50957508bc2911d0bdb944857b1a2b655c5ef823fb00"
+english = [
+  "N-no way...",
+  "Is it really you,",
+  "Goku?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_22"
+original_address = "99:8F68"
+original_offset = 0xC8F68
+original_length = 90
+source_sha256 = "08c245d6640159ee660c4bbe92e8fb65b6d1083f720eb0c554c1e20b80ec488b"
+english = [
+  "What's wrong with",
+  "you?",
+  "Can't tell with this",
+  "on my head?",
+  "Then I'll take it",
+  "off.",
+  "Now take a good look!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_23"
+original_address = "99:8FC2"
+original_offset = 0xC8FC2
+original_length = 30
+source_sha256 = "b6b7f5ca5888419f9ab4c38e66f838d7ae8d73cccde5179bc0ebc08d8a91665c"
+english = [
+  "How's that?!",
+  "No mistaking me now,",
+  "right?!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_24"
+original_address = "99:8FE0"
+original_offset = 0xC8FE0
+original_length = 68
+source_sha256 = "3b138894c7b84acc8544133ff5f75f3e8213b7c6fe27d5523ef152350a420c3f"
+english = [
+  "More importantly,",
+  "Bulma, Gramps, did",
+  "you two get smaller?!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_25"
+original_address = "99:9024"
+original_offset = 0xC9024
+original_length = 34
+source_sha256 = "001c9fdea4e2e9d7092af1ff0b392b22ffa8a5a0bc4cd2d77c2427690cf31ca4"
+english = [
+  "Y-you're the one",
+  "who got bigger...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_opening_26"
+original_address = "99:9046"
+original_offset = 0xC9046
+original_length = 26
+source_sha256 = "d74a6e59d3eb798b05ed818877377276aedb940a020a147438ea891c1aefe781"
+english = [
+  "Bulma, your lips",
+  "are red...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed line wrapping."

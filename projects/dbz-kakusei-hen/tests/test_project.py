@@ -51,9 +51,9 @@ class ProjectDescriptorTest(unittest.TestCase):
         self.assertTrue(manifest.is_file(), f"missing analysis manifest {manifest}")
 
     def test_translation_manifests_exist(self):
-        for name in (
-            "patches", "references", "ranges", "menu", "name_entry", "choices", "glossary"
-        ):
+        patches = PROJECT_ROOT / self.data["manifests"]["patches"]
+        self.assertTrue(patches.is_dir(), f"missing translation manifest collection {patches}")
+        for name in ("references", "ranges", "menu", "name_entry", "choices", "glossary"):
             manifest = PROJECT_ROOT / self.data["manifests"][name]
             self.assertTrue(manifest.is_file(), f"missing translation manifest {manifest}")
 
@@ -74,10 +74,18 @@ class TranslationManifestTest(unittest.TestCase):
         with (PROJECT_ROOT / "translation" / name).open("rb") as source:
             return tomllib.load(source)[table]
 
+    @staticmethod
+    def load_patches() -> list[dict[str, object]]:
+        records = []
+        for path in sorted((PROJECT_ROOT / "translation" / "patches").glob("*.toml")):
+            with path.open("rb") as source:
+                document = tomllib.load(source)
+            records.extend(document["record"])
+        return records
+
     def test_tracked_manifests_are_versioned_toml_with_records(self):
         for name, table in (
-            ("patches.toml", "record"), ("references.toml", "record"),
-            ("ranges.toml", "record"), ("menu.toml", "record"),
+            ("references.toml", "record"), ("ranges.toml", "record"), ("menu.toml", "record"),
             ("name_entry.toml", "record"), ("choices.toml", "record"),
             ("glossary.toml", "term"),
         ):
@@ -87,8 +95,24 @@ class TranslationManifestTest(unittest.TestCase):
                 self.assertEqual(document["schema_version"], 1)
                 self.assertTrue(document[table])
 
+        patch_paths = sorted((PROJECT_ROOT / "translation" / "patches").glob("*.toml"))
+        self.assertEqual(
+            [path.name for path in patch_paths],
+            [
+                "01_opening_narration.toml",
+                "02_opening_recap.toml",
+                "03_tournament_opening.toml",
+            ],
+        )
+        for path in patch_paths:
+            with self.subTest(name=path.name):
+                with path.open("rb") as source:
+                    document = tomllib.load(source)
+                self.assertEqual(document["schema_version"], 1)
+                self.assertTrue(document["record"])
+
     def test_tracked_manifests_preserve_opening_records(self):
-        patches = self.load("patches.toml")
+        patches = self.load_patches()
         self.assertEqual(len(patches), 53)
         self.assertEqual(
             [patch["id"] for patch in patches[:4]],
@@ -112,7 +136,20 @@ class TranslationManifestTest(unittest.TestCase):
         )
         self.assertEqual([patch["original_length"] for patch in patches[:4]], [120, 116, 72, 26])
         self.assertTrue(all(patch["status"] == "implemented" for patch in patches))
-        self.assertEqual([len(patch["english"].split("\n")) for patch in patches[:4]], [4, 4, 3, 1])
+        self.assertEqual([len(patch["english"]) for patch in patches[:4]], [4, 4, 3, 1])
+        self.assertTrue(
+            all(
+                isinstance(line, str) and line
+                for patch in patches
+                for line in patch["english"]
+            )
+        )
+        self.assertEqual(
+            {patch["id"] for patch in patches if "max_line_length" not in patch},
+            {"opening_recap_01", "opening_recap_04", "opening_recap_15", "opening_recap_19"},
+        )
+        self.assertEqual(sum(patch.get("max_line_length") == 21 for patch in patches), 44)
+        self.assertEqual(sum(patch.get("max_line_length") == 28 for patch in patches), 5)
 
         references = self.load("references.toml")
         self.assertEqual(len(references), 55)
@@ -419,9 +456,7 @@ class GlossaryTest(unittest.TestCase):
                     )
 
     def test_existing_patches_do_not_use_prohibited_spellings(self):
-        path = PROJECT_ROOT / "translation" / "patches.toml"
-        with path.open("rb") as source:
-            rows = tomllib.load(source)["record"]
+        rows = TranslationManifestTest.load_patches()
         for row in rows:
             text = row.get("english", "")
             for prohibited in self.PROHIBITED_CANONICAL:

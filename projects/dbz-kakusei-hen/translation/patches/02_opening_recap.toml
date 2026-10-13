@@ -1,0 +1,300 @@
+schema_version = 1
+
+[[record]]
+id = "opening_recap_01"
+original_address = "99:8964"
+original_offset = 0xC8964
+original_length = 14
+source_sha256 = "99085eb2e3e5fcd9831f5e84346018e7060096445739d52a99f5d8b3015c85ed"
+english = [
+  "A-a-aah...!",
+]
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_02"
+original_address = "9C:94A6"
+original_offset = 0xE14A6
+original_length = 40
+source_sha256 = "18e1c4d87bb87a27aa9040d097c953a31c0a7f6ffd63e8f3ccca3b7dbaaa287b"
+english = [
+  "H-he's huge!!",
+  "Like a mountain!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_03"
+original_address = "9C:94CE"
+original_offset = 0xE14CE
+original_length = 14
+source_sha256 = "d25c4239bd11b03a5b351d792fbeaed0be0c050addd49aed65b42e8e70bb2d97"
+english = [
+  "N-no way...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_04"
+original_address = "99:89D0"
+original_offset = 0xC89D0
+original_length = 22
+source_sha256 = "5007192465a5e08e86bc396f0f26822d4dc5b488adbd2db13aae77acaa823c07"
+english = [
+  "Ha ha ha ha!!",
+]
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_05"
+original_address = "9C:94DC"
+original_offset = 0xE14DC
+original_length = 44
+source_sha256 = "863e6d469fd43838aecef044faca379feb4279e393388ae06e6d9e1748b87b90"
+english = [
+  "W-w-what",
+  "the heck is",
+  "that monster?!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_06"
+original_address = "9B:E9D8"
+original_offset = 0xDE9D8
+original_length = 66
+source_sha256 = "8a18b11add16504e23a17fb8e3354b9a518db91c7646904e309d6e11a744026f"
+english = [
+  "Ha ha ha!",
+  "How's that,",
+  "Kakarot?!",
+  "You're done too!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_07"
+original_address = "9C:9508"
+original_offset = 0xE1508
+original_length = 34
+source_sha256 = "7c785658fdbab811601ce7dd90300374fc9a1c48d22c2e46e2faa717b6bafeb8"
+english = [
+  "What the",
+  "hell's going on?!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_08"
+original_address = "9C:952A"
+original_offset = 0xE152A
+original_length = 12
+source_sha256 = "51b8c810422dd33295a123fef3caf1971e52019ce4252168af07933b155bd411"
+english = [
+  "Recoome!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_09"
+original_address = "9C:9536"
+original_offset = 0xE1536
+original_length = 10
+source_sha256 = "1d4a74ffb0718fe1e4966c44264c82321d5fb351c5ee775b39da4057f8fc0ead"
+english = [
+  "Burter!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_10"
+original_address = "9C:9540"
+original_offset = 0xE1540
+original_length = 10
+source_sha256 = "c04c981134d43fad6a29d57cd28822e575adc0900180f76a2ee0f5209bb13f98"
+english = [
+  "Jeice!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_11"
+original_address = "9C:954A"
+original_offset = 0xE154A
+original_length = 10
+source_sha256 = "46451d0aa03bdd0e6adb99531fdc268a98d824ac12b20a86c2074c1bac108d5a"
+english = [
+  "Guldo!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_12"
+original_address = "9C:9554"
+original_offset = 0xE1554
+original_length = 12
+source_sha256 = "71462c03b3d1ec290a880c53745adb8c401ba2fe949fc5a5bc27950e721b4b51"
+english = [
+  "Ginyu!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_13"
+original_address = "9C:9560"
+original_offset = 0xE1560
+original_length = 16
+source_sha256 = "74f8014fc0e39d4aec15ecd9f8b4179213deadbc914c7a5478e77a4cc11b647a"
+english = [
+  "All together!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_14"
+original_address = "9C:9570"
+original_offset = 0xE1570
+original_length = 20
+source_sha256 = "b5603e209395b706e1cc4c1b367121b38217290a1e6a50bb312d19981f86e425"
+english = [
+  "Ginyu Force!!!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_15"
+original_address = "99:87C0"
+original_offset = 0xC87C0
+original_length = 10
+source_sha256 = "8264ff205bb897c0ff9cceef06f5288a145727941ce95ec02cab83b91b4ec3e2"
+english = [
+  "........",
+]
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_16"
+original_address = "9C:996E"
+original_offset = 0xE196E
+original_length = 46
+source_sha256 = "4f7afbc0633053802db031272a8f289f7a7400dd420f3976e5beedb9c3d1f167"
+english = [
+  "What's with",
+  "those fighting",
+  "poses...?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_17"
+original_address = "9C:999C"
+original_offset = 0xE199C
+original_length = 62
+source_sha256 = "e628a4703df65033932a724a9cf55a6ec4a24e01c5297d0e1ed949dbc7d5fb15"
+english = [
+  "State your wish.",
+  "I shall grant you",
+  "any three wishes.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_18"
+original_address = "9C:99DA"
+original_offset = 0xE19DA
+original_length = 34
+source_sha256 = "b2f84f3ba9368d86801bfbc147398d03ba26dcc8d46c1fefc4bfbd303fb461af"
+english = [
+  "Make me",
+  "immortal!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_19"
+original_address = "99:87EA"
+original_offset = 0xC87EA
+original_length = 12
+source_sha256 = "40d0dc835cec8bd33b14b233247dee90e67bae8fdfa3e7b3ee468b25d92337d8"
+english = [
+  "..........",
+]
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_20"
+original_address = "9C:99FC"
+original_offset = 0xE19FC
+original_length = 34
+source_sha256 = "20da39b2a6e98c99cdf5b8a13106c7343be46aa22916dcedd7712ad21434a904"
+english = [
+  "I'm a Saiyan from",
+  "Earth!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_21"
+original_address = "9C:9A1E"
+original_offset = 0xE1A1E
+original_length = 78
+source_sha256 = "faef76a7848bab342fb78df5c0838541f41524934186205232701b9131026c0c"
+english = [
+  "For the Saiyans",
+  "you killed...",
+  "And for the",
+  "Namekians here...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."
+
+[[record]]
+id = "opening_recap_22"
+original_address = "9C:9A6C"
+original_offset = 0xE1A6C
+original_length = 24
+source_sha256 = "13f37b31b4dde600a60b17f983f15ef38910baedf125feda5091b3f967bd69b2"
+english = [
+  "I'll",
+  "beat you!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "automatic recap dialogue; fixed original line-cell allocation, no relocation."

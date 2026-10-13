@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from snesworkbench.errors import WorkstationError
-from snesworkbench.manifests import manifest_int, read_manifest
+from snesworkbench.manifests import manifest_int, read_manifest, read_manifest_collection
 from snesworkbench.patching import BuildResult, bounded_write, changed_offsets, sha256, write_snes_checksum
 from snesworkbench.rom import cpu_to_offset, parse_cpu_address
 
@@ -42,10 +42,11 @@ PATCH_FIELDS = {
     "original_offset": int,
     "original_length": int,
     "source_sha256": str,
-    "english": str,
+    "english": list,
     "status": str,
     "notes": str,
 }
+PATCH_OPTIONAL_FIELDS = {"max_line_length": int}
 REFERENCE_FIELDS = {
     "id": str,
     "reference_type": str,
@@ -84,7 +85,8 @@ class TranslationRecord:
     original_offset: int
     original_length: int
     source_sha256: str
-    english: str
+    english: tuple[str, ...]
+    max_line_length: int | None
     status: str
     notes: str
     reference_offset: int
@@ -119,14 +121,29 @@ def validate_visible_line_width(
 ) -> None:
     """Reject authored lines that would wrap mid-word in the visible text box."""
 
-    limit = visible_line_character_limit(presentation)
-    if limit is None:
+    confirmed_limit = visible_line_character_limit(presentation)
+    if confirmed_limit is None:
+        if record.max_line_length is not None:
+            raise WorkstationError(
+                f"{record.id} selector ${record.selector:04X} has unconfirmed "
+                f"{presentation.kind} presentation and must omit max_line_length"
+            )
         return
-    for line_number, line in enumerate(record.english.split("\n"), start=1):
-        if len(line) > limit:
+    if record.max_line_length is None:
+        raise WorkstationError(
+            f"{record.id} selector ${record.selector:04X} uses {presentation.kind} "
+            f"presentation and must declare max_line_length = {confirmed_limit}"
+        )
+    if record.max_line_length != confirmed_limit:
+        raise WorkstationError(
+            f"{record.id} selector ${record.selector:04X} declares max_line_length = "
+            f"{record.max_line_length}; {presentation.kind} requires {confirmed_limit}"
+        )
+    for line_number, line in enumerate(record.english, start=1):
+        if len(line) > confirmed_limit:
             raise WorkstationError(
                 f"{record.id} selector ${record.selector:04X} line {line_number} "
-                f"has {len(line)} characters; {presentation.kind} permits {limit}"
+                f"has {len(line)} characters; {presentation.kind} permits {confirmed_limit}"
             )
 
 
@@ -135,7 +152,9 @@ def load_translation_manifests(
 ) -> list[TranslationRecord]:
     """Join tracked patch and reference manifests by stable ``id``."""
 
-    patches = read_manifest(patches_path, PATCH_FIELDS)
+    patches = read_manifest_collection(
+        patches_path, PATCH_FIELDS, optional_fields=PATCH_OPTIONAL_FIELDS
+    )
     references = read_manifest(references_path, REFERENCE_FIELDS)
     by_id: dict[str, dict[str, str]] = {}
     for reference in references:
@@ -168,6 +187,25 @@ def load_translation_manifests(
             length = manifest_int(patch["original_length"], f"{identifier} original length")
         except WorkstationError as error:
             raise WorkstationError(f"invalid original length for {identifier!r}") from error
+        english = patch["english"]
+        if not english:
+            raise WorkstationError(f"patch {identifier!r} has an empty English line array")
+        if any(not isinstance(line, str) for line in english):
+            raise WorkstationError(f"patch {identifier!r} has a non-string English line")
+        if any("\n" in line or "\r" in line for line in english):
+            raise WorkstationError(f"patch {identifier!r} has an embedded English line break")
+        max_line_length = patch.get("max_line_length")
+        if max_line_length is not None and max_line_length not in {21, 28}:
+            raise WorkstationError(
+                f"patch {identifier!r} has invalid max_line_length {max_line_length!r}"
+            )
+        if max_line_length is not None:
+            for line_number, line in enumerate(english, start=1):
+                if len(line) > max_line_length:
+                    raise WorkstationError(
+                        f"patch {identifier!r} line {line_number} has {len(line)} characters; "
+                        f"max_line_length is {max_line_length}"
+                    )
         records.append(
             TranslationRecord(
                 id=identifier,
@@ -177,7 +215,8 @@ def load_translation_manifests(
                 original_offset=offset,
                 original_length=length,
                 source_sha256=patch["source_sha256"],
-                english=patch["english"].replace("\\n", "\n"),
+                english=tuple(english),
+                max_line_length=max_line_length,
                 status=patch["status"],
                 notes=patch["notes"],
                 reference_offset=_hex(reference["reference_offset"], f"{identifier} reference offset"),
@@ -366,7 +405,7 @@ def plan_translations(
         slot = slots[record.selector]
         stream = _validate_record(original, record, slot)
         validate_visible_line_width(record, slot.presentation)
-        lines = record.english.split("\n")
+        lines = record.english
         needed_cells = tuple((len(line) + 1) // 2 for line in lines)
         exact_cells = None
         if (
@@ -375,7 +414,7 @@ def plan_translations(
         ):
             exact_cells = stream.line_lengths
         encoded = encode_text_layout(
-            record.english,
+            "\n".join(record.english),
             max_line_width=slot.presentation.width_cells,
             max_lines=slot.presentation.height_cells,
             line_cells=exact_cells,

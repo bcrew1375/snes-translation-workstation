@@ -148,7 +148,9 @@ class PointerUpdateTest(unittest.TestCase):
 
 class ManifestTest(unittest.TestCase):
     @staticmethod
-    def translation_record(english: str) -> TranslationRecord:
+    def translation_record(
+        english: str, max_line_length: int | None
+    ) -> TranslationRecord:
         return TranslationRecord(
             id="width_test",
             selector=0x0200,
@@ -157,7 +159,8 @@ class ManifestTest(unittest.TestCase):
             original_offset=0,
             original_length=2,
             source_sha256="0" * 64,
-            english=english,
+            english=tuple(english.split("\n")),
+            max_line_length=max_line_length,
             status="implemented",
             notes="",
             reference_offset=0,
@@ -171,44 +174,108 @@ class ManifestTest(unittest.TestCase):
         self.assertEqual(visible_line_character_limit(wide), 28)
         self.assertEqual(visible_line_character_limit(portrait), 21)
         self.assertIsNone(visible_line_character_limit(default))
-        validate_visible_line_width(self.translation_record("W" * 28), wide)
-        validate_visible_line_width(self.translation_record("P" * 21), portrait)
+        validate_visible_line_width(self.translation_record("W" * 28, 28), wide)
+        validate_visible_line_width(self.translation_record("P" * 21, 21), portrait)
+        validate_visible_line_width(self.translation_record("default", None), default)
         with self.assertRaisesRegex(
             WorkstationError,
             r"width_test selector \$0200 line 1 has 29 characters; wide_marker permits 28",
         ):
-            validate_visible_line_width(self.translation_record("W" * 29), wide)
+            validate_visible_line_width(self.translation_record("W" * 29, 28), wide)
         with self.assertRaisesRegex(
             WorkstationError,
             r"width_test selector \$0200 line 2 has 22 characters; context_pair permits 21",
         ):
-            validate_visible_line_width(self.translation_record("ok\n" + "P" * 22), portrait)
+            validate_visible_line_width(
+                self.translation_record("ok\n" + "P" * 22, 21), portrait
+            )
+        with self.assertRaisesRegex(WorkstationError, "must declare max_line_length = 28"):
+            validate_visible_line_width(self.translation_record("wide", None), wide)
+        with self.assertRaisesRegex(WorkstationError, "wide_marker requires 28"):
+            validate_visible_line_width(self.translation_record("wide", 21), wide)
+        with self.assertRaisesRegex(WorkstationError, "must omit max_line_length"):
+            validate_visible_line_width(self.translation_record("default", 28), default)
 
     def test_manifests_join_by_id_and_preserve_real_banks(self):
         records = load_translation_manifests(
-            PROJECT_ROOT / "translation" / "patches.toml",
+            PROJECT_ROOT / "translation" / "patches",
             PROJECT_ROOT / "translation" / "references.toml",
         )
         self.assertEqual(len(records), 53)
         self.assertEqual(records[0].selector, 0x07E1)
         self.assertEqual({record.original_bank for record in records}, {0x99, 0x9B, 0x9C})
-        self.assertIn("\n", records[0].english)
+        self.assertEqual(len(records[0].english), 4)
+        self.assertEqual(records[0].max_line_length, 28)
+        self.assertIn("Long ago", records[0].english[0])
+
+    def test_duplicate_patch_ids_across_files_are_rejected(self):
+        patch = f'''schema_version = 1
+
+[[record]]
+id = "duplicate"
+original_address = "99:8100"
+original_offset = 0xC0100
+original_length = 2
+source_sha256 = "{'0' * 64}"
+english = ["It"]
+max_line_length = 21
+status = "implemented"
+notes = ""
+'''
+        reference = '''schema_version = 1
+
+[[record]]
+id = "duplicate"
+reference_type = "command_08_selector"
+reference_address = "99:8000"
+reference_offset = 0xC0000
+message_index = 0
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:8100"
+target_offset = 0xC0100
+'''
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            patches = root / "patches"
+            patches.mkdir()
+            (patches / "01_first.toml").write_text(patch, encoding="utf-8")
+            (patches / "02_second.toml").write_text(patch, encoding="utf-8")
+            references = root / "references.toml"
+            references.write_text(reference, encoding="utf-8")
+
+            with self.assertRaisesRegex(WorkstationError, "duplicate patch id 'duplicate'"):
+                load_translation_manifests(patches, references)
 
     def test_manifest_mismatch_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            patches = root / "patches.tsv"
-            references = root / "references.tsv"
-            patches.write_text(
-                "id\toriginal_address\toriginal_offset\toriginal_length\tsource_sha256\tenglish\tstatus\tnotes\n"
-                f"x\t$99:8100\t$000100\t2\t{'0' * 64}\tIt\timplemented\t\n",
-                encoding="utf-8",
-            )
-            references.write_text(
-                "id\treference_type\treference_address\treference_offset\tmessage_index\tpointer_format\ttarget_address\ttarget_offset\n"
-                "y\tcommand_08_selector\t$99:8000\t$000000\t$0000\t16-bit same-bank LoROM pointer\t$99:8100\t$000100\n",
-                encoding="utf-8",
-            )
+            patches = root / "patches.toml"
+            references = root / "references.toml"
+            patches.write_text(f'''schema_version = 1
+
+[[record]]
+id = "x"
+original_address = "99:8100"
+original_offset = 0xC0100
+original_length = 2
+source_sha256 = "{'0' * 64}"
+english = ["It"]
+max_line_length = 21
+status = "implemented"
+notes = ""
+''', encoding="utf-8")
+            references.write_text('''schema_version = 1
+
+[[record]]
+id = "y"
+reference_type = "command_08_selector"
+reference_address = "99:8000"
+reference_offset = 0xC0000
+message_index = 0
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:8100"
+target_offset = 0xC0100
+''', encoding="utf-8")
             with self.assertRaisesRegex(WorkstationError, "has no reference"):
                 load_translation_manifests(patches, references)
 
@@ -219,7 +286,7 @@ class OriginalRomExpansionTest(unittest.TestCase):
     def setUpClass(cls):
         cls.original = (PROJECT_ROOT / "rom" / "original.sfc").read_bytes()
         cls.records = load_translation_manifests(
-            PROJECT_ROOT / "translation" / "patches.toml",
+            PROJECT_ROOT / "translation" / "patches",
             PROJECT_ROOT / "translation" / "references.toml",
         )
 
@@ -246,10 +313,21 @@ class OriginalRomExpansionTest(unittest.TestCase):
             limit = visible_line_character_limit(presentation)
             with self.subTest(id=record.id, kind=presentation.kind):
                 self.assertIsNotNone(limit)
-                lines = record.english.split("\n")
-                self.assertLessEqual(len(lines), presentation.height_cells)
-                self.assertTrue(all(len(line) <= limit for line in lines))
+                self.assertEqual(record.max_line_length, limit)
+                self.assertLessEqual(len(record.english), presentation.height_cells)
+                self.assertTrue(all(len(line) <= limit for line in record.english))
                 validate_visible_line_width(record, presentation)
+
+    def test_default_presentations_omit_unconfirmed_line_limit(self):
+        from dbz_kakusei_hen.scenario import decode_text_slots
+
+        slots = decode_text_slots(self.original)
+        defaults = [record for record in self.records if slots[record.selector].presentation.kind == "default"]
+        self.assertEqual(
+            [record.id for record in defaults],
+            ["opening_recap_01", "opening_recap_04", "opening_recap_15", "opening_recap_19"],
+        )
+        self.assertTrue(all(record.max_line_length is None for record in defaults))
 
     def test_tournament_relocation_count_and_span_are_stable(self):
         regions = load_reviewed_free_regions(PROJECT_ROOT / "translation" / "ranges.toml")

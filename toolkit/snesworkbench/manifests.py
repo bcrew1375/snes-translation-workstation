@@ -39,6 +39,7 @@ def parse_manifest_text(
     fields: dict[str, type | tuple[type, ...]],
     *,
     table: str = "record",
+    optional_fields: dict[str, type | tuple[type, ...]] | None = None,
 ) -> list[dict[str, Any]]:
     """Parse one strict manifest while preserving its declared record order.
 
@@ -47,7 +48,8 @@ def parse_manifest_text(
     """
 
     source_path = Path(path)
-    expected_names = list(fields)
+    optional_fields = {} if optional_fields is None else optional_fields
+    expected_names = list(fields) + list(optional_fields)
     if source_path.suffix == ".tsv":
         try:
             reader = csv.DictReader(io.StringIO(text), delimiter="\t")
@@ -84,18 +86,21 @@ def parse_manifest_text(
         raise WorkstationError(f"manifest {source_path} key {table!r} must be an array of tables")
 
     validated: list[dict[str, Any]] = []
-    expected = set(fields)
+    expected = set(fields) | set(optional_fields)
+    required = set(fields)
     for index, record in enumerate(records, start=1):
         context = f"manifest {source_path} {table} {index}"
         if not isinstance(record, dict):
             raise WorkstationError(f"{context} is not a table")
         unknown = sorted(set(record) - expected)
-        missing = sorted(expected - set(record))
+        missing = sorted(required - set(record))
         if unknown:
             raise WorkstationError(f"{context} has unknown keys: {', '.join(unknown)}")
         if missing:
             raise WorkstationError(f"{context} is missing keys: {', '.join(missing)}")
-        for name, expected_type in fields.items():
+        for name, expected_type in {**fields, **optional_fields}.items():
+            if name not in record:
+                continue
             if not _matches_type(record[name], expected_type):
                 raise WorkstationError(
                     f"{context} key {name!r} has invalid type "
@@ -110,6 +115,7 @@ def read_manifest(
     fields: dict[str, type | tuple[type, ...]],
     *,
     table: str = "record",
+    optional_fields: dict[str, type | tuple[type, ...]] | None = None,
 ) -> list[dict[str, Any]]:
     """Read a UTF-8 TSV or TOML manifest with a strict declared schema."""
 
@@ -118,7 +124,42 @@ def read_manifest(
         text = source_path.read_text(encoding="utf-8")
     except OSError as error:
         raise WorkstationError(str(error)) from error
-    return parse_manifest_text(source_path, text, fields, table=table)
+    return parse_manifest_text(
+        source_path, text, fields, table=table, optional_fields=optional_fields
+    )
+
+
+def read_manifest_collection(
+    path: str | Path,
+    fields: dict[str, type | tuple[type, ...]],
+    *,
+    table: str = "record",
+    optional_fields: dict[str, type | tuple[type, ...]] | None = None,
+) -> list[dict[str, Any]]:
+    """Read one manifest or an ordered directory of TOML manifests.
+
+    Directory members are direct ``*.toml`` children loaded in lexical filename
+    order. Each member is independently schema-validated by ``read_manifest``;
+    record order is then preserved while the results are concatenated.
+    """
+
+    source_path = Path(path)
+    if not source_path.is_dir():
+        return read_manifest(
+            source_path, fields, table=table, optional_fields=optional_fields
+        )
+
+    members = sorted(
+        member for member in source_path.iterdir() if member.is_file() and member.suffix == ".toml"
+    )
+    if not members:
+        raise WorkstationError(f"manifest directory has no TOML files: {source_path}")
+    records: list[dict[str, Any]] = []
+    for member in members:
+        records.extend(
+            read_manifest(member, fields, table=table, optional_fields=optional_fields)
+        )
+    return records
 
 
 def manifest_int(value: object, field: str, *, hexadecimal: bool = False) -> int:

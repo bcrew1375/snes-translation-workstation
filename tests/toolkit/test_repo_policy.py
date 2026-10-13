@@ -11,7 +11,8 @@ original_address = "8C:8123"
 original_offset = 0x060123
 original_length = 24
 source_sha256 = "{digest}"
-english = "An English replacement."
+english = ["English replacement."]
+max_line_length = 21
 status = "draft"
 notes = "Opening message"
 """
@@ -69,6 +70,12 @@ class RepositoryContentPolicyTest(unittest.TestCase):
             [],
         )
 
+    def test_split_patch_manifest_uses_the_patch_schema(self):
+        relative = "projects/example/translation/patches/01_opening.toml"
+        self.assertEqual(validate_source_text(relative, PATCH.format(digest="a" * 64)), [])
+        failures = validate_source_text(relative, "schema_version = 1\nrecord = [")
+        self.assertTrue(any("not valid TOML" in failure for failure in failures))
+
     def test_unknown_keys_and_wrong_types_are_rejected(self):
         unknown = PATCH.format(digest="a" * 64) + "unexpected = true\n"
         failures = validate_source_text("projects/example/translation/patches.toml", unknown)
@@ -81,6 +88,25 @@ class RepositoryContentPolicyTest(unittest.TestCase):
             "projects/example/translation/patches.toml", wrong_type
         )
         self.assertTrue(any("invalid type" in failure for failure in failures))
+
+    def test_patch_line_arrays_and_limits_are_validated(self):
+        valid = PATCH.format(digest="a" * 64)
+        cases = (
+            (valid.replace('english = ["English replacement."]', "english = []"), "empty English"),
+            (valid.replace('english = ["English replacement."]', 'english = ["ok", 2]'), "non-string"),
+            (valid.replace('english = ["English replacement."]', 'english = ["ok", ""]'), "empty English line"),
+            (valid.replace("max_line_length = 21", "max_line_length = 22"), "invalid max_line_length"),
+            (
+                valid.replace('english = ["English replacement."]', f'english = ["{"x" * 22}"]'),
+                "has 22 characters",
+            ),
+        )
+        for text, expected in cases:
+            with self.subTest(expected=expected):
+                failures = validate_source_text(
+                    "projects/example/translation/patches.toml", text
+                )
+                self.assertTrue(any(expected in failure for failure in failures), failures)
 
     def test_menu_record_type_and_character_offsets_are_validated(self):
         valid = """schema_version = 1

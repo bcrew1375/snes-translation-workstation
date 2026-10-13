@@ -281,7 +281,7 @@ attract-mode cycles rather than extending the recap.
 All 26 selected streams were correlated with visible scenes. Their exact selector,
 pointer, CPU-address, ROM-offset, length, digest, and repository-authored English
 replacement are recorded in `translation/references.toml` and
-`translation/patches.toml`. Decoded Japanese source dialogue remains local and
+the ordered `translation/patches/*.toml` collection. Decoded Japanese source dialogue remains local and
 untracked.
 
 ### Opening menu family

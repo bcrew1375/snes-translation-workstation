@@ -44,7 +44,7 @@ def _project_summary(project) -> dict[str, object]:
 
 
 def _validate_project(project) -> None:
-    missing = [path for path in project.manifests.values() if not path.is_file()]
+    missing = [path for path in project.manifests.values() if not path.exists()]
     if missing:
         raise WorkstationError(
             "missing project manifests: " + ", ".join(str(path) for path in missing)
@@ -69,7 +69,7 @@ def _validate_project(project) -> None:
 def _summary(project) -> dict[str, object]:
     """Build a concise cross-project summary with an optional adapter extension."""
 
-    present = sum(path.is_file() for path in project.manifests.values())
+    present = sum(path.exists() for path in project.manifests.values())
     status_path = project.manifests.get("status")
     status = load_project_status(status_path) if status_path is not None else None
     result: dict[str, object] = {

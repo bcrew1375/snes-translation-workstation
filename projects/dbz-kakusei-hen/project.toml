@@ -17,13 +17,13 @@ sha256 = "cc5ab583b5189c3f5b374335edf4b857461278d41ef674f7db31aa100dcb814a"
 [output]
 default_path = "build/dbz-kakusei-hen/translated.sfc"
 size = 2097152
-sha256 = "359ea57bd4bab983efcf527dba7a9e5465c3e27e1c0bce51e07487ed152bce80"
+sha256 = "4675e123f54b1c1b349b4fb0305fb18c76efe3e4af8c2c1b72dd741b310a1eb1"
 
 [manifests]
 analysis = "analysis/project.json"
 status = "status.toml"
 runtime_evidence = "analysis/runtime-evidence.toml"
-patches = "translation/patches.toml"
+patches = "translation/patches"
 references = "translation/references.toml"
 ranges = "translation/ranges.toml"
 menu = "translation/menu.toml"
