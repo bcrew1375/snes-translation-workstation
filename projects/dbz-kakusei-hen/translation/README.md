@@ -79,13 +79,93 @@ edge of a box. Four short opening-recap records use the unclassified `default`
 presentation and intentionally omit `max_line_length` until their visible width
 is confirmed; their encoded cell capacity and box height remain validated.
 
-The following X/Y/B choice is also a fixed resource rather than a command-`$08`
-text stream. Its option pointers at `$98:9B2A-$98:9B2E` retain X/Y/B order, and
-each option preserves the original colored button-icon and spacer words. The
-localized rows are `You're bleeding!`, `Are you sick?`, and `You look sexy.`
+The following choice panel is also a fixed resource rather than a command-`$08`
+text stream. Its heading is selected through table entry `$0173` at `$98:9E10`
+and translated in place at `$98:C1A8` as `DBZ Trivia Quiz`. Its option pointers
+at `$98:9B2A-$98:9B2E` retain X/Y/B order, and each option preserves the original
+colored button-icon and spacer words. The localized rows are `You're bleeding!`,
+`Are you sick?`, and `You look sexy.`
 Command `$07` at CPU `$91:8179` / ROM `$088179` and its following scenario
 branch bytes are unchanged. The bank-`$88` entry at `$88:8018` is the separate
 `World Tournament Arena` location bar, not a quiz heading.
+
+Runtime branch validation from the pre-choice continuation state confirms that
+X and Y both reach scenario cursor `$91:8193` and Bulma response selector `$021B`
+(`It's lipstick!`), while B reaches `$91:819A` and selector `$021C`
+(`O-oh... Y-you think` / `so...?`). A does not dismiss or select the panel. Both
+English streams exceed their compact original allocations by two bytes, so the
+builder relocates them deterministically within the reviewed bank-`$99` pool:
+`$021C` moves from `$99:906E` to `$99:FAA2`, and `$021B` moves from `$99:9060`
+to `$99:FAC0`. Only pointer words `$99:8438` and `$99:8436` are updated.
+
+After either response, all three result values reconverge on the same Master
+Roshi dialogue. Checkpoint 2 includes every intervening command-`$08` stream:
+selectors `$021D-$0221` cover Roshi's surprise, the returning competitors'
+greetings from Chiaotzu and Tien, Yamcha's observation, and Krillin's explanation
+that their changed appearances left Roshi
+stunned. Four streams fit in place; `$021F` relocates deterministically within the
+reviewed bank-`$99` text pool at `$99:FAD0-$99:FAF3`. Their consecutive pointer slots are
+`$99:843A-$99:8443`, and their original source span is `$99:908A-$99:917D`.
+
+The common route then reaches the second fully rendered quiz panel at frame 8420.
+Scenario resource indices `$0003/$0004/$0005` select consecutive
+fixed-resource pointers `$98:9B30-$98:9B34`. Their localized X/Y/B rows are
+`You haven't changed!`, `I grew more than you!`, and `You look well, Krillin!`.
+All three preserve their native button-icon prefixes and relocate consecutively
+to `$98:F502-$98:F555`. X, Y, and B retain result values 0/1/2 but all branch to
+scenario cursor `$91:8218` and shared Goku response selector `$0222`. Its English
+line, `Now everyone's here!`, fits in place at `$99:917E` without a pointer change.
+A fresh deterministic replay against translated ROM SHA-256 `4a26ab2e...` rendered
+all five lead-in selectors, including `$0221` across two cleanly paginated boxes,
+then reached the translated second panel. Independent X/Y/B reloads from that panel
+all rendered the identical shared Goku response `Now everyone's here!`. The earlier
+`dd21ac10...` frame-8420 run remains recorded as superseded-ROM evidence. Tracing the
+exact selector set after `$0222` established checkpoint 3.
+
+Checkpoint 3 translates the post-quiz reunion and the move to the preliminaries.
+The reached command-`$08` sequence begins `$0223`, shared selector `$001B`, and
+`$0225-$023D`; `$0224` is an
+unexecuted pointer alias of `$0225`, so the shared source at `$99:91BA` has one
+translation record and one pointer update. The remaining source streams span
+`$99:919C-$99:95B3`. Records that exceed their original allocations relocate
+deterministically within the reviewed bank-`$99` text pool; shorter records remain
+in place.
+The translated dialogue covers the group recognizing Goku, Bulma and Oolong's
+reactions, the discussion of Goku's missing tail and Kami restoring the moon,
+the group's reaction to Piccolo's arrival, Goku sensing his strength, and Chi-Chi
+recognizing Goku immediately before the choice. Reused selector `$0003` remains
+shared and does not receive a duplicate record. Runtime and static scenario evidence
+place `$0237` and `$0238` consecutively before reconvergence at `$0239` on the reviewed
+route.
+
+The location header is fixed bank-`$88` entry `$01`: pointer `$88:8002` is
+redirected from `$88:8058` to reviewed tail allocation `$88:FFDC`, which renders
+`Preliminaries Venue`. The two-option panel uses generic heading table entry
+`$0174` at `$98:9E12`, translated in place at `$98:C1BE` as `(Choice)`. Resource
+indices `$0008/$0009` use pointers `$98:9B3A/$98:9B3C`; their in-place localized
+rows are `You're Chi-Chi!?` and `Who are you?`, with the native X/Y icon and
+spacer words preserved.
+
+Final-ROM runtime replay confirms X/Y result values 0/1 and distinct branch
+destinations. X completes immediate Goku selector `$0244` before scenario cursor
+`$91:846F`; Y displays reused silence selector `$0003` before cursor `$91:8502`.
+One further response remains different on each route, so convergence is not
+immediate. Translation of the downstream branch bodies begins with `$0245` on X
+and `$023E` on Y and is intentionally deferred to the next checkpoint.
+
+Final-ROM SHA-256 `cd6516bc...` was replayed from the second trivia response through
+the choice. The observed order is `$0223`, `$001B`, `$0225-$0237`, `$0238`, and
+`$0239-$023D`; `$0224` remains unexecuted. This corrects the earlier tentative
+interpretation of `$0237/$0238`: both execute consecutively on the reviewed route.
+Representative screenshots and per-step WRAM/cursor traces are retained locally under
+`local/runtime/pre-chichi-final-cd6516bc-20261013/`, ending at choice cursor `$91:8355`.
+
+A reusable state for the first post-naming gameplay screen is retained at
+`local/runtime/gameplay-start-cd6516bc-20261013/gameplay-start.mss`. It was migrated
+from the earlier verified gameplay checkpoint onto the final ROM, saved afresh, and
+independently reloaded for one frame; the create and reload screenshots are
+byte-identical. Exact hashes and the migration limitation are recorded in
+`analysis/runtime-evidence.toml`.
 
 The opening menu family is implemented separately because it bypasses command `$08`.
 CPU `$81:85DF-$81:8629` copies one of two fixed title streams from `$84:A1D8` or
@@ -168,7 +248,7 @@ remaining limitations are recorded in `analysis/runtime-evidence.toml`. Raw capt
 remain local and ignored; documentation does not rely on ephemeral `/tmp` paths.
 
 The current translated ROM SHA-256 is
-`359ea57bd4bab983efcf527dba7a9e5465c3e27e1c0bce51e07487ed152bce80`.
+`cd6516bcc5a4dd9a340242b77260dd8621556fbd8c5d82652c7c92d69b0b0b2f`.
 Its mode-aware `$81:8AD7` dispatcher bypasses translated name-only insertion work in
 password mode and rejoins the original path at `$81:8ADD`. Static binary tests pin the
 unchanged original password continuation through `$81:8B4F`, including the original

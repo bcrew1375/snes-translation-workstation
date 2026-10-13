@@ -17,7 +17,7 @@ sha256 = "cc5ab583b5189c3f5b374335edf4b857461278d41ef674f7db31aa100dcb814a"
 [output]
 default_path = "build/dbz-kakusei-hen/translated.sfc"
 size = 2097152
-sha256 = "4675e123f54b1c1b349b4fb0305fb18c76efe3e4af8c2c1b72dd741b310a1eb1"
+sha256 = "cd6516bcc5a4dd9a340242b77260dd8621556fbd8c5d82652c7c92d69b0b0b2f"
 
 [manifests]
 analysis = "analysis/project.json"
@@ -184,6 +184,46 @@ start = 0x0C8400
 end = 0x0C8435
 
 [[approved_ranges]]
+name = "first tournament trivia response selector pointers"
+start = 0x0C8436
+end = 0x0C8439
+
+[[approved_ranges]]
+name = "first tournament trivia B response stream"
+start = 0x0C906E
+end = 0x0C9089
+
+[[approved_ranges]]
+name = "first tournament trivia X/Y response stream"
+start = 0x0C9060
+end = 0x0C906D
+
+[[approved_ranges]]
+name = "second tournament trivia lead-in selector pointers"
+start = 0x0C843A
+end = 0x0C8443
+
+[[approved_ranges]]
+name = "second tournament trivia lead-in streams"
+start = 0x0C908A
+end = 0x0C917D
+
+[[approved_ranges]]
+name = "second tournament trivia shared response stream"
+start = 0x0C917E
+end = 0x0C919B
+
+[[approved_ranges]]
+name = "post-quiz selector pointers"
+start = 0x0C8446
+end = 0x0C8463
+
+[[approved_ranges]]
+name = "post-quiz and preliminaries streams"
+start = 0x0C919C
+end = 0x0C93FD
+
+[[approved_ranges]]
 name = "World Tournament Arena fixed-label pointer"
 start = 0x040018
 end = 0x040019
@@ -194,14 +234,34 @@ start = 0x040046
 end = 0x040047
 
 [[approved_ranges]]
+name = "Preliminaries Venue fixed-label pointer"
+start = 0x040002
+end = 0x040003
+
+[[approved_ranges]]
 name = "opening fixed-label relocations"
 start = 0x047FB4
-end = 0x047FDB
+end = 0x047FF1
 
 [[approved_ranges]]
 name = "quiz option pointers"
 start = 0x0C1B2A
-end = 0x0C1B2F
+end = 0x0C1B3D
+
+[[approved_ranges]]
+name = "pre-Chi-Chi text pointers"
+start = 0x0C8464
+end = 0x0C847B
+
+[[approved_ranges]]
+name = "pre-Chi-Chi source streams"
+start = 0x0C93FE
+end = 0x0C95B3
+
+[[approved_ranges]]
+name = "quiz header stream"
+start = 0x0C41A8
+end = 0x0C41C7
 
 [[approved_ranges]]
 name = "quiz option Y stream"
@@ -209,6 +269,11 @@ start = 0x0C1E3A
 end = 0x0C1E4F
 
 [[approved_ranges]]
-name = "quiz option X and B relocations"
+name = "Chi-Chi choice option streams"
+start = 0x0C1EDA
+end = 0x0C1F05
+
+[[approved_ranges]]
+name = "quiz option relocations"
 start = 0x0C74D8
-end = 0x0C7501
+end = 0x0C7555

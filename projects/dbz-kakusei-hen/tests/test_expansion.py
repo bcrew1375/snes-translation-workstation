@@ -201,7 +201,7 @@ class ManifestTest(unittest.TestCase):
             PROJECT_ROOT / "translation" / "patches",
             PROJECT_ROOT / "translation" / "references.toml",
         )
-        self.assertEqual(len(records), 53)
+        self.assertEqual(len(records), 88)
         self.assertEqual(records[0].selector, 0x07E1)
         self.assertEqual({record.original_bank for record in records}, {0x99, 0x9B, 0x9C})
         self.assertEqual(len(records[0].english), 4)
@@ -325,7 +325,10 @@ class OriginalRomExpansionTest(unittest.TestCase):
         defaults = [record for record in self.records if slots[record.selector].presentation.kind == "default"]
         self.assertEqual(
             [record.id for record in defaults],
-            ["opening_recap_01", "opening_recap_04", "opening_recap_15", "opening_recap_19"],
+            [
+                "opening_recap_01", "opening_recap_04", "opening_recap_15",
+                "opening_recap_19", "post_quiz_krillin_exclamation",
+            ],
         )
         self.assertTrue(all(record.max_line_length is None for record in defaults))
 
@@ -340,6 +343,178 @@ class OriginalRomExpansionTest(unittest.TestCase):
         self.assertEqual(len(relocated), 11)
         self.assertEqual(relocated[0].allocation.new_offset, 0x0CF8EE)
         self.assertEqual(relocated[-1].allocation.end_offset - 1, 0x0CFAA1)
+
+    def test_quiz_responses_relocate_deterministically(self):
+        responses = [
+            record for record in self.records
+            if record.id.startswith("tournament_quiz_") and "response" in record.id
+        ]
+        self.assertEqual(
+            [(record.id, record.selector) for record in responses],
+            [
+                ("tournament_quiz_response_b", 0x021C),
+                ("tournament_quiz_response_xy", 0x021B),
+                ("tournament_quiz_02_response", 0x0222),
+            ],
+        )
+        regions = load_reviewed_free_regions(PROJECT_ROOT / "translation" / "ranges.toml")
+        tournament_and_responses = [
+            record for record in self.records
+            if record.id.startswith("tournament_opening_")
+            or (record.id.startswith("tournament_quiz_") and "response" in record.id)
+        ]
+        plans = [
+            plan for plan in plan_translations(self.original, tournament_and_responses, regions)
+            if plan.record.id.startswith("tournament_quiz_") and "response" in plan.record.id
+        ]
+        self.assertEqual(
+            [(plan.record.id, plan.allocation.strategy, plan.allocation.new_offset) for plan in plans],
+            [
+                ("tournament_quiz_response_b", "in-bank", 0x0CFAA2),
+                ("tournament_quiz_response_xy", "in-bank", 0x0CFAC0),
+                ("tournament_quiz_02_response", "in-place", 0x0C917E),
+            ],
+        )
+        result = build_translation(self.original, tournament_and_responses, regions)
+        for plan in plans:
+            with self.subTest(id=plan.record.id):
+                expected_pointer = 0x8000 + (plan.allocation.new_offset & 0x7FFF)
+                self.assertEqual(
+                    int.from_bytes(
+                        result.data[plan.record.reference_offset:plan.record.reference_offset + 2],
+                        "little",
+                    ),
+                    expected_pointer,
+                )
+                self.assertEqual(
+                    result.data[plan.allocation.new_offset:plan.allocation.end_offset],
+                    plan.encoded.data,
+                )
+
+    def test_second_quiz_leadins_are_complete_and_allocate_deterministically(self):
+        leadins = [
+            record for record in self.records
+            if record.id.startswith("tournament_quiz_02_leadin_")
+        ]
+        self.assertEqual(
+            [(record.id, record.selector) for record in leadins],
+            [
+                ("tournament_quiz_02_leadin_01", 0x021D),
+                ("tournament_quiz_02_leadin_02", 0x021E),
+                ("tournament_quiz_02_leadin_03", 0x021F),
+                ("tournament_quiz_02_leadin_04", 0x0220),
+                ("tournament_quiz_02_leadin_05", 0x0221),
+            ],
+        )
+        regions = load_reviewed_free_regions(PROJECT_ROOT / "translation" / "ranges.toml")
+        checkpoint = [
+            record for record in self.records
+            if record.id.startswith("tournament_opening_")
+            or record.id.startswith("tournament_quiz_")
+        ]
+        plans = {
+            plan.record.id: plan
+            for plan in plan_translations(self.original, checkpoint, regions)
+            if plan.record.id.startswith("tournament_quiz_02_leadin_")
+        }
+        self.assertEqual(
+            [
+                (record.id, plans[record.id].allocation.strategy)
+                for record in leadins
+            ],
+            [
+                ("tournament_quiz_02_leadin_01", "in-place"),
+                ("tournament_quiz_02_leadin_02", "in-place"),
+                ("tournament_quiz_02_leadin_03", "in-bank"),
+                ("tournament_quiz_02_leadin_04", "in-place"),
+                ("tournament_quiz_02_leadin_05", "in-place"),
+            ],
+        )
+        self.assertEqual(plans["tournament_quiz_02_leadin_03"].allocation.new_offset, 0x0CFAD0)
+
+    def test_pre_chichi_route_is_complete_and_allocates_deterministically(self):
+        checkpoint = [
+            record for record in self.records
+            if record.id.startswith(("post_quiz_", "preliminaries_", "pre_chichi_"))
+        ]
+        self.assertEqual(
+            [(record.id, record.selector) for record in checkpoint],
+            [
+                ("post_quiz_00", 0x0223),
+                ("post_quiz_krillin_exclamation", 0x001B),
+                ("post_quiz_01", 0x0225),
+                ("post_quiz_02", 0x0226),
+                ("post_quiz_03", 0x0227),
+                ("post_quiz_04", 0x0228),
+                ("post_quiz_05", 0x0229),
+                ("preliminaries_00", 0x022A),
+                ("preliminaries_01", 0x022B),
+                ("preliminaries_02", 0x022C),
+                ("preliminaries_03", 0x022D),
+                ("preliminaries_04", 0x022E),
+                ("preliminaries_05", 0x022F),
+                ("preliminaries_06", 0x0230),
+                ("preliminaries_07", 0x0231),
+                ("pre_chichi_00", 0x0232),
+                ("pre_chichi_01", 0x0233),
+                ("pre_chichi_02", 0x0234),
+                ("pre_chichi_03", 0x0235),
+                ("pre_chichi_04", 0x0236),
+                ("pre_chichi_05", 0x0237),
+                ("pre_chichi_06", 0x0238),
+                ("pre_chichi_07", 0x0239),
+                ("pre_chichi_08", 0x023A),
+                ("pre_chichi_09", 0x023B),
+                ("pre_chichi_10", 0x023C),
+                ("pre_chichi_11", 0x023D),
+            ],
+        )
+        regions = load_reviewed_free_regions(PROJECT_ROOT / "translation" / "ranges.toml")
+        plans = {
+            plan.record.id: plan
+            for plan in plan_translations(self.original, self.records, regions)
+            if plan.record.id in {record.id for record in checkpoint}
+        }
+        self.assertEqual(
+            [
+                (record.id, plans[record.id].allocation.strategy, plans[record.id].allocation.new_offset)
+                for record in checkpoint
+            ],
+            [
+                ("post_quiz_00", "in-place", 0x0C919C),
+                ("post_quiz_krillin_exclamation", "in-place", 0x0C88D2),
+                ("post_quiz_01", "in-bank", 0x0CFAF4),
+                ("post_quiz_02", "in-bank", 0x0CFB40),
+                ("post_quiz_03", "in-place", 0x0C9238),
+                ("post_quiz_04", "in-place", 0x0C9248),
+                ("post_quiz_05", "in-place", 0x0C9294),
+                ("preliminaries_00", "in-bank", 0x0CFB5C),
+                ("preliminaries_01", "in-place", 0x0C92DA),
+                ("preliminaries_02", "in-bank", 0x0CFB8A),
+                ("preliminaries_03", "in-place", 0x0C931E),
+                ("preliminaries_04", "in-place", 0x0C93B0),
+                ("preliminaries_05", "in-place", 0x0C93BE),
+                ("preliminaries_06", "in-bank", 0x0CFBAC),
+                ("preliminaries_07", "in-place", 0x0C93EC),
+                ("pre_chichi_00", "in-place", 0x0C93FE),
+                ("pre_chichi_01", "in-place", 0x0C940C),
+                ("pre_chichi_02", "in-bank", 0x0CFBC2),
+                ("pre_chichi_03", "in-place", 0x0C943E),
+                ("pre_chichi_04", "in-place", 0x0C946A),
+                ("pre_chichi_05", "in-bank", 0x0CFBEE),
+                ("pre_chichi_06", "in-place", 0x0C94D0),
+                ("pre_chichi_07", "in-place", 0x0C94E2),
+                ("pre_chichi_08", "in-bank", 0x0CFC0C),
+                ("pre_chichi_09", "in-place", 0x0C9562),
+                ("pre_chichi_10", "in-place", 0x0C957E),
+                ("pre_chichi_11", "in-place", 0x0C95A8),
+            ],
+        )
+        self.assertNotIn(0x0224, {record.selector for record in checkpoint})
+        self.assertEqual(
+            self.original[0x0C8448:0x0C844A],
+            self.original[0x0C844A:0x0C844C],
+        )
 
     def test_candidate_gaps_exclude_all_confirmed_text_structures(self):
         from dbz_kakusei_hen.scenario import (

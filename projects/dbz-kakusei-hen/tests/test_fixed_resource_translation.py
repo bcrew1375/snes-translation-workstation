@@ -29,12 +29,18 @@ class FixedResourceManifestTest(unittest.TestCase):
     def test_fixed_labels_and_button_order_are_explicit(self):
         self.assertEqual(
             [record.record_type for record in self.records],
-            ["fixed_label", "fixed_label", "option", "option", "option"],
+            ["fixed_label"] * 5 + ["option"] * 8,
         )
-        self.assertEqual([record.button for record in self.records], ["", "", "X", "Y", "B"])
+        self.assertEqual(
+            [record.button for record in self.records],
+            ["", "", "", "", "", "X", "Y", "B", "X", "Y", "B", "X", "Y"],
+        )
         self.assertEqual([record.english for record in self.records], [
-            "World Tournament Arena", "Papaya Island",
+            "World Tournament Arena", "Papaya Island", "Preliminaries Venue",
+            "DBZ Trivia Quiz", "(Choice)",
             "You're bleeding!", "Are you sick?", "You look sexy.",
+            "You haven't changed!", "I grew more than you!", "You look well, Krillin!",
+            "You're Chi-Chi!?", "Who are you?",
         ])
 
 
@@ -60,6 +66,12 @@ class OriginalRomFixedResourceTranslationTest(unittest.TestCase):
         expected_ranges = {
             "tournament_arena_label": (0x047FB4, 0x047FCC),
             "papaya_island_label": (0x047FCC, 0x047FDC),
+            "preliminaries_venue_label": (0x047FDC, 0x047FF2),
+            "tournament_quiz_header": (0x0C41A8, 0x0C41BE),
+            "generic_choice_header": (0x0C41BE, 0x0C41C8),
+            "tournament_quiz_02_x": (0x0C7502, 0x0C751C),
+            "tournament_quiz_02_y": (0x0C751C, 0x0C7538),
+            "tournament_quiz_02_b": (0x0C7538, 0x0C7556),
         }
         occupied = []
         for record in self.records:
@@ -94,14 +106,28 @@ class OriginalRomFixedResourceTranslationTest(unittest.TestCase):
     def test_scenario_choice_command_and_branch_bytes_are_unchanged(self):
         result = build(self.original, None)
         self.assertEqual(result.data[0x088179:0x088193], self.original[0x088179:0x088193])
+        self.assertEqual(result.data[0x0881FD:0x088218], self.original[0x0881FD:0x088218])
         self.assertEqual(result.metadata["fixed_labels"], {
             "tournament_arena_label": "World Tournament Arena",
             "papaya_island_label": "Papaya Island",
+            "preliminaries_venue_label": "Preliminaries Venue",
+            "tournament_quiz_header": "DBZ Trivia Quiz",
+            "generic_choice_header": "(Choice)",
         })
         self.assertEqual(result.metadata["opening_choices"], {
             "X": "You're bleeding!",
             "Y": "Are you sick?",
             "B": "You look sexy.",
+        })
+        self.assertEqual(result.metadata["fixed_options"], {
+            "tournament_quiz_x": "You're bleeding!",
+            "tournament_quiz_y": "Are you sick?",
+            "tournament_quiz_b": "You look sexy.",
+            "tournament_quiz_02_x": "You haven't changed!",
+            "tournament_quiz_02_y": "I grew more than you!",
+            "tournament_quiz_02_b": "You look well, Krillin!",
+            "chichi_choice_x": "You're Chi-Chi!?",
+            "chichi_choice_y": "Who are you?",
         })
 
 

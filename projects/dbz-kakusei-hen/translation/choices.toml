@@ -35,6 +35,57 @@ status = "implemented"
 notes = "Fixed bank-$88 table entry 35; approved glossary place name."
 
 [[record]]
+id = "preliminaries_venue_label"
+record_type = "fixed_label"
+button = ""
+pointer_address = "88:8002"
+pointer_offset = 0x40002
+original_address = "88:8058"
+original_offset = 0x40058
+original_length = 12
+source_sha256 = "6268792e6c8c357ca099e2965019cb451f58acdb57665c45bc356cde9da853f0"
+destination_address = "88:FFDC"
+destination_offset = 0x47FDC
+prefix_words = 0
+english = "Preliminaries Venue"
+status = "implemented"
+notes = "Fixed bank-$88 table entry 1; translated from the runtime-confirmed post-quiz location header and relocated to the next reviewed tail allocation."
+
+[[record]]
+id = "tournament_quiz_header"
+record_type = "fixed_label"
+button = ""
+pointer_address = "98:9E10"
+pointer_offset = 0xC1E10
+original_address = "98:C1A8"
+original_offset = 0xC41A8
+original_length = 22
+source_sha256 = "d261a1c19786166bf9486c74035b90ce1c90479a2eeeeec1d373b180f0c4bb66"
+destination_address = "98:C1A8"
+destination_offset = 0xC41A8
+prefix_words = 0
+english = "DBZ Trivia Quiz"
+status = "implemented"
+notes = "Fixed choice-panel heading selected through bank-$98 table entry $0173; the packed English fits the original ten-cell allocation in place."
+
+[[record]]
+id = "generic_choice_header"
+record_type = "fixed_label"
+button = ""
+pointer_address = "98:9E12"
+pointer_offset = 0xC1E12
+original_address = "98:C1BE"
+original_offset = 0xC41BE
+original_length = 10
+source_sha256 = "424339f4adba7eabc572385308ee620ff45e83bc9950192a238b818913aae12d"
+destination_address = "98:C1BE"
+destination_offset = 0xC41BE
+prefix_words = 0
+english = "(Choice)"
+status = "implemented"
+notes = "Generic two-option choice heading selected through bank-$98 table entry $0174; packed English fits the original four-cell field in place."
+
+[[record]]
 id = "tournament_quiz_x"
 record_type = "option"
 button = "X"
@@ -84,3 +135,88 @@ prefix_words = 2
 english = "You look sexy."
 status = "implemented"
 notes = "Preserves native B icon and spacer words; relocated for the longer English option."
+
+[[record]]
+id = "tournament_quiz_02_x"
+record_type = "option"
+button = "X"
+pointer_address = "98:9B30"
+pointer_offset = 0xC1B30
+original_address = "98:9E60"
+original_offset = 0xC1E60
+original_length = 22
+source_sha256 = "734f8d89eae532403aba826fac9439cb3ea3d613aef01c9623ed66e5a9f53b41"
+destination_address = "98:F502"
+destination_offset = 0xC7502
+prefix_words = 2
+english = "You haven't changed!"
+status = "implemented"
+notes = "Second tournament trivia X option; preserves the native X icon and spacer words and relocates the longer English stream."
+
+[[record]]
+id = "tournament_quiz_02_y"
+record_type = "option"
+button = "Y"
+pointer_address = "98:9B32"
+pointer_offset = 0xC1B32
+original_address = "98:9E76"
+original_offset = 0xC1E76
+original_length = 26
+source_sha256 = "040198d1865fd833e617263eaa0f529c882b7be1588a9da58e5f0f3314825725"
+destination_address = "98:F51C"
+destination_offset = 0xC751C
+prefix_words = 2
+english = "I grew more than you!"
+status = "implemented"
+notes = "Second tournament trivia Y option; preserves the native Y icon and spacer words and relocates the longer English stream."
+
+[[record]]
+id = "tournament_quiz_02_b"
+record_type = "option"
+button = "B"
+pointer_address = "98:9B34"
+pointer_offset = 0xC1B34
+original_address = "98:9E90"
+original_offset = 0xC1E90
+original_length = 26
+source_sha256 = "2aa93121656a33d98f83c55f0b5c66e09f7b81cf869db51e329a82f5e0cf59c4"
+destination_address = "98:F538"
+destination_offset = 0xC7538
+prefix_words = 2
+english = "You look well, Krillin!"
+status = "implemented"
+notes = "Second tournament trivia B option; preserves the native B icon and spacer words and relocates the longer English stream."
+
+[[record]]
+id = "chichi_choice_x"
+record_type = "option"
+button = "X"
+pointer_address = "98:9B3A"
+pointer_offset = 0xC1B3A
+original_address = "98:9EDA"
+original_offset = 0xC1EDA
+original_length = 22
+source_sha256 = "c5906a63a642b13945cc1de7fd9fe51332f10032051961a0f7eb2e3c08eb9974"
+destination_address = "98:9EDA"
+destination_offset = 0xC1EDA
+prefix_words = 2
+english = "You're Chi-Chi!?"
+status = "implemented"
+notes = "Post-quiz two-option X row; preserves the native X icon and spacer words and fits the original eight-cell text field."
+
+[[record]]
+id = "chichi_choice_y"
+record_type = "option"
+button = "Y"
+pointer_address = "98:9B3C"
+pointer_offset = 0xC1B3C
+original_address = "98:9EF0"
+original_offset = 0xC1EF0
+original_length = 22
+source_sha256 = "c888cb7cc27552fbbca28d6f6af2cfc2c696973bd1dce65a8cc93deecf3dcf60"
+destination_address = "98:9EF0"
+destination_offset = 0xC1EF0
+prefix_words = 2
+english = "Who are you?"
+status = "implemented"
+notes = "Post-quiz two-option Y row; preserves the native Y icon and spacer words and fits the original eight-cell text field."

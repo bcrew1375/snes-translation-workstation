@@ -531,6 +531,356 @@ target_address = "99:9046"
 target_offset = 0xC9046
 
 [[record]]
+id = "tournament_quiz_response_b"
+reference_type = "command_08_selector"
+reference_address = "99:8438"
+reference_offset = 0xC8438
+message_index = 0x21C
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:906E"
+target_offset = 0xC906E
+
+[[record]]
+id = "tournament_quiz_response_xy"
+reference_type = "command_08_selector"
+reference_address = "99:8436"
+reference_offset = 0xC8436
+message_index = 0x21B
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:9060"
+target_offset = 0xC9060
+
+[[record]]
+id = "tournament_quiz_02_leadin_01"
+reference_type = "command_08_selector"
+reference_address = "99:843A"
+reference_offset = 0xC843A
+message_index = 0x21D
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:908A"
+target_offset = 0xC908A
+
+[[record]]
+id = "tournament_quiz_02_leadin_02"
+reference_type = "command_08_selector"
+reference_address = "99:843C"
+reference_offset = 0xC843C
+message_index = 0x21E
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:90BA"
+target_offset = 0xC90BA
+
+[[record]]
+id = "tournament_quiz_02_leadin_03"
+reference_type = "command_08_selector"
+reference_address = "99:843E"
+reference_offset = 0xC843E
+message_index = 0x21F
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:90C4"
+target_offset = 0xC90C4
+
+[[record]]
+id = "tournament_quiz_02_leadin_04"
+reference_type = "command_08_selector"
+reference_address = "99:8440"
+reference_offset = 0xC8440
+message_index = 0x220
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:90E4"
+target_offset = 0xC90E4
+
+[[record]]
+id = "tournament_quiz_02_leadin_05"
+reference_type = "command_08_selector"
+reference_address = "99:8442"
+reference_offset = 0xC8442
+message_index = 0x221
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:9100"
+target_offset = 0xC9100
+
+[[record]]
+id = "tournament_quiz_02_response"
+reference_type = "command_08_selector"
+reference_address = "99:8444"
+reference_offset = 0xC8444
+message_index = 0x222
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:917E"
+target_offset = 0xC917E
+
+[[record]]
+id = "post_quiz_00"
+reference_type = "command_08_selector"
+reference_address = "99:8446"
+reference_offset = 0xC8446
+message_index = 0x223
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:919C"
+target_offset = 0xC919C
+
+[[record]]
+id = "post_quiz_krillin_exclamation"
+reference_type = "command_08_selector"
+reference_address = "99:8036"
+reference_offset = 0xC8036
+message_index = 0x1B
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:88D2"
+target_offset = 0xC88D2
+
+[[record]]
+id = "post_quiz_01"
+reference_type = "command_08_selector"
+reference_address = "99:844A"
+reference_offset = 0xC844A
+message_index = 0x225
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:91BA"
+target_offset = 0xC91BA
+
+[[record]]
+id = "post_quiz_02"
+reference_type = "command_08_selector"
+reference_address = "99:844C"
+reference_offset = 0xC844C
+message_index = 0x226
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:921E"
+target_offset = 0xC921E
+
+[[record]]
+id = "post_quiz_03"
+reference_type = "command_08_selector"
+reference_address = "99:844E"
+reference_offset = 0xC844E
+message_index = 0x227
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:9238"
+target_offset = 0xC9238
+
+[[record]]
+id = "post_quiz_04"
+reference_type = "command_08_selector"
+reference_address = "99:8450"
+reference_offset = 0xC8450
+message_index = 0x228
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:9248"
+target_offset = 0xC9248
+
+[[record]]
+id = "post_quiz_05"
+reference_type = "command_08_selector"
+reference_address = "99:8452"
+reference_offset = 0xC8452
+message_index = 0x229
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:9294"
+target_offset = 0xC9294
+
+[[record]]
+id = "preliminaries_00"
+reference_type = "command_08_selector"
+reference_address = "99:8454"
+reference_offset = 0xC8454
+message_index = 0x22A
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:92AE"
+target_offset = 0xC92AE
+
+[[record]]
+id = "preliminaries_01"
+reference_type = "command_08_selector"
+reference_address = "99:8456"
+reference_offset = 0xC8456
+message_index = 0x22B
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:92DA"
+target_offset = 0xC92DA
+
+[[record]]
+id = "preliminaries_02"
+reference_type = "command_08_selector"
+reference_address = "99:8458"
+reference_offset = 0xC8458
+message_index = 0x22C
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:92FE"
+target_offset = 0xC92FE
+
+[[record]]
+id = "preliminaries_03"
+reference_type = "command_08_selector"
+reference_address = "99:845A"
+reference_offset = 0xC845A
+message_index = 0x22D
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:931E"
+target_offset = 0xC931E
+
+[[record]]
+id = "preliminaries_04"
+reference_type = "command_08_selector"
+reference_address = "99:845C"
+reference_offset = 0xC845C
+message_index = 0x22E
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:93B0"
+target_offset = 0xC93B0
+
+[[record]]
+id = "preliminaries_05"
+reference_type = "command_08_selector"
+reference_address = "99:845E"
+reference_offset = 0xC845E
+message_index = 0x22F
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:93BE"
+target_offset = 0xC93BE
+
+[[record]]
+id = "preliminaries_06"
+reference_type = "command_08_selector"
+reference_address = "99:8460"
+reference_offset = 0xC8460
+message_index = 0x230
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:93DA"
+target_offset = 0xC93DA
+
+[[record]]
+id = "preliminaries_07"
+reference_type = "command_08_selector"
+reference_address = "99:8462"
+reference_offset = 0xC8462
+message_index = 0x231
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:93EC"
+target_offset = 0xC93EC
+
+[[record]]
+id = "pre_chichi_00"
+reference_type = "command_08_selector"
+reference_address = "99:8464"
+reference_offset = 0xC8464
+message_index = 0x232
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:93FE"
+target_offset = 0xC93FE
+
+[[record]]
+id = "pre_chichi_01"
+reference_type = "command_08_selector"
+reference_address = "99:8466"
+reference_offset = 0xC8466
+message_index = 0x233
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:940C"
+target_offset = 0xC940C
+
+[[record]]
+id = "pre_chichi_02"
+reference_type = "command_08_selector"
+reference_address = "99:8468"
+reference_offset = 0xC8468
+message_index = 0x234
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:941E"
+target_offset = 0xC941E
+
+[[record]]
+id = "pre_chichi_03"
+reference_type = "command_08_selector"
+reference_address = "99:846A"
+reference_offset = 0xC846A
+message_index = 0x235
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:943E"
+target_offset = 0xC943E
+
+[[record]]
+id = "pre_chichi_04"
+reference_type = "command_08_selector"
+reference_address = "99:846C"
+reference_offset = 0xC846C
+message_index = 0x236
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:946A"
+target_offset = 0xC946A
+
+[[record]]
+id = "pre_chichi_05"
+reference_type = "command_08_selector"
+reference_address = "99:846E"
+reference_offset = 0xC846E
+message_index = 0x237
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:94B4"
+target_offset = 0xC94B4
+
+[[record]]
+id = "pre_chichi_06"
+reference_type = "command_08_selector"
+reference_address = "99:8470"
+reference_offset = 0xC8470
+message_index = 0x238
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:94D0"
+target_offset = 0xC94D0
+
+[[record]]
+id = "pre_chichi_07"
+reference_type = "command_08_selector"
+reference_address = "99:8472"
+reference_offset = 0xC8472
+message_index = 0x239
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:94E2"
+target_offset = 0xC94E2
+
+[[record]]
+id = "pre_chichi_08"
+reference_type = "command_08_selector"
+reference_address = "99:8474"
+reference_offset = 0xC8474
+message_index = 0x23A
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:953C"
+target_offset = 0xC953C
+
+[[record]]
+id = "pre_chichi_09"
+reference_type = "command_08_selector"
+reference_address = "99:8476"
+reference_offset = 0xC8476
+message_index = 0x23B
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:9562"
+target_offset = 0xC9562
+
+[[record]]
+id = "pre_chichi_10"
+reference_type = "command_08_selector"
+reference_address = "99:8478"
+reference_offset = 0xC8478
+message_index = 0x23C
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:957E"
+target_offset = 0xC957E
+
+[[record]]
+id = "pre_chichi_11"
+reference_type = "command_08_selector"
+reference_address = "99:847A"
+reference_offset = 0xC847A
+message_index = 0x23D
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "99:95A8"
+target_offset = 0xC95A8
+
+[[record]]
 id = "tournament_arena_label"
 reference_type = "fixed_resource_pointer"
 reference_address = "88:8018"
@@ -549,3 +899,83 @@ message_index = 0x23
 pointer_format = "16-bit same-bank LoROM pointer"
 target_address = "88:81EC"
 target_offset = 0x401EC
+
+[[record]]
+id = "preliminaries_venue_label"
+reference_type = "fixed_resource_pointer"
+reference_address = "88:8002"
+reference_offset = 0x40002
+message_index = 0x1
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "88:8058"
+target_offset = 0x40058
+
+[[record]]
+id = "tournament_quiz_header"
+reference_type = "fixed_resource_pointer"
+reference_address = "98:9E10"
+reference_offset = 0xC1E10
+message_index = 0x173
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "98:C1A8"
+target_offset = 0xC41A8
+
+[[record]]
+id = "generic_choice_header"
+reference_type = "fixed_resource_pointer"
+reference_address = "98:9E12"
+reference_offset = 0xC1E12
+message_index = 0x174
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "98:C1BE"
+target_offset = 0xC41BE
+
+[[record]]
+id = "tournament_quiz_02_x"
+reference_type = "fixed_resource_pointer"
+reference_address = "98:9B30"
+reference_offset = 0xC1B30
+message_index = 0x3
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "98:9E60"
+target_offset = 0xC1E60
+
+[[record]]
+id = "tournament_quiz_02_y"
+reference_type = "fixed_resource_pointer"
+reference_address = "98:9B32"
+reference_offset = 0xC1B32
+message_index = 0x4
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "98:9E76"
+target_offset = 0xC1E76
+
+[[record]]
+id = "tournament_quiz_02_b"
+reference_type = "fixed_resource_pointer"
+reference_address = "98:9B34"
+reference_offset = 0xC1B34
+message_index = 0x5
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "98:9E90"
+target_offset = 0xC1E90
+
+[[record]]
+id = "chichi_choice_x"
+reference_type = "fixed_resource_pointer"
+reference_address = "98:9B3A"
+reference_offset = 0xC1B3A
+message_index = 0x8
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "98:9EDA"
+target_offset = 0xC1EDA
+
+[[record]]
+id = "chichi_choice_y"
+reference_type = "fixed_resource_pointer"
+reference_address = "98:9B3C"
+reference_offset = 0xC1B3C
+message_index = 0x9
+pointer_format = "16-bit same-bank LoROM pointer"
+target_address = "98:9EF0"
+target_offset = 0xC1EF0

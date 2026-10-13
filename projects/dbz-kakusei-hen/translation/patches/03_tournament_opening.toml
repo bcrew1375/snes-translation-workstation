@@ -392,3 +392,115 @@ english = [
 max_line_length = 21
 status = "implemented"
 notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed line wrapping."
+
+[[record]]
+id = "tournament_quiz_response_b"
+original_address = "99:906E"
+original_offset = 0xC906E
+original_length = 28
+source_sha256 = "70d6ad2f3cf1b8f98d434136ba0b5598f23f1bbe0015900043920ab24e6d04df"
+english = [
+  "O-oh... Y-you think",
+  "so...?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "First tournament trivia response; speaker/context: Bulma after the B option; runtime-confirmed selector $021C at scenario cursor $91:819A."
+
+[[record]]
+id = "tournament_quiz_response_xy"
+original_address = "99:9060"
+original_offset = 0xC9060
+original_length = 14
+source_sha256 = "b3e45aaefb9dd8346ae185bca9bc304f3cff176f0bfa1c60de1bf70d6605c4b5"
+english = [
+  "It's lipstick!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "First tournament trivia response; speaker/context: Bulma after either the X or Y option; runtime-confirmed shared selector $021B at scenario cursor $91:8193."
+
+[[record]]
+id = "tournament_quiz_02_leadin_01"
+original_address = "99:908A"
+original_offset = 0xC908A
+original_length = 48
+source_sha256 = "59a0dd336eda1eaa31f20e8394afb426198896259d017c98056b7d5a5c893753"
+english = [
+  "Still...",
+  "This is quite a",
+  "surprise...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Second tournament trivia lead-in; speaker/context: Master Roshi reacting to the returning competitors; selector $021D."
+
+[[record]]
+id = "tournament_quiz_02_leadin_02"
+original_address = "99:90BA"
+original_offset = 0xC90BA
+original_length = 10
+source_sha256 = "780c3bae6707563bd4c0877b2678b43997306890716b9ca1e7d53f2e26c99e09"
+english = [
+  "Yoo-hoo!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Second tournament trivia lead-in; speaker/context: Chiaotzu greeting the group; runtime-confirmed selector $021E."
+
+[[record]]
+id = "tournament_quiz_02_leadin_03"
+original_address = "99:90C4"
+original_offset = 0xC90C4
+original_length = 32
+source_sha256 = "9d6e1eb48f7053f1a55a5481f1d3e49c6cc548e7e6527fb19a06c80739639503"
+english = [
+  "It's been a while,",
+  "Master Roshi!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Second tournament trivia lead-in; speaker/context: Tien greeting Master Roshi; selector $021F."
+
+[[record]]
+id = "tournament_quiz_02_leadin_04"
+original_address = "99:90E4"
+original_offset = 0xC90E4
+original_length = 28
+source_sha256 = "4b9a2e5708844b544d3ea81dd258b32024077808bfcf0e366ca8a1d52131d3cd"
+english = [
+  "Uh... no reaction...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Second tournament trivia lead-in; speaker/context: Yamcha observing Master Roshi's silence; selector $0220."
+
+[[record]]
+id = "tournament_quiz_02_leadin_05"
+original_address = "99:9100"
+original_offset = 0xC9100
+original_length = 126
+source_sha256 = "d1b7f038e3a952d491d53ce8e122b144f2b730843cfa9bafd3913c7788897aa8"
+english = [
+  "He's amazed by how",
+  "much we've changed!",
+  "Look, Master Roshi!",
+  "Even I've grown",
+  "this tall!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Second tournament trivia lead-in; speaker/context: Krillin explaining the group's changed appearance and calling attention to his height; selector $0221."
+
+[[record]]
+id = "tournament_quiz_02_response"
+original_address = "99:917E"
+original_offset = 0xC917E
+original_length = 30
+source_sha256 = "99c9c2840d3915b8d5d2265de805dfccbdb255dfe86c6cfbbaadfb24a339cc7a"
+english = [
+  "Now everyone's here!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Second tournament trivia shared response; speaker/context: Goku after X, Y, or B; runtime-confirmed selector $0222 at scenario cursor $91:8218."

@@ -102,6 +102,7 @@ class TranslationManifestTest(unittest.TestCase):
                 "01_opening_narration.toml",
                 "02_opening_recap.toml",
                 "03_tournament_opening.toml",
+                "04_preliminaries_choice.toml",
             ],
         )
         for path in patch_paths:
@@ -113,7 +114,7 @@ class TranslationManifestTest(unittest.TestCase):
 
     def test_tracked_manifests_preserve_opening_records(self):
         patches = self.load_patches()
-        self.assertEqual(len(patches), 53)
+        self.assertEqual(len(patches), 88)
         self.assertEqual(
             [patch["id"] for patch in patches[:4]],
             ["opening_narration", "opening_narration_2", "opening_narration_3", "opening_narration_4"],
@@ -123,8 +124,36 @@ class TranslationManifestTest(unittest.TestCase):
             [f"opening_recap_{index:02d}" for index in range(1, 23)],
         )
         self.assertEqual(
-            [patch["id"] for patch in patches[26:]],
+            [patch["id"] for patch in patches[26:53]],
             [f"tournament_opening_{index:02d}" for index in range(27)],
+        )
+        self.assertEqual(
+            [patch["id"] for patch in patches[53:61]],
+            [
+                "tournament_quiz_response_b",
+                "tournament_quiz_response_xy",
+                "tournament_quiz_02_leadin_01",
+                "tournament_quiz_02_leadin_02",
+                "tournament_quiz_02_leadin_03",
+                "tournament_quiz_02_leadin_04",
+                "tournament_quiz_02_leadin_05",
+                "tournament_quiz_02_response",
+            ],
+        )
+        self.assertEqual(
+            [patch["id"] for patch in patches[61:76]],
+            [
+                "post_quiz_00", "post_quiz_krillin_exclamation",
+                "post_quiz_01", "post_quiz_02", "post_quiz_03",
+                "post_quiz_04", "post_quiz_05",
+                "preliminaries_00", "preliminaries_01", "preliminaries_02",
+                "preliminaries_03", "preliminaries_04", "preliminaries_05",
+                "preliminaries_06", "preliminaries_07",
+            ],
+        )
+        self.assertEqual(
+            [patch["id"] for patch in patches[76:]],
+            [f"pre_chichi_{index:02d}" for index in range(12)],
         )
         self.assertEqual(
             [patch["original_address"] for patch in patches[:4]],
@@ -146,13 +175,16 @@ class TranslationManifestTest(unittest.TestCase):
         )
         self.assertEqual(
             {patch["id"] for patch in patches if "max_line_length" not in patch},
-            {"opening_recap_01", "opening_recap_04", "opening_recap_15", "opening_recap_19"},
+            {
+                "opening_recap_01", "opening_recap_04", "opening_recap_15",
+                "opening_recap_19", "post_quiz_krillin_exclamation",
+            },
         )
-        self.assertEqual(sum(patch.get("max_line_length") == 21 for patch in patches), 44)
+        self.assertEqual(sum(patch.get("max_line_length") == 21 for patch in patches), 78)
         self.assertEqual(sum(patch.get("max_line_length") == 28 for patch in patches), 5)
 
         references = self.load("references.toml")
-        self.assertEqual(len(references), 55)
+        self.assertEqual(len(references), 98)
         self.assertEqual(
             [reference["message_index"] for reference in references[4:26]],
             [
@@ -163,12 +195,17 @@ class TranslationManifestTest(unittest.TestCase):
             ],
         )
         self.assertEqual(
-            [reference["id"] for reference in references[-2:]],
-            ["tournament_arena_label", "papaya_island_label"],
+            [reference["id"] for reference in references[-10:]],
+            [
+                "tournament_arena_label", "papaya_island_label", "preliminaries_venue_label",
+                "tournament_quiz_header", "generic_choice_header",
+                "tournament_quiz_02_x", "tournament_quiz_02_y", "tournament_quiz_02_b",
+                "chichi_choice_x", "chichi_choice_y",
+            ],
         )
         self.assertEqual(
-            [reference["reference_type"] for reference in references[-2:]],
-            ["fixed_resource_pointer", "fixed_resource_pointer"],
+            [reference["reference_type"] for reference in references[-10:]],
+            ["fixed_resource_pointer"] * 10,
         )
 
         menu = self.load("menu.toml")
@@ -201,11 +238,17 @@ class TranslationManifestTest(unittest.TestCase):
         self.assertTrue(all(record["status"] == "implemented" for record in name_entry))
 
         choices = self.load("choices.toml")
-        self.assertEqual(len(choices), 5)
-        self.assertEqual([row["button"] for row in choices], ["", "", "X", "Y", "B"])
+        self.assertEqual(len(choices), 13)
+        self.assertEqual(
+            [row["button"] for row in choices],
+            ["", "", "", "", "", "X", "Y", "B", "X", "Y", "B", "X", "Y"],
+        )
         self.assertEqual([row["english"] for row in choices], [
-            "World Tournament Arena", "Papaya Island",
+            "World Tournament Arena", "Papaya Island", "Preliminaries Venue",
+            "DBZ Trivia Quiz", "(Choice)",
             "You're bleeding!", "Are you sick?", "You look sexy.",
+            "You haven't changed!", "I grew more than you!", "You look well, Krillin!",
+            "You're Chi-Chi!?", "Who are you?",
         ])
 
     def test_local_decoded_catalog_names_remain_ignored(self):

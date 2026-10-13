@@ -1,6 +1,6 @@
 schema_version = 1
 phase = "opening_tournament_quiz"
-summary = "The opening through the tournament trivia quiz is translated and builds reproducibly."
+summary = "The opening route through the Chi-Chi choice at the Preliminaries Venue is translated, builds reproducibly, and is runtime-verified. A reusable final-ROM state is retained at the first post-naming gameplay screen and reload-verified."
 
 [[milestones]]
 id = "automatic_opening"
@@ -19,8 +19,18 @@ summary = "Tournament selectors $0200-$021A are translated with validated visibl
 
 [[milestones]]
 id = "tournament_quiz"
-status = "partial"
-summary = "Quiz resources are localized; authoritative branch-input runtime validation remains."
+status = "complete"
+summary = "The first two DBZ Trivia Quiz checkpoints are localized and runtime-verified. Checkpoint 2 includes lead-in selectors $021D-$0221, three translated fixed rows, and shared Goku selector $0222 for X/Y/B."
+
+[[milestones]]
+id = "preliminaries_choice"
+status = "complete"
+summary = "Post-quiz selector $0223, intervening Krillin selector $001B, reached selectors $0225-$023D, the Preliminaries Venue label, generic choice heading, and Chi-Chi X/Y rows are localized and final-ROM runtime-verified. Selector $0224 remains an unexecuted alias of $0225's source stream; $0237 and $0238 execute consecutively on the reviewed route."
+
+[[milestones]]
+id = "post_naming_checkpoint"
+status = "complete"
+summary = "A reusable final-ROM save state at the first post-naming gameplay screen was saved and independently reload-verified with byte-identical screenshots."
 
 [[unknowns]]
 id = "portrait_catalog"
@@ -28,7 +38,7 @@ summary = "The complete numeric portrait-resource catalog is not yet named."
 priority = "low"
 
 [[recommended_tasks]]
-id = "validate_quiz_branches"
-summary = "Confirm X, Y, and B branch behavior and that A does not select the quiz."
+id = "translate_chichi_branches"
+summary = "Translate the distinct dialogue following Chi-Chi result values 0/1, beginning with X branch selector $0245 after cursor $91:846F and Y branch selector $023E after cursor $91:8502."
 requires_rom = true
 requires_runtime = true

@@ -1,0 +1,379 @@
+schema_version = 1
+
+[[record]]
+id = "post_quiz_00"
+original_address = "99:919C"
+original_offset = 0xC919C
+original_length = 30
+source_sha256 = "c06d551dd9f6c6847a4f89e823546114c7acb083aeab043e88e88ef7b363660d"
+english = [
+  "G-Goku...?",
+  "Is that you!?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Post-quiz transition; speaker/context: Krillin recognizing Goku; selector $0223."
+
+[[record]]
+id = "post_quiz_krillin_exclamation"
+original_address = "99:88D2"
+original_offset = 0xC88D2
+original_length = 8
+source_sha256 = "abba47821150e41cbdc58608d00030b1e1f657ba4c13fbadc322c243737cdb03"
+english = [
+  "Ah!",
+]
+status = "implemented"
+notes = "Post-quiz transition; speaker/context: Krillin reacting immediately after selector $0223; runtime-confirmed selector $001B before reached selector $0225."
+
+[[record]]
+id = "post_quiz_01"
+original_address = "99:91BA"
+original_offset = 0xC91BA
+original_length = 100
+source_sha256 = "6dd33bb69957a4b1aeb5653908adf9318225329fbc6fecb52fe76d8d33b8d03c"
+english = [
+  "Gokuuu!!",
+  "You jerk!!",
+  "I've missed you!!!",
+  "Why didn't you say",
+  "something?!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Post-quiz transition; speaker/context: Krillin greeting Goku; reached selector $0225. Selector $0224 aliases this same pinned source stream but is not executed on the reviewed route."
+
+[[record]]
+id = "post_quiz_02"
+original_address = "99:921E"
+original_offset = 0xC921E
+original_length = 26
+source_sha256 = "2fb23e82c83d0ea764cbcfcf45c3e234f39984ba506229f7cbd43d37daefffb9"
+english = [
+  "A-ah...",
+  "That's Goku...?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Post-quiz transition; speaker/context: Yamcha recognizing Goku; selector $0226."
+
+[[record]]
+id = "post_quiz_03"
+original_address = "99:9238"
+original_offset = 0xC9238
+original_length = 16
+source_sha256 = "487c642d0fbe95f5be07d1550937c159fdbf505d3aa4e50e29e7ed435227360d"
+english = [
+  "Seems so...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Post-quiz transition; speaker/context: Tien confirming Yamcha's recognition; selector $0227."
+
+[[record]]
+id = "post_quiz_04"
+original_address = "99:9248"
+original_offset = 0xC9248
+original_length = 76
+source_sha256 = "109e084f747f4aa45c5e58d0a5adafbb47171be69a26f043886c38db41492d23"
+english = [
+  "I can't believe it...",
+  "That little boy grew",
+  "into quite a man.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Post-quiz transition; speaker/context: Bulma reacting to the grown Goku; selector $0228."
+
+[[record]]
+id = "post_quiz_05"
+original_address = "99:9294"
+original_offset = 0xC9294
+original_length = 26
+source_sha256 = "3daaddf930356aafeca560df94e3ec5c503155731cf9173272a9dbb919e39216"
+english = [
+  "Whoa!",
+  "What a woman!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Post-quiz transition; speaker/context: Oolong reacting to Bulma; selector $0229."
+
+[[record]]
+id = "preliminaries_00"
+original_address = "99:92AE"
+original_offset = 0xC92AE
+original_length = 44
+source_sha256 = "c23c73fc747387dec9883798d3063a2dbec6b7c165a70ccd1343d058bd632762"
+english = [
+  "Hey, Goku.",
+  "Was training under",
+  "Kami tough?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Krillin asking Goku about training under Kami; selector $022A."
+
+[[record]]
+id = "preliminaries_01"
+original_address = "99:92DA"
+original_offset = 0xC92DA
+original_length = 36
+source_sha256 = "62a815077d0a0c95268ce29f55a8cbf1f08beea20a80923624b828d16c7324d6"
+english = [
+  "Nah, it wasn't",
+  "that tough!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Goku answering Krillin; selector $022B."
+
+[[record]]
+id = "preliminaries_02"
+original_address = "99:92FE"
+original_offset = 0xC92FE
+original_length = 32
+source_sha256 = "a800a7e39170603650448584192fb40f06dcc3ad8890692a663c8609a41e4dd3"
+english = [
+  "Huh? Goku,",
+  "where's your tail!?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Yamcha asking about Goku's missing tail; selector $022C."
+
+[[record]]
+id = "preliminaries_03"
+original_address = "99:931E"
+original_offset = 0xC931E
+original_length = 146
+source_sha256 = "5977555447333f8ecd204dab46a0d1c8edc73f76c7080e41c89a8aea9e48e57f"
+english = [
+  "Kami removed it.",
+  "He wants to restore",
+  "the moon, and said",
+  "my tail would get",
+  "in the way.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Goku explains that Kami removed his tail because it would interfere with restoring the moon; selector $022D."
+
+[[record]]
+id = "preliminaries_04"
+original_address = "99:93B0"
+original_offset = 0xC93B0
+original_length = 14
+source_sha256 = "d4a7a0e6a2ee7294b3af00b3667f14b46d22e2c70c7ba12c26c62c6446b10c66"
+english = [
+  "Hmmm...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Yamcha thinking; selector $022E."
+
+[[record]]
+id = "preliminaries_05"
+original_address = "99:93BE"
+original_offset = 0xC93BE
+original_length = 28
+source_sha256 = "4e37857be6d3c33a99b957ec112a415694b019fe838299f295dfb9823f3b1b15"
+english = [
+  "Y-yeah...",
+  "I guess so...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Krillin agreeing tentatively; selector $022F."
+
+[[record]]
+id = "preliminaries_06"
+original_address = "99:93DA"
+original_offset = 0xC93DA
+original_length = 18
+source_sha256 = "812fe271488537012dc452a0dd9133a08da1bbf2ef2ddd3ec3b7702ef9b075c3"
+english = [
+  "What is it, Goku...?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue after reused selector $0003; speaker/context: Yamcha; selector $0230."
+
+[[record]]
+id = "preliminaries_07"
+original_address = "99:93EC"
+original_offset = 0xC93EC
+original_length = 18
+source_sha256 = "7d6408a901779d107496621e68f121b86383b511b47a0d448805c687c9cd8ef4"
+english = [
+  "What's wrong?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue immediately before the Chi-Chi choice; speaker/context: Krillin; selector $0231."
+
+[[record]]
+id = "pre_chichi_00"
+original_address = "99:93FE"
+original_offset = 0xC93FE
+original_length = 14
+source_sha256 = "713fd4906c9f8ba0b6a85f483d044023ff6f4dcacb2ca8a9f5cc9adaf3b8f792"
+english = [
+  "Wh-what...?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Krillin reacting to the newly arrived fighter; selector $0232."
+
+[[record]]
+id = "pre_chichi_01"
+original_address = "99:940C"
+original_offset = 0xC940C
+original_length = 18
+source_sha256 = "e86d1bc5e1623bb42c2914a5eeb783ae3bf2ffc6d23bca1854035bd91ae95103"
+english = [
+  "You know him?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Yamcha asking Krillin about the newly arrived fighter; selector $0233."
+
+[[record]]
+id = "pre_chichi_02"
+original_address = "99:941E"
+original_offset = 0xC941E
+original_length = 32
+source_sha256 = "b0992e2aec6a5990e6681d75ab4e90a63d9498a474ffe6ff12ae8d54acedd99d"
+english = [
+  "Th-that guy...",
+  "No way... could it",
+  "be...?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Krillin recognizing the resemblance to King Piccolo; selector $0234."
+
+[[record]]
+id = "pre_chichi_03"
+original_address = "99:943E"
+original_offset = 0xC943E
+original_length = 44
+source_sha256 = "59ee0d87b92b88795a67802224bc7595324d80f5edee25e249bcc5927e2062bb"
+english = [
+  "You came after all...",
+  "King Piccolo!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Goku addressing the newly arrived fighter as King Piccolo; selector $0235."
+
+[[record]]
+id = "pre_chichi_04"
+original_address = "99:946A"
+original_offset = 0xC946A
+original_length = 74
+source_sha256 = "c45b6e1454a4aba5188b7fb69e32ad76c85dc5682903c1ed281a4dd5250499ce"
+english = [
+  "G-Goku... Is he...",
+  "one of King Piccolo's",
+  "surviving henchmen?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Tien asking whether the fighter is one of King Piccolo's surviving henchmen; selector $0236."
+
+[[record]]
+id = "pre_chichi_05"
+original_address = "99:94B4"
+original_offset = 0xC94B4
+original_length = 28
+source_sha256 = "962f3953eaa307f0c5ddb036a0bb25fae251e0a0598daa7439734d8f914a7523"
+english = [
+  "Yeah. Something like",
+  "that.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Goku cautiously confirming Tien's description; selector $0237."
+
+[[record]]
+id = "pre_chichi_06"
+original_address = "99:94D0"
+original_offset = 0xC94D0
+original_length = 18
+source_sha256 = "2409e7f702b026bf4f339bbd84291221ebe8728136792da90fe5e132bfcf6422"
+english = [
+  "No... I see...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Yamcha accepting Goku's explanation; selector $0238."
+
+[[record]]
+id = "pre_chichi_07"
+original_address = "99:94E2"
+original_offset = 0xC94E2
+original_length = 90
+source_sha256 = "82210980986b51026c6cbf4c720850e50e9664939ff1391dd81d249baf6f8018"
+english = [
+  "But keep it secret!",
+  "If they found out,",
+  "it'd be a huge fuss!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Krillin warning the group to keep the fighter's identity secret; selector $0239."
+
+[[record]]
+id = "pre_chichi_08"
+original_address = "99:953C"
+original_offset = 0xC953C
+original_length = 38
+source_sha256 = "89f6fe9f787dd3732030ccc9ae9014798dde1cd4a276cd714889ff70f7cc21a8"
+english = [
+  "That guy's aura is",
+  "something else...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Goku sensing the newly arrived fighter's extraordinary presence; selector $023A."
+
+[[record]]
+id = "pre_chichi_09"
+original_address = "99:9562"
+original_offset = 0xC9562
+original_length = 28
+source_sha256 = "35db45c488e907c1a079bb5c1acf85c928545d460bb2a043443b620fd8308bb3"
+english = [
+  "Hey, do you know him?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Krillin asking whether Goku knows the fighter; selector $023B."
+
+[[record]]
+id = "pre_chichi_10"
+original_address = "99:957E"
+original_offset = 0xC957E
+original_length = 42
+source_sha256 = "b4331355570add6dfcbcfe40288da9c3dfacd8777921aa439acb8b6b0b0aafb9"
+english = [
+  "Uh, no! I just said",
+  "he looks strong!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Preliminaries Venue dialogue; speaker/context: Goku denying that he knows the fighter and saying only that he looks strong; selector $023C."
+
+[[record]]
+id = "pre_chichi_11"
+original_address = "99:95A8"
+original_offset = 0xC95A8
+original_length = 12
+source_sha256 = "1095f693b292f7e560fdca08d5e1ddfcf56c4c8124ade9222dd8da30d50a7307"
+english = [
+  "Goku...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Final substantive line before the existing Chi-Chi choice command at $91:8353; speaker/context: Chi-Chi recognizing Goku; selector $023D."

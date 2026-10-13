@@ -112,6 +112,12 @@ def build(original: bytes, project):
             "opening_choices": {
                 record.button: record.english
                 for record in load_fixed_resource_records(fixed_resources)
+                if record.status == "implemented"
+                and record.id in {"tournament_quiz_x", "tournament_quiz_y", "tournament_quiz_b"}
+            },
+            "fixed_options": {
+                record.id: record.english
+                for record in load_fixed_resource_records(fixed_resources)
                 if record.status == "implemented" and record.record_type == "option"
             },
         }

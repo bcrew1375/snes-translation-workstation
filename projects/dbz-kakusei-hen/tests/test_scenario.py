@@ -337,6 +337,20 @@ class OriginalRomTextTest(unittest.TestCase):
         self.assertEqual((first.portrait_resource, first.portrait_variant), (0x21, 0x01))
         self.assertEqual((second.portrait_resource, second.portrait_variant), (0x00, 0x09))
 
+    def test_pre_chichi_scenario_sequence_reaches_choice(self):
+        sequence = self.rom[0x0882FF:0x088354]
+        self.assertEqual(
+            sequence,
+            bytes.fromhex(
+                "08 37 02 1C 09 10 49 08 38 02 1C 09 10 "
+                "08 39 02 1C 09 10 23 80 22 0A "
+                "08 3A 02 1C 09 10 08 3B 02 1C 09 10 "
+                "08 3C 02 1C 09 10 23 80 22 0C 0C 04 07 01 15 00 "
+                "08 3D 02 1C 09 10 28 04 00 0C 00 00 00 00 02 08 00 00 "
+                "1C 09 10 0C 00 00 00 15 02 08 00 00 1C 09 10 07"
+            ),
+        )
+
     def test_confirmed_root_entry_dialogue_shape(self):
         commands = decode_root_entry_text_commands(self.rom)
         self.assertEqual(len(commands), 100)

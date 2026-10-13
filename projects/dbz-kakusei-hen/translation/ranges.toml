@@ -397,6 +397,72 @@ evidence = "Exact consecutive source allocations for opening 23rd World Tourname
 confidence = "confirmed"
 
 [[record]]
+name = "tournament_quiz_response_b_stream"
+rom_start = 0xC906E
+rom_end = 0xC9089
+cpu_start = "$906E"
+cpu_end = "$9089"
+bank = 0x99
+alignment = 2
+evidence = "Exact source allocation for first tournament trivia B response selector $021C, reached from scenario cursor $91:819A."
+confidence = "confirmed"
+
+[[record]]
+name = "tournament_quiz_response_xy_stream"
+rom_start = 0xC9060
+rom_end = 0xC906D
+cpu_start = "$9060"
+cpu_end = "$906D"
+bank = 0x99
+alignment = 2
+evidence = "Exact source allocation for first tournament trivia shared X/Y response selector $021B, reached from scenario cursor $91:8193."
+confidence = "confirmed"
+
+[[record]]
+name = "tournament_quiz_02_leadin_streams"
+rom_start = 0xC908A
+rom_end = 0xC917D
+cpu_start = "$908A"
+cpu_end = "$917D"
+bank = 0x99
+alignment = 2
+evidence = "Five consecutive source allocations for second tournament trivia lead-in selectors $021D-$0221; pointer slots are $99:843A-$99:8443."
+confidence = "confirmed"
+
+[[record]]
+name = "tournament_quiz_02_response_stream"
+rom_start = 0xC917E
+rom_end = 0xC919B
+cpu_start = "$917E"
+cpu_end = "$919B"
+bank = 0x99
+alignment = 2
+evidence = "Exact source allocation for second tournament trivia shared X/Y/B response selector $0222, reached from scenario cursor $91:8218."
+confidence = "confirmed"
+
+[[record]]
+name = "post_quiz_selector_pointers"
+rom_start = 0xC8446
+rom_end = 0xC847B
+cpu_start = "$8446"
+cpu_end = "$847B"
+bank = 0x99
+alignment = 2
+evidence = "Consecutive selector slots $0223-$023D. Slots $0224/$0225 alias source $99:91BA; only reached selector $0225 has a translation record."
+confidence = "confirmed"
+
+[[record]]
+name = "post_quiz_and_preliminaries_streams"
+rom_start = 0xC919C
+rom_end = 0xC95B3
+cpu_start = "$919C"
+cpu_end = "$95B3"
+bank = 0x99
+alignment = 2
+evidence = "Exact consecutive source allocations for post-quiz and Preliminaries Venue selectors $0223-$023D, including the shared $0224/$0225 stream and the complete lead-in to the Chi-Chi choice."
+confidence = "confirmed"
+
+[[record]]
 name = "world_tournament_arena_pointer"
 rom_start = 0x40018
 rom_end = 0x40019
@@ -419,25 +485,69 @@ evidence = "Fixed bank-$88 table entry 35 is updated from its pinned source at $
 confidence = "confirmed"
 
 [[record]]
+name = "preliminaries_venue_pointer"
+rom_start = 0x40002
+rom_end = 0x40003
+cpu_start = "$8002"
+cpu_end = "$8003"
+bank = 0x88
+alignment = 2
+evidence = "Fixed bank-$88 table entry 1 is updated from its pinned source at $88:8058 to reviewed same-bank tail space at $88:FFDC."
+confidence = "confirmed"
+
+[[record]]
 name = "opening_fixed_label_relocations"
 rom_start = 0x47FB4
-rom_end = 0x47FDB
+rom_end = 0x47FF1
 cpu_start = "$FFB4"
 cpu_end = "$FFDB"
 bank = 0x88
 alignment = 2
-evidence = "The final reviewed all-$FF run in bank $88 holds non-overlapping packed-Latin World Tournament Arena and Papaya Island streams with terminators."
+evidence = "The final reviewed all-$FF run in bank $88 holds non-overlapping packed-Latin World Tournament Arena, Papaya Island, and Preliminaries Venue streams with terminators."
 confidence = "confirmed"
 
 [[record]]
 name = "quiz_option_pointers"
 rom_start = 0xC1B2A
-rom_end = 0xC1B2F
+rom_end = 0xC1B3D
 cpu_start = "$9B2A"
-cpu_end = "$9B2F"
+cpu_end = "$9B35"
 bank = 0x98
 alignment = 2
-evidence = "Three consecutive fixed resource pointers preserve X/Y/B row order while X and B are redirected to reviewed bank-$98 tail space."
+evidence = "The reviewed fixed-resource pointer run covers both trivia panels and the later Chi-Chi X/Y choice while preserving native row order and button-icon prefixes."
+confidence = "confirmed"
+
+[[record]]
+name = "quiz_header"
+rom_start = 0xC41A8
+rom_end = 0xC41BD
+cpu_start = "$C1A8"
+cpu_end = "$C1BD"
+bank = 0x98
+alignment = 2
+evidence = "Fixed choice-panel heading selected through table entry $0173 at $98:9E10; packed English fits its original ten-cell field and leaves the pointer unchanged."
+confidence = "confirmed"
+
+[[record]]
+name = "generic_choice_header"
+rom_start = 0xC41BE
+rom_end = 0xC41C7
+cpu_start = "$C1BE"
+cpu_end = "$C1C7"
+bank = 0x98
+alignment = 2
+evidence = "Fixed generic choice heading selected through table entry $0174 at $98:9E12; packed '(Choice)' fits the original four-cell field in place."
+confidence = "confirmed"
+
+[[record]]
+name = "chichi_choice_options"
+rom_start = 0xC1EDA
+rom_end = 0xC1F05
+cpu_start = "$9EDA"
+cpu_end = "$9F05"
+bank = 0x98
+alignment = 2
+evidence = "Two consecutive fixed X/Y option streams selected by resource indices $0008/$0009; English preserves the two-word icon/spacer prefix and fits each original allocation."
 confidence = "confirmed"
 
 [[record]]
@@ -452,12 +562,23 @@ evidence = "Original Y option allocation; native Y icon/spacer words are retaine
 confidence = "confirmed"
 
 [[record]]
-name = "quiz_option_relocations"
-rom_start = 0xC74D8
-rom_end = 0xC7501
-cpu_start = "$F4D8"
-cpu_end = "$F501"
+name = "quiz_02_option_sources"
+rom_start = 0xC1E60
+rom_end = 0xC1EA9
+cpu_start = "$9E60"
+cpu_end = "$9EA9"
 bank = 0x98
 alignment = 2
-evidence = "Reviewed bank-$98 all-$FF tail holds relocated X and B option streams with their native icon/spacer words and terminators."
+evidence = "Three consecutive source allocations selected by scenario resource indices $0003/$0004/$0005 for the second tournament trivia X/Y/B rows."
+confidence = "confirmed"
+
+[[record]]
+name = "quiz_option_relocations"
+rom_start = 0xC74D8
+rom_end = 0xC7555
+cpu_start = "$F4D8"
+cpu_end = "$F555"
+bank = 0x98
+alignment = 2
+evidence = "Reviewed bank-$98 all-$FF tail holds the first panel's relocated X/B streams and all three second-panel streams with their native icon/spacer words and terminators."
 confidence = "confirmed"
