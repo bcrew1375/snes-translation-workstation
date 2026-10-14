@@ -220,3 +220,105 @@ prefix_words = 2
 english = "Who are you?"
 status = "implemented"
 notes = "Post-quiz two-option Y row; preserves the native Y icon and spacer words and fits the original eight-cell text field."
+
+[[record]]
+id = "preliminaries_quiz_x"
+record_type = "option"
+button = "X"
+pointer_address = "98:9B3E"
+pointer_offset = 0xC1B3E
+original_address = "98:9F06"
+original_offset = 0xC1F06
+original_length = 12
+source_sha256 = "5ea2c4b6872c3f0c6eb51b29c880fce411c832edb29f5e4dc508c45fa767ef5f"
+destination_address = "98:9F06"
+destination_offset = 0xC1F06
+prefix_words = 2
+english = "Huh?"
+status = "implemented"
+notes = "First preliminaries quiz X row; preserves the native X icon and spacer words and fits in place."
+
+[[record]]
+id = "preliminaries_quiz_y"
+record_type = "option"
+button = "Y"
+pointer_address = "98:9B40"
+pointer_offset = 0xC1B40
+original_address = "98:9F12"
+original_offset = 0xC1F12
+original_length = 22
+source_sha256 = "6a803a64d714e3c1118d7bbcc893d290a228874273a4f80510f66fdac950616f"
+destination_address = "98:9F12"
+destination_offset = 0xC1F12
+prefix_words = 2
+english = "You again..."
+status = "implemented"
+notes = "First preliminaries quiz Y row; preserves the native Y icon and spacer words and fits in place."
+
+[[record]]
+id = "preliminaries_quiz_b"
+record_type = "option"
+button = "B"
+pointer_address = "98:9B42"
+pointer_offset = 0xC1B42
+original_address = "98:9F28"
+original_offset = 0xC1F28
+original_length = 16
+source_sha256 = "c932a329a75db5c2ebb7c986b0e61f0f8bcc3d8acc57dd443513ad4d0b156591"
+destination_address = "98:F556"
+destination_offset = 0xC7556
+prefix_words = 2
+english = "King Chappa..."
+status = "implemented"
+notes = "First preliminaries quiz B row; preserves the native B icon and spacer words and relocates by two bytes for the canonical character name."
+
+[[record]]
+id = "mercenary_tao_quiz_x"
+record_type = "option"
+button = "X"
+pointer_address = "98:9B44"
+pointer_offset = 0xC1B44
+original_address = "98:9F38"
+original_offset = 0xC1F38
+original_length = 24
+source_sha256 = "b60f3723cab9a520d24304a3e9b6984fe2c4ef5260fcb86cce8f94516654791e"
+destination_address = "98:9F38"
+destination_offset = 0xC1F38
+prefix_words = 2
+english = "He's an assassin."
+status = "implemented"
+notes = "Mercenary Tao identity quiz X row; preserves the native X icon and spacer words and fits exactly in place."
+
+[[record]]
+id = "mercenary_tao_quiz_y"
+record_type = "option"
+button = "Y"
+pointer_address = "98:9B46"
+pointer_offset = 0xC1B46
+original_address = "98:9F50"
+original_offset = 0xC1F50
+original_length = 28
+source_sha256 = "26a3b296fbe570c671e9bad9ae8a83771f46687be67bcf56707ad33b2c38374f"
+destination_address = "98:F56A"
+destination_offset = 0xC756A
+prefix_words = 2
+english = "I don't know him either."
+status = "implemented"
+notes = "Mercenary Tao identity quiz Y row; preserves the native Y icon and spacer words and relocates for the faithful full wording."
+
+[[record]]
+id = "mercenary_tao_quiz_b"
+record_type = "option"
+button = "B"
+pointer_address = "98:9B48"
+pointer_offset = 0xC1B48
+original_address = "98:9F6C"
+original_offset = 0xC1F6C
+original_length = 28
+source_sha256 = "c1befd647946571118de9879fc6329baf285f61b1243904b40360677ddcd35d1"
+destination_address = "98:F588"
+destination_offset = 0xC7588
+prefix_words = 2
+english = "I've seen him somewhere."
+status = "implemented"
+notes = "Mercenary Tao identity quiz B row; preserves the native B icon and spacer words and relocates for the faithful full wording."

@@ -17,7 +17,7 @@ sha256 = "cc5ab583b5189c3f5b374335edf4b857461278d41ef674f7db31aa100dcb814a"
 [output]
 default_path = "build/dbz-kakusei-hen/translated.sfc"
 size = 2097152
-sha256 = "cd6516bcc5a4dd9a340242b77260dd8621556fbd8c5d82652c7c92d69b0b0b2f"
+sha256 = "87986c7c7806365adbc0978b07a3b9f7463083ea88e226fc26548e695ed998f8"
 
 [manifests]
 analysis = "analysis/project.json"
@@ -246,7 +246,7 @@ end = 0x047FF1
 [[approved_ranges]]
 name = "quiz option pointers"
 start = 0x0C1B2A
-end = 0x0C1B3D
+end = 0x0C1B49
 
 [[approved_ranges]]
 name = "pre-Chi-Chi text pointers"
@@ -274,6 +274,36 @@ start = 0x0C1EDA
 end = 0x0C1F05
 
 [[approved_ranges]]
+name = "first preliminaries quiz in-place option streams"
+start = 0x0C1F06
+end = 0x0C1F27
+
+[[approved_ranges]]
 name = "quiz option relocations"
 start = 0x0C74D8
-end = 0x0C7555
+end = 0x0C75A5
+
+[[approved_ranges]]
+name = "post-Chi-Chi text pointers"
+start = 0x0C847C
+end = 0x0C84CD
+
+[[approved_ranges]]
+name = "post-Chi-Chi source streams"
+start = 0x0C95B4
+end = 0x0C9D75
+
+[[approved_ranges]]
+name = "first preliminary match selector pointers"
+start = 0x0C84CE
+end = 0x0C84F7
+
+[[approved_ranges]]
+name = "first preliminary match source streams"
+start = 0x0C9D76
+end = 0x0CA2A3
+
+[[approved_ranges]]
+name = "Mercenary Tao quiz source option streams"
+start = 0x0C1F38
+end = 0x0C1F87

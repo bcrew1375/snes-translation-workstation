@@ -575,10 +575,65 @@ confidence = "confirmed"
 [[record]]
 name = "quiz_option_relocations"
 rom_start = 0xC74D8
-rom_end = 0xC7555
+rom_end = 0xC75A5
 cpu_start = "$F4D8"
-cpu_end = "$F555"
+cpu_end = "$F5A5"
 bank = 0x98
 alignment = 2
-evidence = "Reviewed bank-$98 all-$FF tail holds the first panel's relocated X/B streams and all three second-panel streams with their native icon/spacer words and terminators."
+evidence = "Reviewed bank-$98 all-$FF tail holds the earlier relocated quiz rows plus the full Mercenary Tao Y/B rows, with native icon/spacer words and terminators."
+confidence = "confirmed"
+
+[[record]]
+name = "chichi_branch_and_next_quiz_pointers"
+rom_start = 0xC847C
+rom_end = 0xC84CD
+cpu_start = "$847C"
+cpu_end = "$84CD"
+bank = 0x99
+alignment = 2
+evidence = "Selector slots $023E-$0266 cover both Chi-Chi branches, their convergence, the first-preliminaries quiz lead-in, and its common continuation. Runtime tracing confirms the reached subset $023E-$0253 and $0260-$0266."
+confidence = "confirmed"
+
+[[record]]
+name = "chichi_branch_and_next_quiz_streams"
+rom_start = 0xC95B4
+rom_end = 0xC9D75
+cpu_start = "$95B4"
+cpu_end = "$9D75"
+bank = 0x99
+alignment = 2
+evidence = "Exact source allocations for reached selectors $023E-$0253 and $0260-$0266. Selectors $0254-$025F remain reserved intervening streams and are not included in the translation manifest."
+confidence = "confirmed"
+
+[[record]]
+name = "first_preliminary_match_pointers"
+rom_start = 0xC84CE
+rom_end = 0xC84F7
+cpu_start = "$84CE"
+cpu_end = "$84F7"
+bank = 0x99
+alignment = 2
+evidence = "Runtime-confirmed selector slots $0267-$027B cover the first preliminary match, the Mercenary Tao quiz, and the shared response through the scene transition."
+confidence = "confirmed"
+
+[[record]]
+name = "first_preliminary_match_streams"
+rom_start = 0xC9D76
+rom_end = 0xCA2A3
+cpu_start = "$9D76"
+cpu_end = "$A2A3"
+bank = 0x99
+alignment = 2
+evidence = "Exact source allocations for runtime-confirmed selectors $0267-$027B; low selectors $0000/$0002 reached within the action sequence are shared existing streams and are not duplicated here."
+confidence = "confirmed"
+
+[[record]]
+name = "mercenary_tao_quiz_options"
+rom_start = 0xC1F38
+rom_end = 0xC1F87
+cpu_start = "$9F38"
+cpu_end = "$9F87"
+bank = 0x98
+alignment = 2
+evidence = "Three consecutive fixed X/Y/B option streams selected by resource indices $000D-$000F at the runtime-confirmed Mercenary Tao identity quiz."
 confidence = "confirmed"

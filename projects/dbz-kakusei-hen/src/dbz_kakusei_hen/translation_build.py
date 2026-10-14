@@ -147,6 +147,14 @@ def validate_visible_line_width(
             )
 
 
+def source_dialogue_box_count(stream: TextStream, *, lines_per_box: int = 4) -> int:
+    """Return the source stream's four-line dialogue-box count."""
+
+    if lines_per_box < 1:
+        raise ValueError("lines per dialogue box must be positive")
+    return (len(stream.line_lengths) + lines_per_box - 1) // lines_per_box
+
+
 def load_translation_manifests(
     patches_path: str | Path, references_path: str | Path
 ) -> list[TranslationRecord]:
@@ -416,7 +424,7 @@ def plan_translations(
         encoded = encode_text_layout(
             "\n".join(record.english),
             max_line_width=slot.presentation.width_cells,
-            max_lines=slot.presentation.height_cells,
+            max_lines=source_dialogue_box_count(stream) * 4,
             line_cells=exact_cells,
             context=f"{record.id} selector ${record.selector:04X}",
         )

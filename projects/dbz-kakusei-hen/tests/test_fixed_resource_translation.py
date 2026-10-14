@@ -29,11 +29,11 @@ class FixedResourceManifestTest(unittest.TestCase):
     def test_fixed_labels_and_button_order_are_explicit(self):
         self.assertEqual(
             [record.record_type for record in self.records],
-            ["fixed_label"] * 5 + ["option"] * 8,
+            ["fixed_label"] * 5 + ["option"] * 14,
         )
         self.assertEqual(
             [record.button for record in self.records],
-            ["", "", "", "", "", "X", "Y", "B", "X", "Y", "B", "X", "Y"],
+            ["", "", "", "", "", "X", "Y", "B", "X", "Y", "B", "X", "Y", "X", "Y", "B", "X", "Y", "B"],
         )
         self.assertEqual([record.english for record in self.records], [
             "World Tournament Arena", "Papaya Island", "Preliminaries Venue",
@@ -41,6 +41,8 @@ class FixedResourceManifestTest(unittest.TestCase):
             "You're bleeding!", "Are you sick?", "You look sexy.",
             "You haven't changed!", "I grew more than you!", "You look well, Krillin!",
             "You're Chi-Chi!?", "Who are you?",
+            "Huh?", "You again...", "King Chappa...",
+            "He's an assassin.", "I don't know him either.", "I've seen him somewhere.",
         ])
 
 
@@ -72,6 +74,8 @@ class OriginalRomFixedResourceTranslationTest(unittest.TestCase):
             "tournament_quiz_02_x": (0x0C7502, 0x0C751C),
             "tournament_quiz_02_y": (0x0C751C, 0x0C7538),
             "tournament_quiz_02_b": (0x0C7538, 0x0C7556),
+            "mercenary_tao_quiz_y": (0x0C756A, 0x0C7588),
+            "mercenary_tao_quiz_b": (0x0C7588, 0x0C75A6),
         }
         occupied = []
         for record in self.records:
@@ -107,6 +111,7 @@ class OriginalRomFixedResourceTranslationTest(unittest.TestCase):
         result = build(self.original, None)
         self.assertEqual(result.data[0x088179:0x088193], self.original[0x088179:0x088193])
         self.assertEqual(result.data[0x0881FD:0x088218], self.original[0x0881FD:0x088218])
+        self.assertEqual(result.data[0x088718:0x088733], self.original[0x088718:0x088733])
         self.assertEqual(result.metadata["fixed_labels"], {
             "tournament_arena_label": "World Tournament Arena",
             "papaya_island_label": "Papaya Island",
@@ -128,6 +133,12 @@ class OriginalRomFixedResourceTranslationTest(unittest.TestCase):
             "tournament_quiz_02_b": "You look well, Krillin!",
             "chichi_choice_x": "You're Chi-Chi!?",
             "chichi_choice_y": "Who are you?",
+            "preliminaries_quiz_x": "Huh?",
+            "preliminaries_quiz_y": "You again...",
+            "preliminaries_quiz_b": "King Chappa...",
+            "mercenary_tao_quiz_x": "He's an assassin.",
+            "mercenary_tao_quiz_y": "I don't know him either.",
+            "mercenary_tao_quiz_b": "I've seen him somewhere.",
         })
 
 

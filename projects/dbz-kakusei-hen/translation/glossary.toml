@@ -19,9 +19,9 @@ status = "approved"
 [[term]]
 id = "character_piccolo_jr"
 category = "character"
-canonical = "Piccolo Jr."
-aliases = ["Majunior", "Demon King Piccolo"]
-usage_notes = "Use for identity or roster label during the 23rd World Tournament."
+canonical = "Junior"
+aliases = ["Piccolo Jr.", "Majunior", "Demon King Piccolo"]
+usage_notes = "Use \"Junior\" for identity, dialogue references, and roster labels during the 23rd World Tournament."
 status = "approved"
 
 [[term]]
@@ -77,7 +77,7 @@ id = "character_mercenary_tao"
 category = "character"
 canonical = "Mercenary Tao"
 aliases = ["Tao Pai Pai", "Cyber Tao"]
-usage_notes = "Use \"Mercenary Tao\" for his pre-cyborg form; \"Cyborg Tao\" specifically for his reconstructed tournament form."
+usage_notes = "Use \"Mercenary Tao\" for the full name and \"Tao\" where the shorter form is natural. Describe his reconstructed body as cyborg rather than using \"Cyborg Tao\" as a name."
 status = "approved"
 
 [[term]]

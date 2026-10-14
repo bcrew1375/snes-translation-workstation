@@ -40,6 +40,7 @@ from dbz_kakusei_hen.translation_build import (  # noqa: E402
     load_translation_manifests,
     map_unverified_candidate_gaps,
     plan_translations,
+    source_dialogue_box_count,
     validate_visible_line_width,
     validate_reviewed_free_regions,
     visible_line_character_limit,
@@ -61,6 +62,22 @@ class GlyphEncodingTest(unittest.TestCase):
         encoded = encode_text_layout("I", max_line_width=1)
         self.assertEqual(encoded.words, (encode_latin_cell("I"), 0))
         self.assertEqual(encoded.line_cells, (1,))
+
+    def test_empty_lines_encode_as_page_padding(self):
+        encoded = encode_text_layout("One\n\nTwo", max_line_width=16)
+        self.assertEqual(encoded.line_cells, (2, 0, 2))
+        self.assertEqual(encoded.words.count(0x000A), 2)
+
+
+class DialoguePaginationTest(unittest.TestCase):
+    def test_source_box_count_uses_four_lines_per_box(self):
+        stream = decode_text_stream(
+            bytes.fromhex("00010a000a000a000a000101000000"),
+            bank=0x80,
+            address=0x8000,
+        )
+        self.assertEqual(stream.line_lengths, (1, 0, 0, 0, 1))
+        self.assertEqual(source_dialogue_box_count(stream), 2)
 
 
 class AllocatorTest(unittest.TestCase):
@@ -201,7 +218,7 @@ class ManifestTest(unittest.TestCase):
             PROJECT_ROOT / "translation" / "patches",
             PROJECT_ROOT / "translation" / "references.toml",
         )
-        self.assertEqual(len(records), 88)
+        self.assertEqual(len(records), 138)
         self.assertEqual(records[0].selector, 0x07E1)
         self.assertEqual({record.original_bank for record in records}, {0x99, 0x9B, 0x9C})
         self.assertEqual(len(records[0].english), 4)
@@ -435,7 +452,8 @@ class OriginalRomExpansionTest(unittest.TestCase):
     def test_pre_chichi_route_is_complete_and_allocates_deterministically(self):
         checkpoint = [
             record for record in self.records
-            if record.id.startswith(("post_quiz_", "preliminaries_", "pre_chichi_"))
+            if record.id.startswith(("post_quiz_", "pre_chichi_"))
+            or record.id in {f"preliminaries_{index:02d}" for index in range(8)}
         ]
         self.assertEqual(
             [(record.id, record.selector) for record in checkpoint],
@@ -514,6 +532,88 @@ class OriginalRomExpansionTest(unittest.TestCase):
         self.assertEqual(
             self.original[0x0C8448:0x0C844A],
             self.original[0x0C844A:0x0C844C],
+        )
+
+    def test_chichi_branches_and_next_quiz_allocate_deterministically(self):
+        checkpoint = [
+            record for record in self.records
+            if record.id.startswith(("chichi_y_", "chichi_x_", "preliminaries_quiz_"))
+        ]
+        self.assertEqual(
+            [(record.id, record.selector) for record in checkpoint],
+            [(f"chichi_y_{index:02d}", 0x023E + index) for index in range(6)]
+            + [(f"chichi_x_{index:02d}", 0x0244 + index) for index in range(16)]
+            + [(f"preliminaries_quiz_{index:02d}", 0x0260 + index) for index in range(4)]
+            + [(f"preliminaries_quiz_response_{index:02d}", 0x0264 + index) for index in range(3)],
+        )
+        regions = load_reviewed_free_regions(PROJECT_ROOT / "translation" / "ranges.toml")
+        plans = {
+            plan.record.id: plan
+            for plan in plan_translations(self.original, self.records, regions)
+            if plan.record.id in {record.id for record in checkpoint}
+        }
+        expected_relocations = {
+            "chichi_y_02": 0x0CFC34,
+            "chichi_x_03": 0x0CFC50,
+            "chichi_x_04": 0x0CFC72,
+            "chichi_x_06": 0x0CFC80,
+            "chichi_x_12": 0x0CFC98,
+            "chichi_x_14": 0x0CFCB2,
+            "preliminaries_quiz_02": 0x0CFCE2,
+            "preliminaries_quiz_response_00": 0x0CFD30,
+            "preliminaries_quiz_response_02": 0x0CFD9E,
+        }
+        self.assertEqual(
+            {
+                record.id: plans[record.id].allocation.new_offset
+                for record in checkpoint
+                if plans[record.id].allocation.strategy == "in-bank"
+            },
+            expected_relocations,
+        )
+        self.assertEqual(
+            [record.id for record in checkpoint if plans[record.id].allocation.strategy == "in-place"],
+            [record.id for record in checkpoint if record.id not in expected_relocations],
+        )
+
+    def test_first_preliminary_match_allocates_deterministically(self):
+        checkpoint = [
+            record for record in self.records
+            if record.id.startswith("first_preliminary_match")
+        ]
+        self.assertEqual(
+            [(record.id, record.selector) for record in checkpoint],
+            [(f"first_preliminary_match_{index:02d}", 0x0267 + index) for index in range(16)]
+            + [(f"first_preliminary_match_response_{index:02d}", 0x0277 + index) for index in range(5)],
+        )
+        regions = load_reviewed_free_regions(PROJECT_ROOT / "translation" / "ranges.toml")
+        plans = {
+            plan.record.id: plan
+            for plan in plan_translations(self.original, self.records, regions)
+            if plan.record.id in {record.id for record in checkpoint}
+        }
+        expected_relocations = {
+            "first_preliminary_match_00": 0x0CFDE0,
+            "first_preliminary_match_02": 0x0CFE08,
+            "first_preliminary_match_03": 0x0CFE1A,
+            "first_preliminary_match_04": 0x0CFE2C,
+            "first_preliminary_match_05": 0x0CFE4E,
+            "first_preliminary_match_06": 0x0CFE8A,
+            "first_preliminary_match_11": 0x0CFF30,
+            "first_preliminary_match_13": 0x0CFFA6,
+            "first_preliminary_match_15": 0x0CFFD2,
+        }
+        self.assertEqual(
+            {
+                record.id: plans[record.id].allocation.new_offset
+                for record in checkpoint
+                if plans[record.id].allocation.strategy == "in-bank"
+            },
+            expected_relocations,
+        )
+        self.assertEqual(
+            [record.id for record in checkpoint if plans[record.id].allocation.strategy == "in-place"],
+            [record.id for record in checkpoint if record.id not in expected_relocations],
         )
 
     def test_candidate_gaps_exclude_all_confirmed_text_structures(self):

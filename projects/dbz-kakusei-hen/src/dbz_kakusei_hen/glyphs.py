@@ -80,10 +80,7 @@ def encode_latin_line(line: str, cells: int, *, context: str) -> tuple[int, ...]
 def _split_lines(text: str) -> tuple[str, ...]:
     if "\r" in text:
         raise WorkstationError("translation text must use LF line endings")
-    lines = tuple(text.split("\n"))
-    if any(line == "" for line in lines):
-        raise WorkstationError("translation text contains an empty line")
-    return lines
+    return tuple(text.split("\n"))
 
 
 def encode_text_layout(

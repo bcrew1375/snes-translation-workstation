@@ -147,11 +147,50 @@ rows are `You're Chi-Chi!?` and `Who are you?`, with the native X/Y icon and
 spacer words preserved.
 
 Final-ROM runtime replay confirms X/Y result values 0/1 and distinct branch
-destinations. X completes immediate Goku selector `$0244` before scenario cursor
-`$91:846F`; Y displays reused silence selector `$0003` before cursor `$91:8502`.
-One further response remains different on each route, so convergence is not
-immediate. Translation of the downstream branch bodies begins with `$0245` on X
-and `$023E` on Y and is intentionally deferred to the next checkpoint.
+destinations. The Y route executes selectors `$023E-$0243`. The longer X route
+executes `$0244-$0253`, with three portrait-only silent reactions between `$0251`
+and `$0252`. Both routes converge at scenario cursor `$91:853D` on selector `$0260`.
+
+The converged route translates selectors `$0260-$0263`: the announcer gathers the
+contestants, Goku reads number 2 and the first Block 1 match, Krillin notes that the
+group was separated into different blocks, and the announcer calls contestants 1 and
+2. The next `DBZ Trivia Quiz` panel is reached at cursor `$91:8586`. Resource indices
+`$000A/$000B/$000C` use fixed pointers `$98:9B3E/$98:9B40/$98:9B42`; their localized
+X/Y/B rows are `Huh?`, `You again...`, and `King Chappa...`. X and Y fit in place.
+The B row preserves its icon/spacer prefix and relocates from `$98:9F28` to the
+reviewed tail at `$98:F556`.
+
+All three quiz buttons reconverge immediately at `$91:85A0` and shared selector
+`$0264`. Common selectors `$0264-$0266` carry the start-of-match narration,
+announcer's signal, and Yamcha's reaction through cursor `$91:85B3`. Independent
+X/Y/B replay produced byte-identical final screenshots for selector `$0266`.
+
+Checkpoint 5 continues from `$91:85B3` through the first preliminary match and
+Mercenary Tao confrontation. Runtime tracing confirms portrait selectors
+`$0267-$0276`; shared low selectors `$0000/$0002` also execute inside the action
+sequence but remain existing shared records rather than duplicate translations.
+The new dialogue covers Goku's effortless win, Junior judging his hidden power,
+Mercenary Tao injuring Chiaotzu, and his reunion with Tien and Goku. The reviewed
+source span is `$99:9D76-$99:A0A7`; records that exceed their compact allocations
+relocate deterministically into the existing bank-`$99` translation pool.
+
+Command `$07` at CPU `$91:8718` opens the next `DBZ Trivia Quiz`. Resource indices
+`$000D/$000E/$000F` use pointers `$98:9B44/$98:9B46/$98:9B48`. Their localized
+X/Y/B rows are `He's an assassin.`, `I don't know him either.`, and
+`I've seen him somewhere.` X fits in place at `$98:9F38`; Y/B preserve their
+native icon/spacer prefixes and relocate to `$98:F56A/$98:F588`.
+
+Final-ROM replay confirms that X/Y/B write result values 0/1/2 to WRAM `$021C`.
+X takes the short extra command route `$91:8722->$91:8729->$91:872B->$91:872E`,
+while Y and B go from `$91:8722` to `$91:8731`. All three reconverge at
+`$91:8733` and execute common response selectors `$0277-$027B`: Mercenary Tao
+reveals his cyborg body, threatens Goku and Tien, Tien rejects the Crane School's
+teachings, and the two agree to fight. The shared final line renders as
+`Ha ha ha...` / `I can't wait.` Independent revised X/Y/B runs enter the next
+scene at selector `$027C`, cursor `$91:87A5`, with byte-identical captures.
+The revised dialogue preserves the source's four-line box count with explicit
+page-padding lines where required. Its translated ROM is SHA-256 `abf9222a...`;
+final-ROM replay confirmed all page transitions and quiz rows without clipping.
 
 Final-ROM SHA-256 `cd6516bc...` was replayed from the second trivia response through
 the choice. The observed order is `$0223`, `$001B`, `$0225-$0237`, `$0238`, and
@@ -248,7 +287,7 @@ remaining limitations are recorded in `analysis/runtime-evidence.toml`. Raw capt
 remain local and ignored; documentation does not rely on ephemeral `/tmp` paths.
 
 The current translated ROM SHA-256 is
-`cd6516bcc5a4dd9a340242b77260dd8621556fbd8c5d82652c7c92d69b0b0b2f`.
+`9bdb3780349db284be6eefd3ad96351d4440548a6662bf37430d685f1b12afee`.
 Its mode-aware `$81:8AD7` dispatcher bypasses translated name-only insertion work in
 password mode and rejoins the original path at `$81:8ADD`. Static binary tests pin the
 unchanged original password continuation through `$81:8B4F`, including the original

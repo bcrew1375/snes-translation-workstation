@@ -1,6 +1,6 @@
 schema_version = 1
-phase = "opening_tournament_quiz"
-summary = "The opening route through the Chi-Chi choice at the Preliminaries Venue is translated, builds reproducibly, and is runtime-verified. A reusable final-ROM state is retained at the first post-naming gameplay screen and reload-verified."
+phase = "first_preliminary_match"
+summary = "The opening route through the first preliminary match, Mercenary Tao quiz, all X/Y/B results, and their shared response is translated, builds reproducibly, and is final-ROM runtime-verified with source-aligned four-line pagination."
 
 [[milestones]]
 id = "automatic_opening"
@@ -32,13 +32,23 @@ id = "post_naming_checkpoint"
 status = "complete"
 summary = "A reusable final-ROM save state at the first post-naming gameplay screen was saved and independently reload-verified with byte-identical screenshots."
 
+[[milestones]]
+id = "chichi_branches_and_preliminaries_quiz"
+status = "complete"
+summary = "Y selectors $023E-$0243, X selectors $0244-$0253, converged selectors $0260-$0263, three fixed quiz rows, and common response selectors $0264-$0266 are translated and final-ROM runtime-verified."
+
+[[milestones]]
+id = "first_preliminary_match_and_mercenary_tao_quiz"
+status = "complete"
+summary = "Selectors $0267-$027B and the fixed X/Y/B Mercenary Tao quiz rows are retranslated with source-aligned four-line pagination and final-ROM runtime-verified. X/Y/B write 0/1/2, preserve their distinct branch paths, reconverge at $91:8733, and enter selector $027C with byte-identical final captures."
+
 [[unknowns]]
 id = "portrait_catalog"
 summary = "The complete numeric portrait-resource catalog is not yet named."
 priority = "low"
 
 [[recommended_tasks]]
-id = "translate_chichi_branches"
-summary = "Translate the distinct dialogue following Chi-Chi result values 0/1, beginning with X branch selector $0245 after cursor $91:846F and Y branch selector $023E after cursor $91:8502."
+id = "translate_post_mercenary_tao_scene"
+summary = "Continue from runtime-confirmed selector $027C at scenario cursor $91:87A5 after the verified Mercenary Tao response."
 requires_rom = true
 requires_runtime = true

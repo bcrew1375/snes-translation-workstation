@@ -1,0 +1,339 @@
+schema_version = 1
+
+[[record]]
+id = "chichi_y_00"
+original_address = "99:95B4"
+original_offset = 0xC95B4
+original_length = 28
+source_sha256 = "1583895322fad14f9f4e2caf70901a0d118280eca36bb2ea7c58edb2b17ef30b"
+english = [".........", "You idiot!!!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice Y branch; Chi-Chi's stunned pause and outburst; selector $023E."
+
+[[record]]
+id = "chichi_y_01"
+original_address = "99:95D0"
+original_offset = 0xC95D0
+original_length = 26
+source_sha256 = "fc7a3bd3a784ebdab38e2aafb4bc74fdf6ac2a185925a2ca43980441db6fcd0e"
+english = ["W-what's with her...?"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice Y branch; Goku reacting after Chi-Chi runs away; selector $023F."
+
+[[record]]
+id = "chichi_y_02"
+original_address = "99:95EA"
+original_offset = 0xC95EA
+original_length = 26
+source_sha256 = "556cea5be462296f34e73794818f952fa0b31d52172897521e808d81dc019192"
+english = ["G-Goku...", "What was that?"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice Y branch; Yamcha asking Goku about the encounter; selector $0240."
+
+[[record]]
+id = "chichi_y_03"
+original_address = "99:9604"
+original_offset = 0xC9604
+original_length = 46
+source_sha256 = "56e4bc0c80847679c71f83aeb980f7c312a28246f5e934f054fcf9c40e1ebbef"
+english = ["Sh-she's really cute,", "isn't she!?"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice Y branch; Krillin reacting to Chi-Chi; selector $0241."
+
+[[record]]
+id = "chichi_y_04"
+original_address = "99:9632"
+original_offset = 0xC9632
+original_length = 72
+source_sha256 = "3004df289dd32643f20b1c2f70c2426077c94377ca6a17b31b9144b732d22cf0"
+english = ["I don't know her!", "I've never met her!"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice Y branch; Goku insists he does not know Chi-Chi; selector $0242."
+
+[[record]]
+id = "chichi_y_05"
+original_address = "99:967A"
+original_offset = 0xC967A
+original_length = 128
+source_sha256 = "aeae795eba294e2a22328e9e908e6d2559ad10bc37c597bcbec4e34d4b0a6483"
+english = [
+  "Liar! It sure didn't",
+  "look that way!",
+  "You really trained",
+  "under Kami, right?",
+  "Damn, lucky you!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice Y branch; Krillin doubts Goku and envies the attention; selector $0243."
+
+[[record]]
+id = "chichi_x_00"
+original_address = "99:96FA"
+original_offset = 0xC96FA
+original_length = 36
+source_sha256 = "41b3a47db5958c98778f5b498d9e8d0e0f0d5fe50b070e048a594c99c7f98528"
+english = ["What are you doing", "here?"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; Goku asks why Chi-Chi is at the tournament; selector $0244."
+
+[[record]]
+id = "chichi_x_01"
+original_address = "99:971E"
+original_offset = 0xC971E
+original_length = 94
+source_sha256 = "75b0da94f0b2f370481573d1c9aad3e44c3db5d18f87363903490bc6767bd7a9"
+english = ["See!? I knew it!", "You forgot about me!", "I waited so long!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; Chi-Chi accuses Goku of forgetting her; selector $0245."
+
+[[record]]
+id = "chichi_x_02"
+original_address = "99:977C"
+original_offset = 0xC977C
+original_length = 18
+source_sha256 = "314977fadc090e7bc4a59b0cb217dd710858a7560ee2b5a019fa7248f0bb1376"
+english = ["F-for what...!?"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; Goku remains confused; selector $0246."
+
+[[record]]
+id = "chichi_x_03"
+original_address = "99:978E"
+original_offset = 0xC978E
+original_length = 30
+source_sha256 = "ed47550eba4fa3195797a03bab0b897eb2fd09b07c072a9dc4d0f2fab4d56a99"
+english = ["You forgot your", "promise too!?"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; Chi-Chi reminds Goku of his promise; selector $0247."
+
+[[record]]
+id = "chichi_x_04"
+original_address = "99:97AC"
+original_offset = 0xC97AC
+original_length = 12
+source_sha256 = "a20201f66482961b972d85044d5ceadffe5adcb642499076d0daa4d996dd910b"
+english = ["P-promise!?"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; Goku repeats the word in surprise; selector $0248."
+
+[[record]]
+id = "chichi_x_05"
+original_address = "99:97B8"
+original_offset = 0xC97B8
+original_length = 42
+source_sha256 = "46331b13e457a0bcf26d91cfe4af5b37563d4c2c1e52a9c50b9ca0e05c9fbbb3"
+english = ["You said you'd", "make me your bride!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; Chi-Chi states Goku's childhood promise; selector $0249."
+
+[[record]]
+id = "chichi_x_06"
+original_address = "99:97E2"
+original_offset = 0xC97E2
+original_length = 22
+source_sha256 = "1a3bd12f376c82a68990ec7d3d0b56c3266404d6c6d2247fd7eced9568c8569b"
+english = ["When!?", "Y-your bride!?"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; Krillin reacts to the marriage claim; selector $024A."
+
+[[record]]
+id = "chichi_x_07"
+original_address = "99:97F8"
+original_offset = 0xC97F8
+original_length = 68
+source_sha256 = "da10351f4309329fde9c445b7a3515a43f0243a760af262d6cb24c400f0def69"
+english = [".........", "Krillin! What's a", "bride!? Tell me!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; Goku asks Krillin what bride means; selector $024B."
+
+[[record]]
+id = "chichi_x_08"
+original_address = "99:983C"
+original_offset = 0xC983C
+original_length = 152
+source_sha256 = "5c1bf6b897aeca572d346b39ff859ef0c533661be22c7fd23ef315edcda32664"
+english = [
+  "Idiot!! Taking her",
+  "as your bride means",
+  "marrying her!!",
+  "When did you promise",
+  "such a cute girl!?",
+  "It's not fair!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; Krillin explains marriage and complains enviously; selector $024C."
+
+[[record]]
+id = "chichi_x_09"
+original_address = "99:98D4"
+original_offset = 0xC98D4
+original_length = 106
+source_sha256 = "70d96fca52f57f0c7ac0e3d806ef0bb6e48fe924218901e0145d8ea042ca5fb1"
+english = ["You become husband", "and wife, and live", "together forever!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; marriage is explained to Goku; selector $024D."
+
+[[record]]
+id = "chichi_x_10"
+original_address = "99:993E"
+original_offset = 0xC993E
+original_length = 108
+source_sha256 = "d9b717914fd22709b220092aac81754a9f397e036c147e165d57a2a1c3f4fbfc"
+english = ["Ah!! I remember now!!", "I sure did say I'd", "come get a bride!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; Goku suddenly remembers that he said he would come get a bride; selector $024E."
+
+[[record]]
+id = "chichi_x_11"
+original_address = "99:99AA"
+original_offset = 0xC99AA
+original_length = 118
+source_sha256 = "f94bb062ad608ebd8c4783f6bfe7dafe98b24605c1a902976be5aa716aef20b6"
+english = [
+  "I thought a bride was",
+  "something to eat...",
+  "...Oh well.",
+  "I did promise,",
+  "after all...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; Goku reflects that he mistook a bride for food but did make a promise; selector $024F."
+
+[[record]]
+id = "chichi_x_12"
+original_address = "99:9A20"
+original_offset = 0xC9A20
+original_length = 22
+source_sha256 = "7340e8f98b2baebdb3da704fb6d7924c3d10dc7f7b8e709d9f19d6c31f74e8c6"
+english = ["Then let's get", "married."]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; Goku accepts the marriage; selector $0250."
+
+[[record]]
+id = "chichi_x_13"
+original_address = "99:9A36"
+original_offset = 0xC9A36
+original_length = 8
+source_sha256 = "89ad1a9f7a8d2924bcad6c8588c9dd6041750ae614aa966497fccad4c1dfdfa7"
+english = ["Yeah!"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; Chi-Chi happily agrees; selector $0251."
+
+[[record]]
+id = "chichi_x_14"
+original_address = "99:9A3E"
+original_offset = 0xC9A3E
+original_length = 44
+source_sha256 = "5eeb68dc800a2aafa799a7e4e35c133aaa022eb9687745dcd38699ab9eb9a2c1"
+english = ["I'm entering the", "prelims too.", "See you later!"]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch after three silent reactions; Chi-Chi departs; selector $0252."
+
+[[record]]
+id = "chichi_x_15"
+original_address = "99:9A6A"
+original_offset = 0xC9A6A
+original_length = 12
+source_sha256 = "b7dc473024b901836e930ddc93a3e7a9a30fb73599a0dc4964ef8847c427f7fd"
+english = ["Y-yeah..."]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi choice X branch; Goku responds as Chi-Chi leaves; selector $0253."
+
+[[record]]
+id = "preliminaries_quiz_00"
+original_address = "99:9BB2"
+original_offset = 0xC9BB2
+original_length = 90
+source_sha256 = "680e036a1cf149422dc49a8faa434513a202d71b8edb565d83d1099357ab3abf"
+english = ["Contestants, thanks", "for waiting.", "Please gather. The", "prelims begin now!"]
+max_line_length = 21
+status = "implemented"
+notes = "Common route after both Chi-Chi branches; announcer calls the entrants together; selector $0260."
+
+[[record]]
+id = "preliminaries_quiz_01"
+original_address = "99:9C0C"
+original_offset = 0xC9C0C
+original_length = 54
+source_sha256 = "3cf4c805afd258313e024e691b4913c8dc5596f40e683cbfee4fd74a1219ac81"
+english = ["I'm number 2...", "First match, Block 1!"]
+max_line_length = 21
+status = "implemented"
+notes = "Common route; Goku reads his preliminary draw; selector $0261."
+
+[[record]]
+id = "preliminaries_quiz_02"
+original_address = "99:9C42"
+original_offset = 0xC9C42
+original_length = 70
+source_sha256 = "845fabbd80995ad9e18ed7bca26dd909222b321d20db38b86400da2a6af77c46"
+english = ["Hey, we're all in", "different blocks!", "We won't have to", "fight each other!"]
+max_line_length = 21
+status = "implemented"
+notes = "Common route; Krillin observes that the group was split between blocks; selector $0262."
+
+[[record]]
+id = "preliminaries_quiz_03"
+original_address = "99:9C88"
+original_offset = 0xC9C88
+original_length = 58
+source_sha256 = "19a9c0735e041cc5e6e0177b7ffa2d5532ac71f0a6c68362533c70478a9bd3cc"
+english = ["Now for the Block 1", "preliminary.", "Numbers 1 and 2..."]
+max_line_length = 21
+status = "implemented"
+notes = "Common route immediately before the next quiz panel; announcer calls the first pair; selector $0263."
+
+[[record]]
+id = "preliminaries_quiz_response_00"
+original_address = "99:9CC2"
+original_offset = 0xC9CC2
+original_length = 98
+source_sha256 = "6a33f13456fde70c1843208d5412dfce92db9b081e7dffeb2ac3cecfc67fc3fb"
+english = ["At last, the first", "match is about to", "begin...", "Well then... We'll", "start where we left", "off last time..."]
+max_line_length = 21
+status = "implemented"
+notes = "Shared X/Y/B continuation after the next quiz; narrator transitions into the first match; selector $0264. Selector $0D67 aliases the same source stream."
+
+[[record]]
+id = "preliminaries_quiz_response_01"
+original_address = "99:9D24"
+original_offset = 0xC9D24
+original_length = 30
+source_sha256 = "b11b1a6279d071c5fce0d11ec90d6d0f227a6b84b1069446459cb0e5dcf2b488"
+english = ["Now then...", "Please begin!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Shared X/Y/B continuation; announcer starts the match; selector $0265."
+
+[[record]]
+id = "preliminaries_quiz_response_02"
+original_address = "99:9D42"
+original_offset = 0xC9D42
+original_length = 52
+source_sha256 = "8216d43526f8f36423cf8f11cc2e427207301cef1e50a1f118ccbf552a9044f4"
+english = ["H-how can this be...?", "I can't sense Goku's", "presence at all..."]
+max_line_length = 21
+status = "implemented"
+notes = "Shared X/Y/B continuation; Yamcha reacts to Goku suppressing his presence; selector $0266."

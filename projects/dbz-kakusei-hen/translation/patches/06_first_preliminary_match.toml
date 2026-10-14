@@ -1,0 +1,307 @@
+schema_version = 1
+
+[[record]]
+id = "first_preliminary_match_00"
+original_address = "99:9D76"
+original_offset = 0xC9D76
+original_length = 32
+source_sha256 = "d65ecef9cb569d7358f2e7d50e4ea95742c3d2e5be25d96e21640337ccc10294"
+english = ["His presence has", "completely vanished."]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; Yamcha realizes Goku's presence has completely vanished; selector $0267."
+
+[[record]]
+id = "first_preliminary_match_01"
+original_address = "99:9D96"
+original_offset = 0xC9D96
+original_length = 18
+source_sha256 = "4934cc6f8c7b13b56435028c4c3ec0f6e282b4540dd0cdefca59febb09a6a534"
+english = ["Taaah!!"]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; Goku's opponent attacks; selector $0268."
+
+[[record]]
+id = "first_preliminary_match_02"
+original_address = "99:9DA8"
+original_offset = 0xC9DA8
+original_length = 14
+source_sha256 = "c4e740d3576745011215c27ca6bc3de6ad81be1abd4007abf8d48bcd3e32f235"
+english = ["W-where is he!?"]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; Goku's opponent loses track of him; selector $0269."
+
+[[record]]
+id = "first_preliminary_match_03"
+original_address = "99:9DB6"
+original_offset = 0xC9DB6
+original_length = 14
+source_sha256 = "58ce3074589b44705dacb55c28e6700fb0009f06635fa953b879fde259d3ecf1"
+english = ["Number 2 wins!!"]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; the official declares Goku the winner; selector $026A."
+
+[[record]]
+id = "first_preliminary_match_04"
+original_address = "99:9DC4"
+original_offset = 0xC9DC4
+original_length = 30
+source_sha256 = "bb15ccb1631e9199d410db01300b7a01637fb338d60219352037e7aa9c4b0a80"
+english = ["He wasn't fighting", "seriously..."]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; Krillin notes that Goku did not fight seriously; selector $026B."
+
+[[record]]
+id = "first_preliminary_match_05"
+original_address = "99:9DE2"
+original_offset = 0xC9DE2
+original_length = 56
+source_sha256 = "52d18bdd3ee61c43e7fb9925023054d4a05323066204ffb62a9eb7efd6bf9f77"
+english = ["That guy...", "How should I put it?", "He's very composed..."]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; Krillin senses how composed Goku has become; selector $026C."
+
+[[record]]
+id = "first_preliminary_match_06"
+original_address = "99:9E1A"
+original_offset = 0xC9E1A
+original_length = 164
+source_sha256 = "55165c227aafada687c7406bccc621db2821f1ae1ed98a49a7188bb85b9c1fbc"
+english = [
+  "His true strength is",
+  "far greater than",
+  "what he just showed.",
+  "",
+  "Fighting like that,",
+  "he could never",
+  "defeat me...",
+  "",
+  "I'll tear him",
+  "to pieces",
+  "before them all.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; Junior judges Goku's hidden strength and plans to destroy him publicly; selector $026D. The explicit blank lines preserve the source's three four-line dialogue boxes."
+
+[[record]]
+id = "first_preliminary_match_07"
+original_address = "99:9EBE"
+original_offset = 0xC9EBE
+original_length = 10
+source_sha256 = "1cff92be80683d9d6619dd7cb04da53f719533ef0ca39495f9c94039f7e2f71d"
+english = ["Hah!!!"]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; attack cry during Chiaotzu's match; selector $026E."
+
+[[record]]
+id = "first_preliminary_match_08"
+original_address = "99:9EC8"
+original_offset = 0xC9EC8
+original_length = 12
+source_sha256 = "3c187f0c81977a6b29570e5bbf8d02e835e22871406a8a6b6eaa65bf88f1b356"
+english = ["Taaah!!!!"]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; answering attack cry during Chiaotzu's match; selector $026F."
+
+[[record]]
+id = "first_preliminary_match_09"
+original_address = "99:9ED4"
+original_offset = 0xC9ED4
+original_length = 16
+source_sha256 = "e6a408d27b1c731807d1f3d93c88183214d6977f12646b872c463c913f1230f2"
+english = ["A-ah...!"]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; Chiaotzu reels from the attack; selector $0270."
+
+[[record]]
+id = "first_preliminary_match_10"
+original_address = "99:9EE4"
+original_offset = 0xC9EE4
+original_length = 58
+source_sha256 = "0780ababf95fd5f27d20755c8406c8ab6ed7d4aad0725a3425a14f850ba42a6b"
+english = ["Chiaotzu...!", "", "", "", "Chiaotzu!", "You okay!?", "Chiaotzu!"]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; Tien rushes to the injured Chiaotzu; selector $0271. The explicit blank lines preserve the source's two four-line dialogue boxes."
+
+[[record]]
+id = "first_preliminary_match_11"
+original_address = "99:9F1E"
+original_offset = 0xC9F1E
+original_length = 102
+source_sha256 = "bdcde48610554e1aed98cf4e6220bebeb3b026d799ba6d5fafc1529969d05432"
+english = [
+  "Heh heh heh...",
+  "",
+  "",
+  "",
+  "I just knocked him",
+  "out cold.",
+  "I'd be disqualified",
+  "",
+  "if I killed him.",
+  "How merciful of me.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; Tao says he only knocked Chiaotzu unconscious to avoid disqualification, then boasts of his mercy; selector $0272. The layout preserves the source's three dialogue boxes."
+
+[[record]]
+id = "first_preliminary_match_12"
+original_address = "99:9F84"
+original_offset = 0xC9F84
+original_length = 62
+source_sha256 = "d2c5d9e0259d14c06b4ec99049a67178385c2b2487eaa91d1d776461d0477447"
+english = [
+  "Long time no see,",
+  "Tien...",
+  "",
+  "",
+  "You're Goku,",
+  "right...?"
+]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; Tao recognizes Tien and Goku; selector $0273. The explicit blank lines preserve the source's two dialogue boxes."
+
+[[record]]
+id = "first_preliminary_match_13"
+original_address = "99:9FC2"
+original_offset = 0xC9FC2
+original_length = 36
+source_sha256 = "643435351dd69d2af982b2ead97557d77ebd10e51948c97ab2211d3ba516fa1f"
+english = [
+  "M-Mercenary Tao...!",
+  "B-but you were dead!"
+]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; Tien is shocked that Mercenary Tao survived; selector $0274."
+
+[[record]]
+id = "first_preliminary_match_14"
+original_address = "99:9FE6"
+original_offset = 0xC9FE6
+original_length = 166
+source_sha256 = "291fb44d4c5c9e2aabb41016c57c678b5528d79b539c4bc9d515e479fff339f6"
+english = [
+  "Don't be ridiculous.",
+  "",
+  "",
+  "",
+  "I would never die",
+  "that easily...",
+  "",
+  "Still, I endured",
+  "a terrible ordeal.",
+  "",
+  "",
+  "It took quite",
+  "a long time",
+  "to recover...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; Tao explains that he survived, suffered a terrible ordeal, and needed a long recovery; selector $0275. The explicit blank lines preserve the source's four dialogue boxes."
+
+[[record]]
+id = "first_preliminary_match_15"
+original_address = "99:A08C"
+original_offset = 0xCA08C
+original_length = 28
+source_sha256 = "62d22ee4e96f2e99dda74ae1ca020f6ee578c3daea8202ad7060aae5041a821d"
+english = [
+  "H-hey, Goku...",
+  "Who is that guy...?"
+]
+max_line_length = 21
+status = "implemented"
+notes = "First preliminary match; Krillin asks Goku to identify Mercenary Tao; selector $0276."
+
+[[record]]
+id = "first_preliminary_match_response_00"
+original_address = "99:A0A8"
+original_offset = 0xCA0A8
+original_length = 300
+source_sha256 = "0b21746146da75fd38c9ec7642e8b9243026acd4c8e97455639aae1043646fbd"
+english = [
+  "To return as a",
+  "cyborg,",
+  "I spent every cent",
+  "I'd ever earned.",
+  "But my power is now",
+  "several times",
+  "greater than before.",
+  "",
+  "Goku...",
+  "Survive the",
+  "preliminaries.",
+  "",
+  "I came here",
+  "to take your life.",
+  "",
+  "",
+  "Then you're next,",
+  "Tien...",
+  "",
+  "",
+  "You defected to",
+  "the Turtle School...",
+  "Traitor.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Shared X/Y/B response after the Mercenary Tao quiz; Tao says becoming a cyborg consumed all his earnings but multiplied his power, orders Goku to survive the preliminaries, and threatens Tien for defecting to the Turtle School; selector $0277. The layout preserves all six source dialogue boxes."
+
+[[record]]
+id = "first_preliminary_match_response_01"
+original_address = "99:A1D4"
+original_offset = 0xCA1D4
+original_length = 88
+source_sha256 = "ccf8c52197ce218a981d48af08e79700cac98af015eec0ec05f79701547a38ba"
+english = ["I-I just...", "began to think...", "", "", "that perhaps", "what you taught us", "was wrong..."]
+max_line_length = 21
+status = "implemented"
+notes = "Shared response; Tien hesitantly explains that he began to question Tao and the Crane School's teachings; selector $0278. The explicit blank lines preserve the source's two dialogue boxes."
+
+[[record]]
+id = "first_preliminary_match_response_02"
+original_address = "99:A22C"
+original_offset = 0xCA22C
+original_length = 34
+source_sha256 = "7b6fd12608eb98e022f914018144acd0e017583296a0d3a5d5b38dc404cabdee"
+english = ["Prepare to die...", "and wait."]
+max_line_length = 21
+status = "implemented"
+notes = "Shared response; Tao uses the idiom 'wash your neck and wait,' meaning that Tien should prepare to die; selector $0279."
+
+[[record]]
+id = "first_preliminary_match_response_03"
+original_address = "99:A24E"
+original_offset = 0xCA24E
+original_length = 52
+source_sha256 = "13df0d487a6c29d0b7c7571dba15969e88345883e6d78da8352c8edc5238ed82"
+english = ["Very well...", "I'll fight you.", "For Chiaotzu too."]
+max_line_length = 21
+status = "implemented"
+notes = "Shared response; Tien accepts the challenge on Chiaotzu's behalf; selector $027A."
+
+[[record]]
+id = "first_preliminary_match_response_04"
+original_address = "99:A282"
+original_offset = 0xCA282
+original_length = 34
+source_sha256 = "3a8b8e6db824777a7beee21ad67357c692907291415ce7a9184fafdae56a55d8"
+english = ["Ha ha ha...", "I can't wait."]
+max_line_length = 21
+status = "implemented"
+notes = "Shared response; Tao welcomes Tien's challenge before the scene transition; selector $027B."

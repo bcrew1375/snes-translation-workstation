@@ -170,10 +170,6 @@ def validate_translation_manifest(relative: str, text: str) -> list[str]:
                         f"{relative} record {record_number} has a non-string English line"
                     )
                 else:
-                    if any(not line for line in lines):
-                        failures.append(
-                            f"{relative} record {record_number} has an empty English line"
-                        )
                     if any("\n" in line or "\r" in line for line in lines):
                         failures.append(
                             f"{relative} record {record_number} has an embedded English line break"
