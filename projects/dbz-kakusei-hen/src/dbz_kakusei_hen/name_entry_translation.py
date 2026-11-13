@@ -11,7 +11,7 @@ from typing import Sequence
 
 from snesworkbench.errors import WorkstationError
 from snesworkbench.graphics import encode_tiles
-from snesworkbench.manifests import manifest_int, read_manifest
+from snesworkbench.manifests import manifest_int, read_manifest_collection
 from snesworkbench.patching import bounded_write, changed_offsets
 from snesworkbench.rom import parse_cpu_address
 
@@ -212,7 +212,7 @@ def _hex(value: object, field: str) -> int:
 
 
 def load_name_entry_records(path: str | Path) -> list[NameEntryRecord]:
-    rows = read_manifest(path, NAME_ENTRY_FIELDS)
+    rows = read_manifest_collection(path, NAME_ENTRY_FIELDS)
     records: list[NameEntryRecord] = []
     seen: set[str] = set()
     for row in rows:

@@ -72,6 +72,19 @@ class SubstituteTest(unittest.TestCase):
             "hirom mapping directive was not emitted",
         )
 
+    def test_spc700_dynamic_opcode_dispatch_is_expanded_for_asar_191(self):
+        script = self.tool.SCRIPTS["spc700"]
+        text = script.read_text(encoding="utf-8", errors="replace")
+        out = self.tool.prepare_script("spc700", text)
+        self.assertNotIn("%Op!Input1()", out)
+        for opcode in range(0x100):
+            self.assertIn(f"%Op{opcode}()", out)
+            self.assertIn(f"!Input1 == ${opcode:02X}", out)
+
+    def test_other_decoders_are_not_rewritten(self):
+        text = "before\n\t\t\t%Op!Input1()\nafter\n"
+        self.assertEqual(self.tool.prepare_script("65816", text), text)
+
 
 @unittest.skipUnless(HAVE_ASAR, "asar is not installed")
 class DecodeTest(unittest.TestCase):
@@ -161,6 +174,28 @@ class DecodeTest(unittest.TestCase):
             # If it assembled, the first instruction must not be SEI, because
             # the read is displaced by $200.
             self.assertNotIn("SEI", bad)
+
+    def test_spc700_decoder_runs_under_current_asar(self):
+        package = bytes.fromhex(
+            "04 00 00 08 "  # four payload bytes destined for SPC $0800
+            "20 cd 7f bd "  # CLRP; MOV X,#$7F; MOV SP,X
+            "00 00 00 08"   # terminator and execution address $0800
+        )
+        data = self._rom_with_header(package)
+        rom = self.directory / "spc.sfc"
+        rom.write_bytes(data)
+        workdir = self.directory / "work_spc"
+        workdir.mkdir(exist_ok=True)
+        staged = workdir / "ROM.sfc"
+        shutil.copyfile(rom, staged)
+        script = self.tool.SCRIPTS["spc700"].read_text(
+            encoding="utf-8", errors="replace"
+        )
+        script = self.tool.prepare_script("spc700", script)
+        text = self.tool.disassemble_bank(script, "lorom", 0, workdir, len(package), staged)
+        self.assertIn("CLRP", text)
+        self.assertIn("MOV.b X, #$7F", text)
+        self.assertIn("MOV SP, X", text)
 
 
 if __name__ == "__main__":

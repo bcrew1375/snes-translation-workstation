@@ -1,0 +1,13 @@
+schema_version = 1
+
+[[record]]
+name = "translated_checksum"
+rom_start = 0x7FDC
+rom_end = 0x7FDF
+cpu_start = "$FFDC"
+cpu_end = "$FFDF"
+bank = 0x0
+alignment = 2
+evidence = "Standard LoROM checksum complement and checksum fields, regenerated after intentional translation changes."
+confidence = "confirmed"
+

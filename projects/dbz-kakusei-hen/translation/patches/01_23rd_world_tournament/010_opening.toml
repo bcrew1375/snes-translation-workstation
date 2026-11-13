@@ -2,6 +2,10 @@ schema_version = 1
 
 [[record]]
 id = "tournament_opening_00"
+selector = 0x0200
+reference_address = "99:8400"
+reference_offset = 0xC8400
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8BB4"
 original_offset = 0xC8BB4
 original_length = 146
@@ -10,9 +14,9 @@ english = [
   "Three years had passed since",
   "Goku defeated",
   "King Piccolo...",
-  "Crowds gathered on Papaya",
-  "Island for the 23rd World",
-  "Martial Arts Tournament.",
+  "Crowds gathered on",
+  "Papaya Island for the 23rd",
+  "World Tournament.",
 ]
 max_line_length = 28
 status = "implemented"
@@ -20,6 +24,10 @@ notes = "23rd World Tournament opening; speaker/context: Narrator; explicit revi
 
 [[record]]
 id = "tournament_opening_01"
+selector = 0x0201
+reference_address = "99:8402"
+reference_offset = 0xC8402
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8C46"
 original_offset = 0xC8C46
 original_length = 10
@@ -33,6 +41,10 @@ notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewe
 
 [[record]]
 id = "tournament_opening_02"
+selector = 0x0202
+reference_address = "99:8404"
+reference_offset = 0xC8404
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8C50"
 original_offset = 0xC8C50
 original_length = 26
@@ -46,6 +58,10 @@ notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewe
 
 [[record]]
 id = "tournament_opening_03"
+selector = 0x0203
+reference_address = "99:8406"
+reference_offset = 0xC8406
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8C6A"
 original_offset = 0xC8C6A
 original_length = 8
@@ -59,14 +75,19 @@ notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewe
 
 [[record]]
 id = "tournament_opening_04"
+selector = 0x0204
+reference_address = "99:8408"
+reference_offset = 0xC8408
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8C72"
 original_offset = 0xC8C72
 original_length = 60
 source_sha256 = "f5240499a25ff2f8172490f1891ce3f2001641f9638fb2284c87504f536d67c6"
 english = [
   "Eee!",
-  "Long time no see!",
-  "Where is everyone?",
+  "Good to see you!",
+  "Where are they?",
+  "",
   "Not here yet?!",
 ]
 max_line_length = 21
@@ -75,6 +96,10 @@ notes = "23rd World Tournament opening; speaker/context: Oolong; explicit review
 
 [[record]]
 id = "tournament_opening_05"
+selector = 0x0205
+reference_address = "99:840A"
+reference_offset = 0xC840A
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8CAE"
 original_offset = 0xC8CAE
 original_length = 62
@@ -90,6 +115,10 @@ notes = "23rd World Tournament opening; speaker/context: Master Roshi; explicit 
 
 [[record]]
 id = "tournament_opening_06"
+selector = 0x0206
+reference_address = "99:840C"
+reference_offset = 0xC840C
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8CEC"
 original_offset = 0xC8CEC
 original_length = 28
@@ -103,6 +132,10 @@ notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewe
 
 [[record]]
 id = "tournament_opening_07"
+selector = 0x0207
+reference_address = "99:840E"
+reference_offset = 0xC840E
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8D08"
 original_offset = 0xC8D08
 original_length = 48
@@ -117,6 +150,10 @@ notes = "23rd World Tournament opening; speaker/context: Master Roshi; explicit 
 
 [[record]]
 id = "tournament_opening_08"
+selector = 0x0208
+reference_address = "99:8410"
+reference_offset = 0xC8410
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8D38"
 original_offset = 0xC8D38
 original_length = 38
@@ -131,6 +168,10 @@ notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewe
 
 [[record]]
 id = "tournament_opening_09"
+selector = 0x0209
+reference_address = "99:8412"
+reference_offset = 0xC8412
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8D5E"
 original_offset = 0xC8D5E
 original_length = 22
@@ -145,6 +186,10 @@ notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewe
 
 [[record]]
 id = "tournament_opening_10"
+selector = 0x020A
+reference_address = "99:8414"
+reference_offset = 0xC8414
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8D74"
 original_offset = 0xC8D74
 original_length = 22
@@ -158,6 +203,10 @@ notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewe
 
 [[record]]
 id = "tournament_opening_11"
+selector = 0x020B
+reference_address = "99:8416"
+reference_offset = 0xC8416
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8D8A"
 original_offset = 0xC8D8A
 original_length = 156
@@ -168,6 +217,9 @@ english = [
   "left to train.",
   "They must have been",
   "inspired by Goku",
+  "",
+  "",
+  "",
   "three years ago...",
 ]
 max_line_length = 21
@@ -176,6 +228,10 @@ notes = "23rd World Tournament opening; speaker/context: Master Roshi; explicit 
 
 [[record]]
 id = "tournament_opening_12"
+selector = 0x020C
+reference_address = "99:8418"
+reference_offset = 0xC8418
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8E26"
 original_offset = 0xC8E26
 original_length = 10
@@ -189,6 +245,10 @@ notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed
 
 [[record]]
 id = "tournament_opening_13"
+selector = 0x020D
+reference_address = "99:841A"
+reference_offset = 0xC841A
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8E30"
 original_offset = 0xC8E30
 original_length = 22
@@ -203,6 +263,10 @@ notes = "23rd World Tournament opening; speaker/context: Oolong; explicit review
 
 [[record]]
 id = "tournament_opening_14"
+selector = 0x020E
+reference_address = "99:841C"
+reference_offset = 0xC841C
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8E46"
 original_offset = 0xC8E46
 original_length = 10
@@ -216,17 +280,27 @@ notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewe
 
 [[record]]
 id = "tournament_opening_15"
+selector = 0x020F
+reference_address = "99:841E"
+reference_offset = 0xC841E
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8E50"
 original_offset = 0xC8E50
 original_length = 156
 source_sha256 = "5067e40b35375a965fb4c161371f03eddbb15a70dbdf101f162a894c554cf61c"
 english = [
-  "Gramps! You're alive",
-  "again!",
-  "Everyone looks well!",
-  " ",
+  "Gramps!",
+  "You're alive again!",
+  "",
+  "",
+  "Everyone",
+  "looks well!",
+  "",
+  "",
   "Where are Krillin,",
   "Yamcha, and Tien?",
+  "",
+  "",
   "Did they already go",
   "to the preliminaries?",
 ]
@@ -236,6 +310,10 @@ notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed
 
 [[record]]
 id = "tournament_opening_16"
+selector = 0x0210
+reference_address = "99:8420"
+reference_offset = 0xC8420
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8EEC"
 original_offset = 0xC8EEC
 original_length = 12
@@ -249,6 +327,10 @@ notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewe
 
 [[record]]
 id = "tournament_opening_17"
+selector = 0x0211
+reference_address = "99:8422"
+reference_offset = 0xC8422
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8EF8"
 original_offset = 0xC8EF8
 original_length = 10
@@ -262,6 +344,10 @@ notes = "23rd World Tournament opening; speaker/context: Master Roshi; explicit 
 
 [[record]]
 id = "tournament_opening_18"
+selector = 0x0212
+reference_address = "99:8424"
+reference_offset = 0xC8424
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8F02"
 original_offset = 0xC8F02
 original_length = 12
@@ -275,6 +361,10 @@ notes = "23rd World Tournament opening; speaker/context: Oolong; explicit review
 
 [[record]]
 id = "tournament_opening_19"
+selector = 0x0213
+reference_address = "99:8426"
+reference_offset = 0xC8426
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8F0E"
 original_offset = 0xC8F0E
 original_length = 6
@@ -288,6 +378,10 @@ notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed
 
 [[record]]
 id = "tournament_opening_20"
+selector = 0x0214
+reference_address = "99:8428"
+reference_offset = 0xC8428
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8F14"
 original_offset = 0xC8F14
 original_length = 38
@@ -303,6 +397,10 @@ notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed
 
 [[record]]
 id = "tournament_opening_21"
+selector = 0x0215
+reference_address = "99:842A"
+reference_offset = 0xC842A
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8F3A"
 original_offset = 0xC8F3A
 original_length = 46
@@ -318,6 +416,10 @@ notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewe
 
 [[record]]
 id = "tournament_opening_22"
+selector = 0x0216
+reference_address = "99:842C"
+reference_offset = 0xC842C
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8F68"
 original_offset = 0xC8F68
 original_length = 90
@@ -337,6 +439,10 @@ notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed
 
 [[record]]
 id = "tournament_opening_23"
+selector = 0x0217
+reference_address = "99:842E"
+reference_offset = 0xC842E
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8FC2"
 original_offset = 0xC8FC2
 original_length = 30
@@ -352,6 +458,10 @@ notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed
 
 [[record]]
 id = "tournament_opening_24"
+selector = 0x0218
+reference_address = "99:8430"
+reference_offset = 0xC8430
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:8FE0"
 original_offset = 0xC8FE0
 original_length = 68
@@ -367,6 +477,10 @@ notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed
 
 [[record]]
 id = "tournament_opening_25"
+selector = 0x0219
+reference_address = "99:8432"
+reference_offset = 0xC8432
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9024"
 original_offset = 0xC9024
 original_length = 34
@@ -381,6 +495,10 @@ notes = "23rd World Tournament opening; speaker/context: Bulma; explicit reviewe
 
 [[record]]
 id = "tournament_opening_26"
+selector = 0x021A
+reference_address = "99:8434"
+reference_offset = 0xC8434
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9046"
 original_offset = 0xC9046
 original_length = 26
@@ -395,6 +513,10 @@ notes = "23rd World Tournament opening; speaker/context: Goku; explicit reviewed
 
 [[record]]
 id = "tournament_quiz_response_b"
+selector = 0x021C
+reference_address = "99:8438"
+reference_offset = 0xC8438
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:906E"
 original_offset = 0xC906E
 original_length = 28
@@ -409,6 +531,10 @@ notes = "First tournament trivia response; speaker/context: Bulma after the B op
 
 [[record]]
 id = "tournament_quiz_response_xy"
+selector = 0x021B
+reference_address = "99:8436"
+reference_offset = 0xC8436
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9060"
 original_offset = 0xC9060
 original_length = 14
@@ -422,6 +548,10 @@ notes = "First tournament trivia response; speaker/context: Bulma after either t
 
 [[record]]
 id = "tournament_quiz_02_leadin_01"
+selector = 0x021D
+reference_address = "99:843A"
+reference_offset = 0xC843A
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:908A"
 original_offset = 0xC908A
 original_length = 48
@@ -437,6 +567,10 @@ notes = "Second tournament trivia lead-in; speaker/context: Master Roshi reactin
 
 [[record]]
 id = "tournament_quiz_02_leadin_02"
+selector = 0x021E
+reference_address = "99:843C"
+reference_offset = 0xC843C
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:90BA"
 original_offset = 0xC90BA
 original_length = 10
@@ -450,6 +584,10 @@ notes = "Second tournament trivia lead-in; speaker/context: Chiaotzu greeting th
 
 [[record]]
 id = "tournament_quiz_02_leadin_03"
+selector = 0x021F
+reference_address = "99:843E"
+reference_offset = 0xC843E
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:90C4"
 original_offset = 0xC90C4
 original_length = 32
@@ -464,6 +602,10 @@ notes = "Second tournament trivia lead-in; speaker/context: Tien greeting Master
 
 [[record]]
 id = "tournament_quiz_02_leadin_04"
+selector = 0x0220
+reference_address = "99:8440"
+reference_offset = 0xC8440
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:90E4"
 original_offset = 0xC90E4
 original_length = 28
@@ -477,6 +619,10 @@ notes = "Second tournament trivia lead-in; speaker/context: Yamcha observing Mas
 
 [[record]]
 id = "tournament_quiz_02_leadin_05"
+selector = 0x0221
+reference_address = "99:8442"
+reference_offset = 0xC8442
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9100"
 original_offset = 0xC9100
 original_length = 126
@@ -494,6 +640,10 @@ notes = "Second tournament trivia lead-in; speaker/context: Krillin explaining t
 
 [[record]]
 id = "tournament_quiz_02_response"
+selector = 0x0222
+reference_address = "99:8444"
+reference_offset = 0xC8444
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:917E"
 original_offset = 0xC917E
 original_length = 30

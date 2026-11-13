@@ -30,6 +30,28 @@ class ManifestCollectionTest(unittest.TestCase):
 
             self.assertEqual([record["id"] for record in records], ["first", "second"])
 
+    def test_nested_members_are_concatenated_in_relative_path_order(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "01_arc").mkdir()
+            (root / "00_opening").mkdir()
+            (root / "01_arc" / "02_scene.toml").write_text(
+                'schema_version = 1\n[[record]]\nid = "third"\n'
+            )
+            (root / "00_opening" / "01_scene.toml").write_text(
+                'schema_version = 1\n[[record]]\nid = "first"\n'
+            )
+            (root / "01_arc" / "01_scene.toml").write_text(
+                'schema_version = 1\n[[record]]\nid = "second"\n'
+            )
+
+            records = read_manifest_collection(root, {"id": str})
+
+            self.assertEqual(
+                [record["id"] for record in records],
+                ["first", "second", "third"],
+            )
+
     def test_empty_manifest_directory_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             with self.assertRaisesRegex(WorkstationError, "has no TOML files"):

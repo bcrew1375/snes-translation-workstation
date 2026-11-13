@@ -2,17 +2,31 @@ schema_version = 1
 
 [[record]]
 id = "chichi_y_00"
+selector = 0x023E
+reference_address = "99:847C"
+reference_offset = 0xC847C
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:95B4"
 original_offset = 0xC95B4
 original_length = 28
 source_sha256 = "1583895322fad14f9f4e2caf70901a0d118280eca36bb2ea7c58edb2b17ef30b"
-english = [".........", "You idiot!!!!"]
+english = [
+  ".........",
+  "",
+  "",
+  "",
+  "Idiot!!",
+]
 max_line_length = 21
 status = "implemented"
 notes = "Chi-Chi choice Y branch; Chi-Chi's stunned pause and outburst; selector $023E."
 
 [[record]]
 id = "chichi_y_01"
+selector = 0x023F
+reference_address = "99:847E"
+reference_offset = 0xC847E
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:95D0"
 original_offset = 0xC95D0
 original_length = 26
@@ -24,6 +38,10 @@ notes = "Chi-Chi choice Y branch; Goku reacting after Chi-Chi runs away; selecto
 
 [[record]]
 id = "chichi_y_02"
+selector = 0x0240
+reference_address = "99:8480"
+reference_offset = 0xC8480
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:95EA"
 original_offset = 0xC95EA
 original_length = 26
@@ -35,6 +53,10 @@ notes = "Chi-Chi choice Y branch; Yamcha asking Goku about the encounter; select
 
 [[record]]
 id = "chichi_y_03"
+selector = 0x0241
+reference_address = "99:8482"
+reference_offset = 0xC8482
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9604"
 original_offset = 0xC9604
 original_length = 46
@@ -46,17 +68,31 @@ notes = "Chi-Chi choice Y branch; Krillin reacting to Chi-Chi; selector $0241."
 
 [[record]]
 id = "chichi_y_04"
+selector = 0x0242
+reference_address = "99:8484"
+reference_offset = 0xC8484
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9632"
 original_offset = 0xC9632
 original_length = 72
 source_sha256 = "3004df289dd32643f20b1c2f70c2426077c94377ca6a17b31b9144b732d22cf0"
-english = ["I don't know her!", "I've never met her!"]
+english = [
+  "I don't know her!",
+  "",
+  "",
+  "",
+  "I've never met her!",
+]
 max_line_length = 21
 status = "implemented"
 notes = "Chi-Chi choice Y branch; Goku insists he does not know Chi-Chi; selector $0242."
 
 [[record]]
 id = "chichi_y_05"
+selector = 0x0243
+reference_address = "99:8486"
+reference_offset = 0xC8486
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:967A"
 original_offset = 0xC967A
 original_length = 128
@@ -64,8 +100,12 @@ source_sha256 = "aeae795eba294e2a22328e9e908e6d2559ad10bc37c597bcbec4e34d4b0a648
 english = [
   "Liar! It sure didn't",
   "look that way!",
+  "",
+  "",
   "You really trained",
   "under Kami, right?",
+  "",
+  "",
   "Damn, lucky you!",
 ]
 max_line_length = 21
@@ -74,6 +114,10 @@ notes = "Chi-Chi choice Y branch; Krillin doubts Goku and envies the attention; 
 
 [[record]]
 id = "chichi_x_00"
+selector = 0x0244
+reference_address = "99:8488"
+reference_offset = 0xC8488
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:96FA"
 original_offset = 0xC96FA
 original_length = 36
@@ -85,17 +129,31 @@ notes = "Chi-Chi choice X branch; Goku asks why Chi-Chi is at the tournament; se
 
 [[record]]
 id = "chichi_x_01"
+selector = 0x0245
+reference_address = "99:848A"
+reference_offset = 0xC848A
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:971E"
 original_offset = 0xC971E
 original_length = 94
 source_sha256 = "75b0da94f0b2f370481573d1c9aad3e44c3db5d18f87363903490bc6767bd7a9"
-english = ["See!? I knew it!", "You forgot about me!", "I waited so long!!"]
+english = [
+  "See!? I knew it!",
+  "You forgot about me!",
+  "",
+  "",
+  "I waited so long!!",
+]
 max_line_length = 21
 status = "implemented"
 notes = "Chi-Chi choice X branch; Chi-Chi accuses Goku of forgetting her; selector $0245."
 
 [[record]]
 id = "chichi_x_02"
+selector = 0x0246
+reference_address = "99:848C"
+reference_offset = 0xC848C
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:977C"
 original_offset = 0xC977C
 original_length = 18
@@ -107,6 +165,10 @@ notes = "Chi-Chi choice X branch; Goku remains confused; selector $0246."
 
 [[record]]
 id = "chichi_x_03"
+selector = 0x0247
+reference_address = "99:848E"
+reference_offset = 0xC848E
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:978E"
 original_offset = 0xC978E
 original_length = 30
@@ -118,6 +180,10 @@ notes = "Chi-Chi choice X branch; Chi-Chi reminds Goku of his promise; selector 
 
 [[record]]
 id = "chichi_x_04"
+selector = 0x0248
+reference_address = "99:8490"
+reference_offset = 0xC8490
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:97AC"
 original_offset = 0xC97AC
 original_length = 12
@@ -129,6 +195,10 @@ notes = "Chi-Chi choice X branch; Goku repeats the word in surprise; selector $0
 
 [[record]]
 id = "chichi_x_05"
+selector = 0x0249
+reference_address = "99:8492"
+reference_offset = 0xC8492
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:97B8"
 original_offset = 0xC97B8
 original_length = 42
@@ -140,6 +210,10 @@ notes = "Chi-Chi choice X branch; Chi-Chi states Goku's childhood promise; selec
 
 [[record]]
 id = "chichi_x_06"
+selector = 0x024A
+reference_address = "99:8494"
+reference_offset = 0xC8494
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:97E2"
 original_offset = 0xC97E2
 original_length = 22
@@ -151,17 +225,31 @@ notes = "Chi-Chi choice X branch; Krillin reacts to the marriage claim; selector
 
 [[record]]
 id = "chichi_x_07"
+selector = 0x024B
+reference_address = "99:8496"
+reference_offset = 0xC8496
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:97F8"
 original_offset = 0xC97F8
 original_length = 68
 source_sha256 = "da10351f4309329fde9c445b7a3515a43f0243a760af262d6cb24c400f0def69"
-english = [".........", "Krillin! What's a", "bride!? Tell me!!"]
+english = [
+  ".........",
+  "Krillin! What's a",
+  "",
+  "",
+  "bride!? Tell me!!",
+]
 max_line_length = 21
 status = "implemented"
 notes = "Chi-Chi choice X branch; Goku asks Krillin what bride means; selector $024B."
 
 [[record]]
 id = "chichi_x_08"
+selector = 0x024C
+reference_address = "99:8498"
+reference_offset = 0xC8498
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:983C"
 original_offset = 0xC983C
 original_length = 152
@@ -172,6 +260,9 @@ english = [
   "marrying her!!",
   "When did you promise",
   "such a cute girl!?",
+  "",
+  "",
+  "",
   "It's not fair!!",
 ]
 max_line_length = 21
@@ -180,28 +271,56 @@ notes = "Chi-Chi choice X branch; Krillin explains marriage and complains enviou
 
 [[record]]
 id = "chichi_x_09"
+selector = 0x024D
+reference_address = "99:849A"
+reference_offset = 0xC849A
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:98D4"
 original_offset = 0xC98D4
 original_length = 106
 source_sha256 = "70d96fca52f57f0c7ac0e3d806ef0bb6e48fe924218901e0145d8ea042ca5fb1"
-english = ["You become husband", "and wife, and live", "together forever!!"]
+english = [
+  "You become husband",
+  "and wife, and live",
+  "",
+  "",
+  "together forever!!",
+]
 max_line_length = 21
 status = "implemented"
 notes = "Chi-Chi choice X branch; marriage is explained to Goku; selector $024D."
 
 [[record]]
 id = "chichi_x_10"
+selector = 0x024E
+reference_address = "99:849C"
+reference_offset = 0xC849C
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:993E"
 original_offset = 0xC993E
 original_length = 108
 source_sha256 = "d9b717914fd22709b220092aac81754a9f397e036c147e165d57a2a1c3f4fbfc"
-english = ["Ah!! I remember now!!", "I sure did say I'd", "come get a bride!!"]
+english = [
+  "Ah!! I remember now!!",
+  "",
+  "",
+  "",
+  "I sure did say I'd",
+  "",
+  "",
+  "",
+  "come get a bride!!",
+]
 max_line_length = 21
 status = "implemented"
-notes = "Chi-Chi choice X branch; Goku suddenly remembers that he said he would come get a bride; selector $024E."
+notes = "Chi-Chi choice X branch; Goku suddenly remembers that he definitely said he would come get a bride, preserving the source wording and the following food-misunderstanding joke; selector $024E."
 
 [[record]]
 id = "chichi_x_11"
+selector = 0x024F
+reference_address = "99:849E"
+reference_offset = 0xC849E
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:99AA"
 original_offset = 0xC99AA
 original_length = 118
@@ -219,39 +338,64 @@ notes = "Chi-Chi choice X branch; Goku reflects that he mistook a bride for food
 
 [[record]]
 id = "chichi_x_12"
+selector = 0x0250
+reference_address = "99:84A0"
+reference_offset = 0xC84A0
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9A20"
 original_offset = 0xC9A20
 original_length = 22
 source_sha256 = "7340e8f98b2baebdb3da704fb6d7924c3d10dc7f7b8e709d9f19d6c31f74e8c6"
-english = ["Then let's get", "married."]
+english = [
+  "Then let's get",
+  "married."
+]
 max_line_length = 21
 status = "implemented"
 notes = "Chi-Chi choice X branch; Goku accepts the marriage; selector $0250."
 
 [[record]]
 id = "chichi_x_13"
+selector = 0x0251
+reference_address = "99:84A2"
+reference_offset = 0xC84A2
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9A36"
 original_offset = 0xC9A36
 original_length = 8
 source_sha256 = "89ad1a9f7a8d2924bcad6c8588c9dd6041750ae614aa966497fccad4c1dfdfa7"
-english = ["Yeah!"]
+english = [
+  "Yeah!"
+]
 max_line_length = 21
 status = "implemented"
 notes = "Chi-Chi choice X branch; Chi-Chi happily agrees; selector $0251."
 
 [[record]]
 id = "chichi_x_14"
+selector = 0x0252
+reference_address = "99:84A4"
+reference_offset = 0xC84A4
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9A3E"
 original_offset = 0xC9A3E
 original_length = 44
 source_sha256 = "5eeb68dc800a2aafa799a7e4e35c133aaa022eb9687745dcd38699ab9eb9a2c1"
-english = ["I'm entering the", "prelims too.", "See you later!"]
+english = [
+  "I'm entering the",
+  "preliminaries too.",
+  "See you later!"
+]
 max_line_length = 21
 status = "implemented"
 notes = "Chi-Chi choice X branch after three silent reactions; Chi-Chi departs; selector $0252."
 
 [[record]]
 id = "chichi_x_15"
+selector = 0x0253
+reference_address = "99:84A6"
+reference_offset = 0xC84A6
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9A6A"
 original_offset = 0xC9A6A
 original_length = 12
@@ -263,28 +407,54 @@ notes = "Chi-Chi choice X branch; Goku responds as Chi-Chi leaves; selector $025
 
 [[record]]
 id = "preliminaries_quiz_00"
+selector = 0x0260
+reference_address = "99:84C0"
+reference_offset = 0xC84C0
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9BB2"
 original_offset = 0xC9BB2
 original_length = 90
 source_sha256 = "680e036a1cf149422dc49a8faa434513a202d71b8edb565d83d1099357ab3abf"
-english = ["Contestants, thanks", "for waiting.", "Please gather. The", "prelims begin now!"]
+english = [
+  "Contestants, thanks",
+  "for waiting.",
+  "",
+  "",
+  "Gather around! The",
+  "preliminaries begin",
+  "now!",
+]
 max_line_length = 21
 status = "implemented"
 notes = "Common route after both Chi-Chi branches; announcer calls the entrants together; selector $0260."
 
 [[record]]
 id = "preliminaries_quiz_01"
+selector = 0x0261
+reference_address = "99:84C2"
+reference_offset = 0xC84C2
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9C0C"
 original_offset = 0xC9C0C
 original_length = 54
 source_sha256 = "3cf4c805afd258313e024e691b4913c8dc5596f40e683cbfee4fd74a1219ac81"
-english = ["I'm number 2...", "First match, Block 1!"]
+english = [
+  "I'm number 2...",
+  "",
+  "",
+  "",
+  "First match, Block 1!",
+]
 max_line_length = 21
 status = "implemented"
 notes = "Common route; Goku reads his preliminary draw; selector $0261."
 
 [[record]]
 id = "preliminaries_quiz_02"
+selector = 0x0262
+reference_address = "99:84C4"
+reference_offset = 0xC84C4
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9C42"
 original_offset = 0xC9C42
 original_length = 70
@@ -296,44 +466,81 @@ notes = "Common route; Krillin observes that the group was split between blocks;
 
 [[record]]
 id = "preliminaries_quiz_03"
+selector = 0x0263
+reference_address = "99:84C6"
+reference_offset = 0xC84C6
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9C88"
 original_offset = 0xC9C88
 original_length = 58
 source_sha256 = "19a9c0735e041cc5e6e0177b7ffa2d5532ac71f0a6c68362533c70478a9bd3cc"
-english = ["Now for the Block 1", "preliminary.", "Numbers 1 and 2..."]
+english = [
+  "Now for Block 1's",
+  "preliminary.",
+  "",
+  "",
+  "Numbers 1 and 2...",
+]
 max_line_length = 21
 status = "implemented"
 notes = "Common route immediately before the next quiz panel; announcer calls the first pair; selector $0263."
 
 [[record]]
 id = "preliminaries_quiz_response_00"
+selector = 0x0264
+reference_address = "99:84C8"
+reference_offset = 0xC84C8
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9CC2"
 original_offset = 0xC9CC2
 original_length = 98
 source_sha256 = "6a33f13456fde70c1843208d5412dfce92db9b081e7dffeb2ac3cecfc67fc3fb"
-english = ["At last, the first", "match is about to", "begin...", "Well then... We'll", "start where we left", "off last time..."]
+english = [
+  "At last, the first",
+  "match is about to",
+  "begin...",
+  "",
+  "Well then...",
+  "We'll start where we",
+  "left off last time..."
+]
 max_line_length = 21
 status = "implemented"
 notes = "Shared X/Y/B continuation after the next quiz; narrator transitions into the first match; selector $0264. Selector $0D67 aliases the same source stream."
 
 [[record]]
 id = "preliminaries_quiz_response_01"
+selector = 0x0265
+reference_address = "99:84CA"
+reference_offset = 0xC84CA
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9D24"
 original_offset = 0xC9D24
 original_length = 30
 source_sha256 = "b11b1a6279d071c5fce0d11ec90d6d0f227a6b84b1069446459cb0e5dcf2b488"
-english = ["Now then...", "Please begin!!"]
+english = [
+  "Now then...",
+  "Please begin!!"
+]
 max_line_length = 21
 status = "implemented"
 notes = "Shared X/Y/B continuation; announcer starts the match; selector $0265."
 
 [[record]]
 id = "preliminaries_quiz_response_02"
+selector = 0x0266
+reference_address = "99:84CC"
+reference_offset = 0xC84CC
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9D42"
 original_offset = 0xC9D42
 original_length = 52
 source_sha256 = "8216d43526f8f36423cf8f11cc2e427207301cef1e50a1f118ccbf552a9044f4"
-english = ["H-how can this be...?", "I can't sense Goku's", "presence at all..."]
+english = [
+  "H-how can this be...?",
+  "I can't sense Goku's",
+  "presence at all..."
+]
 max_line_length = 21
 status = "implemented"
 notes = "Shared X/Y/B continuation; Yamcha reacts to Goku suppressing his presence; selector $0266."

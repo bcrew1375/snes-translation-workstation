@@ -2,6 +2,10 @@ schema_version = 1
 
 [[record]]
 id = "first_preliminary_match_00"
+selector = 0x0267
+reference_address = "99:84CE"
+reference_offset = 0xC84CE
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9D76"
 original_offset = 0xC9D76
 original_length = 32
@@ -9,10 +13,14 @@ source_sha256 = "d65ecef9cb569d7358f2e7d50e4ea95742c3d2e5be25d96e21640337ccc1029
 english = ["His presence has", "completely vanished."]
 max_line_length = 21
 status = "implemented"
-notes = "First preliminary match; Yamcha realizes Goku's presence has completely vanished; selector $0267."
+notes = "First preliminary match; Tien realizes Goku's presence has completely vanished; selector $0267."
 
 [[record]]
 id = "first_preliminary_match_01"
+selector = 0x0268
+reference_address = "99:84D0"
+reference_offset = 0xC84D0
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9D96"
 original_offset = 0xC9D96
 original_length = 18
@@ -24,6 +32,10 @@ notes = "First preliminary match; Goku's opponent attacks; selector $0268."
 
 [[record]]
 id = "first_preliminary_match_02"
+selector = 0x0269
+reference_address = "99:84D2"
+reference_offset = 0xC84D2
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9DA8"
 original_offset = 0xC9DA8
 original_length = 14
@@ -35,6 +47,10 @@ notes = "First preliminary match; Goku's opponent loses track of him; selector $
 
 [[record]]
 id = "first_preliminary_match_03"
+selector = 0x026A
+reference_address = "99:84D4"
+reference_offset = 0xC84D4
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9DB6"
 original_offset = 0xC9DB6
 original_length = 14
@@ -46,6 +62,10 @@ notes = "First preliminary match; the official declares Goku the winner; selecto
 
 [[record]]
 id = "first_preliminary_match_04"
+selector = 0x026B
+reference_address = "99:84D6"
+reference_offset = 0xC84D6
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9DC4"
 original_offset = 0xC9DC4
 original_length = 30
@@ -53,21 +73,29 @@ source_sha256 = "bb15ccb1631e9199d410db01300b7a01637fb338d60219352037e7aa9c4b0a8
 english = ["He wasn't fighting", "seriously..."]
 max_line_length = 21
 status = "implemented"
-notes = "First preliminary match; Krillin notes that Goku did not fight seriously; selector $026B."
+notes = "First preliminary match; Yamcha notes that Goku did not fight seriously; selector $026B."
 
 [[record]]
 id = "first_preliminary_match_05"
+selector = 0x026C
+reference_address = "99:84D8"
+reference_offset = 0xC84D8
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9DE2"
 original_offset = 0xC9DE2
 original_length = 56
 source_sha256 = "52d18bdd3ee61c43e7fb9925023054d4a05323066204ffb62a9eb7efd6bf9f77"
-english = ["That guy...", "How should I put it?", "He's very composed..."]
+english = ["That guy...", "He seems so calm..."]
 max_line_length = 21
 status = "implemented"
-notes = "First preliminary match; Krillin senses how composed Goku has become; selector $026C."
+notes = "First preliminary match; Krillin remarks on how calm and composed Goku seems; selector $026C."
 
 [[record]]
 id = "first_preliminary_match_06"
+selector = 0x026D
+reference_address = "99:84DA"
+reference_offset = 0xC84DA
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9E1A"
 original_offset = 0xC9E1A
 original_length = 164
@@ -91,6 +119,10 @@ notes = "First preliminary match; Junior judges Goku's hidden strength and plans
 
 [[record]]
 id = "first_preliminary_match_07"
+selector = 0x026E
+reference_address = "99:84DC"
+reference_offset = 0xC84DC
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9EBE"
 original_offset = 0xC9EBE
 original_length = 10
@@ -98,10 +130,14 @@ source_sha256 = "1cff92be80683d9d6619dd7cb04da53f719533ef0ca39495f9c94039f7e2f71
 english = ["Hah!!!"]
 max_line_length = 21
 status = "implemented"
-notes = "First preliminary match; attack cry during Chiaotzu's match; selector $026E."
+notes = "First preliminary match; Krillin reacts during Chiaotzu's match; selector $026E. The portrait resource identifies Krillin, but the brief exclamation does not establish whether he is reacting to an attack or urging Chiaotzu on."
 
 [[record]]
 id = "first_preliminary_match_08"
+selector = 0x026F
+reference_address = "99:84DE"
+reference_offset = 0xC84DE
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9EC8"
 original_offset = 0xC9EC8
 original_length = 12
@@ -109,10 +145,14 @@ source_sha256 = "3c187f0c81977a6b29570e5bbf8d02e835e22871406a8a6b6eaa65bf88f1b35
 english = ["Taaah!!!!"]
 max_line_length = 21
 status = "implemented"
-notes = "First preliminary match; answering attack cry during Chiaotzu's match; selector $026F."
+notes = "First preliminary match; Yamcha reacts during Chiaotzu's match; selector $026F. The portrait resource identifies Yamcha, but the brief exclamation does not establish a more specific action."
 
 [[record]]
 id = "first_preliminary_match_09"
+selector = 0x0270
+reference_address = "99:84E0"
+reference_offset = 0xC84E0
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9ED4"
 original_offset = 0xC9ED4
 original_length = 16
@@ -124,6 +164,10 @@ notes = "First preliminary match; Chiaotzu reels from the attack; selector $0270
 
 [[record]]
 id = "first_preliminary_match_10"
+selector = 0x0271
+reference_address = "99:84E2"
+reference_offset = 0xC84E2
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9EE4"
 original_offset = 0xC9EE4
 original_length = 58
@@ -135,6 +179,10 @@ notes = "First preliminary match; Tien rushes to the injured Chiaotzu; selector 
 
 [[record]]
 id = "first_preliminary_match_11"
+selector = 0x0272
+reference_address = "99:84E4"
+reference_offset = 0xC84E4
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9F1E"
 original_offset = 0xC9F1E
 original_length = 102
@@ -144,19 +192,22 @@ english = [
   "",
   "",
   "",
-  "I just knocked him",
-  "out cold.",
-  "I'd be disqualified",
+  "I barely left him",
+  "alive.",
+  "If I killed him,",
   "",
-  "if I killed him.",
-  "How merciful of me.",
+  "I'd be disqualified.",
 ]
 max_line_length = 21
 status = "implemented"
-notes = "First preliminary match; Tao says he only knocked Chiaotzu unconscious to avoid disqualification, then boasts of his mercy; selector $0272. The layout preserves the source's three dialogue boxes."
+notes = "First preliminary match; Tao says he barely left Chiaotzu alive because killing him would disqualify him; selector $0272. The layout preserves the source's three dialogue boxes."
 
 [[record]]
 id = "first_preliminary_match_12"
+selector = 0x0273
+reference_address = "99:84E6"
+reference_offset = 0xC84E6
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9F84"
 original_offset = 0xC9F84
 original_length = 62
@@ -175,6 +226,10 @@ notes = "First preliminary match; Tao recognizes Tien and Goku; selector $0273. 
 
 [[record]]
 id = "first_preliminary_match_13"
+selector = 0x0274
+reference_address = "99:84E8"
+reference_offset = 0xC84E8
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9FC2"
 original_offset = 0xC9FC2
 original_length = 36
@@ -189,6 +244,10 @@ notes = "First preliminary match; Tien is shocked that Mercenary Tao survived; s
 
 [[record]]
 id = "first_preliminary_match_14"
+selector = 0x0275
+reference_address = "99:84EA"
+reference_offset = 0xC84EA
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9FE6"
 original_offset = 0xC9FE6
 original_length = 166
@@ -200,13 +259,12 @@ english = [
   "",
   "I would never die",
   "that easily...",
-  "",
   "Still, I endured",
   "a terrible ordeal.",
-  "",
-  "",
   "It took quite",
   "a long time",
+  "",
+  "",
   "to recover...",
 ]
 max_line_length = 21
@@ -215,6 +273,10 @@ notes = "First preliminary match; Tao explains that he survived, suffered a terr
 
 [[record]]
 id = "first_preliminary_match_15"
+selector = 0x0276
+reference_address = "99:84EC"
+reference_offset = 0xC84EC
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:A08C"
 original_offset = 0xCA08C
 original_length = 28
@@ -229,22 +291,26 @@ notes = "First preliminary match; Krillin asks Goku to identify Mercenary Tao; s
 
 [[record]]
 id = "first_preliminary_match_response_00"
+selector = 0x0277
+reference_address = "99:84EE"
+reference_offset = 0xC84EE
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:A0A8"
 original_offset = 0xCA0A8
 original_length = 300
 source_sha256 = "0b21746146da75fd38c9ec7642e8b9243026acd4c8e97455639aae1043646fbd"
 english = [
-  "To return as a",
-  "cyborg,",
   "I spent every cent",
-  "I'd ever earned.",
-  "But my power is now",
+  "I'd ever earned",
+  "to become a cyborg.",
+  "But now I have",
   "several times",
-  "greater than before.",
+  "my former power.",
+  "",
   "",
   "Goku...",
-  "Survive the",
-  "preliminaries.",
+  "Make it through",
+  "the preliminaries.",
   "",
   "I came here",
   "to take your life.",
@@ -260,10 +326,14 @@ english = [
 ]
 max_line_length = 21
 status = "implemented"
-notes = "Shared X/Y/B response after the Mercenary Tao quiz; Tao says becoming a cyborg consumed all his earnings but multiplied his power, orders Goku to survive the preliminaries, and threatens Tien for defecting to the Turtle School; selector $0277. The layout preserves all six source dialogue boxes."
+notes = "Shared X/Y/B response after the Mercenary Tao quiz; Tao says becoming a cyborg consumed all his earnings but multiplied his power, tells Goku to make it through the preliminaries so Tao can kill him, and threatens Tien for defecting to the Turtle School; selector $0277. The layout preserves all six source dialogue boxes."
 
 [[record]]
 id = "first_preliminary_match_response_01"
+selector = 0x0278
+reference_address = "99:84F0"
+reference_offset = 0xC84F0
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:A1D4"
 original_offset = 0xCA1D4
 original_length = 88
@@ -275,17 +345,25 @@ notes = "Shared response; Tien hesitantly explains that he began to question Tao
 
 [[record]]
 id = "first_preliminary_match_response_02"
+selector = 0x0279
+reference_address = "99:84F2"
+reference_offset = 0xC84F2
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:A22C"
 original_offset = 0xCA22C
 original_length = 34
 source_sha256 = "7b6fd12608eb98e022f914018144acd0e017583296a0d3a5d5b38dc404cabdee"
-english = ["Prepare to die...", "and wait."]
+english = ["Your days", "are numbered..."]
 max_line_length = 21
 status = "implemented"
 notes = "Shared response; Tao uses the idiom 'wash your neck and wait,' meaning that Tien should prepare to die; selector $0279."
 
 [[record]]
 id = "first_preliminary_match_response_03"
+selector = 0x027A
+reference_address = "99:84F4"
+reference_offset = 0xC84F4
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:A24E"
 original_offset = 0xCA24E
 original_length = 52
@@ -297,6 +375,10 @@ notes = "Shared response; Tien accepts the challenge on Chiaotzu's behalf; selec
 
 [[record]]
 id = "first_preliminary_match_response_04"
+selector = 0x027B
+reference_address = "99:84F6"
+reference_offset = 0xC84F6
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:A282"
 original_offset = 0xCA282
 original_length = 34

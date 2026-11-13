@@ -1,0 +1,40 @@
+schema_version = 1
+
+[[record]]
+id = "semifinal_match_begin_reuse"
+selector = 0x0369
+reference_address = "99:86D2"
+reference_offset = 0xC86D2
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:DD38"
+original_offset = 0xCDD38
+original_length = 60
+source_sha256 = "776e47fba22b01994df70c17838ae2ff51534a891dd1c9b10a571db24808fc82"
+english = [
+  "All right!!",
+  "Semifinal match!",
+  "",
+  "",
+  "Please begin!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tournament announcer opens a semifinal match; selector $0369. The final source line reuses the same encoded request as selector $0265."
+
+[[record]]
+id = "first_match_begin_reuse"
+selector = 0x0950
+reference_address = "9C:8342"
+reference_offset = 0xE0342
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "9C:EFFE"
+original_offset = 0xE6FFE
+original_length = 36
+source_sha256 = "21bb9c69d762d5cca43611991a2b967cd46b77850f41dc7bc6e853a86ababf11"
+english = [
+  "First match!",
+  "Please begin!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tournament announcer opens the first match; selector $0950. The second source line reuses the same encoded request as selector $0265."

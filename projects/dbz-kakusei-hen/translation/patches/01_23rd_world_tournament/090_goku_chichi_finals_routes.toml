@@ -1,0 +1,434 @@
+schema_version = 1
+
+[[record]]
+id = "goku_chichi_recognized_00"
+selector = 0x02C6
+reference_address = "99:858C"
+reference_offset = 0xC858C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B4FE"
+original_offset = 0xCB4FE
+original_length = 198
+source_sha256 = "2ca75d00be93293db11496b76b62b41201fb3d5a87d2e3099d08147f422def72"
+english = [
+  "An announcement!",
+  "",
+  "",
+  "",
+  "Match two was to be",
+  "Goku versus Chi-Chi.",
+  "",
+  "",
+  "But their marriage",
+  "has been settled,",
+  "so Chi-Chi withdraws.",
+  "",
+  "Goku wins by default!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Recognized finals route; the announcer cancels the match after Goku and Chi-Chi's marriage is settled."
+
+[[record]]
+id = "goku_chichi_recognized_01"
+selector = 0x02C7
+reference_address = "99:858E"
+reference_offset = 0xC858E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B5C4"
+original_offset = 0xCB5C4
+original_length = 22
+source_sha256 = "bf6fe1cd377cae4244f9165ba892b95001a9df8d6bc13ef943b55990b50124d8"
+english = [
+  "Hey!",
+  "Get off me!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Recognized finals route; Goku tells Chi-Chi not to cling to him after she embraces him."
+
+[[record]]
+id = "goku_chichi_recognized_02"
+selector = 0x02C8
+reference_address = "99:8590"
+reference_offset = 0xC8590
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B5DA"
+original_offset = 0xCB5DA
+original_length = 30
+source_sha256 = "d9bc8e03a9da2ccbcb170bfa2817675771ed37ed89e1dd6afa1e7e47e760bdf8"
+english = [
+  "That's how married",
+  "couples are.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Recognized finals route; Chi-Chi tells Goku that this is how married couples are, preserving her rustic source phrasing."
+
+[[record]]
+id = "goku_chichi_recognized_03"
+selector = 0x02C9
+reference_address = "99:8592"
+reference_offset = 0xC8592
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B5F8"
+original_offset = 0xCB5F8
+original_length = 64
+source_sha256 = "612b24ab5412c1521aa411dd77443abe72c60e0577b22bd892ceea59d2bc6f0c"
+english = [
+  "W-",
+  "",
+  "",
+  "",
+  "What...?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Recognized finals route; Master Roshi reacts."
+
+[[record]]
+id = "goku_chichi_recognized_04"
+selector = 0x02CA
+reference_address = "99:8594"
+reference_offset = 0xC8594
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B638"
+original_offset = 0xCB638
+original_length = 34
+source_sha256 = "309295602eaf274e828076ca1935b9257489068740840500aa2472dc0a501b17"
+english = [
+  "When'd they",
+  "get married...?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Recognized finals route; Bulma wonders when Goku and Chi-Chi married."
+
+[[record]]
+id = "goku_chichi_unknown_00"
+selector = 0x02CB
+reference_address = "99:8596"
+reference_offset = 0xC8596
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B65A"
+original_offset = 0xCB65A
+original_length = 120
+source_sha256 = "f09136561fa272200f80a03d5e0256ab46e96b9f7b8ecf7e76c4d3d3ba698f25"
+english = [
+  "H-here goes...",
+  "",
+  "I never thought you'd",
+  "become this strong...",
+  "But you're still",
+  "the only man",
+  "",
+  "",
+  "I've chosen.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals route; Chi-Chi prepares to fight Goku."
+
+[[record]]
+id = "goku_chichi_unknown_name_reaction"
+selector = 0x001D
+reference_address = "99:803A"
+reference_offset = 0xC803A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:88E4"
+original_offset = 0xC88E4
+original_length = 8
+source_sha256 = "f36530e4dbdc7af59503a2c83d1e15e9e836ec96b0c1817cb335525634e5b10e"
+english = [
+  "Chi-Chi!!",
+]
+status = "implemented"
+notes = "Shared selector $001D; Goku repeats Chi-Chi's name immediately after she identifies herself on the unrecognized finals route."
+
+[[record]]
+id = "goku_chichi_unknown_01"
+selector = 0x02CC
+reference_address = "99:8598"
+reference_offset = 0xC8598
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B6D2"
+original_offset = 0xCB6D2
+original_length = 60
+source_sha256 = "35a0bb0dc845b6d597e713074115421bb8912a15194165d3e8a431d288b71851"
+english = [
+  "You still don't know?",
+  "",
+  "",
+  "",
+  "I'm the Ox-King's",
+  "daughter, Chi-Chi!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals route; Chi-Chi reveals her identity."
+
+[[record]]
+id = "goku_chichi_unknown_02"
+selector = 0x02CD
+reference_address = "99:859A"
+reference_offset = 0xC859A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B70E"
+original_offset = 0xCB70E
+original_length = 18
+source_sha256 = "4144aaced8de1bff126de6e75ec4d04356336cef2854df07916b848d80678453"
+english = [
+  "I-I see!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals route; Master Roshi realizes who she is."
+
+[[record]]
+id = "goku_chichi_unknown_03"
+selector = 0x02CE
+reference_address = "99:859C"
+reference_offset = 0xC859C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B720"
+original_offset = 0xCB720
+original_length = 18
+source_sha256 = "8fa54840ba9b464bc7202ebe9ba664d41415446d2dd041b7e5afe47427d64b83"
+english = [
+  "Ch-Chi-Chi...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals route; Goku repeats Chi-Chi's name."
+
+[[record]]
+id = "goku_chichi_unknown_04"
+selector = 0x02CF
+reference_address = "99:859E"
+reference_offset = 0xC859E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B732"
+original_offset = 0xCB732
+original_length = 28
+source_sha256 = "6ce87490e89cfce72e5c9617c1eca58963ba8c78bb6b585c27d33ef7fd8fe159"
+english = [
+  "Ch-Chi-Chi...?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals route; Goku finally recognizes Chi-Chi's name."
+
+[[record]]
+id = "goku_chichi_unknown_05"
+selector = 0x02D0
+reference_address = "99:85A0"
+reference_offset = 0xC85A0
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B74E"
+original_offset = 0xCB74E
+original_length = 92
+source_sha256 = "b01810848cd64585af9af904615b48e29887b218d18a85962cecb3ee00eb77c7"
+english = [
+  "Oh, I remember!!",
+  "I really did say I'd",
+  "",
+  "",
+  "return for a bride!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals route; Goku remembers that he truly promised to return for a bride."
+
+[[record]]
+id = "goku_chichi_unknown_06"
+selector = 0x02D1
+reference_address = "99:85A2"
+reference_offset = 0xC85A2
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B7AA"
+original_offset = 0xCB7AA
+original_length = 26
+source_sha256 = "3870ffe27429e37e702b864aa78e5c8bef55a29c6dee3ddfb060f8042928e83d"
+english = [
+  "You do",
+  "remember now...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals route; Chi-Chi responds."
+
+[[record]]
+id = "goku_chichi_unknown_07"
+selector = 0x02D2
+reference_address = "99:85A4"
+reference_offset = 0xC85A4
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B7C4"
+original_offset = 0xCB7C4
+original_length = 26
+source_sha256 = "b2a6e83f554bf26d87ee688edd11e592e0b8e51552c7956e24375cd71113ce4e"
+english = [
+  "No! Right now!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals route; Chi-Chi demands an immediate answer."
+
+[[record]]
+id = "goku_chichi_unknown_08"
+selector = 0x02D3
+reference_address = "99:85A6"
+reference_offset = 0xC85A6
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B7DE"
+original_offset = 0xCB7DE
+original_length = 40
+source_sha256 = "d0277188e62c938d41db02be5c199d1e34966d25a3d4b77a9dbec02ba37bd068"
+english = [
+  "O-okay...",
+  "Let's get married!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals route; Goku agrees to marry Chi-Chi."
+
+[[record]]
+id = "goku_chichi_unknown_09"
+selector = 0x02D4
+reference_address = "99:85A8"
+reference_offset = 0xC85A8
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B806"
+original_offset = 0xCB806
+original_length = 58
+source_sha256 = "025c9231527fb6fce3171002b00b7ad8badf6c0fc1ce71128b219c3b06be7517"
+english = [
+  "G-",
+  "",
+  "",
+  "",
+  "Goku...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals route; Chi-Chi reacts emotionally."
+
+[[record]]
+id = "goku_chichi_unknown_agreement"
+selector = 0x001F
+reference_address = "99:803E"
+reference_offset = 0xC803E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:88FA"
+original_offset = 0xC88FA
+original_length = 8
+source_sha256 = "89ad1a9f7a8d2924bcad6c8588c9dd6041750ae614aa966497fccad4c1dfdfa7"
+english = [
+  "Yeah!",
+]
+status = "implemented"
+notes = "Shared selector $001F; post-marriage agreement on the unrecognized finals route. The source stream is content-identical to selector $0251 but has its own pointer and allocation."
+
+[[record]]
+id = "goku_chichi_unknown_10"
+selector = 0x02D5
+reference_address = "99:85AA"
+reference_offset = 0xC85AA
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B840"
+original_offset = 0xCB840
+original_length = 100
+source_sha256 = "7d29672781be5540fee8deb02a69a851e27e031c611630f189759c0a6b4af1e6"
+english = [
+  "Y-you were just",
+  "playing with",
+  "",
+  "",
+  "a maiden's heart...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals route; Chi-Chi accuses Goku of toying with her feelings."
+
+[[record]]
+id = "goku_chichi_unknown_x"
+selector = 0x0F1F
+reference_address = "98:C25E"
+reference_offset = 0xC425E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "98:D93A"
+original_offset = 0xC593A
+original_length = 78
+source_sha256 = "64714ad79c1c61796422cc334bc9713c5021c2cf46efa47d2e5893b004789075"
+english = [
+  "Ridiculous...",
+  "",
+  "",
+  "",
+  "I'll force",
+  "you to marry me",
+  "if I have to!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals X-response branch; Chi-Chi declares she will force Goku to marry her."
+
+[[record]]
+id = "goku_chichi_unknown_y"
+selector = 0x0F20
+reference_address = "98:C260"
+reference_offset = 0xC4260
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "98:D988"
+original_offset = 0xC5988
+original_length = 14
+source_sha256 = "18ca33085a1d339bd9ef579b7b43a5aeed87d2506bffdca6c9fec0218c3eaaf7"
+english = [
+  "...Chi-Chi?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals Y-response branch; Bulma reacts to Chi-Chi."
+
+[[record]]
+id = "goku_chichi_unknown_b"
+selector = 0x0F21
+reference_address = "98:C262"
+reference_offset = 0xC4262
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "98:D996"
+original_offset = 0xC5996
+original_length = 154
+source_sha256 = "18596217f45738691a6a9c4ed3fcd3642cb60f4fd7ed1b88f98699df51a40483"
+english = [
+  "I thought a bride",
+  "was food...",
+  "",
+  "",
+  "But I made a promise!",
+  "Okay...",
+  "",
+  "",
+  "Let's get married!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals B-response branch; Goku recalls misunderstanding 'bride' and honors his promise."
+
+[[record]]
+id = "goku_chichi_unknown_result"
+selector = 0x0F22
+reference_address = "98:C264"
+reference_offset = 0xC4264
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "98:DA30"
+original_offset = 0xC5A30
+original_length = 50
+source_sha256 = "61cac4ff2472f5aa7e36f31a561b4c017c76bdf0409e89ff19d0d0fe20ddbbfe"
+english = [
+  "Uh... Contestant Goku",
+  "is getting married!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Unrecognized finals route; the announcer reports Goku's marriage."

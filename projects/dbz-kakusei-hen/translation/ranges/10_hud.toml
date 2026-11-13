@@ -1,0 +1,90 @@
+schema_version = 1
+
+[[record]]
+name = "first_hud_hp_label_routine"
+rom_start = 0x11843
+rom_end = 0x11887
+cpu_start = "$9843"
+cpu_end = "$9887"
+bank = 0x82
+alignment = 1
+evidence = "CPU $82:9843 writes three prefix words to WRAM $0A00, appends the dynamic HP value through CPU $80:9052, and renders the fixed $0180-byte strip to VRAM word $01C0. Only the three immediate glyph operands are translated."
+confidence = "confirmed"
+
+[[record]]
+name = "first_hud_power_label_routine"
+rom_start = 0x11888
+rom_end = 0x118D3
+cpu_start = "$9888"
+cpu_end = "$98D3"
+bank = 0x82
+alignment = 1
+evidence = "CPU $82:9888 writes three prefix words to WRAM $0A00, appends the dynamic battle-power value through CPU $80:8F91, and renders the fixed $0240-byte strip to VRAM word $03A0. Only the three immediate glyph operands are translated."
+confidence = "confirmed"
+
+[[record]]
+name = "first_hud_anonymous_fighter_record"
+rom_start = 0x23F16
+rom_end = 0x23F21
+cpu_start = "$BF16"
+cpu_end = "$BF21"
+bank = 0x84
+alignment = 2
+evidence = "Anonymous-contestant record selected by CPU $82:EE8C for the recognition-bit-clear Goku/Chi-Chi battle HUD. The original visible label is 匿名希望. Five packed-Latin cells encode 'Anonymous'; the next existing zero word at ROM $023F20 remains the terminator within the fixed eight-word slot."
+confidence = "confirmed"
+
+[[record]]
+name = "first_hud_dash_punch_record"
+rom_start = 0x24A10
+rom_end = 0x24A1F
+cpu_start = "$CA10"
+cpu_end = "$CA1F"
+bank = 0x84
+alignment = 2
+evidence = "One byte-identical Dash Punch technique allocation referenced through pointer table CPU $84:C550. The existing terminator is preserved."
+confidence = "confirmed"
+
+[[record]]
+name = "first_hud_homing_ki_record"
+rom_start = 0x246EA
+rom_end = 0x246F5
+cpu_start = "$C6EA"
+cpu_end = "$C6F5"
+bank = 0x84
+alignment = 2
+evidence = "Runtime at CPU $82:98D4 records action selector $0E40 = $0002; pointer table CPU $84:C550 resolves it to this five-cell homing-ki stream for the bottom-right VRAM $03A0 strip."
+confidence = "confirmed"
+
+[[record]]
+name = "first_hud_dash_punch_alias_record"
+rom_start = 0x24BE2
+rom_end = 0x24BF1
+cpu_start = "$CBE2"
+cpu_end = "$CBF1"
+bank = 0x84
+alignment = 2
+evidence = "Runtime at CPU $82:9931 records action selector $0E42 = $0091; pointer table CPU $84:C550 resolves it to this byte-identical Dash Punch allocation for the top-right VRAM $0280 strip."
+confidence = "confirmed"
+
+[[record]]
+name = "first_hud_charge_record"
+rom_start = 0x24B16
+rom_end = 0x24B1F
+cpu_start = "$CB16"
+cpu_end = "$CB1F"
+bank = 0x84
+alignment = 2
+evidence = "Runtime at CPU $82:9931 records later action selector $0E42 = $0084 at frame 1060; pointer table CPU $84:C550 resolves it to this body-check/rush stream for the top-right strip."
+confidence = "confirmed"
+
+[[record]]
+name = "first_hud_open_fallback_record"
+rom_start = 0x176FD
+rom_end = 0x17704
+cpu_start = "$F6FD"
+cpu_end = "$F704"
+bank = 0x82
+alignment = 1
+evidence = "Runtime enters CPU $82:98D4 with $0E40 = $FFFF at frame 1066, selecting the fallback stream at CPU $82:F6FD. The rendered source state denotes being unguarded/open in the bottom-right strip."
+confidence = "confirmed"
+

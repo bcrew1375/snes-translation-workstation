@@ -38,6 +38,28 @@ SCRIPTS = {
 BANK_SIZE = {"lorom": 0x8000, "hirom": 0x10000}
 
 
+def prepare_script(cpu: str, script: str) -> str:
+    """Apply compatibility rewrites required by the selected vendored decoder."""
+    if cpu != "spc700":
+        return script
+
+    # The upstream SPC700 script builds a decimal macro name dynamically with
+    # ``%Op!Input1()``. Asar 1.91 instead parses the expanded value as part of
+    # the macro syntax (for example ``%Op$20()``), which is invalid. Keep the
+    # vendored source unchanged and replace that one call site with explicit,
+    # deterministic dispatch to its existing Op0..Op255 macros.
+    marker = "\t\t\t%Op!Input1()"
+    if marker not in script:
+        return script
+    dispatch = []
+    for opcode in range(0x100):
+        keyword = "if" if opcode == 0 else "elseif"
+        dispatch.append(f"\t\t\t{keyword} !Input1 == ${opcode:02X}")
+        dispatch.append(f"\t\t\t\t%Op{opcode}()")
+    dispatch.append("\t\t\tendif")
+    return script.replace(marker, "\n".join(dispatch), 1)
+
+
 def substitute(script: str, mapping: str, org: int, bank: int, limit: int) -> str:
     """Rewrite the vendored script's documented knobs for one bank.
 
@@ -159,7 +181,10 @@ def main() -> int:
             parser.error(f"bank {bank} outside ROM (0..{bank_count - 1})")
     limit = args.limit if args.limit is not None else step
 
-    script = script_path.read_text(encoding="utf-8", errors="replace")
+    script = prepare_script(
+        args.cpu,
+        script_path.read_text(encoding="utf-8", errors="replace"),
+    )
     # Resolve everything to absolute paths: Asar runs with cwd set to the work
     # directory, so a relative --outdir would otherwise make the staged ROM
     # path resolve against the wrong directory (Ecreate_rom_failed).

@@ -37,8 +37,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(prog="dbz-kakusei-translate", description=__doc__)
     parser.add_argument("rom", type=Path, help="Path to the supported original ROM")
     parser.add_argument("--patches", type=Path, default=PROJECT_ROOT / "translation/patches")
-    parser.add_argument("--references", type=Path, default=PROJECT_ROOT / "translation/references.toml")
-    parser.add_argument("--ranges", type=Path, default=PROJECT_ROOT / "translation/ranges.toml")
+    parser.add_argument("--ranges", type=Path, default=PROJECT_ROOT / "translation/ranges")
     parser.add_argument(
         "--analyze-unreferenced",
         "--analyze-orphans",
@@ -141,7 +140,7 @@ def main(argv: list[str] | None = None) -> int:
         )
         plans = None
         if args.plan:
-            records = load_translation_manifests(args.patches, args.references)
+            records = load_translation_manifests(args.patches)
             reviewed = load_reviewed_free_regions(args.ranges)
             plans = plan_translations(rom, records, reviewed)
 

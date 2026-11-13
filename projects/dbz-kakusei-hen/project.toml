@@ -17,18 +17,19 @@ sha256 = "cc5ab583b5189c3f5b374335edf4b857461278d41ef674f7db31aa100dcb814a"
 [output]
 default_path = "build/dbz-kakusei-hen/translated.sfc"
 size = 2097152
-sha256 = "87986c7c7806365adbc0978b07a3b9f7463083ea88e226fc26548e695ed998f8"
+sha256 = "13577602d3bba92f796bf4f2d974373d19d6c109faf18aaa8597a6995239f974"
 
 [manifests]
 analysis = "analysis/project.json"
 status = "status.toml"
 runtime_evidence = "analysis/runtime-evidence.toml"
 patches = "translation/patches"
-references = "translation/references.toml"
-ranges = "translation/ranges.toml"
+ranges = "translation/ranges"
 menu = "translation/menu.toml"
 name_entry = "translation/name_entry.toml"
 choices = "translation/choices.toml"
+battle_text = "translation/battle_text.toml"
+hud = "translation/hud.toml"
 glossary = "translation/glossary.toml"
 
 # The build executor independently computes the ROM diff and rejects every
@@ -179,6 +180,21 @@ start = 0x0CF8EE
 end = 0x0CFFFF
 
 [[approved_ranges]]
+name = "Junior-Kami confrontation selector pointers"
+start = 0x0C8614
+end = 0x0C8651
+
+[[approved_ranges]]
+name = "Junior-Kami shared reaction selector pointer 002A"
+start = 0x0C8054
+end = 0x0C8055
+
+[[approved_ranges]]
+name = "Junior-Kami confrontation source streams"
+start = 0x0CC5F8
+end = 0x0CCDBB
+
+[[approved_ranges]]
 name = "23rd World Tournament opening selector pointers"
 start = 0x0C8400
 end = 0x0C8435
@@ -239,6 +255,26 @@ start = 0x040002
 end = 0x040003
 
 [[approved_ranges]]
+name = "Backstage fixed label"
+start = 0x040064
+end = 0x04006F
+
+[[approved_ranges]]
+name = "Arena fixed label"
+start = 0x040070
+end = 0x040077
+
+[[approved_ranges]]
+name = "Stands fixed label"
+start = 0x040078
+end = 0x04007F
+
+[[approved_ranges]]
+name = "Matchup Announcement fixed label"
+start = 0x040210
+end = 0x04022B
+
+[[approved_ranges]]
 name = "opening fixed-label relocations"
 start = 0x047FB4
 end = 0x047FF1
@@ -246,7 +282,7 @@ end = 0x047FF1
 [[approved_ranges]]
 name = "quiz option pointers"
 start = 0x0C1B2A
-end = 0x0C1B49
+end = 0x0C1B55
 
 [[approved_ranges]]
 name = "pre-Chi-Chi text pointers"
@@ -281,7 +317,7 @@ end = 0x0C1F27
 [[approved_ranges]]
 name = "quiz option relocations"
 start = 0x0C74D8
-end = 0x0C75A5
+end = 0x0C75DF
 
 [[approved_ranges]]
 name = "post-Chi-Chi text pointers"
@@ -307,3 +343,278 @@ end = 0x0CA2A3
 name = "Mercenary Tao quiz source option streams"
 start = 0x0C1F38
 end = 0x0C1F87
+
+[[approved_ranges]]
+name = "second preliminary lead-in selector pointers"
+start = 0x0C84F8
+end = 0x0C8501
+
+[[approved_ranges]]
+name = "second preliminary lead-in source streams"
+start = 0x0CA2A4
+end = 0x0CA3E9
+
+[[approved_ranges]]
+name = "second preliminary quiz source option streams"
+start = 0x0C1F88
+end = 0x0C1FB1
+
+[[approved_ranges]]
+name = "finals transition relocated selector pointers 0281-0284"
+start = 0x0C8502
+end = 0x0C8509
+
+[[approved_ranges]]
+name = "finals transition relocated selector pointer 028C"
+start = 0x0C8518
+end = 0x0C8519
+
+[[approved_ranges]]
+name = "finals transition source streams through recognized selector 0293"
+start = 0x0CA3EA
+end = 0x0CA725
+
+[[approved_ranges]]
+name = "finals transition match 2 stream"
+start = 0x0C5B1E
+end = 0x0C5B4F
+
+[[approved_ranges]]
+name = "finals transition source streams after recognized selector 0293"
+start = 0x0CA726
+end = 0x0CA8AD
+
+[[approved_ranges]]
+name = "finals transition quiz source option streams"
+start = 0x0C1FB2
+end = 0x0C1FEF
+
+[[approved_ranges]]
+name = "finals quiz through Goku-Chi-Chi primary streams"
+start = 0x0CA8AE
+end = 0x0CB8A3
+
+[[approved_ranges]]
+name = "Crane Hermit selector pointer 029C"
+start = 0x0C8538
+end = 0x0C8539
+
+[[approved_ranges]]
+name = "Crane Hermit selector pointer 02BE"
+start = 0x0C857C
+end = 0x0C857D
+
+[[approved_ranges]]
+name = "Crane Hermit selector pointer 02C2"
+start = 0x0C8584
+end = 0x0C8585
+
+[[approved_ranges]]
+name = "Tien-Tao selector pointer 02C3"
+start = 0x0C8586
+end = 0x0C8587
+
+[[approved_ranges]]
+name = "recognized Goku-Chi-Chi selector pointer 02C7"
+start = 0x0C858E
+end = 0x0C858F
+
+[[approved_ranges]]
+name = "recognized Goku-Chi-Chi selector pointer 02C8"
+start = 0x0C8590
+end = 0x0C8591
+
+[[approved_ranges]]
+name = "Tien-Tao selector pointer 02B6"
+start = 0x0C856C
+end = 0x0C856D
+
+[[approved_ranges]]
+name = "Goku-Chi-Chi selector pointer 02CC"
+start = 0x0C8598
+end = 0x0C8599
+
+[[approved_ranges]]
+name = "Goku-Chi-Chi shared name-reaction selector pointer 001D"
+start = 0x0C803A
+end = 0x0C803B
+
+[[approved_ranges]]
+name = "Goku-Chi-Chi shared agreement selector pointer 001F"
+start = 0x0C803E
+end = 0x0C803F
+
+[[approved_ranges]]
+name = "Goku-Chi-Chi disjoint branch streams"
+start = 0x0C593A
+end = 0x0C5A61
+
+[[approved_ranges]]
+name = "Goku-Chi-Chi finals choice option streams"
+start = 0x0C1FF0
+end = 0x0C203D
+
+[[approved_ranges]]
+name = "post-sealing Shenron choice option streams"
+start = 0x0C416A
+end = 0x0C41A7
+
+[[approved_ranges]]
+name = "recognized route to first HUD selector pointers"
+start = 0x0C85AC
+end = 0x0C8613
+
+[[approved_ranges]]
+name = "recognized route to first HUD source streams"
+start = 0x0CB8A4
+end = 0x0CC5F7
+
+[[approved_ranges]]
+name = "first battle HUD label immediates"
+start = 0x01184B
+end = 0x0118A1
+
+[[approved_ranges]]
+name = "first battle HUD Anonymous fighter record"
+start = 0x023F16
+end = 0x023F1F
+
+[[approved_ranges]]
+name = "first battle HUD Dash Punch record"
+start = 0x024A10
+end = 0x024A1D
+
+[[approved_ranges]]
+name = "first battle HUD Homing Ki record"
+start = 0x0246EA
+end = 0x0246F3
+
+[[approved_ranges]]
+name = "first battle HUD Dash Punch alias record"
+start = 0x024BE2
+end = 0x024BEF
+
+[[approved_ranges]]
+name = "first battle HUD Charge record"
+start = 0x024B16
+end = 0x024B1D
+
+[[approved_ranges]]
+name = "first battle HUD Open fallback record"
+start = 0x0176FD
+end = 0x017702
+
+[[approved_ranges]]
+name = "Goku-Tien battle opening selector pointers"
+start = 0x0C8664
+end = 0x0C8675
+
+[[approved_ranges]]
+name = "Goku-Tien battle opening source streams"
+start = 0x0CCF1E
+end = 0x0CD111
+
+[[approved_ranges]]
+name = "Goku-Tien shared weight-reaction selector pointer"
+start = 0x0C4268
+end = 0x0C4269
+
+[[approved_ranges]]
+name = "Goku-Tien shared weight-reaction stream"
+start = 0x0C5ACC
+end = 0x0C5B1D
+
+[[approved_ranges]]
+name = "Goku-Chi-Chi battle opening resources"
+start = 0x1A0800
+end = 0x1A083F
+
+[[approved_ranges]]
+name = "Goku-Chi-Chi shared battle result resources"
+start = 0x1A1D76
+end = 0x1A1DDB
+
+[[approved_ranges]]
+name = "Goku-Chi-Chi Chi-Chi-zero resources"
+start = 0x1A3006
+end = 0x1A3327
+
+[[approved_ranges]]
+name = "Shenron wish and Junior lead-in streams"
+start = 0x0E1A84
+end = 0x0E1B25
+
+[[approved_ranges]]
+name = "reused announcer semifinal begin stream"
+start = 0x0CDD38
+end = 0x0CDD73
+
+[[approved_ranges]]
+name = "reused announcer first-match begin stream"
+start = 0x0E6FFE
+end = 0x0E7021
+
+[[approved_ranges]]
+name = "Junior fight lead-in selector pointers"
+start = 0x0C8652
+end = 0x0C8663
+
+[[approved_ranges]]
+name = "Junior fight lead-in source streams"
+start = 0x0CCDBC
+end = 0x0CCF1D
+
+[[approved_ranges]]
+name = "Junior battle win continuation selector pointers"
+start = 0x0C8744
+end = 0x0C8757
+
+[[approved_ranges]]
+name = "Junior battle win continuation announcer stream"
+start = 0x0CEE48
+end = 0x0CEF15
+
+[[approved_ranges]]
+name = "Junior battle win continuation spectator reaction"
+start = 0x0CEF16
+end = 0x0CEF23
+
+[[approved_ranges]]
+name = "Junior battle win continuation King Piccolo question"
+start = 0x0CEF48
+end = 0x0CEF5D
+
+[[approved_ranges]]
+name = "Junior battle loss continuation relocated selector pointer"
+start = 0x0E038A
+end = 0x0E038B
+
+[[approved_ranges]]
+name = "Junior battle loss continuation source streams"
+start = 0x0E74DC
+end = 0x0E770F
+
+[[approved_ranges]]
+name = "Junior battle opening resources"
+start = 0x1A08C6
+end = 0x1A08E5
+
+[[approved_ranges]]
+name = "Junior battle shared win resources"
+start = 0x1A1E72
+end = 0x1A1EDB
+
+[[approved_ranges]]
+name = "Junior battle loss resources"
+start = 0x1A1EDE
+end = 0x1A1F95
+
+[[approved_ranges]]
+name = "Junior battle primary win resources"
+start = 0x1A368A
+end = 0x1A3799
+
+[[approved_ranges]]
+name = "Junior battle late opening resources"
+start = 0x1A37B4
+end = 0x1A37CF

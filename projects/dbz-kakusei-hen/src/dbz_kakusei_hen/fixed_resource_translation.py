@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from snesworkbench.errors import WorkstationError
-from snesworkbench.manifests import manifest_int, read_manifest
+from snesworkbench.manifests import manifest_int, read_manifest_collection
 from snesworkbench.patching import bounded_write
 from snesworkbench.rom import parse_cpu_address
 
@@ -61,7 +61,7 @@ def _hex(value: object, field: str) -> int:
 
 
 def load_fixed_resource_records(path: str | Path) -> list[FixedResourceRecord]:
-    rows = read_manifest(path, FIXED_RESOURCE_FIELDS)
+    rows = read_manifest_collection(path, FIXED_RESOURCE_FIELDS)
     records = []
     seen: set[str] = set()
     for row in rows:

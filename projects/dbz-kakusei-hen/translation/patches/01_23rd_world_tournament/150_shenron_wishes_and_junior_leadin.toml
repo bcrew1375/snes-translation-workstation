@@ -1,0 +1,96 @@
+schema_version = 1
+
+[[record]]
+id = "shenron_wish_prompt"
+selector = 0x0806
+reference_address = "9C:80AE"
+reference_offset = 0xE00AE
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "9C:9A84"
+original_offset = 0xE1A84
+original_length = 52
+source_sha256 = "1781faac4bc3f9ca9a9c6ab74635863828b3b82a045458e136c1e06496f28a9e"
+english = [
+  "This is a save point.",
+  "I'll grant you",
+  "one wish.",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Shenron introduces the save-point wish menu."
+
+[[record]]
+id = "shenron_save_prompt"
+selector = 0x0807
+reference_address = "9C:80B0"
+reference_offset = 0xE00B0
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "9C:9AB8"
+original_offset = 0xE1AB8
+original_length = 22
+source_sha256 = "065f67cc99f46d66fc4741a6868fb227eb06e56ce5d8c4b6d485ca79cc5bcb2f"
+english = [
+  "Choose your data...",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Shenron opens the save workflow after the X choice."
+
+[[record]]
+id = "shenron_wish_granted"
+selector = 0x0808
+reference_address = "9C:80B2"
+reference_offset = 0xE00B2
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "9C:9ACE"
+original_offset = 0xE1ACE
+original_length = 42
+source_sha256 = "7a532e2b08ce8b0556f478b8b882658577a153d76b8b06f098b1c69973dd3a6c"
+english = [
+  "Your wish",
+  "is granted...",
+  "Farewell.",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Common farewell after a completed save, power boost, or health boost."
+
+[[record]]
+id = "shenron_save_cancelled"
+selector = 0x0809
+reference_address = "9C:80B4"
+reference_offset = 0xE00B4
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "9C:9AF8"
+original_offset = 0xE1AF8
+original_length = 30
+source_sha256 = "830bdbe970173af203e51a5a1470320fe5cb1bee2536038b6f77940fd6812ce2"
+english = [
+  "Hurry.",
+  "Make your wish...",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Shown when B cancels the X/save workflow before the menu loops back."
+
+[[record]]
+id = "shenron_boost_response"
+selector = 0x080A
+reference_address = "9C:80B6"
+reference_offset = 0xE00B6
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "9C:9B16"
+original_offset = 0xE1B16
+original_length = 16
+source_sha256 = "e1697f9ba6100821cd0b56019d66511cd634c2a3f8996790a2a0a7f70ae5078e"
+english = [
+  "Easily done.",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Shared Shenron response for the Y/power and B/health wishes."

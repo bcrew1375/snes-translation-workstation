@@ -24,6 +24,7 @@ class FreeSpaceRegion:
     rom_end: int
     alignment: int = 2
     name: str = "reviewed free space"
+    priority: int = 0
 
     def __post_init__(self) -> None:
         bank_start = (self.bank & 0x7F) * LOROM_BANK_SIZE
@@ -94,13 +95,23 @@ class StreamAllocator:
     """Stateful deterministic allocator that consumes and splits regions."""
 
     def __init__(self, regions: list[FreeSpaceRegion] | tuple[FreeSpaceRegion, ...]):
-        ordered = sorted(regions, key=lambda region: (region.bank, region.rom_start, region.name))
-        for left, right in zip(ordered, ordered[1:]):
+        address_ordered = sorted(
+            regions, key=lambda region: (region.bank, region.rom_start, region.name)
+        )
+        for left, right in zip(address_ordered, address_ordered[1:]):
             if left.bank == right.bank and right.rom_start < left.rom_end:
                 raise WorkstationError(
                     f"reviewed allocation regions overlap at ROM ${right.rom_start:06X}"
                 )
-        self._regions = list(ordered)
+        self._regions = sorted(
+            regions,
+            key=lambda region: (
+                region.bank,
+                region.priority,
+                region.rom_start,
+                region.name,
+            ),
+        )
 
     @property
     def remaining_regions(self) -> tuple[FreeSpaceRegion, ...]:
@@ -142,12 +153,24 @@ class StreamAllocator:
             if region.rom_start < start:
                 replacement.append(
                     FreeSpaceRegion(
-                        region.bank, region.rom_start, start, region.alignment, region.name
+                        region.bank,
+                        region.rom_start,
+                        start,
+                        region.alignment,
+                        region.name,
+                        region.priority,
                     )
                 )
             if end < region.rom_end:
                 replacement.append(
-                    FreeSpaceRegion(region.bank, end, region.rom_end, region.alignment, region.name)
+                    FreeSpaceRegion(
+                        region.bank,
+                        end,
+                        region.rom_end,
+                        region.alignment,
+                        region.name,
+                        region.priority,
+                    )
                 )
             self._regions[index : index + 1] = replacement
             return Allocation(

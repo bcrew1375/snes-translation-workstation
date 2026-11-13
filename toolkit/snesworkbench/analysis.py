@@ -17,14 +17,18 @@ TYPE_COLORS = {
     "code": "#4e79a7",
     "data": "#f28e2b",
     "routine_data": "#ffbe7d",
+    "scenario_data": "#9c755f",
+    "battle_script_data": "#c49a6c",
     "pointer_table": "#b6992d",
     "graphics": "#59a14f",
     "compressed_graphics": "#8cd17d",
     "compressed_tilemap": "#76b7b2",
+    "compressed_resource": "#86bcb6",
     "sgb_transfer_data": "#af7aa1",
     "text": "#e15759",
     "audio": "#edc948",
     "padding": "#bab0ac",
+    "fill": "#d0c8c0",
     UNKNOWN_TYPE: "#e6e6e6",
 }
 

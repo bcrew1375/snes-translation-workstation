@@ -84,6 +84,40 @@ tables across CPU banks `$98-$9F`; the selected word is stored in WRAM `$0214`.
 After optional metadata handling through bank `$98`, it calls CPU `$80:9A0E`
 with the selected value and then advances the cursor by the two parameter bytes.
 
+## Command `$28`
+
+The handler at CPU `$83:CCDB` / ROM `$01CCDB` reads a little-endian 16-bit
+operand and treats it as a flag-bit index. The high nibble selects a word in the
+WRAM flag array beginning at `$0CCE`; the low nibble selects the bit set in that
+word. For example, `$28 $000A` at CPU `$91:89A9` sets bit 10 of WRAM `$0CCE`.
+It does not select a fixed text resource or read the bank-$88 fixed-label table.
+
+## Commands `$3D` and `$3E`
+
+Command `$3D` dispatches to CPU `$83:D4CB` / ROM `$01D4CB`. It interprets its
+16-bit operand as a bit index in the transient scenario flag array at WRAM
+`$0D98` and sets that bit. Command `$3E` dispatches to CPU `$83:D516` / ROM
+`$01D516`; it tests the same bit array and either advances past its four-byte
+operand/destination pair or replaces the scenario cursor with the embedded
+16-bit destination.
+
+The earlier Chi-Chi X branch executes `$3D $0000` at CPU `$91:8366`, setting
+WRAM `$0D98` bit 0 when Goku recognizes her. Authentic retained states confirm
+`$0D98=$0001` after that branch and `$0D98=$0000` after the unrecognized Y
+branch. The finals transition tests this exact bit with `$3E $0000,$8EDD` at
+CPU `$91:8EB0`: set skips selectors `$02C4-$02C5`, while clear executes them.
+Root `$000D` at CPU `$91:8EDE` tests the same bit with destination `$91:8EEB`;
+root `$000E` at CPU `$91:8F5F` contains the longer unrecognized Goku/Chi-Chi
+fight and response branches.
+
+A current-ROM continuation with the recognition bit set establishes that the
+recognized branch does not immediately reach a battle. It advances into root
+`$0013`, executes further command-`$08` selectors through `$0309`, and reaches
+command `$47` at CPU `$91:9931`. The first common battle resource load from CPU
+`$B0:8000` follows at that fixed scenario cursor. Thus `$91:9931`, not the end
+of root `$000D`, is the recognized route's first established later battle-HUD
+boundary.
+
 ## Commands `$07` and `$10`
 
 The opening tournament quiz establishes that command `$10` at CPU `$91:8178` /
@@ -124,6 +158,23 @@ variant within that descriptor. The pair is copied to WRAM `$0272/$0278` and
 `$027E/$0284`; CPU `$83:E2A8` then decompresses/assembles two `$0400`-byte
 graphics pieces and updates associated palette/object state before a 16x8 area
 is used. No `$FE` entry occurs within the bounded selector corpus.
+
+The complete descriptor hierarchy is now structurally decoded. CPU
+`$83:EE97-$EF96` contains 128 same-bank 16-bit pointers resolving to 125 unique
+targets. Those targets partition CPU `$83:EF97-$F392` into variable-length
+arrays of three-byte source address/bank records: 340 records select 219 unique
+streams accepted by the confirmed `$80:9CFA/$80:9DA7` codec. Record zero is the
+base piece and the presentation pair's second byte selects an additional record
+at `descriptor + variant * 3`. Decoded lengths range from `$00A0` to `$0400`;
+the caller uses a fixed `$0400` workspace, so the codec header rather than the
+copy size defines each stream's decoded extent.
+
+The same resource ID indexes 128 palette pointers at CPU `$8A:8000`. They
+resolve to 102 unique contiguous 32-byte CGRAM records at `$8A:8100-$8DBF`.
+CPU `$83:E500` supplies a 16-bit object-frame base ID adjusted by the selected
+variant, and CPU `$83:E900-$E917` contains six four-byte display-slot placement
+records. These tables establish structure and ownership without assigning
+character names to unreviewed numeric IDs.
 
 A trusted 1,500-frame trace on October 6, 2026 confirmed all three paths in the
 automatic opening. Wide selectors `$07E1-$07E4` and low selectors `$0026/$002E`
@@ -280,9 +331,9 @@ attract-mode cycles rather than extending the recap.
 
 All 26 selected streams were correlated with visible scenes. Their exact selector,
 pointer, CPU-address, ROM-offset, length, digest, and repository-authored English
-replacement are recorded in `translation/references.toml` and
-the ordered `translation/patches/*.toml` collection. Decoded Japanese source dialogue remains local and
-untracked.
+replacement are recorded together in the recursively ordered
+`translation/patches/<arc>/*.toml` collection. Decoded Japanese source dialogue
+remains local and untracked.
 
 ### Opening menu family
 
@@ -366,3 +417,18 @@ project-local analysis area; persist only reviewed conclusions here.
 - Ordinary command-`$08` presentation pairs are confirmed portrait
   resource/variant selectors, but the complete numeric portrait catalog is not
   yet named or documented.
+- Root `$0018` begins the Junior/Kami confrontation at CPU `$91:A3B0`. Its
+  dialogue order includes the shared selector `$002A` between `$030D` and
+  `$030E`, then continues through `$0328`. Runtime tracing corrects the earlier
+  byte-boundary error at CPU `$91:A755`: `$91:A753-$91:A757` is one command
+  `$0E` instruction with operand bytes `$00 $07 $05 $03`; the `$07` byte at
+  `$91:A755` is not an opcode. Root `$0018` then executes command `$05` at
+  `$91:A758` and command `$47` at `$91:A75A`, routing to root `$0171` at CPU
+  `$93:C163`. That root displays selector `$0806` and executes the actual command
+  `$07` at CPU `$93:C187` / ROM `$09C187`, opening the visible post-sealing
+  Shenron X/Y/B prompt. Renderer tracing confirms row sources CPU `$98:C16A`,
+  `$98:C17E`, and `$98:C194`. Separate captures establish X at `$93:C197`
+  selecting `$0807`, Y at `$93:C1D7` and B at `$93:C1FE` selecting shared
+  `$080A`, then common `$0808` and successor root `$001E`. Cancelling the X/save
+  workflow with B selects `$0809` at `$93:C1CC`; command `$1F $C187` at
+  `$93:C1D4` then jumps back to the command-`$07` wish menu.

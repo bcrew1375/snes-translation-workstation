@@ -1,0 +1,904 @@
+schema_version = 1
+
+[[record]]
+id = "tien_tao_00"
+selector = 0x029C
+reference_address = "99:8538"
+reference_offset = 0xC8538
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A8F8"
+original_offset = 0xCA8F8
+original_length = 14
+source_sha256 = "1a7bd707ee7c540f5fcc846cb03176fe9d262a26e7290e6df34f074c803a57c1"
+english = [
+  "The Crane Hermit!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Krillin reacts to the Crane Hermit."
+
+[[record]]
+id = "tien_tao_01"
+selector = 0x029D
+reference_address = "99:853A"
+reference_offset = 0xC853A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A906"
+original_offset = 0xCA906
+original_length = 84
+source_sha256 = "7932c5a7454031bf2adcd9f47ca012e3ec9407f78b99654881dfb4cac19237c0"
+english = [
+  "Heh heh...",
+  "",
+  "",
+  "",
+  "Turtle School runts!",
+  "Run while you can",
+  "or face",
+  "annihilation",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; the Crane Hermit taunts the Turtle School group."
+
+[[record]]
+id = "tien_tao_02"
+selector = 0x029E
+reference_address = "99:853C"
+reference_offset = 0xC853C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A95A"
+original_offset = 0xCA95A
+original_length = 170
+source_sha256 = "dd26e0ac55b9e6917064d19a46ae839b3a3eebac2ef53c7e7e86073a4874cf3c"
+english = [
+  "You old bastard!",
+  "I'll settle this",
+  "here and now!",
+  "",
+  "But Tien and",
+  "the other three",
+  "aren't my pupils.",
+  "",
+  "Each has already",
+  "surpassed me and",
+  "walks his own path.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Master Roshi answers the Crane Hermit and says the four fighters have surpassed him."
+
+[[record]]
+id = "tien_tao_03"
+selector = 0x029F
+reference_address = "99:853E"
+reference_offset = 0xC853E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AA04"
+original_offset = 0xCAA04
+original_length = 44
+source_sha256 = "b4e479c11f66416e40cd926f55186d5d54f51ff72b0b6fc7cd1427e7cce8a6e6"
+english = [
+  "Oh...?",
+  "Then why wear",
+  "Turtle uniforms?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; the Crane Hermit questions why they are wearing Turtle School uniforms."
+
+[[record]]
+id = "tien_tao_04"
+selector = 0x02A0
+reference_address = "99:8540"
+reference_offset = 0xC8540
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AA30"
+original_offset = 0xCAA30
+original_length = 72
+source_sha256 = "6c724e6247a0d74ecc423be906981c95bd9fc2e9e3474831f812c3c267d6ec21"
+english = [
+  "They had them made",
+  "as a gift",
+  "for me.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Master Roshi explains the uniforms."
+
+[[record]]
+id = "tien_tao_05"
+selector = 0x02A1
+reference_address = "99:8542"
+reference_offset = 0xC8542
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AA78"
+original_offset = 0xCAA78
+original_length = 90
+source_sha256 = "a6f4613878c6f6e4a20c52571f0291d54ef2d93b07a72381eaae4ffd453abe0e"
+english = [
+  "Right, right!",
+  "",
+  "",
+  "",
+  "He doesn't teach us",
+  "anymore, but he's",
+  "still our master!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Krillin says Roshi no longer teaches them but remains their master."
+
+[[record]]
+id = "tien_tao_06"
+selector = 0x02A2
+reference_address = "99:8544"
+reference_offset = 0xC8544
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AAD2"
+original_offset = 0xCAAD2
+original_length = 190
+source_sha256 = "66a7cbd15cb586d780d86a84aaf75659d7f371e931556873ecd408ae2c32fc23"
+english = [
+  "Heh heh...",
+  "Enjoy your bravado",
+  "while you can.",
+  "",
+  "Cyborg Tao has power",
+  "beyond imagination.",
+  "",
+  "",
+  "Let's hope Tien and",
+  "you lot have even the",
+  "slightest chance...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; the Crane Hermit boasts about Cyborg Tao's power and sarcastically hopes Tien and the others have even the slightest chance."
+
+[[record]]
+id = "tien_tao_07"
+selector = 0x02A3
+reference_address = "99:8546"
+reference_offset = 0xC8546
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AB90"
+original_offset = 0xCAB90
+original_length = 44
+source_sha256 = "985b0067455d1dfab9ed3935f00ee2d467349fba10517f7b8d976f9105e3ce98"
+english = [
+  "What!?",
+  "Don't get cocky,",
+  "you old geezer!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Yamcha snaps at the Crane Hermit."
+
+[[record]]
+id = "tien_tao_08"
+selector = 0x02A4
+reference_address = "99:8548"
+reference_offset = 0xC8548
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:ABBC"
+original_offset = 0xCABBC
+original_length = 50
+source_sha256 = "6cf3f591c7ed08c18afabdc4d56ac8777f494bb236e3dc0489f4a30b85ddcef2"
+english = [
+  "He's incredible...",
+  "Not like the Tao",
+  "I knew...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Goku assesses Cyborg Tao."
+
+[[record]]
+id = "yamcha_startled_laugh"
+selector = 0x0007
+reference_address = "99:800E"
+reference_offset = 0xC800E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:880E"
+original_offset = 0xC880E
+original_length = 14
+source_sha256 = "091437d71ceca3cd634137985500fb0ade3285adce2ec1353e33cd041e0c3753"
+english = [
+  "H-heh!?",
+]
+status = "implemented"
+notes = "Shared low-index selector $0007; fresh current-ROM replay confirms Yamcha gives a startled laugh between selectors $02A4 and $02A5."
+
+[[record]]
+id = "tien_tao_09"
+selector = 0x02A5
+reference_address = "99:854A"
+reference_offset = 0xC854A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:ABEE"
+original_offset = 0xCABEE
+original_length = 58
+source_sha256 = "569a1b1b47b44abfdcc7732d600494db6a2ba5613926af8ec8c50c6d7699377d"
+english = [
+  "The match will",
+  "begin shortly.",
+  "Fighters, assemble.",
+]
+max_line_length = 28
+status = "implemented"
+notes = "Tien/Tao continuation; the announcer calls the fighters together."
+
+[[record]]
+id = "tien_tao_10"
+selector = 0x02A6
+reference_address = "99:854C"
+reference_offset = 0xC854C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AC28"
+original_offset = 0xCAC28
+original_length = 64
+source_sha256 = "7483bdc3fb18ab4339400ed013676e2aded721e918ede771bb293e91472111ed"
+english = [
+  "All right, let's go!",
+  "",
+  "",
+  "",
+  "Show me how much",
+  "you've improved.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tao challenges Tien."
+
+[[record]]
+id = "goku_affirmative_reply"
+selector = 0x001C
+reference_address = "99:8038"
+reference_offset = 0xC8038
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:88DA"
+original_offset = 0xC88DA
+original_length = 10
+source_sha256 = "5a1ef70294629e56a6ec94b14d94bd78664844e311aef1210be93d051e586a1e"
+english = [
+  "Right!!",
+]
+status = "implemented"
+notes = "Shared selector $001C; runtime tracing places Goku's affirmative reply immediately after Tao tells Tien to show how much he has improved."
+
+[[record]]
+id = "tien_tao_11"
+selector = 0x02A7
+reference_address = "99:854E"
+reference_offset = 0xC854E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AC68"
+original_offset = 0xCAC68
+original_length = 44
+source_sha256 = "d384f8b5346d47caf5f368f73c1408bda8dd8f334427cb6168df864e4891f2ae"
+english = [
+  "Hey, Krillin.",
+  "Want a",
+  "tasty treat?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Yajirobe offers Krillin something good to eat."
+
+[[record]]
+id = "tien_tao_12"
+selector = 0x02A8
+reference_address = "99:8550"
+reference_offset = 0xC8550
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AC94"
+original_offset = 0xCAC94
+original_length = 44
+source_sha256 = "ffa9627ef4369d999eeb9fa2a4cb1abc2ee3e272879c794acd5945d39d0686f7"
+english = [
+  "One Senzu keeps you",
+  "full for ten days!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Yajirobe says one bean keeps a person full for ten days."
+
+[[record]]
+id = "tien_tao_13"
+selector = 0x02A9
+reference_address = "99:8552"
+reference_offset = 0xC8552
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:ACC0"
+original_offset = 0xCACC0
+original_length = 50
+source_sha256 = "c6dd840a7a80b8091993c8f85841ee4c2131d9829eb3b396302dbfcda16c0eb4"
+english = [
+  "Senzu, huh?",
+  "Yamcha and I",
+  "have some too!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Krillin says that Yamcha and he also have Senzu Beans."
+
+[[record]]
+id = "tien_tao_14"
+selector = 0x02AA
+reference_address = "99:8554"
+reference_offset = 0xC8554
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:ACF2"
+original_offset = 0xCACF2
+original_length = 38
+source_sha256 = "9581fbd6c4c222e12fb25a92363e6a068233b332d35d205f116dd5bbfd8a3965"
+english = [
+  "Huh!?",
+  "Y-you guys...!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Goku reacts with surprise."
+
+[[record]]
+id = "tien_tao_15"
+selector = 0x02AB
+reference_address = "99:8556"
+reference_offset = 0xC8556
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AD18"
+original_offset = 0xCAD18
+original_length = 110
+source_sha256 = "fd207e075c24b258668fcb16eb0e99a238c3c4dfc10a4e32ba1ef508c37abf70"
+english = [
+  "Yeah. Krillin,",
+  "Tien, Chiaotzu...",
+  "and I all climbed",
+  "Korin Tower,",
+  "without Master Roshi",
+  "knowing.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Yamcha explains that Krillin, Tien, Chiaotzu, and he climbed Korin Tower without Master Roshi knowing."
+
+[[record]]
+id = "tien_tao_16"
+selector = 0x02AC
+reference_address = "99:8558"
+reference_offset = 0xC8558
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AD86"
+original_offset = 0xCAD86
+original_length = 20
+source_sha256 = "7d94c97c319b67f85318ee6e092dbc58edd343fc2a6df293567725fb91b49a3d"
+english = [
+  "Oh, you did!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Goku responds."
+
+[[record]]
+id = "tien_tao_17"
+selector = 0x02AD
+reference_address = "99:855A"
+reference_offset = 0xC855A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AD9A"
+original_offset = 0xCAD9A
+original_length = 76
+source_sha256 = "ea5e9ca32d8eed3c04575539085b5969644008c1274b8f2c07670f9cbffd4e2e"
+english = [
+  "We looked for",
+  "Yajirobe at Korin",
+  "Tower, but he wasn't",
+  "there.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Krillin says Yajirobe was absent from Korin Tower."
+
+[[record]]
+id = "tien_tao_18"
+selector = 0x02AE
+reference_address = "99:855C"
+reference_offset = 0xC855C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:ADE6"
+original_offset = 0xCADE6
+original_length = 34
+source_sha256 = "1f46fae8ef5f3134f26a414c574b8f60befcd8833d096172551881ed229d4180"
+english = [
+  "He hates this",
+  "sort of thing.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Goku comments on Yajirobe."
+
+[[record]]
+id = "tien_tao_19"
+selector = 0x02AF
+reference_address = "99:855E"
+reference_offset = 0xC855E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AE08"
+original_offset = 0xCAE08
+original_length = 44
+source_sha256 = "971eb8d2b70645a1da53c3bb31b5d40f0d2ce984df16895947671ed32d95c373"
+english = [
+  "Shut up...",
+  "I came,",
+  "but I lost...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Yajirobe mutters after losing in disguise."
+
+[[record]]
+id = "tien_tao_20"
+selector = 0x02B0
+reference_address = "99:8560"
+reference_offset = 0xC8560
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AE34"
+original_offset = 0xCAE34
+original_length = 110
+source_sha256 = "10ecff11817853b245e7b40f2a919c04ecae60712119edf874b040f81181abbf"
+english = [
+  "Thank you for",
+  "waiting!",
+  "",
+  "",
+  "The 23rd World",
+  "Tournament begins",
+  "now!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; the announcer opens the finals."
+
+[[record]]
+id = "tien_tao_21"
+selector = 0x02B1
+reference_address = "99:8562"
+reference_offset = 0xC8562
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AEA2"
+original_offset = 0xCAEA2
+original_length = 88
+source_sha256 = "c8b32a3188857cc1e07cfee1893a061d3c65c79ecd1527e506384b0b107bfe1d"
+english = [
+  "Match one:",
+  "Mercenary Tao",
+  "versus last year's",
+  "champion, Tien!",
+  "Begin!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; the announcer starts the first finals match."
+
+[[record]]
+id = "tien_tao_22"
+selector = 0x02B2
+reference_address = "99:8564"
+reference_offset = 0xC8564
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AEFA"
+original_offset = 0xCAEFA
+original_length = 134
+source_sha256 = "75dc8cd25b6f3e810195802cd1ccb7b64939fc66317678ec9880831e7c1b1db7"
+english = [
+  "Relax. I won't kill",
+  "you in the match.",
+  "I'll leave you",
+  "half-dead.",
+  "After I beat you",
+  "and Goku,",
+  "I'll finish you then.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tao threatens Tien and Goku."
+
+[[record]]
+id = "tien_tao_23"
+selector = 0x02B3
+reference_address = "99:8566"
+reference_offset = 0xC8566
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AF80"
+original_offset = 0xCAF80
+original_length = 56
+source_sha256 = "1b7dffd84030d21c775a62e28efc2044278e14de814725f66df6a293193a0085"
+english = [
+  "Get him, Tien!!",
+  "Don't lose!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Chiaotzu cheers for Tien."
+
+[[record]]
+id = "tien_tao_24"
+selector = 0x02B4
+reference_address = "99:8568"
+reference_offset = 0xC8568
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AFB8"
+original_offset = 0xCAFB8
+original_length = 8
+source_sha256 = "4d634ac54dc25fa0d6f81919d0c5aa7073840f2e5602de53f21b508f2f085be1"
+english = [
+  "Huh!?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tao reacts."
+
+[[record]]
+id = "tien_tao_25"
+selector = 0x02B5
+reference_address = "99:856A"
+reference_offset = 0xC856A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:AFC0"
+original_offset = 0xCAFC0
+original_length = 84
+source_sha256 = "52dc1ae31370021add716c312976f6f504eb240dd0ee3c8a7fc4417b0509842f"
+english = [
+  "Heh... heh heh...!!",
+  "",
+  "",
+  "",
+  "I see...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tao laughs after gauging Tien."
+
+[[record]]
+id = "tien_tao_26"
+selector = 0x02B6
+reference_address = "99:856C"
+reference_offset = 0xC856C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B014"
+original_offset = 0xCB014
+original_length = 66
+source_sha256 = "6945ad18454cf0dfcb24c9ae96f7544446bede68b70c4289629069e5117c6ebc"
+english = [
+  "Tao...",
+  "I'll let what you did",
+  "to Chiaotzu go.",
+  "Please stop now.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tien offers to let what Tao did to Chiaotzu go and asks him to stop."
+
+[[record]]
+id = "tien_tao_27"
+selector = 0x02B7
+reference_address = "99:856E"
+reference_offset = 0xC856E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B056"
+original_offset = 0xCB056
+original_length = 58
+source_sha256 = "7b5592b609cca43e5afbd8daf86dd7e88720460324b77f66ec65fa7bec991277"
+english = [
+  "What...?",
+  "That little victory",
+  "made you cocky?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tao rejects Tien's warning."
+
+[[record]]
+id = "tien_tao_28"
+selector = 0x02B8
+reference_address = "99:8570"
+reference_offset = 0xC8570
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B090"
+original_offset = 0xCB090
+original_length = 70
+source_sha256 = "4501957a5e28e858234e72e9c241605596cfebed1aaf56c1f98d49ec08080d99"
+english = [
+  "I've grown far",
+  "stronger than",
+  "you imagine...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tien warns Tao about his growth."
+
+[[record]]
+id = "tien_tao_29"
+selector = 0x02B9
+reference_address = "99:8572"
+reference_offset = 0xC8572
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B0D6"
+original_offset = 0xCB0D6
+original_length = 82
+source_sha256 = "5c7a640b3aa9bd048b2fb03beb33312beac58b789046a3b0528a326e7a4e65c2"
+english = [
+  "Don't joke!!",
+  "Forget the match!",
+  "I'll kill you!!",
+  "",
+  "I'll kill you, Tien!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tao abandons the match rules and threatens to kill Tien."
+
+[[record]]
+id = "tien_tao_30"
+selector = 0x02BA
+reference_address = "99:8574"
+reference_offset = 0xC8574
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B128"
+original_offset = 0xCB128
+original_length = 78
+source_sha256 = "bdb3292515dd6446f8ff8f56896ce427b152e8e12d99b0ae1f02699212e67857"
+english = [
+  "That's it, Tao!!",
+  "Kill every one of",
+  "those Turtle School",
+  "punks!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; the Crane Hermit orders Tao to kill the Turtle School fighters."
+
+[[record]]
+id = "tien_tao_31"
+selector = 0x02BB
+reference_address = "99:8576"
+reference_offset = 0xC8576
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B176"
+original_offset = 0xCB176
+original_length = 158
+source_sha256 = "c0ac65d346bd5483fce2f5d78a70c8cd4f9c8d13131b0f5368591b5abd1717a3"
+english = [
+  "I'll show you the",
+  "Super Dodon Ray...",
+  "",
+  "",
+  "It makes the old",
+  "Dodon Ray look weak!",
+  "",
+  "",
+  "You'll be in hell",
+  "before you know it!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tao introduces his Super Dodon Ray."
+
+[[record]]
+id = "tien_tao_32"
+selector = 0x02BC
+reference_address = "99:8578"
+reference_offset = 0xC8578
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B214"
+original_offset = 0xCB214
+original_length = 22
+source_sha256 = "532013cb8a27b7c4c718512b89bb2b9c97616fcb60df21ae45351b9a184b0d71"
+english = [
+  "Super Dodon Ray!!!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tao fires the Super Dodon Ray."
+
+[[record]]
+id = "tien_tao_33"
+selector = 0x02BD
+reference_address = "99:857A"
+reference_offset = 0xC857A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B22A"
+original_offset = 0xCB22A
+original_length = 12
+source_sha256 = "f287cbd221f823fc17cd333d5fcdb5bffc3cca865870b312bcf9ff338b0967d7"
+english = [
+  "Haaah!!!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tien counters."
+
+[[record]]
+id = "tien_tao_34"
+selector = 0x02BE
+reference_address = "99:857C"
+reference_offset = 0xC857C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B236"
+original_offset = 0xCB236
+original_length = 88
+source_sha256 = "40125d960eabb184e55c8f4cbeacf159c641fec4b180186d431e6b5ccc823f10"
+english = [
+  "Impossible!!",
+  "Th-this can't be!!",
+  "",
+  "",
+  "He erased the",
+  "Super Dodon Ray",
+  "with his ki alone!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tao is stunned that Tien erased the attack."
+
+[[record]]
+id = "tien_tao_35"
+selector = 0x02BF
+reference_address = "99:857E"
+reference_offset = 0xC857E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B28E"
+original_offset = 0xCB28E
+original_length = 22
+source_sha256 = "4f0ae6c9a9aecf32dd8564ab93fc159489f80b6db12516ecc7192d7f6a8c5d63"
+english = [
+  "G... gah...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tao reels."
+
+[[record]]
+id = "tien_tao_36"
+selector = 0x02C0
+reference_address = "99:8580"
+reference_offset = 0xC8580
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B2A4"
+original_offset = 0xCB2A4
+original_length = 18
+source_sha256 = "4bea76f2ae2c686c421ef8eacc645be146c42586dad6d3b88fcb67a9b0cf0873"
+english = [
+  "N... no...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tao refuses to accept defeat."
+
+[[record]]
+id = "tien_tao_37"
+selector = 0x02C1
+reference_address = "99:8582"
+reference_offset = 0xC8582
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B2B6"
+original_offset = 0xCB2B6
+original_length = 134
+source_sha256 = "5e72960fdaa02f3e3dc3cb6983f4c739b51a369a5c20f581ec369df2446db343"
+english = [
+  "He won't wake for",
+  "several days...",
+  "",
+  "",
+  "Take him home.",
+  "And never show",
+  "",
+  "",
+  "yourselves before",
+  "us again...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Tien sends the unconscious Tao away with the Crane Hermit."
+
+[[record]]
+id = "tien_tao_38"
+selector = 0x02C2
+reference_address = "99:8584"
+reference_offset = 0xC8584
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B33C"
+original_offset = 0xCB33C
+original_length = 70
+source_sha256 = "14ae6b0a4bb3295c307c80ead2a82c04a473fe91117b97f58d85c1efbbda9db4"
+english = [
+  "Y-you...",
+  "You crushed him!!",
+  "",
+  "",
+  "I won't let you",
+  "leave here alive!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; the Crane Hermit threatens Tien."
+
+[[record]]
+id = "tien_tao_39"
+selector = 0x02C3
+reference_address = "99:8586"
+reference_offset = 0xC8586
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B382"
+original_offset = 0xCB382
+original_length = 112
+source_sha256 = "1572ed7a87cb462ff800e45cf2b49510aaa38b7d0df59f276b4f4eb11a8ad68f"
+english = [
+  "Well now...",
+  "You've become such",
+  "",
+  "",
+  "a great fighter.",
+  "",
+  "",
+  "",
+  "There's no need for",
+  "an old man like me",
+  "anymore...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien/Tao continuation; Master Roshi marvels at Tien's growth and says an old man like him is no longer needed."
+
+[[record]]
+id = "tien_tao_unrecognized_00"
+selector = 0x02C4
+reference_address = "99:8588"
+reference_offset = 0xC8588
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B3F2"
+original_offset = 0xCB3F2
+original_length = 152
+source_sha256 = "96ae5283e64d4db285d8b9e063732dbc6ed2b626db1baceefbc2179064e9c1fd"
+english = [
+  "Now then, it's time",
+  "for match two!!",
+  "",
+  "",
+  "Last tournament's",
+  "runner-up, Goku,",
+  "",
+  "",
+  "versus the woman who",
+  "won preliminaries,",
+  "Anonymous entrant!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Recognition-bit-clear epilogue to the Tien/Tao root; the announcer introduces Goku versus the anonymous woman who won the preliminaries. The native two-line, two-line, three-line page layout is preserved because changing it caused later pages to be skipped at runtime."
+
+[[record]]
+id = "tien_tao_unrecognized_01"
+selector = 0x02C5
+reference_address = "99:858A"
+reference_offset = 0xC858A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B48A"
+original_offset = 0xCB48A
+original_length = 116
+source_sha256 = "51584ecd54ff3f71679cbc19cb3c8e29d043131725e8ff86407ff0b9ccd16e0f"
+english = [
+  "At her request,",
+  "she will be called",
+  "the anonymous",
+  "contestant.",
+  "Now, begin",
+  "match two!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Recognition-bit-clear epilogue; at the contestant's request, the announcer calls her Anonymous and asks the fighters to begin match two. The native four-line then two-line page layout is preserved."
+

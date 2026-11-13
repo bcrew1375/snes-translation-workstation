@@ -1,0 +1,683 @@
+schema_version = 1
+
+[[record]]
+id = "junior_kami_00"
+selector = 0x030A
+reference_address = "99:8614"
+reference_offset = 0xC8614
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C5F8"
+original_offset = 0xCC5F8
+original_length = 140
+source_sha256 = "5d1cb909d2e607a5d00dcd2a28a00760caa22b164e4e98cbe3837d10129024e4"
+english = [
+  "Tch... I thought",
+  "Goku would",
+  "entertain me",
+  "a little longer...",
+  "But this pointless",
+  "game ends",
+  "right now!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior reacts to Goku defeat."
+
+[[record]]
+id = "junior_kami_01"
+selector = 0x030B
+reference_address = "99:8616"
+reference_offset = 0xC8616
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C684"
+original_offset = 0xCC684
+original_length = 108
+source_sha256 = "5f080b1ea2af1413eb4efa9f741beab9cc6940a5a2871d1487ea918b96e9eb3f"
+english = [
+  "....No!!",
+  "",
+  "",
+  "",
+  "Junior gave up on",
+  "the tournament",
+  "now that Goku lost!!",
+  "I have to stop him!!",
+  "At once!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Kami moves to stop Junior."
+
+[[record]]
+id = "junior_kami_02"
+selector = 0x030C
+reference_address = "99:8618"
+reference_offset = 0xC8618
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C6F0"
+original_offset = 0xCC6F0
+original_length = 20
+source_sha256 = "2796518677cd91404383b67d84cff0ee8a9e442b1bf5f40db39c3e585a94065f"
+english = [
+  "J-Junior...!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Kami calls to Junior."
+
+[[record]]
+id = "junior_kami_03"
+selector = 0x030D
+reference_address = "99:861A"
+reference_offset = 0xC861A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C704"
+original_offset = 0xCC704
+original_length = 98
+source_sha256 = "c9801f3e27f598fc87576daa70c628a803b315de3ca780674c78e89fa16ecb70"
+english = [
+  "Too bad,",
+  "Goku...",
+  "",
+  "",
+  "What a pathetic",
+  "end for one who",
+  "was to be my",
+  "destined rival...",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior mocks the defeated Goku."
+
+[[record]]
+id = "junior_kami_04"
+selector = 0x030E
+reference_address = "99:861C"
+reference_offset = 0xC861C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C766"
+original_offset = 0xCC766
+original_length = 84
+source_sha256 = "fc9659d61b7b75d2decab031c71602adf290185c2cd61dfff24c5e30d2cfbf5a"
+english = [
+  "Now there are no",
+  "more hindrances.",
+  "",
+  "",
+  "Not even Kami can",
+  "stand against me.",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior declares no one can stop him."
+
+[[record]]
+id = "junior_kami_goku_reaction"
+selector = 0x002A
+reference_address = "99:8054"
+reference_offset = 0xC8054
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:89A2"
+original_offset = 0xC89A2
+original_length = 12
+source_sha256 = "f7ff7c7bfb08e7e93d32f4c5cdb308c6f12c0b0524a4f082453bc973b09a1ee7"
+english = [
+  "What!?",
+]
+status = "implemented"
+notes = "Shared selector $002A; Goku reacts between selectors $030D and $030E in root $0018."
+
+[[record]]
+id = "junior_kami_05"
+selector = 0x030F
+reference_address = "99:861E"
+reference_offset = 0xC861E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C7BA"
+original_offset = 0xCC7BA
+original_length = 92
+source_sha256 = "82575ceb1b9138e35e553446eaa22c7d539d59362a71a5ea3d284846e090b54d"
+english = [
+  "Is that so,",
+  "Junior...?",
+  "",
+  "",
+  "Another remains",
+  "who intends to",
+  "defeat you.",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Kami confronts Junior."
+
+[[record]]
+id = "junior_kami_06"
+selector = 0x0310
+reference_address = "99:8620"
+reference_offset = 0xC8620
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C816"
+original_offset = 0xCC816
+original_length = 22
+source_sha256 = "92da3dd43f5112325cd1854ac8ca9435a6236f330e7c1ac84bc71a1a4076924e"
+english = [
+  "Y-you!! Who are you!?",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior demands the unidentified man's identity; he does not recognize Kami until selector $0314."
+
+[[record]]
+id = "junior_kami_07"
+selector = 0x0311
+reference_address = "99:8622"
+reference_offset = 0xC8622
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C82C"
+original_offset = 0xCC82C
+original_length = 96
+source_sha256 = "d47f3b39c58de1ca6adc48e7bd5ab93b91fd9dac7c559ceee1362f99043b9408"
+english = [
+  "Heh heh...",
+  "Only you and I",
+  "remain now...",
+  "",
+  "I know all you are,",
+  "all that you are",
+  "thinking.",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Kami sees through Junior."
+
+[[record]]
+id = "junior_kami_08"
+selector = 0x0312
+reference_address = "99:8624"
+reference_offset = 0xC8624
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C88C"
+original_offset = 0xCC88C
+original_length = 48
+source_sha256 = "9f3bb48fc93a0a5c35f6b53ed2215669a484a6d6622aad07766f52a0d0cfedc1"
+english = [
+  "N-no...",
+  "That is",
+  "impossible!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior rejects the claim."
+
+[[record]]
+id = "junior_kami_09"
+selector = 0x0313
+reference_address = "99:8626"
+reference_offset = 0xC8626
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C8BC"
+original_offset = 0xCC8BC
+original_length = 150
+source_sha256 = "0263a08e1c296d80b32bdbd7a2325f0f8c246b31a8d35211d5d6231184ceeeb3"
+english = [
+  "Enough!!",
+  "",
+  "",
+  "",
+  "I don't care",
+  "if you're from",
+  "another planet",
+  "or if you're",
+  "my brother!!",
+  "None of it matters!!",
+  "",
+  "",
+  "I grew up here.",
+  "I'm Goku!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Portrait-supported Goku statement embedded in root $0018."
+
+[[record]]
+id = "junior_kami_10"
+selector = 0x0314
+reference_address = "99:8628"
+reference_offset = 0xC8628
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C952"
+original_offset = 0xCC952
+original_length = 48
+source_sha256 = "8ab8e54b665373a7335276d6bead99af99d0bfad355df3066588dc6cd94e78b3"
+english = [
+  "I see!",
+  "At last I know",
+  "who you are, Kami!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior recognizes Kami."
+
+[[record]]
+id = "junior_kami_11"
+selector = 0x0315
+reference_address = "99:862A"
+reference_offset = 0xC862A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C982"
+original_offset = 0xCC982
+original_length = 30
+source_sha256 = "1b1543a34b92da9b9a6cee8c38900e41bf340552425b716655a90edc8dbc9746"
+english = [
+  "Why is Kami",
+  "down here!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior asks why Kami descended."
+
+[[record]]
+id = "junior_kami_12"
+selector = 0x0316
+reference_address = "99:862C"
+reference_offset = 0xC862C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C9A0"
+original_offset = 0xCC9A0
+original_length = 80
+source_sha256 = "7a1ae33d1f1a8387947c8d3b8c1b3cec456503eb3681479991a6a2e55865e656"
+english = [
+  "Now you know,",
+  "Junior...",
+  "",
+  "",
+  "Why I came below",
+  "goes without saying.",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Kami confirms his purpose."
+
+[[record]]
+id = "junior_kami_13"
+selector = 0x0317
+reference_address = "99:862E"
+reference_offset = 0xC862E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C9F0"
+original_offset = 0xCC9F0
+original_length = 68
+source_sha256 = "f0d70416fa39c7d57bd4820109d73bc9c46eba6e2a0826ee801edd6944d9cbba"
+english = [
+  "You came to",
+  "destroy me, but",
+  "that is not",
+  "your real aim!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior identifies their shared-life constraint."
+
+[[record]]
+id = "junior_kami_14"
+selector = 0x0318
+reference_address = "99:8630"
+reference_offset = 0xC8630
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CA34"
+original_offset = 0xCCA34
+original_length = 34
+source_sha256 = "7d41ba7c44802a5a4842a9148ec0343c35237a733b16ed706423c31bd9197a42"
+english = [
+  "No.",
+  "Just as you say!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Kami confirms Junior deduction."
+
+[[record]]
+id = "junior_kami_15"
+selector = 0x0319
+reference_address = "99:8632"
+reference_offset = 0xC8632
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CA56"
+original_offset = 0xCCA56
+original_length = 94
+source_sha256 = "a7ee75f6e74a4a5194643446e0f10c8465e6a44d784aeb48f0222181804f2012"
+english = [
+  "Wh-what is",
+  "going on",
+  "here...?",
+  "",
+  "The contestants",
+  "seem to be in",
+  "some dispute...",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "The announcer observes the confrontation."
+
+[[record]]
+id = "junior_kami_16"
+selector = 0x031A
+reference_address = "99:8634"
+reference_offset = 0xC8634
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CAB4"
+original_offset = 0xCCAB4
+original_length = 156
+source_sha256 = "ece7c2a467c8d421f0481bf3c8246d6859a3c9a15cdc899c1692a7f47804d725"
+english = [
+  "Ha ha ha...!",
+  "You came here",
+  "to defeat me!?",
+  "",
+  "Kami, though blood",
+  "once divided us,",
+  "we are one being!!",
+  "",
+  "If you kill me,",
+  "you too will",
+  "die!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior mocks the shared-life constraint."
+
+[[record]]
+id = "junior_kami_17"
+selector = 0x031B
+reference_address = "99:8636"
+reference_offset = 0xC8636
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CB50"
+original_offset = 0xCCB50
+original_length = 76
+source_sha256 = "70dac1531adbb0905d3fb0f250f658b9ce0903b36aafffd1139cef2511c6f06a"
+english = [
+  "Don't worry...",
+  "",
+  "",
+  "",
+  "A human taught me",
+  "how to seal away",
+  "your evil.",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Kami reveals the sealing method."
+
+[[record]]
+id = "junior_kami_18"
+selector = 0x031C
+reference_address = "99:8638"
+reference_offset = 0xC8638
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CB9C"
+original_offset = 0xCCB9C
+original_length = 16
+source_sha256 = "ce24c8cba4a1e79e93476ba299d29d1cdbead4fe27377a1b9bbb660132cfdccc"
+english = [
+  "Wh-what!?",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior reacts."
+
+[[record]]
+id = "junior_kami_19"
+selector = 0x031D
+reference_address = "99:863A"
+reference_offset = 0xC863A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CBAC"
+original_offset = 0xCCBAC
+original_length = 30
+source_sha256 = "f529dd8afb92498cdef9e8698d2f30a0a61e4837538863d3c8f16e611fadbe44"
+english = [
+  "What will you",
+  "do, Kami!?",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior demands Kami plan."
+
+[[record]]
+id = "junior_kami_20"
+selector = 0x031E
+reference_address = "99:863C"
+reference_offset = 0xC863C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CBCA"
+original_offset = 0xCCBCA
+original_length = 18
+source_sha256 = "a69eee85a4b4f57a0ad3e9cf479aea8149fe19467ff8898d1288e23c8b8197e6"
+english = [
+  "Are you ready?",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Kami warns Junior."
+
+[[record]]
+id = "junior_kami_21"
+selector = 0x031F
+reference_address = "99:863E"
+reference_offset = 0xC863E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CBDC"
+original_offset = 0xCCBDC
+original_length = 14
+source_sha256 = "93279bc3ff4d69dd226f13cde547b995a40c4080fb1db85e4f5ae7feaf01cef7"
+english = [
+  "N-no way...",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior recognizes the technique."
+
+[[record]]
+id = "junior_kami_22"
+selector = 0x0320
+reference_address = "99:8640"
+reference_offset = 0xC8640
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CBEA"
+original_offset = 0xCCBEA
+original_length = 14
+source_sha256 = "0680071e28d388cfa02e080926cb26b5c37ccdcdc2257d139b185f679d1b4733"
+english = [
+  "Evil Containment!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Kami invokes the Evil Containment technique."
+
+[[record]]
+id = "junior_kami_23"
+selector = 0x0321
+reference_address = "99:8642"
+reference_offset = 0xC8642
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CBF8"
+original_offset = 0xCCBF8
+original_length = 16
+source_sha256 = "5d3bdc80f344884826809517feab5ba58440ba07ea075a76c86fa7412dc82fa3"
+english = [
+  "Evil Containment!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior identifies the technique."
+
+[[record]]
+id = "junior_kami_24"
+selector = 0x0322
+reference_address = "99:8644"
+reference_offset = 0xC8644
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CC08"
+original_offset = 0xCCC08
+original_length = 20
+source_sha256 = "2151fc4837e88d030a340f799e77f8864de95fa252a537d8cb2cb9a0512cefa0"
+english = [
+  "Containment Reversal!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior counters the Evil Containment technique."
+
+[[record]]
+id = "junior_kami_25"
+selector = 0x0323
+reference_address = "99:8646"
+reference_offset = 0xC8646
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CC1C"
+original_offset = 0xCCC1C
+original_length = 18
+source_sha256 = "da333b43d650efe07ee69c39f6003168f5f690c1694f923c9af4984ec4951fbf"
+english = [
+  "He reversed it!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "An observer reacts to the reversal."
+
+[[record]]
+id = "junior_kami_26"
+selector = 0x0324
+reference_address = "99:8648"
+reference_offset = 0xC8648
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CC2E"
+original_offset = 0xCCC2E
+original_length = 104
+source_sha256 = "f22650b6d72f64e5e72bc6d81f9185b0b103df0dc2275e0ef9c1597a673b6eba"
+english = [
+  "D-damn!!",
+  "How could this...",
+  "end like this...?",
+  "",
+  "At least I must",
+  "return this",
+  "human body...!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Kami resolves to return Shen body."
+
+[[record]]
+id = "junior_kami_27"
+selector = 0x0325
+reference_address = "99:864A"
+reference_offset = 0xC864A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CC96"
+original_offset = 0xCCC96
+original_length = 82
+source_sha256 = "5bf8b472d6421341f2f5af50420623b088ac2cdc747306a8ccaf2da33d0f650d"
+english = [
+  "Goku!!",
+  "I don't care",
+  "if I die!!",
+  "",
+  "Defeat him!!",
+  "Purge his evil!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Kami entrusts Junior defeat to Goku."
+
+[[record]]
+id = "junior_kami_28"
+selector = 0x0326
+reference_address = "99:864C"
+reference_offset = 0xC864C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CCE8"
+original_offset = 0xCCCE8
+original_length = 10
+source_sha256 = "c566063f919e6c26fa268d4d279cbe4a4ad3f07d94912012d253ada934947570"
+english = [
+  "Gah!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Kami is pulled into the container."
+
+[[record]]
+id = "junior_kami_29"
+selector = 0x0327
+reference_address = "99:864E"
+reference_offset = 0xC864E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CCF2"
+original_offset = 0xCCCF2
+original_length = 78
+source_sha256 = "9528bad5848a088e2112023f07f20d8c715448ad353039698d95863fba591bd2"
+english = [
+  "If you thought",
+  "that trick would work",
+  "on me forever,",
+  "you're an amateur.",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior mocks Kami failed technique."
+
+[[record]]
+id = "junior_kami_30"
+selector = 0x0328
+reference_address = "99:8650"
+reference_offset = 0xC8650
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CD40"
+original_offset = 0xCCD40
+original_length = 124
+source_sha256 = "69c82f332277905ef56dc45df9a6e96e2816f0ab318ee3a02bbbb73a10a3d0d9"
+english = [
+  "K-Kami lost...",
+  "He has been",
+  "sealed inside",
+  "that little jar!",
+  "Junior swallowed",
+  "the jar",
+  "whole...!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Krillin reports Kami sealing and the swallowed jar."

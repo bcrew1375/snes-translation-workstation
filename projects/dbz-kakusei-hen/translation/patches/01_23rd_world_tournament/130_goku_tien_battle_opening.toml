@@ -1,0 +1,209 @@
+schema_version = 1
+
+[[record]]
+id = "goku_tien_battle_opening_00"
+selector = 0x0332
+reference_address = "99:8664"
+reference_offset = 0xC8664
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CF1E"
+original_offset = 0xCCF1E
+original_length = 110
+source_sha256 = "f3bbfdcf439cfcfaa3186dbf3645c130b0608bf10d2b67bf6cdf9f8e566705ae"
+english = [
+  "Ah... Goku is",
+  "taking a breather.",
+  "He's stripping off",
+  "his uniform!",
+  "Well, no wonder.",
+  "It's so hot out.",
+  "",
+  "",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Root $0014 opening after the observed Tien HUD; the announcer notices Goku removing his weighted uniform."
+
+[[record]]
+id = "goku_tien_battle_opening_01"
+selector = 0x0333
+reference_address = "99:8666"
+reference_offset = 0xC8666
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CF8C"
+original_offset = 0xCCF8C
+original_length = 52
+source_sha256 = "7e86a38e852c56fca425638b71ad27830ddc08261ff8908dceedb5685fcb1e16"
+english = [
+  "Oh... Already?",
+  "His foe must be",
+  "very strong...",
+  "",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Kami recognizes that Goku is removing the weights because Tien is a serious opponent."
+
+[[record]]
+id = "goku_tien_battle_opening_02"
+selector = 0x0334
+reference_address = "99:8668"
+reference_offset = 0xC8668
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CFC0"
+original_offset = 0xCCFC0
+original_length = 10
+source_sha256 = "934fb9155f535475677e213f8226010c278af452af96bc715fd6d2354074127b"
+english = ["Hup!"]
+max_line_length = 21
+status = "implemented"
+notes = "Goku removes the weighted clothing."
+
+[[record]]
+id = "goku_tien_battle_opening_03"
+selector = 0x0335
+reference_address = "99:866A"
+reference_offset = 0xC866A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CFCA"
+original_offset = 0xCCFCA
+original_length = 52
+source_sha256 = "309a7c00f3b1a8d101f58a16ea0a90651b92ae73bf34f7f0bdacd927015bc94a"
+english = [
+  "Goku, mind if I",
+  "take a look at",
+  "that shirt?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Krillin asks to inspect Goku's removed shirt."
+
+[[record]]
+id = "goku_tien_battle_opening_04"
+selector = 0x0336
+reference_address = "99:866C"
+reference_offset = 0xC866C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CFFE"
+original_offset = 0xCCFFE
+original_length = 14
+source_sha256 = "b86bab5198befef4f9e593ff10d0aae8ca9c71a1e90302feae0124fce45130e1"
+english = ["Huh? Sure."]
+max_line_length = 21
+status = "implemented"
+notes = "Goku hands the weighted shirt to Krillin."
+
+[[record]]
+id = "goku_tien_battle_opening_05"
+selector = 0x0337
+reference_address = "99:866E"
+reference_offset = 0xC866E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:D00C"
+original_offset = 0xCD00C
+original_length = 40
+source_sha256 = "ddbe7fe80422db399e5c339fe0988219a8c7c01d6cb54a8d90f9fe9eff58c126"
+english = [
+  "Kami calls it",
+  "training too...",
+  "",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Goku explains that Kami made the weighted clothing part of his training."
+
+[[record]]
+id = "goku_tien_battle_opening_06"
+selector = 0x0338
+reference_address = "99:8670"
+reference_offset = 0xC8670
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:D034"
+original_offset = 0xCD034
+original_length = 80
+source_sha256 = "8e31727d2cdfae20c1c867df058d15a78ad9f2ca80330a508b9aeea5745ff855"
+english = [
+  "Boots too!",
+  "Wristbands too!!",
+  "",
+  "",
+  "All together, over",
+  "100 kilos...!",
+  "",
+  "",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Krillin realizes that Goku's full weighted outfit exceeds 100 kilograms."
+
+[[record]]
+id = "goku_tien_battle_opening_07"
+selector = 0x0339
+reference_address = "99:8672"
+reference_offset = 0xC8672
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:D084"
+original_offset = 0xCD084
+original_length = 52
+source_sha256 = "e9b9b09ab856fbdc00a7218e9dcc4d193f41c64f399016a4ed9bbdfbd34b678c"
+english = [
+  "Ha! So light!",
+  "So light!",
+  "",
+  "",
+  "Sorry!",
+  "",
+  "",
+  "",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Goku returns to the match after removing the weights."
+
+[[record]]
+id = "goku_tien_battle_opening_08"
+selector = 0x033A
+reference_address = "99:8674"
+reference_offset = 0xC8674
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:D0B8"
+original_offset = 0xCD0B8
+original_length = 90
+source_sha256 = "09188322652c4d08941c5a22e3da2f5e758e919a6ccd068c1b4f0ddf5de18bee"
+english = [
+  "I-I see...",
+  "So that's it.",
+  "",
+  "All right!!",
+  "This is getting",
+  "more exciting!!",
+  "",
+  "",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Tien accepts the revelation and grows more eager to continue fighting Goku."
+
+[[record]]
+id = "goku_tien_weight_reaction_shared"
+selector = 0x0F24
+reference_address = "98:C268"
+reference_offset = 0xC4268
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "98:DACC"
+original_offset = 0xC5ACC
+original_length = 82
+source_sha256 = "b4f9f431a0c78565e252a123cbafa625b789909fcfb98a42b7b0ee3c75cf74c0"
+english = [
+  "W-what!?",
+  "",
+  "",
+  "G-Goku...",
+  "You wore that",
+  "the whole time",
+  "we fought?!",
+  "",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Shared selector $0F24; Krillin reacts to the weight Goku had worn throughout the match."

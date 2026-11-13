@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from snesworkbench.errors import WorkstationError
-from snesworkbench.manifests import manifest_int, manifest_int_list, read_manifest
+from snesworkbench.manifests import manifest_int, manifest_int_list, read_manifest_collection
 from snesworkbench.patching import bounded_write
 from snesworkbench.rom import parse_cpu_address
 
@@ -52,7 +52,7 @@ def _hex(value: object, field: str) -> int:
 
 
 def load_title_menu_records(path: str | Path) -> list[TitleMenuRecord]:
-    rows = read_manifest(path, MENU_FIELDS)
+    rows = read_manifest_collection(path, MENU_FIELDS)
     records: list[TitleMenuRecord] = []
     seen: set[str] = set()
     for row in rows:

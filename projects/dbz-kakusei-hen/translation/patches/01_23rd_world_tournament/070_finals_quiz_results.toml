@@ -1,0 +1,39 @@
+schema_version = 1
+
+[[record]]
+id = "finals_quiz_result_x"
+selector = 0x029A
+reference_address = "99:8534"
+reference_offset = 0xC8534
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A8AE"
+original_offset = 0xCA8AE
+original_length = 42
+source_sha256 = "aa1d879b65a127899094007148b5b58afb5cceb271a00cf7300c55c54d2c8bb1"
+english = [
+  "Hmm...",
+  "You understand",
+  "quite well.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Finals quiz X result; the speaker approves the answer before root $000A converges on the Tien/Tao continuation."
+
+[[record]]
+id = "finals_quiz_result_yb"
+selector = 0x029B
+reference_address = "99:8536"
+reference_offset = 0xC8536
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A8D8"
+original_offset = 0xCA8D8
+original_length = 32
+source_sha256 = "5f00dd2e6049a8c04bbc81410113828db7f3921ae54c75bd94d6829c24fe86ba"
+english = [
+  "I can't let",
+  "that pass.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Finals quiz shared Y/B result; root $000B converges on the Tien/Tao continuation."
+

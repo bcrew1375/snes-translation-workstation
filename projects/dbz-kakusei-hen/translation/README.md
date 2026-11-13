@@ -16,14 +16,24 @@ preferred where it reflects an address. CPU addresses remain explicit
 English lines, menu character offsets, and glossary aliases; escaped `\\n`
 sequences are not used to define patch line breaks.
 
-- `patches/*.toml` records stable IDs, source locations/lengths/hashes, English text,
-  workflow status, and non-expressive notes. The `english` value is an array in
-  which each string is one explicit displayed line. Files are loaded in lexical
-  filename order, and records retain their declared order within each file.
-- `references.toml` records pointer-table or direct-reference metadata without source
-  dialogue.
-- `ranges.toml` records reviewed allocation ranges for translated streams and custom
-  glyph storage.
+- `patches/<arc>/*.toml` records stable IDs, selectors, pointer locations,
+  source locations/lengths/hashes, English text, workflow status, and
+  non-expressive notes. Each story record is self-contained; no parallel
+  reference manifest has to remain synchronized with it. The `english` value is
+  an array in which each string is one explicit displayed line. Arc directories
+  and files use sparse three-digit story order prefixes; numbering restarts within
+  each arc and leaves room for later discoveries without mass renaming.
+  Files are loaded recursively in lexical relative-path order, and records retain
+  their declared order within each file. The current layout is:
+  - `patches/00_opening/` for the opening narration and recap.
+  - `patches/01_23rd_world_tournament/` for the tournament story through the
+    Junior battle branches.
+  Future story content should receive the next ordered arc directory rather than
+  extending one game-wide filename sequence. Stable record IDs are independent of
+  this organizational path and must not be renumbered during moves.
+- `ranges/**/*.toml` records reviewed allocation ranges by technical responsibility:
+  core fields, HUD resources, menu/name/font resources, allocator pools, and story
+  source ranges. The loader still validates and processes them as one ordered collection.
 - `menu.toml` records the fixed title, New Game, sound-mode, and indexed BGM menu
   records, including record type and reviewed character-level alignment offsets.
 - `name_entry.toml` records both 85-entry name-picker pages, their selection maps,
@@ -31,6 +41,12 @@ sequences are not used to define patch line breaks.
 - `choices.toml` records pointer-selected fixed labels and opening choices, source
   hashes, pointer locations, preserved native icon prefixes where applicable, and
   deterministic same-bank relocation destinations.
+- `battle_text.toml` records the battle-script resources selected through bank-$B4's
+  `$1000`-based pointer table. It preserves each source stream's native line count and
+  cell allocation, records the runtime/control-flow-established path and speaker, and
+  keeps all implemented Goku/Chi-Chi and Junior battle resources in place. The Junior
+  battle (encounter `$0003`) includes opening, win, and loss resources plus scenario
+  continuation patches for both result paths.
 - `glossary.toml` records the project's canonical English terminology for names,
   terms, techniques, places, races, organizations, and story arcs. Each record
   contains a stable `id`, a `category`, the `canonical` English form, the
@@ -39,18 +55,30 @@ sequences are not used to define patch line breaks.
   reconstructed dialogue. It uses the modern North American anime and game
   localization as the primary standard: Frieza, Krillin, Jeice, King Kai, Grand
   Elder Guru, World Tournament, Special Beam Cannon, Destructo Disc, Tri-Beam,
-  Spirit Bomb, Kaio-ken, and related forms. The aliases array may contain manga-
+  Spirit Bomb, Kaio-ken, and related forms. Tournament-specific exceptions use
+  `Shen` for Kami's contestant alias, `Kami` for his identity, and `Crane Hermit`
+  for Tsuru-sen'nin; `Master Shen` is prohibited because it conflates two separate
+  characters. The aliases array may contain manga-
   oriented or source-name alternatives (for example Freeza, Kuririn, Tenshinhan,
   Kaio, Kienzan, Makankosappo, Tenkaichi Budokai) for identification purposes,
   but the canonical field is the required output form.
 
-The translation builder concatenates the ordered `patches/*.toml` collection and
-joins it to `references.toml` by stable `id`;
-selectors are not inferred from patch-column positions. Only confirmed ranges whose
-names begin with `free_text_` are eligible for relocated text allocation. The reviewed
-`free_text_bank_99_tail` range is the production allocation used by longer tournament
-records. Other structural gaps and streams lacking a known scenario-root reference
-remain reserved until all reference paths are validated.
+The translation builder recursively concatenates the ordered
+`patches/<arc>/*.toml` collection.
+Only confirmed ranges whose names begin with `free_text_`, compact suffixes from fully
+claimed in-place streams, and complete source allocations proven to be vacated by
+mandatory relocation are eligible for relocated text allocation. Compact English
+streams end immediately after their `$0000` terminator; unused Japanese-width line
+cells are not emitted. After every record and alias is validated, the builder may reuse
+the bytes between such a compact terminator and that record's hash-pinned source end.
+If a fully claimed stream is too large to remain in place, its complete hash-pinned
+source allocation becomes a lower-priority fallback only after every selector that
+references it is scheduled to move. Sources with any unclaimed alias remain reserved.
+The reviewed `free_text_bank_99_tail` remains the primary fallback production pool.
+Relocation-required streams are allocated largest-first, with manifest order as the
+stable tie-breaker, to avoid fragmenting reviewed space; returned build plans retain
+manifest order.
+Other structural gaps and streams lacking fully established ownership remain reserved.
 
 The implemented automatic opening covers the four narration panels at command-`$08`
 selectors `$07E1-$07E4` and all 22 text records shown in the following recap before
@@ -59,10 +87,10 @@ post-fade selector order; the tracked reference manifest records every selector 
 target without reproducing source dialogue.
 
 The opening 23rd World Tournament scene is implemented for command-`$08`
-selectors `$0200-$021A`. Sixteen records fit their original bank-$99
-allocations; eleven longer records relocate deterministically into the reviewed
-all-`$FF` tail at CPU `$99:F8EE-$99:FAA1` / ROM `$0CF8EE-$0CFAA1`, with only
-their same-bank selector pointers updated.
+selectors `$0200-$021A`. Seventeen records fit their original bank-$99
+allocations; ten longer records relocate deterministically into safe compact-stream
+suffixes or the reviewed all-`$FF` tail beginning at CPU `$99:F8EE` / ROM
+`$0CF8EE`, with only their same-bank selector pointers updated.
 
 Two opening location bars use a separate fixed bank-`$88` pointer table rather
 than command-`$08` dialogue selectors. Table entry 12 is translated as
@@ -75,7 +103,9 @@ records permit 28 characters per line, while portrait-bearing `context_pair`
 records permit 21. Confirmed records declare that value as `max_line_length`;
 the build checks it against the ROM presentation metadata and rejects longer
 explicit lines before allocation so the game cannot split a word at the right
-edge of a box. Four short opening-recap records use the unclassified `default`
+edge of a box. Explicit newlines, including blank lines used to reach the next
+four-line box, are encoded as `$000A`; unused cells at the end of a line are not
+padded. Four short opening-recap records use the unclassified `default`
 presentation and intentionally omit `max_line_length` until their visible width
 is confirmed; their encoded cell capacity and box height remain validated.
 
@@ -95,16 +125,17 @@ X and Y both reach scenario cursor `$91:8193` and Bulma response selector `$021B
 (`O-oh... Y-you think` / `so...?`). A does not dismiss or select the panel. Both
 English streams exceed their compact original allocations by two bytes, so the
 builder relocates them deterministically within the reviewed bank-`$99` pool:
-`$021C` moves from `$99:906E` to `$99:FAA2`, and `$021B` moves from `$99:9060`
-to `$99:FAC0`. Only pointer words `$99:8438` and `$99:8436` are updated.
+`$021C` moves from `$99:906E` to the compact suffix at `$99:998A`, and `$021B`
+moves from `$99:9060` to the compact suffix at `$99:9526`. Only pointer words
+`$99:8438` and `$99:8436` are updated.
 
 After either response, all three result values reconverge on the same Master
 Roshi dialogue. Checkpoint 2 includes every intervening command-`$08` stream:
 selectors `$021D-$0221` cover Roshi's surprise, the returning competitors'
 greetings from Chiaotzu and Tien, Yamcha's observation, and Krillin's explanation
 that their changed appearances left Roshi
-stunned. Four streams fit in place; `$021F` relocates deterministically within the
-reviewed bank-`$99` text pool at `$99:FAD0-$99:FAF3`. Their consecutive pointer slots are
+stunned. Four streams fit in place; `$021F` relocates deterministically into a safe
+compact suffix at `$99:AB6A-$99:AB8D`. Their consecutive pointer slots are
 `$99:843A-$99:8443`, and their original source span is `$99:908A-$99:917D`.
 
 The common route then reaches the second fully rendered quiz panel at frame 8420.
@@ -191,6 +222,174 @@ scene at selector `$027C`, cursor `$91:87A5`, with byte-identical captures.
 The revised dialogue preserves the source's four-line box count with explicit
 page-padding lines where required. Its translated ROM is SHA-256 `abf9222a...`;
 final-ROM replay confirmed all page transitions and quiz rows without clipping.
+
+Checkpoint 7 continues at selector `$027C`, cursor `$91:87A5`, and translates
+selectors `$027C-$0280`. The scene covers contestant 51's win, another
+contestant recognizing an unusually strong fighter, Krillin reacting to the
+quality of this tournament's field, Goku identifying Piccolo's reincarnation
+and judging his training, and contestant 2 qualifying for the World Tournament
+finals. Source pagination remains exactly 1, 1, 2, 3, and 1 dialogue boxes.
+Selectors `$027D/$027E` relocate deterministically to `$99:FB32/$99:FB60`;
+the other three streams remain in place.
+
+After `$0280`, command `$07` at CPU `$91:87EE` opens the next `DBZ Trivia Quiz`.
+Resource indices `$0010/$0011/$0012` use pointers `$98:9B4A/$98:9B4C/$98:9B4E`.
+Their localized X/Y/B rows are `Heh heh heh!`, `Peace!`, and `I did it!`.
+Y fits in place at `$98:9F96`; X/B preserve their native icon/spacer prefixes
+and relocate to the reviewed bank-`$98` tail at `$98:F5A6/$98:F5B8`.
+
+Final-ROM SHA-256 `220b5030e5d32bc6ff5db77d6ee7431eeb2fbb1423336ba652f40fb9dc15fe4f`
+was replayed from the retained pre-`$027C` state. The observed order is
+`$027C->$027D->$027E->$027F->$0280->$91:87EE`; seven dialogue-page captures
+and the quiz panel render without clipping. The final choice state, trace, and
+screenshots are retained locally under
+`local/runtime/second-prelim-final-220b5030-20261014/`.
+
+Checkpoint 8 continues from command `$07` at `$91:87EE` through the finals draw and
+stops at the next quiz. Independent original-ROM route tracing established the shared
+executed dialogue set `$0281-$0292`, `$0F25`, and `$0294-$0299`. Separate recognition
+evidence and source glyph review identify contiguous selector `$0293` as the alternate
+recognized-route second-match card naming Chi-Chi. All three choice branches reconverge before selector `$0281`, so one
+shared translation covers X/Y/B while preserving the distinct B route before
+`$91:8809`.
+
+The translated scene announces the remaining qualifiers, reactions from Goku and
+Krillin, Yajirobe's disguised loss to Hero/Shen (Kami in disguise), the eight finalists,
+and the four finals pairings. The unrecognized route selects bank-`$98` selector `$0F25`
+and displays `Goku vs Anonymous`; the recognized route uses `$0293` and displays
+`Goku vs Chi-Chi`. The final exchange
+explains that Mercenary Tao survived in a partly mechanical body, intends to kill Goku
+and Tien, and knows Tien's techniques inside and out. The prior `Saiya` interpretation
+was an error: `$028D` calls it "a lousy match" and does not contain a character name.
+Every dialogue record fits its original pinned allocation, so no additional bank-`$99`
+free space is consumed.
+
+After the bracket sequence, the existing bank-`$88` location entry `$0C` renders
+`World Tournament Arena`. Command `$07` at CPU `$91:8AE9` opens the next quiz with
+resource indices `$0013/$0014/$0015`. The localized X/Y/B rows are
+`This could be bad.`, `No big deal.`, and `We'll manage.` The X row preserves its
+native icon/spacer prefix and relocates to `$98:F5C8`; Y and B fit in place at
+`$98:9FC4/$98:9FDC`.
+
+Historical final-ROM X/Y/B replay on SHA-256
+`861d5808911c132cf512c552d0ead3759f6502c4079aeacbee1f94f6c71819b1` preserves result
+values 0/1/2 and executes the identical ordered
+selector sequence through `$0299`, including repeated `$0287`, disjoint `$0F25`, and no
+`$0293`. Every route reaches command `$07` at `$91:8AE9` and stops at cursor
+`$91:8AEA`. The three byte-identical terminal screenshots visibly confirm
+`World Tournament Arena` and the unclipped rows `This could be bad.`, `No big deal.`,
+and `We'll manage.` Fresh branch-specific next-quiz states and traces are retained
+locally under `local/runtime/finals-transition-final-861d5808-20261014/`.
+
+The next checkpoint translates the quiz results and the entire Tien-versus-Tao
+continuation. X writes result `0`, enters root `$000A` at CPU `$91:8B08`, and
+renders selector `$029A`; Y and B write `1/2`, enter root `$000B` at
+`$91:8B0F`, and render `$029B`. All three converge at root `$000C`, CPU
+`$91:8B16`, and execute common selectors `$029C-$02C3`. The recognition test at
+CPU `$91:8EB0` then controls the final two introduction lines: bit clear executes
+`$02C4-$02C5`, while bit set skips them and terminates the root at `$91:8EDD`.
+
+Recognition is not inferred from the later trivia answer. The earlier Chi-Chi X
+branch sets WRAM `$0D98` bit 0 through command `$3D $0000` at CPU `$91:8366`;
+an authentic retained X state contains `$0D98=$0001`, while the unrecognized Y
+state contains `$0000`. Command `$3E` at CPU `$83:D516` tests this transient flag.
+The finals checks at CPU `$91:8EB0` and root `$000D` entry `$91:8EDE` both use
+operand `$0000` and therefore test the same recognition bit.
+
+The recognized finals route uses selectors `$02C6-$02CA`: the announcer cancels
+the second match because Goku and Chi-Chi's marriage has been settled, followed
+by Goku, Chi-Chi, Master Roshi, and Bulma reactions. The unrecognized route in
+root `$000E`, CPU `$91:8F5F`, uses `$02CB-$02D5` and disjoint selectors
+`$0F1F-$0F22`, including the translated X/Y/B rows `When this is over.`,
+`Sorry, forget it.`, and `Let's get married!` from fixed resources
+`$0016-$0018`. The unrecognized sequence also interleaves shared selector
+`$001D` (`Chi-Chi!!`) after `$02CB` and shared selector `$001F` (`Yeah!`) after
+`$02D4`; these have independent pointer entries even where source content is
+duplicated elsewhere. The checkpoint now contains 66 command-`$08` records.
+Selector `$001D` relocates deterministically into a reviewed compact suffix;
+the other newly restored shared selector remains in place.
+
+The first actual battle-HUD audit extends beyond that checkpoint. The
+unrecognized branch reaches Goku versus Chi-Chi first. The recognized branch
+skips that fight, continues into root `$0013`, and executes additional dialogue
+from `$02D6` through `$0309` before command `$47` at CPU `$91:9931` starts its
+first later battle setup. Those intervening selectors are not part of the
+implemented checkpoint above, so the repository does not claim complete
+fresh-game translation coverage through the first HUD.
+
+The battle HUD is also outside the command-`$08` text path. Its fighter name,
+HP field, action, and status labels are generated as four 2bpp tile strips in
+WRAM and uploaded independently. `src/dbz_kakusei_hen/battle_hud.py` implements
+the confirmed base decompressor, deterministic recompressor, and post-decode
+interleave with pinned resource tests. The remaining localization task is to
+identify and replace the strip generator's source tables/compositor inputs; the
+large `$B0:8000` battle setup resource must not be treated as the label source.
+
+Root `$0018` is translated through the post-Goku-defeat Junior/Kami
+confrontation. Its actual opening order is `$030A-$030D`, shared `$002A`
+(`What!?`), then `$030E` onward. Selector `$0310` asks `Y-you!! Who are you!?`;
+Junior's recognition of Kami belongs at `$0314`. The three technique lines use
+allocation-safe localized terminology: `Evil Containment!!`,
+`Evil Containment!!`, and `Containment Reversal!`. After selector `$0328`, root
+`$0018` finishes its transition and routes to root `$0171` at CPU `$93:C163`.
+That root displays selector `$0806`; command `$07` at CPU `$93:C187` / ROM
+`$09C187` then opens the visible post-sealing Shenron prompt. The three
+runtime-confirmed rows are rendered from CPU `$98:C16A`, `$98:C17E`, and
+`$98:C194`: X `Save the game.`, Y `Boost power.`, and B `Boost health.` They fit
+their original bank-$98 allocations in place. CPU `$91:A755` is the second
+operand byte of the preceding command `$0E`, not a command boundary.
+
+Separate final-ROM captures now confirm the full branch structure. X enters
+selector `$0807` at CPU `$93:C197`; Y enters `$080A` at `$93:C1D7`; B enters
+the same `$080A` stream at `$93:C1FE`. Completed X/Y/B wishes all continue
+through `$0808` and then enter root `$001E`, whose Junior-battle lead-in begins
+at selector `$0329`. Cancelling the X/save workflow with B instead selects
+`$0809` at `$93:C1CC`; command `$1F $C187` at `$93:C1D4` loops back to the
+wish menu. Selectors `$0806-$080A` are translated in place as `This is a save
+point.` / `I'll grant you` / `one wish.`, `Choose your data...`, `Your wish` /
+`is granted...` / `Farewell.`, `Hurry.` / `Make your wish...`, and
+`Easily done.` All five use Shenron portrait resource `$67`, variant `$00`.
+
+Root `$001E` continues with the translated selectors `$0329-$0331` immediately
+after every successful Shenron X/Y/B branch converges. The tournament announcer
+objects to Junior starting the fight and is silenced; Goku orders Piccolo to spit
+out the bottle containing Kami, while Junior challenges him to take it by force
+and warns that killing him would also kill Kami. Portrait resources pin the
+speaker order as announcer (`$21`), Junior (`$03`), and Goku (`$00`). All nine
+streams fit their original allocations at ROM `$0CCDBC-$0CCF1D`; selector `$032D`
+retains its two native blank page-padding lines. After `$0331`, root `$001E`
+executes only arena/battle setup commands before terminating. The resulting
+deterministic translated ROM has SHA-256
+`13577602d3bba92f796bf4f2d974373d19d6c109faf18aaa8597a6995239f974`.
+
+The corrected checkpoint 6-8 wording was replayed again on the definitive translated
+ROM SHA-256 `f64cca802e0d11230095fa611ae07fbc833ff0a78ccbb99f31fcf47bc4a51375`.
+Bounded checkpoint-6 chunks execute `$0267-$027B`; checkpoint 7 executes
+`$027C-$0280`; and final X/Y/B runs preserve values 0/1/2 while executing the same
+checkpoint-8 selector sequence and reaching `$91:8AEA`. Runtime portraits confirm the
+corrected speaker notes, including Tien at `$0267`, Yamcha at `$026B/$026F/$027D/$0298`,
+Krillin at `$026E/$0297`, Yajirobe in disguise at `$0289/$028E/$028F`, and Master Roshi
+at `$0296/$0299`. Final evidence paths and hashes are recorded separately in
+`analysis/runtime-evidence.toml`; historical artifacts were not replaced.
+
+Those retained finals captures also exposed an untranslated top banner on the matchup
+announcement screens. Comparison with the reviewed fixed-resource strips identifies it
+as bank-$88 table entry `$27`, whose pointer is at `$88:804E` (ROM `$04004E`) and whose
+pinned source occupies `$88:8210-$88:822B` (ROM `$040210-$04022B`). It is translated in
+place as `Matchup Announcement`. A final-ROM replay on SHA-256 `e4e53732...` followed the
+retained X route through selectors `$028E-$0290`, continued across the bracket-transition
+fade, and captured the stable Match 3 screen with the translated banner fully visible and
+unclipped. Reproducibility paths and hashes are recorded in `analysis/runtime-evidence.toml`.
+
+The nearby scenario command `$28 $000A` at CPU `$91:89A9` is unrelated to the banner.
+Static handler analysis at `$83:CCDB` confirms that command `$28` treats its operand as
+a bit index in the WRAM flag array beginning at `$0CCE`; `$000A` sets bit 10.
+
+The actual fixed label meaning "behind the martial-arts stage" is bank-$88 table entry
+`$02`, not entry `$0A`. Its pointer at `$88:8004` targets the 12-byte source allocation
+at `$88:8064-$88:806F` (ROM `$040064-$04006F`). `Backstage` occupies that allocation
+exactly, including its terminator, so the label is translated in place without changing
+the pointer.
 
 Final-ROM SHA-256 `cd6516bc...` was replayed from the second trivia response through
 the choice. The observed order is `$0223`, `$001B`, `$0225-$0237`, `$0238`, and
@@ -287,7 +486,7 @@ remaining limitations are recorded in `analysis/runtime-evidence.toml`. Raw capt
 remain local and ignored; documentation does not rely on ephemeral `/tmp` paths.
 
 The current translated ROM SHA-256 is
-`9bdb3780349db284be6eefd3ad96351d4440548a6662bf37430d685f1b12afee`.
+`24821991630b6064111ce969fd36b6b688e3346e4d763ac1e3b5c0b9efd24163`.
 Its mode-aware `$81:8AD7` dispatcher bypasses translated name-only insertion work in
 password mode and rejoins the original path at `$81:8ADD`. Static binary tests pin the
 unchanged original password continuation through `$81:8B4F`, including the original

@@ -1,0 +1,81 @@
+schema_version = 1
+
+[[record]]
+id = "first_hud_fighter_anonymous"
+original_offset = 0x23F16
+original_length = 12
+source_sha256 = "0de63e8fd12ba961efdd44e152c2446bf605b879d901d6495f06df760df2b263"
+patch_offsets = [0x23F16, 0x23F18, 0x23F1A, 0x23F1C, 0x23F1E]
+english = "Anonymous"
+status = "implemented"
+notes = "Anonymous-contestant record at CPU $84:BF16, selected by the unrecognized Chi-Chi route's battle HUD. The source reads 匿名希望. Five packed-Latin cells replace the four Japanese glyphs and original terminator; the next existing zero word at ROM $023F20 remains the terminator."
+
+[[record]]
+id = "first_hud_hp_label"
+original_offset = 0x11843
+original_length = 69
+source_sha256 = "b30bcd06c28c7029692d7efbe3c1f82db487839d110246bab28626b6003a9994"
+patch_offsets = [0x1184B, 0x11853, 0x1185B]
+english = "HP"
+status = "implemented"
+notes = "Three immediate glyph words written before the dynamic value by CPU $82:9843. Numeric conversion, buffer offset, strip dimensions, and VRAM destination $01C0 are preserved."
+
+[[record]]
+id = "first_hud_power_label"
+original_offset = 0x11888
+original_length = 76
+source_sha256 = "3005d74067ae7e75012829d1f6fa69621e18c135770ebbb91fccbc5f10eb04c8"
+patch_offsets = [0x11890, 0x11898, 0x118A0]
+english = "Power"
+status = "implemented"
+notes = "Three immediate glyph words written before the dynamic battle-power value by CPU $82:9888. Numeric conversion and VRAM destination $03A0 are preserved."
+
+[[record]]
+id = "first_hud_dash_punch"
+original_offset = 0x24A10
+original_length = 16
+source_sha256 = "3fbd56215e1167b88ef7c59b84e1f712334cc69aea4c520e744e932410c94349"
+patch_offsets = [0x24A10, 0x24A12, 0x24A14, 0x24A16, 0x24A18, 0x24A1A, 0x24A1C]
+english = "Dash Punch"
+status = "implemented"
+notes = "Byte-identical Dash Punch technique record at CPU $84:CA10. The existing terminator at ROM $024A1E remains unchanged."
+
+[[record]]
+id = "first_hud_dash_punch_alias"
+original_offset = 0x24BE2
+original_length = 16
+source_sha256 = "3fbd56215e1167b88ef7c59b84e1f712334cc69aea4c520e744e932410c94349"
+patch_offsets = [0x24BE2, 0x24BE4, 0x24BE6, 0x24BE8, 0x24BEA, 0x24BEC, 0x24BEE]
+english = "Dash Punch"
+status = "implemented"
+notes = "Byte-identical allocation selected as action index $0091 by the recognized route's first HUD. The existing terminator at ROM $024BF0 remains unchanged."
+
+[[record]]
+id = "first_hud_homing_ki"
+original_offset = 0x246EA
+original_length = 12
+source_sha256 = "8eaf101e4d6b0bd61ccc6fca254cac347ea5bf8138b851282e4957984aed2e02"
+patch_offsets = [0x246EA, 0x246EC, 0x246EE, 0x246F0, 0x246F2]
+english = "Homing Ki"
+status = "implemented"
+notes = "The active bottom-right action index $0002; the source denotes a homing ki projectile. The existing terminator at ROM $0246F4 remains unchanged."
+
+[[record]]
+id = "first_hud_charge"
+original_offset = 0x24B16
+original_length = 10
+source_sha256 = "d9b9dde49ec619c6e10190b3e03206be0f534918503913ad26a09b96f3058bf0"
+patch_offsets = [0x24B16, 0x24B18, 0x24B1A, 0x24B1C]
+english = "Rush"
+status = "implemented"
+notes = "The later top-right action index $0084 denotes a body-check/rush attack and was observed at frame 1060 of the retained first-battle replay. The concise label avoids an ambiguous lowercase g in the existing font. The terminator at ROM $024B1E remains unchanged."
+
+[[record]]
+id = "first_hud_open_state"
+original_offset = 0x176FD
+original_length = 8
+source_sha256 = "d8a183c2c9c2844aa0b6001361b821f30b6f41d9e2ee75058454b831c1acad57"
+patch_offsets = [0x176FD, 0x176FF, 0x17701]
+english = "Open"
+status = "implemented"
+notes = "Fallback stream at CPU $82:F6FD, used when $0E40 is $FFFF. Runtime renders an unguarded/open state at frame 1066 of the retained first-battle replay. The existing terminator at ROM $017703 remains unchanged."

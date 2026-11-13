@@ -53,6 +53,33 @@ offset so a real regression is diagnosable rather than papered over.
 
 ---
 
+# 2A. Cardinal Translation Rule: Never Assume Speaker or Context
+
+If the speaker or context of a text stream cannot be clearly established from
+available evidence, stop and ask the user clarifying questions before translating,
+labeling, documenting, or otherwise interpreting the stream.
+
+Never assume or infer a speaker, addressee, scene, route, event, emotional intent,
+or narrative context merely because one interpretation appears plausible.
+
+Acceptable evidence may include:
+
+- explicit scenario or script references
+- surrounding text streams
+- confirmed portraits or speaker identifiers
+- runtime execution and visual evidence
+- established control-flow or route context
+- corroborating game material supplied or approved by the user
+
+When available evidence supports multiple plausible interpretations, describe the
+ambiguity and ask the user which interpretation to use. Do not select one silently.
+
+Until clarification is received, preserve the stream as unresolved and avoid
+committing speculative speaker names, contextual notes, translations, symbols, or
+review conclusions.
+
+---
+
 # 3. Original ROM
 
 The original ROM is expected at:
@@ -551,6 +578,10 @@ Translation tooling should generate assembly/data where practical.
 # 19. Translation Accuracy
 
 Do not silently invent translations.
+
+The cardinal rule against assuming a text stream's speaker or context always
+applies. Ambiguous ownership or scene context requires a clarifying question, not
+a best-guess translation.
 
 If Japanese text is ambiguous:
 

@@ -2,6 +2,10 @@ schema_version = 1
 
 [[record]]
 id = "opening_narration"
+selector = 0x07E1
+reference_address = "9C:8064"
+reference_offset = 0xE0064
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "9C:9358"
 original_offset = 0xE1358
 original_length = 120
@@ -18,6 +22,10 @@ notes = "opening narration panel; fixed original line-cell allocation, no reloca
 
 [[record]]
 id = "opening_narration_2"
+selector = 0x07E2
+reference_address = "9C:8066"
+reference_offset = 0xE0066
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "9C:93D0"
 original_offset = 0xE13D0
 original_length = 116
@@ -34,6 +42,10 @@ notes = "opening narration panel; fixed original line-cell allocation, no reloca
 
 [[record]]
 id = "opening_narration_3"
+selector = 0x07E3
+reference_address = "9C:8068"
+reference_offset = 0xE0068
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "9C:9444"
 original_offset = 0xE1444
 original_length = 72
@@ -49,6 +61,10 @@ notes = "opening narration panel; fixed original line-cell allocation, no reloca
 
 [[record]]
 id = "opening_narration_4"
+selector = 0x07E4
+reference_address = "9C:806A"
+reference_offset = 0xE006A
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "9C:948C"
 original_offset = 0xE148C
 original_length = 26

@@ -1,0 +1,165 @@
+schema_version = 1
+
+[[record]]
+id = "junior_fight_leadin_00"
+selector = 0x0329
+reference_address = "99:8652"
+reference_offset = 0xC8652
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CDBC"
+original_offset = 0xCCDBC
+original_length = 70
+source_sha256 = "34bf018cd6c6421d16b983fffde8ce9b6d86b032d0be3f2501201e2b6d939380"
+english = [
+  "U-um, Junior...",
+  "You can't just start",
+  "a match on",
+  "your own...",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "The tournament announcer objects when Junior starts a fight without authorization."
+
+[[record]]
+id = "junior_fight_leadin_01"
+selector = 0x032A
+reference_address = "99:8654"
+reference_offset = 0xC8654
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CE02"
+original_offset = 0xCCE02
+original_length = 10
+source_sha256 = "34fc8dab52e95412ab29c914c8305d68f50601a69c08b40b1e214484f62a9656"
+english = ["Shut up!"]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior silences the announcer."
+
+[[record]]
+id = "junior_fight_leadin_02"
+selector = 0x032B
+reference_address = "99:8656"
+reference_offset = 0xC8656
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CE0C"
+original_offset = 0xCCE0C
+original_length = 18
+source_sha256 = "cd8683edfd1315cfcd895375623c09173744562e07290aa5dfa728720bb07207"
+english = ["Eeeeeek!!"]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "The tournament announcer recoils in fear."
+
+[[record]]
+id = "junior_fight_leadin_03"
+selector = 0x032C
+reference_address = "99:8658"
+reference_offset = 0xC8658
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CE1E"
+original_offset = 0xCCE1E
+original_length = 64
+source_sha256 = "1a7f224a490605027684f438ab78f3fd694c4d11faa73bd6422640bbc897a548"
+english = [
+  "Hey, Junior!!",
+  "Spit that bottle",
+  "back out!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Goku orders Junior to spit out the bottle containing Kami."
+
+[[record]]
+id = "junior_fight_leadin_04"
+selector = 0x032D
+reference_address = "99:865A"
+reference_offset = 0xC865A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CE5E"
+original_offset = 0xCCE5E
+original_length = 84
+source_sha256 = "2378d3ffbfefc6a96c61ea294ec14ace027f380a3cfc7d28326a463fe0c12cb1"
+english = [
+  "Heh heh heh...",
+  "Don't be absurd...",
+  "",
+  "",
+  "Or will you take",
+  "the bottle by force?",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior mocks Goku and challenges him to take the bottle by force; the two blank page-padding lines are native."
+
+[[record]]
+id = "junior_fight_leadin_05"
+selector = 0x032E
+reference_address = "99:865C"
+reference_offset = 0xC865C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CEB2"
+original_offset = 0xCCEB2
+original_length = 18
+source_sha256 = "a8d2ef7fdd0504e582b7924f4263750b032089faecd1102e1436ac7903325310"
+english = ["Y-you bastard..."]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Goku curses Junior."
+
+[[record]]
+id = "junior_fight_leadin_06"
+selector = 0x032F
+reference_address = "99:865E"
+reference_offset = 0xC865E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CEC4"
+original_offset = 0xCCEC4
+original_length = 52
+source_sha256 = "574894e226851349d1f997921c8dc5582cd07e522ca45ade29e6d9fa22f35793"
+english = [
+  "Be warned.",
+  "If you kill me,",
+  "Kami dies too...",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior warns that killing him will also kill Kami."
+
+[[record]]
+id = "junior_fight_leadin_07"
+selector = 0x0330
+reference_address = "99:8660"
+reference_offset = 0xC8660
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CEF8"
+original_offset = 0xCCEF8
+original_length = 18
+source_sha256 = "1d5ba45fb20db79412fe98bf48c0cda5002d7e15538fa3ec61ee9de87e5cbc05"
+english = ["I'll find a way."]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Goku insists he will find a way."
+
+[[record]]
+id = "junior_fight_leadin_08"
+selector = 0x0331
+reference_address = "99:8662"
+reference_offset = 0xC8662
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:CF0A"
+original_offset = 0xCCF0A
+original_length = 20
+source_sha256 = "38aefe5e206c15150d521e3f094ffd0eee1b35c61ba312e3e9ac8239c87fd594"
+english = ["Heh. You fool...!!"]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Junior dismisses Goku as a fool."

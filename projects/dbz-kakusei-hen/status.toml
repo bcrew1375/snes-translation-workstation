@@ -1,6 +1,6 @@
 schema_version = 1
-phase = "first_preliminary_match"
-summary = "The opening route through the first preliminary match, Mercenary Tao quiz, all X/Y/B results, and their shared response is translated, builds reproducibly, and is final-ROM runtime-verified with source-aligned four-line pagination."
+phase = "junior_fight_leadin"
+summary = "Root $001E selectors $0329-$0331 are translated in place after the confirmed Shenron X/Y/B convergence. The sequence preserves native pagination and proceeds directly into arena and battle setup after Junior's final warning exchange with Goku."
 
 [[milestones]]
 id = "automatic_opening"
@@ -42,13 +42,73 @@ id = "first_preliminary_match_and_mercenary_tao_quiz"
 status = "complete"
 summary = "Selectors $0267-$027B and the fixed X/Y/B Mercenary Tao quiz rows are retranslated with source-aligned four-line pagination and final-ROM runtime-verified. X/Y/B write 0/1/2, preserve their distinct branch paths, reconverge at $91:8733, and enter selector $027C with byte-identical final captures."
 
+[[milestones]]
+id = "second_preliminary_leadin_and_quiz_screen"
+status = "complete"
+summary = "Selectors $027C-$0280 and fixed quiz resources $0010-$0012 are translated and final-ROM runtime-verified. The route reaches command $07 at $91:87EE; all dialogue pages and the rows 'Heh heh heh!', 'Peace!', and 'I did it!' render without clipping."
+
+[[milestones]]
+id = "finals_transition_and_next_quiz"
+status = "complete"
+summary = "Runtime-confirmed selectors $0281-$0292, $0F25, and $0294-$0299 plus fixed quiz resources $0013-$0015 are translated and final-ROM runtime-verified on X/Y/B. The matchup-screen top banner is fixed bank-$88 table entry $27 and is final-ROM runtime-verified as Matchup Announcement. Selector $0293 is intentionally excluded. All dialogue fits its pinned source allocation; only the X quiz row relocates."
+
+[[milestones]]
+id = "finals_quiz_tien_tao_and_chichi"
+status = "complete"
+summary = "Quiz result selectors $029A/$029B, common Tien/Tao selectors $029C-$02C5, recognized Goku/Chi-Chi selectors $02C6-$02CA, unrecognized selectors $02CB-$02D5 and $0F1F-$0F22, and fixed choice resources $0016-$0018 are translated. The aggregate planner preserves in-place streams where possible and relocates longer streams only within reviewed or proven-vacated same-bank ranges. WRAM $0D98 bit 0 is the confirmed recognition flag; CPU $91:8EB0 and $91:8EDE test it."
+
+[[milestones]]
+id = "canonical_translation_allocation"
+status = "complete"
+summary = "The full 346-record command-$08 plan now allocates deterministically. Compact suffixes and reviewed free_text ranges remain preferred; a fully claimed source that must relocate becomes lower-priority fallback space. The canonical plan reuses only selector $0214's vacated 38-byte source at ROM $0C8F14, placing selector $02C8's 34-byte stream without authorizing new ROM space. Selectors $0369 and $0950 cover the remaining announcer streams that reuse the request translated at $0265; root-$001E selectors $0329-$0331 all remain in place."
+
 [[unknowns]]
 id = "portrait_catalog"
 summary = "The complete numeric portrait-resource catalog is not yet named."
 priority = "low"
 
+[[unknowns]]
+id = "recognized_route_to_first_hud"
+summary = "The recognized Chi-Chi route's root-$0013 dialogue through selector $0309 and its first Tien HUD are translated. Static source reconstruction now proves the following root-$0014 continuation is Goku versus Tien, not Junior versus Krillin; command $47 operand $0003 remains semantically unknown."
+priority = "medium"
+
+[[milestones]]
+id = "goku_tien_battle_opening"
+status = "complete"
+summary = "Root $0014 selectors $0332-$033A and shared selector $0F24 are translated with source-box pagination preserved. The scene identifies Goku removing over 100 kilograms of weighted clothing before continuing his match with Tien."
+
+[[milestones]]
+id = "goku_chichi_battle_dialogue"
+status = "complete"
+summary = "Battle opening resources $1000-$1001, Chi-Chi-at-zero resources $1180-$1190 plus $10B6-$10B7, and Goku-at-zero resources $10B8-$10B9 are translated. Runtime HP manipulation and CPU $82:D0C0 table selection establish both result conditions and speaker presentations."
+
+[[milestones]]
+id = "junior_kami_confrontation"
+status = "complete"
+summary = "A translated-ROM replay from the retained Goku-at-zero state writes root $0018 and confirms the scene through $0328: Junior reacts to Goku's defeat, recognizes Kami only at $0314, Kami attempts Evil Containment, Junior uses Containment Reversal, and Kami entrusts Junior's defeat to Goku. Root $0018 then routes to root $0171; selector $0806 precedes command $07 at CPU $93:C187, and renderer-confirmed rows at CPU $98:C16A/$98:C17E/$98:C194 supply the Shenron options."
+
+[[milestones]]
+id = "shenron_wishes_and_junior_leadin"
+status = "complete"
+summary = "Selectors $0806-$080A are translated in place. Independent X/Y/B replays confirm the response branches, common farewell, root-$001E successor, and Junior-battle lead-in; cancelling the X/save workflow with B reaches $0809 and returns to the wish menu."
+
+[[unknowns]]
+id = "battle_hud_generated_labels"
+summary = "The fighter name, HP label/value, actions, and statuses are generated as four WRAM 2bpp strips. Their source tables and the complete $82:9159/$80:9CBE/$80:9CF0 composition path still need to be identified before English replacement."
+priority = "high"
+
+[[milestones]]
+id = "junior_fight_leadin"
+status = "complete"
+summary = "Root $001E selectors $0329-$0331 are translated in place with native pagination preserved. Independent Shenron X/Y/B traces converge on the sequence, which proceeds directly into arena and Junior battle setup."
+
+[[milestones]]
+id = "junior_battle_dialogue"
+status = "complete"
+summary = "Battle opening resources $1006-$1007 and $11AB-$11AC, win resources $11A4-$11A9 plus $10BE-$10BF, and loss resources $10C0-$10C4 are translated. Runtime HP manipulation at CPU $82:8156 and $82:D0C0 table selection establish both result conditions. Win continuation root $0019 selectors $03A2-$03AB plus shared $0011/$0002 reveal Junior as King Piccolo's reincarnation. Loss continuation root $001C selectors $096C-$0976 lead to game over via King Piccolo's resurrection."
+
 [[recommended_tasks]]
-id = "translate_post_mercenary_tao_scene"
-summary = "Continue from runtime-confirmed selector $027C at scenario cursor $91:87A5 after the verified Mercenary Tao response."
+id = "identify_battle_hud_source_tables"
+summary = "Trace the generated battle-HUD fighter name, HP, action, and status strips back from their confirmed WRAM composition and DMA paths to the source tables that must be localized."
 requires_rom = true
 requires_runtime = true

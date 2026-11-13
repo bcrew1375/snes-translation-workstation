@@ -20,7 +20,7 @@ status = "approved"
 id = "character_piccolo_jr"
 category = "character"
 canonical = "Junior"
-aliases = ["Piccolo Jr.", "Majunior", "Demon King Piccolo"]
+aliases = ["Piccolo Jr.", "Majunior"]
 usage_notes = "Use \"Junior\" for identity, dialogue references, and roster labels during the 23rd World Tournament."
 status = "approved"
 
@@ -269,7 +269,15 @@ id = "character_kami"
 category = "character"
 canonical = "Kami"
 aliases = ["God", "Earth's Kami"]
-usage_notes = "Use \"Kami\" as the name. Lowercase \"guardian\" for descriptive references."
+usage_notes = "Use \"Kami\" for his identity. During the 23rd World Tournament, use \"Shen\" for his contestant alias. Lowercase \"guardian\" for descriptive references."
+status = "approved"
+
+[[term]]
+id = "character_crane_hermit"
+category = "character"
+canonical = "Crane Hermit"
+aliases = ["Master Shen", "Tsuru-sen'nin", "Tsuru Sennin"]
+usage_notes = "Use \"Crane Hermit\" for Tien and Mercenary Tao's former master. Never use \"Master Shen\"; \"Shen\" is reserved for Kami's 23rd World Tournament alias."
 status = "approved"
 
 [[term]]
@@ -347,9 +355,9 @@ status = "approved"
 [[term]]
 id = "character_hero"
 category = "character"
-canonical = "Hero"
-aliases = []
-usage_notes = "Use for the 23rd World Tournament masked fighter (Kami's vessel)."
+canonical = "Shen"
+aliases = ["Hero"]
+usage_notes = "Use \"Shen\" for Kami's 23rd World Tournament contestant alias and \"Kami\" once his identity is meant."
 status = "approved"
 
 [[term]]
@@ -812,8 +820,8 @@ status = "approved"
 id = "technique_dodon_ray"
 category = "technique"
 canonical = "Dodon Ray"
-aliases = ["Dodon Pa"]
-usage_notes = "Use \"Dodon Ray.\""
+aliases = ["Dodon Pa", "Dodonpa"]
+usage_notes = "Use \"Dodon Ray\" and \"Super Dodon Ray\"; never use \"Dodonpa\" in English output."
 status = "approved"
 
 [[term]]
@@ -828,7 +836,7 @@ status = "approved"
 id = "technique_four_witches"
 category = "technique"
 canonical = "Four Witches Technique"
-aliases = ["Evil Containment Wave", "Mafuba"]
+aliases = []
 usage_notes = "Use \"Four Witches Technique\" per established localization."
 status = "approved"
 

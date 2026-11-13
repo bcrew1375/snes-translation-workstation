@@ -1,0 +1,95 @@
+schema_version = 1
+
+[[record]]
+id = "second_preliminary_leadin_00"
+selector = 0x027C
+reference_address = "99:84F8"
+reference_offset = 0xC84F8
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A2A4"
+original_offset = 0xCA2A4
+original_length = 26
+source_sha256 = "edd6dbd7067ae4167d9cf3aee31158ce1eec8ef191477169e347fcf43c1bdf82"
+english = ["Down!!", "Number 51 wins!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Second preliminary sequence; the announcer declares contestant 51 the winner; selector $027C."
+
+[[record]]
+id = "second_preliminary_leadin_01"
+selector = 0x027D
+reference_address = "99:84FA"
+reference_offset = 0xC84FA
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A2BE"
+original_offset = 0xCA2BE
+original_length = 44
+source_sha256 = "2fa59e48a1a4ccddd71d5b4aeca0cdf7a41b100f34b42d32a7cc27e8979c88b7"
+english = ["That guy's no", "ordinary fighter", "either..."]
+max_line_length = 21
+status = "implemented"
+notes = "Second preliminary sequence; Yamcha recognizes that the other fighter is no ordinary contestant; selector $027D."
+
+[[record]]
+id = "second_preliminary_leadin_02"
+selector = 0x027E
+reference_address = "99:84FC"
+reference_offset = 0xC84FC
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A2EA"
+original_offset = 0xCA2EA
+original_length = 76
+source_sha256 = "059d29c3e29f84405723547f1b4bd71b4268229cff2199bb3f62ee9032a97cdb"
+english = [
+  "What a surprise...",
+  "",
+  "",
+  "",
+  "Why are there so many",
+  "amazing fighters",
+  "this time around?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Second preliminary sequence; Krillin wonders why this tournament has so many exceptional fighters; selector $027E. The explicit blank lines preserve the source's two dialogue boxes."
+
+[[record]]
+id = "second_preliminary_leadin_03"
+selector = 0x027F
+reference_address = "99:84FE"
+reference_offset = 0xC84FE
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A336"
+original_offset = 0xCA336
+original_length = 132
+source_sha256 = "8b6d14d67b418d80253a0cf79e4ee9755a4d7831aaabb3b2ba0e77b8cd7cd396"
+english = [
+  "(So that's Piccolo's",
+  "reincarnation...)",
+  "",
+  "",
+  "(But he's much",
+  "stronger now...)",
+  "",
+  "",
+  "(He must've trained",
+  "hard too.)",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Second preliminary sequence; Goku recognizes Piccolo's reincarnation, judges him much stronger than before, and concludes that he has trained intensely; selector $027F. The explicit blank lines preserve the source's three dialogue boxes."
+
+[[record]]
+id = "second_preliminary_leadin_04"
+selector = 0x0280
+reference_address = "99:8500"
+reference_offset = 0xC8500
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A3BA"
+original_offset = 0xCA3BA
+original_length = 48
+source_sha256 = "f4d83c7fb4450d471d4e2339e9b2977e42014fba7c285df86b90321edc9ced2b"
+english = ["Out!!", "Number 2", "qualifies", "for the finals!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Second preliminary sequence; the announcer declares contestant 2 qualified for the World Tournament finals; selector $0280. The concise wording fits the original four-line allocation."

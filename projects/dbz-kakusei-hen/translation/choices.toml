@@ -52,6 +52,74 @@ status = "implemented"
 notes = "Fixed bank-$88 table entry 1; translated from the runtime-confirmed post-quiz location header and relocated to the next reviewed tail allocation."
 
 [[record]]
+id = "backstage_label"
+record_type = "fixed_label"
+button = ""
+pointer_address = "88:8004"
+pointer_offset = 0x40004
+original_address = "88:8064"
+original_offset = 0x40064
+original_length = 12
+source_sha256 = "b0eba5d90425f015aeaadba1750b9351aae742407e62a51fba685fd56432794d"
+destination_address = "88:8064"
+destination_offset = 0x40064
+prefix_words = 0
+english = "Backstage"
+status = "implemented"
+notes = "Fixed bank-$88 table entry 2; the source means behind the martial-arts stage. Backstage fits the original allocation exactly and is written in place."
+
+[[record]]
+id = "martial_arts_stage_label"
+record_type = "fixed_label"
+button = ""
+pointer_address = "88:8006"
+pointer_offset = 0x40006
+original_address = "88:8070"
+original_offset = 0x40070
+original_length = 8
+source_sha256 = "e1176bdaa961b9c8d11e6c8af594369d358087bd05e08a5e0eeb256e6bbe0843"
+destination_address = "88:8070"
+destination_offset = 0x40070
+prefix_words = 0
+english = "Arena"
+status = "implemented"
+notes = "Fixed bank-$88 table entry 3; fresh recognized Chi-Chi finals replay identifies it as the top banner on the martial-arts-stage dialogue screen. Arena fits the original allocation in place."
+
+[[record]]
+id = "spectator_stands_label"
+record_type = "fixed_label"
+button = ""
+pointer_address = "88:8008"
+pointer_offset = 0x40008
+original_address = "88:8078"
+original_offset = 0x40078
+original_length = 8
+source_sha256 = "7a49300d9db2b30a7fa5c038368812e552e24f2ef5925730fe5a9d2c30532fba"
+destination_address = "88:8078"
+destination_offset = 0x40078
+prefix_words = 0
+english = "Stands"
+status = "implemented"
+notes = "Fixed bank-$88 table entry 4; runtime replay shows the Japanese spectator-stands header during the late Tien/Tao spectator dialogue. Packed English fits the original allocation in place."
+
+[[record]]
+id = "matchup_announcement_label"
+record_type = "fixed_label"
+button = ""
+pointer_address = "88:804E"
+pointer_offset = 0x4004E
+original_address = "88:8210"
+original_offset = 0x40210
+original_length = 28
+source_sha256 = "75245cc9f1bbc5eb1121f7e9b0acfa5aabd678c56104a08ff050a43e1f63736b"
+destination_address = "88:8210"
+destination_offset = 0x40210
+prefix_words = 0
+english = "Matchup Announcement"
+status = "implemented"
+notes = "Fixed bank-$88 table entry $27; runtime replay identifies it as the top banner on the World Tournament matchup-announcement screens. The packed English fits the original allocation in place."
+
+[[record]]
 id = "tournament_quiz_header"
 record_type = "fixed_label"
 button = ""
@@ -322,3 +390,207 @@ prefix_words = 2
 english = "I've seen him somewhere."
 status = "implemented"
 notes = "Mercenary Tao identity quiz B row; preserves the native B icon and spacer words and relocates for the faithful full wording."
+
+[[record]]
+id = "second_preliminary_quiz_x"
+record_type = "option"
+button = "X"
+pointer_address = "98:9B4A"
+pointer_offset = 0xC1B4A
+original_address = "98:9F88"
+original_offset = 0xC1F88
+original_length = 14
+source_sha256 = "1a837c23127ea086313f8614fa1c9889ee5c0f8ce2bf009dd72547c2e183b7c7"
+destination_address = "98:F5A6"
+destination_offset = 0xC75A6
+prefix_words = 2
+english = "Heh heh heh!"
+status = "implemented"
+notes = "Second preliminary quiz X row; preserves the native X icon and spacer words and relocates for the full laugh."
+
+[[record]]
+id = "second_preliminary_quiz_y"
+record_type = "option"
+button = "Y"
+pointer_address = "98:9B4C"
+pointer_offset = 0xC1B4C
+original_address = "98:9F96"
+original_offset = 0xC1F96
+original_length = 14
+source_sha256 = "b660c0eaeb31f83374cbf5c40e27f2dac0ef9d7434d2c6cc563e66d1b7fb5f09"
+destination_address = "98:9F96"
+destination_offset = 0xC1F96
+prefix_words = 2
+english = "Peace!"
+status = "implemented"
+notes = "Second preliminary quiz Y row; preserves the native Y icon and spacer words and fits exactly in place."
+
+[[record]]
+id = "second_preliminary_quiz_b"
+record_type = "option"
+button = "B"
+pointer_address = "98:9B4E"
+pointer_offset = 0xC1B4E
+original_address = "98:9FA4"
+original_offset = 0xC1FA4
+original_length = 14
+source_sha256 = "652ce164f8d1e274b5a0cf3a3da0bb9878164a87543fe3bf32dd69c8e24e7312"
+destination_address = "98:F5B8"
+destination_offset = 0xC75B8
+prefix_words = 2
+english = "I did it!"
+status = "implemented"
+notes = "Second preliminary quiz B row; preserves the native B icon and spacer words and relocates for the full exclamation."
+
+[[record]]
+id = "finals_transition_quiz_x"
+record_type = "option"
+button = "X"
+pointer_address = "98:9B50"
+pointer_offset = 0xC1B50
+original_address = "98:9FB2"
+original_offset = 0xC1FB2
+original_length = 18
+source_sha256 = "11ed8bb35877b53c4be6dc49d7b52999e546381c4676698668fc788b2fc5807e"
+destination_address = "98:F5C8"
+destination_offset = 0xC75C8
+prefix_words = 2
+english = "This could be bad."
+status = "implemented"
+notes = "Finals-transition quiz X row; preserves the native X icon and spacer words and relocates for the complete warning."
+
+[[record]]
+id = "finals_transition_quiz_y"
+record_type = "option"
+button = "Y"
+pointer_address = "98:9B52"
+pointer_offset = 0xC1B52
+original_address = "98:9FC4"
+original_offset = 0xC1FC4
+original_length = 24
+source_sha256 = "8ed29d566478f6f93c9c9417e2413d27bcfa3ccd1ebc5e975214b1936e9b585f"
+destination_address = "98:9FC4"
+destination_offset = 0xC1FC4
+prefix_words = 2
+english = "No big deal."
+status = "implemented"
+notes = "Finals-transition quiz Y row; preserves the native Y icon and spacer words and fits in place."
+
+[[record]]
+id = "finals_transition_quiz_b"
+record_type = "option"
+button = "B"
+pointer_address = "98:9B54"
+pointer_offset = 0xC1B54
+original_address = "98:9FDC"
+original_offset = 0xC1FDC
+original_length = 20
+source_sha256 = "0a094368115df84e13f58b0cd4871923bb4a50659c9168f9f8f7e23bb33f997f"
+destination_address = "98:9FDC"
+destination_offset = 0xC1FDC
+prefix_words = 2
+english = "We'll manage."
+status = "implemented"
+notes = "Finals-transition quiz B row; preserves the native B icon and spacer words and fits exactly in place."
+
+[[record]]
+id = "goku_chichi_finals_choice_x"
+record_type = "option"
+button = "X"
+pointer_address = "98:9B56"
+pointer_offset = 0xC1B56
+original_address = "98:9FF0"
+original_offset = 0xC1FF0
+original_length = 24
+source_sha256 = "cf812cc36bc9999d199a124ffac20d457391a2b0aac214ecfc27df3559e9c1e0"
+destination_address = "98:9FF0"
+destination_offset = 0xC1FF0
+prefix_words = 2
+english = "When this is over."
+status = "implemented"
+notes = "Unrecognized Goku/Chi-Chi finals X row; preserves the native X icon and spacer words and fits exactly in place."
+
+[[record]]
+id = "goku_chichi_finals_choice_y"
+record_type = "option"
+button = "Y"
+pointer_address = "98:9B58"
+pointer_offset = 0xC1B58
+original_address = "98:A008"
+original_offset = 0xC2008
+original_length = 26
+source_sha256 = "45442c75e9b6a9e375730ab2764e47a29ceed682d9dc91b4a61219528dc2dcd7"
+destination_address = "98:A008"
+destination_offset = 0xC2008
+prefix_words = 2
+english = "Sorry, forget it."
+status = "implemented"
+notes = "Unrecognized Goku/Chi-Chi finals Y row; preserves the native Y icon and spacer words and fits in place."
+
+[[record]]
+id = "goku_chichi_finals_choice_b"
+record_type = "option"
+button = "B"
+pointer_address = "98:9B5A"
+pointer_offset = 0xC1B5A
+original_address = "98:A022"
+original_offset = 0xC2022
+original_length = 28
+source_sha256 = "7d02cfdd3f19a1ccb3150bde624390078810289fd83011ff99e4d16d1b714608"
+destination_address = "98:A022"
+destination_offset = 0xC2022
+prefix_words = 2
+english = "Let's get married!"
+status = "implemented"
+notes = "Unrecognized Goku/Chi-Chi finals B row; preserves the native B icon and spacer words and fits in place."
+
+[[record]]
+id = "shenron_choice_x"
+record_type = "option"
+button = "X"
+pointer_address = "98:9E0A"
+pointer_offset = 0xC1E0A
+original_address = "98:C16A"
+original_offset = 0xC416A
+original_length = 20
+source_sha256 = "7a9da43a6716f67d8f0e4306422aa3e02fab8a2816e955eff7bec85c841fc8a7"
+destination_address = "98:C16A"
+destination_offset = 0xC416A
+prefix_words = 2
+english = "Save the game."
+status = "implemented"
+notes = "Runtime-confirmed post-sealing Shenron X row at root $0171; preserves the native X icon and spacer words and fits in place."
+
+[[record]]
+id = "shenron_choice_y"
+record_type = "option"
+button = "Y"
+pointer_address = "98:9E0C"
+pointer_offset = 0xC1E0C
+original_address = "98:C17E"
+original_offset = 0xC417E
+original_length = 22
+source_sha256 = "60a4706250495c5dd9a45c52e62f9fdb8783c6a5d775f3459f879df8dd8ee268"
+destination_address = "98:C17E"
+destination_offset = 0xC417E
+prefix_words = 2
+english = "Boost power."
+status = "implemented"
+notes = "Runtime-confirmed post-sealing Shenron Y row at root $0171; preserves the native Y icon and spacer words and fits in place."
+
+[[record]]
+id = "shenron_choice_b"
+record_type = "option"
+button = "B"
+pointer_address = "98:9E0E"
+pointer_offset = 0xC1E0E
+original_address = "98:C194"
+original_offset = 0xC4194
+original_length = 20
+source_sha256 = "7ee95e96c6e74c04f94617775b37c38a07e92b9678cbba3df423a8543f9b6a45"
+destination_address = "98:C194"
+destination_offset = 0xC4194
+prefix_words = 2
+english = "Boost health."
+status = "implemented"
+notes = "Runtime-confirmed post-sealing Shenron B row at root $0171; preserves the native B icon and spacer words and fits in place."

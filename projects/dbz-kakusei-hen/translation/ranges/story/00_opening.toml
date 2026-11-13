@@ -1,0 +1,123 @@
+schema_version = 1
+
+[[record]]
+name = "opening_stream_1"
+rom_start = 0xE1358
+rom_end = 0xE13CF
+cpu_start = "$9358"
+cpu_end = "$93CF"
+bank = 0x9C
+alignment = 2
+evidence = "Exact selector $07E1 source allocation; adjacent streams begin immediately before and after."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_stream_2"
+rom_start = 0xE13D0
+rom_end = 0xE1443
+cpu_start = "$93D0"
+cpu_end = "$9443"
+bank = 0x9C
+alignment = 2
+evidence = "Exact selector $07E2 source allocation; adjacent streams begin immediately before and after."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_stream_3"
+rom_start = 0xE1444
+rom_end = 0xE148B
+cpu_start = "$9444"
+cpu_end = "$948B"
+bank = 0x9C
+alignment = 2
+evidence = "Exact selector $07E3 source allocation; adjacent streams begin immediately before and after."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_stream_4"
+rom_start = 0xE148C
+rom_end = 0xE14A5
+cpu_start = "$948C"
+cpu_end = "$94A5"
+bank = 0x9C
+alignment = 2
+evidence = "Exact selector $07E4 source allocation; adjacent streams begin immediately before and after."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_recap_shared_0000"
+rom_start = 0xC87C0
+rom_end = 0xC87C9
+cpu_start = "$87C0"
+cpu_end = "$87C9"
+bank = 0x99
+alignment = 2
+evidence = "Exact selector $0000 source allocation used in the traced automatic recap."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_recap_shared_0003"
+rom_start = 0xC87EA
+rom_end = 0xC87F5
+cpu_start = "$87EA"
+cpu_end = "$87F5"
+bank = 0x99
+alignment = 2
+evidence = "Exact selector $0003 source allocation used in the traced automatic recap."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_recap_shared_0026"
+rom_start = 0xC8964
+rom_end = 0xC8971
+cpu_start = "$8964"
+cpu_end = "$8971"
+bank = 0x99
+alignment = 2
+evidence = "Exact selector $0026 source allocation used in the traced automatic recap."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_recap_shared_002e"
+rom_start = 0xC89D0
+rom_end = 0xC89E5
+cpu_start = "$89D0"
+cpu_end = "$89E5"
+bank = 0x99
+alignment = 2
+evidence = "Exact selector $002E source allocation used in the traced automatic recap."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_recap_shared_076b"
+rom_start = 0xDE9D8
+rom_end = 0xDEA19
+cpu_start = "$E9D8"
+cpu_end = "$EA19"
+bank = 0x9B
+alignment = 2
+evidence = "Exact selector $076B source allocation used in the traced automatic recap."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_recap_07e5_07ef"
+rom_start = 0xE14A6
+rom_end = 0xE1583
+cpu_start = "$94A6"
+cpu_end = "$9583"
+bank = 0x9C
+alignment = 2
+evidence = "Consecutive exact allocations for traced recap selectors $07E5-$07EF."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_recap_0800_0805"
+rom_start = 0xE196E
+rom_end = 0xE1A83
+cpu_start = "$996E"
+cpu_end = "$9A83"
+bank = 0x9C
+alignment = 2
+evidence = "Consecutive exact allocations for traced recap selectors $0800-$0805."
+confidence = "confirmed"
+

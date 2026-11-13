@@ -1,5 +1,244 @@
 schema_version = 1
+
+[[evidence]]
+id = "goku_defeat_enters_root_0018"
+date = "2026-10-22"
+system = "mesen-agent"
+rom_sha256 = "b789830235ea03fc0482a1bb8f978fe109dd05692692c6931503caaa969a8579"
+status = "confirmed"
+summary = "A deterministic replay from the retained Goku-at-zero Goku/Chi-Chi result state continued through root $000E, wrote $0018 to WRAM $029C-$029D at relative frame 2568, entered root $0018 at CPU $91:A3B0, and later continued through selector $0328. Runtime tracing corrects the prior boundary claim: CPU $91:A755 is an operand byte inside command $0E at $91:A753-$91:A757. Root $0018 routes through command $47 at $91:A75A to root $0171, where selector $0806 precedes the actual command $07 at CPU $93:C187."
+addresses = ["7E:029C", "91:A3B0", "91:A753", "91:A75A", "93:C163", "93:C187", "98:9E0A", "98:C16A", "99:8054", "99:8614", "99:C5F8"]
+selectors = [0x030A, 0x030B, 0x030C, 0x030D, 0x002A, 0x030E, 0x030F]
+events = "local/runtime/goku-defeat-to-junior-kami-20261022-short/events.jsonl"
+source_state = "local/runtime/goku-chichi-battle-final-4e1e6228-20261021/goku-zero/end.mss"
+input_schedule = ["A+X at relative frame 20 and every 90 frames", "4000-frame replay"]
+limitation = "The original bounded replay proves entry and the opening selector order but ends during selector $030F. A later final-ROM continuation confirms the route through $0328, root $0171, and the Shenron prompt. Button result values, branch targets, and per-button successor roots still require separate captures without combined-button input."
+final_rom_sha256 = "31d186dc7b752bcf76fc24973defe50c0bf15a4fbad2b61bca54efd468a79032"
+final_events = "local/runtime/junior-kami-final-31d186dc-20261022/events.jsonl"
+final_events_sha256 = "c5f174fd0b902a8095fa974ecf0548baf73d9a84fdb29c7a122b70a7ee13ce56"
+final_state = "local/runtime/junior-kami-final-31d186dc-20261022/end.mss"
+final_state_sha256 = "24239b0705efb6fc5cc6657102e3d442c5f1224567915841204149ffc0eebe94"
+final_visual_events = "local/runtime/junior-kami-visual-31d186dc-20261022/events.jsonl"
+final_visual_events_sha256 = "a0945fb8d39cac6207e60bb80285180cff4f79365fcfc3f91980049b81d21e74"
+final_visual_capture = "local/runtime/junior-kami-visual-31d186dc-20261022/frame.png"
+final_visual_capture_sha256 = "bb5c87b62f4a73940fd2698b1ec5e18fc6ebc6e0a05c5dab61dfb124cc9c847c"
+final_visual_summary = "The 3000-frame final-ROM capture visibly renders selector $030B in English with the expected Kami/Junior presentation while the log records root $0018 and selectors $030A-$030B without Lua errors."
+shenron_choice_events = "local/runtime/shenron-choice-visible-20261022/events.jsonl"
+shenron_choice_events_sha256 = "d9f9ce8f6644a2de95659164be5a1e3f72b96d11bb42a3d8ada1fe77895e282d"
+shenron_choice_state = "local/runtime/shenron-choice-visible-20261022/end.mss"
+shenron_choice_state_sha256 = "f92bbb1934b6bfd6c61bed10145fc904e14702275de46120dfedd989abf75041"
+shenron_choice_capture = "local/runtime/shenron-choice-visible-20261022/frame.png"
+shenron_choice_capture_sha256 = "b0a1fda606898d1c4cf0918a2ca613331e4d939ac1d55e3e9f3ef753e9097743"
+shenron_choice_sources = ["98:C16A", "98:C17E", "98:C194"]
+shenron_choice_render_trace = "local/runtime/shenron-choice-render-trace-20261022/events.jsonl"
+shenron_choice_render_trace_sha256 = "3ceff27624180b8712ebf61c4e5ffa75d5a81564a40bbfdd644a1efe1c40832e"
+shenron_choice_summary = "The stable source-ROM frame visibly confirms the X save option, Y battle-power option, and B health option. CPU $80:997B renderer tracing identifies their exact bank-$98 source streams at $98:C16A, $98:C17E, and $98:C194; the original-language screenshot remains local and ignored."
+shenron_choice_final_rom_sha256 = "732081420da0565f0e3993bd9151d408739e85024275db61e3dab128b77e92c7"
+shenron_choice_final_events = "local/runtime/shenron-choice-english-73208142-20261022/events.jsonl"
+shenron_choice_final_events_sha256 = "1db7935e66afd37f1c353754b35b90b8491e8453f3be2b5880e779fc5bc2009e"
+shenron_choice_final_state = "local/runtime/shenron-choice-english-73208142-20261022/end.mss"
+shenron_choice_final_state_sha256 = "7fd3689cb6b02c20533da3f44ad4b2137a37e678f8041009d76f18588ba5c4a5"
+shenron_choice_final_capture = "local/runtime/shenron-choice-english-73208142-20261022/frame.png"
+shenron_choice_final_capture_sha256 = "558c05458c8fb4d0fa7c0fa4948a4647ef4c1c4b8fd80c663cb84921e4072828"
+shenron_choice_final_summary = "The definitive translated-ROM replay reaches command $07 at CPU $93:C187 and visibly renders X 'Save the game.', Y 'Boost power.', and B 'Boost health.' without clipping."
+shenron_branch_date = "2026-10-23"
+shenron_branch_events = ["local/runtime/shenron-wish-branches-73208142-20261023/X/events.jsonl", "local/runtime/shenron-wish-branches-73208142-20261023/Y/events.jsonl", "local/runtime/shenron-wish-branches-73208142-20261023/B/events.jsonl"]
+shenron_branch_event_sha256 = ["b8e5b7160850e23da3d6a8a19e53e5d52e4b609b4f4be666129cc6247b10fc50", "d9ca60f6f07aab9e230c816a112b40c0482ecab7927cbaa94d2eee5dcbc82854", "15a80dbc3f538713528c2d0ceadd452c7b6bdf89699597c089c1b42f778f5f7d"]
+shenron_branch_input_schedule = ["X, Y, or B at relative frames 10-12 from the retained root-$0171 choice state", "A at relative frame 130 and every 120 frames"]
+shenron_branch_summary = "Independent captures confirm X selects $0807 at CPU $93:C197, Y and B select $080A at CPU $93:C1D7/$93:C1FE, all completed branches select $0808, and all enter successor root $001E before selector $0329."
+shenron_save_cancel_events = "local/runtime/shenron-wish-branches-73208142-20261023/X-cancel-early/events.jsonl"
+shenron_save_cancel_events_sha256 = "1fca27b55762f851fa44e9dea78413303d26603ee90062f15fd2b2ab7cfb6435"
+shenron_save_cancel_summary = "After X and selector $0807, B cancellation in the save workflow selects $0809 at CPU $93:C1CC. Command $1F $C187 at CPU $93:C1D4 returns to command $07 at CPU $93:C187."
+shenron_checkpoint_rom_sha256 = "2aad347d36036342a4d4ad737c20c9a612a183c23d9cc215f1d7577cf070421f"
+shenron_checkpoint_base_rom_sha256 = "732081420da0565f0e3993bd9151d408739e85024275db61e3dab128b77e92c7"
+shenron_checkpoint_scope = "Ignored incremental verification ROM produced by applying only selectors $0806-$080A to the previously pinned translated ROM. Its 156 changed bytes are confined to checksum ROM $007FDC-$007FDF and Shenron streams ROM $0E1A84-$0E1B23. It is runtime evidence, not the canonical aggregate build output."
+shenron_visual_events = ["local/runtime/shenron-wishes-visual-2aad347d-20261023/X-0807/events.jsonl", "local/runtime/shenron-wishes-visual-2aad347d-20261023/Y-080A-early/events.jsonl", "local/runtime/shenron-wishes-visual-2aad347d-20261023/B-080A-early/events.jsonl", "local/runtime/shenron-wishes-visual-2aad347d-20261023/Y-0808/events.jsonl", "local/runtime/shenron-wishes-visual-2aad347d-20261023/X-cancel-0809/events.jsonl"]
+shenron_visual_event_sha256 = ["c3eaffee25c3a44cc8d50ff36bf317ea01ba66c5a11bb3fb32275abc3003b796", "4bbf82c9af46711f5a50540e93f86fd459a46b3398655b5b9a00d67bc9c00084", "a331b65a32e87c04dde5a2bfca8718b081c737087bdcf4ec7b14107f0d3b7c4f", "aa587da7a728c4d4a74f5b1206b7b17c11223752332b98451f2a84529a15e63e", "8bfe2539e981de8987a6e69be0a238282ff83bab26b9c3cd51c71ba76b1e540f"]
+shenron_visual_captures = ["local/runtime/shenron-wishes-visual-2aad347d-20261023/X-0807/frame.png", "local/runtime/shenron-wishes-visual-2aad347d-20261023/Y-080A-early/frame.png", "local/runtime/shenron-wishes-visual-2aad347d-20261023/B-080A-early/frame.png", "local/runtime/shenron-wishes-visual-2aad347d-20261023/Y-0808/frame.png", "local/runtime/shenron-wishes-visual-2aad347d-20261023/X-cancel-0809/frame.png"]
+shenron_visual_capture_sha256 = ["b6bbabe57eee59b43ae3f14ae55b47d5d81cff6eb954cb37efedd28fa956163d", "c3271e5d465902e21bf09baffb246caec5ea982b237ed1bcf2303576b2b278a6", "c3271e5d465902e21bf09baffb246caec5ea982b237ed1bcf2303576b2b278a6", "2ed900a5d04114706dd6bea7d51e2a53c087057badd5e307e36917a7cf7969c6", "bc8a7eeb37c123173b83f18901326b24c455c9419efe11772eeb853dbb3c8dcb"]
+shenron_visual_summary = "Checkpoint-ROM captures visibly render $0807, shared $080A on both Y and B, common $0808, and cancel-only $0809 without clipping."
+shenron_prompt_events = "local/runtime/shenron-wishes-visual-2aad347d-20261023/prompt-0806-full/events.jsonl"
+shenron_prompt_events_sha256 = "beb7f5022b3765ebe0705ff68907a569ad6d0efa780a017bd8bf61fa188d00c1"
+shenron_prompt_capture = "local/runtime/shenron-wishes-visual-2aad347d-20261023/prompt-0806-full/frame.png"
+shenron_prompt_capture_sha256 = "8e69fa2eac07079067b2202ecd95a0b1f3ccf5a7a8f264b65537403e6c5e566f"
+shenron_prompt_summary = "A trusted continuation capture visibly renders all three $0806 lines without clipping: 'This is a save point.' / 'I'll grant you' / 'one wish.'"
+shenron_canonical_build_limitation = "Resolved on 2026-10-24. The deterministic allocator now treats complete source allocations as lower-priority fallback space only when every referencing selector is claimed and the stream must relocate. The canonical aggregate build uses the vacated 38-byte source of selector $0214 at ROM $0C8F14 for the 34-byte selector $02C8 stream; no unreviewed ROM range is admitted."
+
+[[evidence]]
+id = "goku_chichi_hp_result_mapping"
+date = "2026-10-21"
+system = "mesen-agent and static 65C816 analysis"
+rom_sha256 = "4e1e622858034a0d8a5343542b18a1d412ee2d5ec3c6d3b30ab134ada353291f"
+status = "confirmed"
+summary = "Retained battle-state comparison establishes WRAM $0E66 as Goku current HP ($03E8 at displayed 1000 and $0398 at displayed 920) and initialization establishes $0E68 as Chi-Chi current HP. CPU $82:9E1F sets result $0002 when $0E68 reaches zero; CPU $82:9F10 sets $0200 when $0E66 reaches zero. CPU $82:D0C0 selects opponent-defeated table $B5:C5AC for $0002 and player-defeated table $B5:CC74 otherwise. Encounter index $0000 resolves to scripts $B5:C64C and $B5:CD14."
+opening_script = "B5:BB1E"
+chichi_zero_script = "B5:C64C"
+goku_zero_script = "B5:CD14"
+opening_resources = [0x1000, 0x1001]
+chichi_zero_resources = [0x1180, 0x1181, 0x1182, 0x1183, 0x1184, 0x1185, 0x1186, 0x1187, 0x1188, 0x1189, 0x118A, 0x118B, 0x118C, 0x118D, 0x118E, 0x118F, 0x1190, 0x10B6, 0x10B7]
+goku_zero_resources = [0x10B8, 0x10B9]
+local_resource_catalog = "local/goku-chichi-battle-resources-20261021/metadata.txt"
+chichi_zero_events = "local/runtime/goku-chichi-hp-results-20261021/chichi-zero/events.jsonl"
+chichi_zero_events_sha256 = "5644ce59fce4cb7f641d6d20918e6fec86c244607b3e47bc2230422a2060c0ad"
+chichi_zero_capture = "local/runtime/goku-chichi-hp-results-20261021/chichi-zero/frame.png"
+chichi_zero_capture_sha256 = "dd61c7914e7648456173d5681689e26f036960d1a68942f54df8dd1e71f1a8e3"
+goku_zero_events = "local/runtime/goku-chichi-hp-results-20261021/goku-zero/events.jsonl"
+goku_zero_events_sha256 = "e7fdc43aa213b3fd02ca34a1f26c16490d9bd068344ecf568be4ddf6a6ad687f"
+goku_zero_capture = "local/runtime/goku-chichi-hp-results-20261021/goku-zero/frame.png"
+goku_zero_capture_sha256 = "d63c5aa079bd68e05d5fd9c4a0c37e65a0c440c044fe6a21816fcb709efdef76"
+limitation = "The retained pre-translation captures establish HP manipulation and branch ownership. Final translated-ROM visual captures are recorded separately after the deterministic build digest is updated."
+final_opening_events = "local/runtime/goku-chichi-battle-final-4e1e6228-20261021/opening/events.jsonl"
+final_opening_events_sha256 = "4841529e3d005965e1a293792c2ddbd97b56b505be4fbe5768c88ae1bd28d758"
+final_opening_capture = "local/runtime/goku-chichi-battle-final-4e1e6228-20261021/opening/frame.png"
+final_opening_capture_sha256 = "bbcc4526dd82a63ba3e9aed3ae0bd519d5d6c5e3e00a6cb9e8bc1f65dc60a033"
+final_chichi_zero_events = "local/runtime/goku-chichi-battle-final-4e1e6228-20261021/chichi-zero/events.jsonl"
+final_chichi_zero_events_sha256 = "33b638e116ebc507b9346275ab1db4c683fee1a2361a8ba7a468fa84c8b3a300"
+final_chichi_zero_capture = "local/runtime/goku-chichi-battle-final-4e1e6228-20261021/chichi-zero/frame.png"
+final_chichi_zero_capture_sha256 = "50751bb5bd2cadcfca4e8062db00d3223f4de54156dc450debda02a3d6755603"
+final_chichi_zero_continuation_events = "local/runtime/goku-chichi-battle-final-4e1e6228-20261021/chichi-zero-continuation/events.jsonl"
+final_chichi_zero_continuation_events_sha256 = "c43504a75310530c713ce11f67a471b8032e8e18399492708545df1185d0435d"
+final_goku_zero_events = "local/runtime/goku-chichi-battle-final-4e1e6228-20261021/goku-zero/events.jsonl"
+final_goku_zero_events_sha256 = "2412bbe5516603596765f90acd8a099848f9c154f64180045d140246cf42ef50"
+final_goku_zero_capture = "local/runtime/goku-chichi-battle-final-4e1e6228-20261021/goku-zero/frame.png"
+final_goku_zero_capture_sha256 = "28f5a3770335e81a938832d32925ad402b35d4b732a485adff741daac7f43c82"
+final_goku_zero_continuation_events = "local/runtime/goku-chichi-battle-final-4e1e6228-20261021/goku-zero-continuation/events.jsonl"
+final_goku_zero_continuation_events_sha256 = "ca5b47dc17f1ac49b8cbcf5f6b5f52517c2c97e60d4a997f5996bd9d332de7ce"
+final_runtime_summary = "Final-ROM replay logs opening resources $1000/$1001; Chi-Chi-zero resources $1180-$1189 through the wide explanatory page; and Goku-zero resources $10B8/$10B9 followed by script termination. The first page of each path renders in English without clipping."
 artifact_policy = "Raw captures are local and ignored; this ledger preserves reviewed conclusions and reproducibility metadata."
+
+[[evidence]]
+id = "unrecognized_chichi_hud_anonymous_source_label"
+date = "2026-10-21"
+system = "static_source_glyph_and_scenario_analysis"
+rom_sha256 = "cc5ab583b5189c3f5b374335edf4b857461278d41ef674f7db31aa100dcb814a"
+status = "confirmed"
+summary = "The fixed fighter-name record at CPU $84:BF16 reads 匿名希望, meaning Anonymous/Name withheld, and belongs to the recognition-bit-clear Goku versus Chi-Chi battle. It must not be labeled Tien. The English HUD record is therefore 'Anonymous'."
+addresses = ["84:BF16", "82:EE8C", "99:B3F2", "99:B48A"]
+limitation = "The corrected nine-letter HUD label has been statically encoded and build-tested; the retained 2026-10-19 screenshots predate this correction and visibly contain the superseded 'Tien' patch."
+
+[[evidence]]
+id = "recognized_chichi_route_first_battle_hud"
+date = "2026-10-19"
+system = "mesen-agent"
+rom_sha256 = "3e875e81dfc2e111f839f0f1376c0ba83e0117159b22a62602251099f6854c5a"
+status = "confirmed_with_explicit_flag_setup"
+summary = "A current translated-ROM continuation from the retained recognized Chi-Chi state remained in scenario root $0013, rendered selectors $02E3-$0309 plus shared $0000/$0003/$000B, reached command $47 at CPU $91:9931, and began the first later battle setup with CPU $B0:8000. The terminal screenshot visibly shows the resulting Tien battle HUD with Japanese fighter name, HP, and battle-power labels, proving that this route is not translated through its first actual HUD."
+addresses = ["91:954B", "91:9919", "91:9931", "B0:8000", "B0:B4DA", "B5:8000", "A0:83E0", "A1:8000", "A2:97CA"]
+events = "local/runtime/chichi-recognized-first-hud-20261019-033900/events.jsonl"
+events_sha256 = "692c6bf11a8fb0d407b9e7e58ea3e098800d16e124194c16d2df58948f0c610f"
+capture = "local/runtime/chichi-recognized-first-hud-20261019-033900/frame.png"
+capture_sha256 = "263c12d7c1595c8be9624b5766db5055fee78f48188299d0e1fee9bbd5d7caac"
+source_state = "local/runtime/chichi-recognized-final-d94f9598-20261018/end.mss"
+source_state_sha256 = "d258f592700abd715798e10bb12bd10e8b5204ccfdfbbb4ce06430fd88bd2ec0"
+input_schedule = ["A+X at relative frame 10 and every 120 frames", "capture after 10,700 frames"]
+limitation = "The source state was produced on the same translated ROM after explicitly setting the already-proven WRAM $0D98 recognition bit; this is not an uninterrupted fresh-reset lineage. Selectors $02D6-$02E2 occurred before this continuation state and remain part of the same unaudited interval."
+
+[[evidence]]
+id = "recognized_route_battle_identity_correction"
+date = "2026-10-21"
+system = "static_scenario_and_source_glyph_analysis"
+rom_sha256 = "cc5ab583b5189c3f5b374335edf4b857461278d41ef674f7db31aa100dcb814a"
+status = "confirmed"
+summary = "The command $47 operand $0003 at CPU $91:992E is not evidence that the following battle is the third finals match. Root $0014 at CPU $91:9932 references selectors $0332-$033A and shared $0F24; source-order glyph reconstruction explicitly names Goku and describes him removing weighted clothing while Tien waits. This agrees with the retained Tien HUD capture and identifies the continuation as Goku versus Tien."
+addresses = ["91:992E", "91:9932", "99:8664", "99:CF1E", "98:C268", "98:DACC"]
+limitation = "The exact semantics of command $47 and operand $0003 remain unknown; only the previous match-index interpretation is disproven."
+
+[[evidence]]
+id = "battle_hud_generated_strip_path"
+date = "2026-10-19"
+system = "mesen-agent_and_static_disassembly"
+rom_sha256 = "3e875e81dfc2e111f839f0f1376c0ba83e0117159b22a62602251099f6854c5a"
+status = "confirmed"
+summary = "The four visible battle-HUD fields are generated in WRAM and uploaded as independent 2bpp strips rather than read from the compressed CPU $B0:8000 setup resource. Uploads use $0180 bytes to VRAM words $0100/$01C0 and $0240 bytes to $0280/$03A0. CPU $82:9159, $80:992A, $80:9CBE, and $80:9CF0 are confirmed workspace writers/converters. The new deterministic codec pins six observed compressed resources and models CPU $80:9CFA and the $80:9DA7 interleave."
+addresses = ["82:9159", "80:992A", "80:9CBE", "80:9CF0", "80:9CFA", "80:9DA7", "7E:8000"]
+unknown = "The source tables and complete composition logic for the fighter name, HP label/value, action, and status strips remain to be identified before English replacement."
+
+[[evidence]]
+id = "yamcha_finals_reaction_selector_0007"
+date = "2026-10-18"
+system = "mesen-agent"
+rom_sha256 = "d94f959800f7d3e11d002518d674466baabeb4927eb7761581cc7db8bd27a15e"
+status = "confirmed_with_migrated_state_limitation"
+summary = "A final-ROM replay selected quiz result B, reached finals root $000C, and executed selectors $02A3, $02A4, $0007, $02A5, and $02A6 in order. Selector $0007 executed at scenario cursor $91:8B7E and visibly rendered Yamcha's translated startled reaction as 'H-heh!?'."
+addresses = ["91:8B6C", "91:8B72", "91:8B7E", "99:800E", "99:880E"]
+events = "local/runtime/selector-0007-final-d94f9598-20261018/events.jsonl"
+events_sha256 = "2e4096d69106d0d634861da5efdf2670cc9f6d5debc92da669993ebe3c5e3f97"
+capture = "local/runtime/selector-0007-final-d94f9598-20261018/frame.png"
+capture_sha256 = "d2ebd564016ed4f3130e30fd3d2a48bfbfb689ab96bf88f606b87afa0a6cd8fb"
+source_state = "local/runtime/finals-transition-final-861d5808-20261014/B/next-quiz.mss"
+source_state_sha256 = "adecb5f354f3d356649e3866a1e34a8d35838dc3dad0d07367a11bacaa94ebe1"
+input_schedule = ["B at relative frames 10-12", "A at relative frame 130 and every 120 frames"]
+limitation = "The replay runs the pinned final ROM but starts from a save state generated by an earlier translated ROM revision; it confirms current-ROM selector execution and rendering rather than a clean-lineage playthrough from reset."
+
+[[evidence]]
+id = "recognized_chichi_route_and_stage_label"
+date = "2026-10-18"
+system = "mesen-agent"
+rom_sha256 = "d94f959800f7d3e11d002518d674466baabeb4927eb7761581cc7db8bd27a15e"
+status = "confirmed_with_explicit_flag_setup"
+summary = "A final-ROM replay loaded the current-ROM-generated finals continuation state, explicitly set WRAM $0D98 bit 0, and preserved that value throughout. Command $3E at $91:8EB0 jumped to root $000D at $91:8EDE; the second test continued at $91:8EEB and rendered recognized selectors $02C6-$02CA. The replay then advanced into later roots and visibly rendered translated bank-$88 fixed resource $03, source $88:8070, as 'Arena' above Krillin and Piccolo dialogue."
+addresses = ["7E:0D98", "91:8EB0", "91:8EDD", "91:8EDE", "91:8EEB", "99:858C", "88:8006", "88:8070"]
+events = "local/runtime/chichi-recognized-final-d94f9598-20261018/events.jsonl"
+events_sha256 = "39816bcf35e4888ca6dbab5e0b79efebd51567ff35e04309abf71db26f66a6de"
+capture = "local/runtime/chichi-recognized-final-d94f9598-20261018/frame.png"
+capture_sha256 = "04a8e104bc28470f226d0a6a474ac92790283c53cdce1ccb42a0f0649f8a3745"
+source_state = "local/runtime/finals-post-quiz-e4e53732-20261018/X/end.mss"
+input_schedule = ["write $01 to WRAM $0D98 before execution", "A+X at relative frame 10 and every 120 frames"]
+limitation = "The replay starts from a current-ROM-generated continuation state but sets the already-proven recognition flag explicitly rather than deriving it from an uninterrupted earlier recognized playthrough."
+
+[[evidence]]
+id = "finals_quiz_results_and_tien_tao_route_runtime"
+date = "2026-10-18"
+system = "mesen-agent"
+rom_sha256 = "e4e53732c96b161344002404a7aa791839441ce9d07e923c12a2f6029d236faa"
+status = "confirmed"
+summary = "Independent X/Y/B replay from the retained next-quiz states preserved result values 0/1/2. X entered root $000A at $91:8B08 and rendered $029A; Y/B entered root $000B at $91:8B0F and rendered $029B. All routes converged at root $000C, executed $029C-$02C5 in the same order, reached recognition test $3E $0000,$8EDD at $91:8EB0 with bit 0 clear, and terminated at $91:8EDD before the Tien-vs-Tao battle."
+addresses = ["91:8AEA", "91:8B08", "91:8B0F", "91:8B16", "91:8EB0", "91:8EDD", "83:D516"]
+x_events = "local/runtime/finals-post-quiz-e4e53732-20261018/X/events.jsonl"
+x_events_sha256 = "54ec07041e145378d959a9103d6bbc96215ac9e04a6f07759025493d9e1fce70"
+y_events = "local/runtime/finals-post-quiz-e4e53732-20261018/Y/events.jsonl"
+y_events_sha256 = "5894582d584096eecf5c005d945ba1285f5295fdf650886828638fae5fc0f601"
+b_events = "local/runtime/finals-post-quiz-e4e53732-20261018/B/events.jsonl"
+b_events_sha256 = "726fd34e2bda072f9db9f8e2d7303e2f0af8e53f19ab09e606ac027119fdebc9"
+x_continuation_events = "local/runtime/finals-post-quiz-cont-e4e53732-20261018/X/events.jsonl"
+x_continuation_events_sha256 = "48d24cc668a314fb4040b45ad4e6cc9ca820ecadc42277b5ccffca3471e43384"
+y_continuation_events = "local/runtime/finals-post-quiz-cont-e4e53732-20261018/Y/events.jsonl"
+y_continuation_events_sha256 = "0edb288b6b57706c874fb3219877f0c9ee7bee94b22a2097831c5089331f5d94"
+b_continuation_events = "local/runtime/finals-post-quiz-cont-e4e53732-20261018/B/events.jsonl"
+b_continuation_events_sha256 = "cbb35ec2e04a52d9b2664ba207be6261f873aeee63e954edaaf9a15924b3856b"
+input_schedule = ["X, Y, or B at relative frames 10-12", "A at relative frame 130 and every 120 frames"]
+
+[[evidence]]
+id = "chichi_recognition_flag_and_finals_branch"
+date = "2026-10-18"
+system = "static_and_state_comparison"
+rom_sha256 = "333871adb74653a3571d8e1df88f6659627df21dcdbe04f4cf5e879035a3f2da"
+status = "confirmed_control_flow_pending_authentic_finals_replay"
+summary = "Authentic earlier branch states establish WRAM $0D98 bit 0 as the Chi-Chi recognition flag: recognized X has $0001 and unrecognized Y has $0000. Command $3D $0000 at $91:8366 sets it. Command $3E $0000,$8EDD at $91:8EB0 and command $3E $0000,$8EEB at root $000D entry $91:8EDE test it. Static root analysis assigns recognized selectors $02C6-$02CA and unrecognized selectors $02CB-$02D5 plus $0F1F-$0F22."
+addresses = ["91:8366", "91:8EB0", "91:8EDE", "91:8EEB", "91:8F5F", "83:D4CB", "83:D516", "7E:0D98"]
+recognized_source_state = "local/runtime/post-chichi-final-373f4ab1-20261013/X/step-28/end.mss"
+recognized_source_state_sha256 = "de9264d8e63330ba5689dbd3ce0e4e09ca0d70b52fb27110550ac4a500a6cd08"
+unrecognized_source_state = "local/runtime/post-chichi-final-373f4ab1-20261013/Y/step-15/end.mss"
+unrecognized_source_state_sha256 = "7bfc2eb5c16684c85ba5ed4fd207587146f640aebf71461b79efa73a42803b8e"
+unknown = "The recognized and unrecognized finals variants still need authentic downstream final-ROM replay through their post-fight reconvergence; selector ownership and branch instructions are already confirmed statically."
+
+[[evidence]]
+id = "finals_dialogue_current_rom_migrated_state_checks"
+date = "2026-10-18"
+system = "mesen-agent"
+rom_sha256 = "333871adb74653a3571d8e1df88f6659627df21dcdbe04f4cf5e879035a3f2da"
+status = "confirmed_with_migrated_state_limitation"
+summary = "Two bounded checks loaded retained states onto the current translated ROM with zero Lua errors. The early run wrote X result 0, executed $029A, converged at $91:8B16, and visibly rendered translated Tien/Tao dialogue. The late run executed $02BA-$02C5, reached command $3E at $91:8EB0 with recognition bit clear, and terminated at $91:8EDD before the battle screen."
+addresses = ["91:8B08", "91:8B16", "91:8EB0", "91:8EDD"]
+early_events = "local/runtime/finals-dialogue-final-333871ad-20261018/early-X/events.jsonl"
+early_events_sha256 = "bc7f3a78e7699cceacdd2e893e26c15c41dd1a42853676b5a1505edb442622a9"
+early_capture = "local/runtime/finals-dialogue-final-333871ad-20261018/early-X/frame.png"
+early_capture_sha256 = "79cdfef8e9f5d3cb91b099d70acb9eff0c94c731edb081dcf7352aa772fa7c61"
+late_events = "local/runtime/finals-dialogue-final-333871ad-20261018/late-X/events.jsonl"
+late_events_sha256 = "92e731b3528c0c3abc3b285b47d78752dbf60b90ad3139c3703d283932b8fa01"
+late_capture = "local/runtime/finals-dialogue-final-333871ad-20261018/late-X/frame.png"
+late_capture_sha256 = "025ff9b3f5a30f9b21c422836e7cbe4592400a9576b5463d97bdb6ba89169fb5"
+limitation = "Both checks migrate historical save states across translated ROM revisions. They verify current-ROM rendering and control flow but are not substitutes for authentic clean-lineage recognized/unrecognized finals replays."
 
 [[evidence]]
 id = "opening_selector_order"
@@ -412,6 +651,109 @@ next_scene_selector = 0x27C
 next_scene_cursor = "91:87A5"
 
 [[evidence]]
+id = "first_preliminary_match_corrections_runtime_final"
+date = "2026-10-14"
+system = "mesen-agent"
+rom_sha256 = "f64cca802e0d11230095fa611ae07fbc833ff0a78ccbb99f31fcf47bc4a51375"
+status = "confirmed"
+summary = "Definitive final-ROM replay of checkpoint 6 used four bounded scene chunks plus the X response route. The chunks executed selectors $0267-$0276 in order, with shared action selectors $0000/$0002 retained between them; the response run executed $0277-$027B in order. Runtime portraits confirm Tien at $0267, Yamcha at $026B, Krillin at $026E, and Yamcha at $026F. Intermediate GIF captures on SHA-256 6d32f2f5... visually confirmed the corrected pages without clipping; the checkpoint-6 bytes are identical in the definitive f64cca80... ROM."
+addresses = ["91:85B3", "91:85B6", "91:8611", "91:8634", "91:8668", "91:86E8", "91:8712", "91:8733", "91:873F", "91:874B", "99:9D76", "99:A282"]
+source_states = ["local/runtime/first-prelim-final-9ccf9016-20261014/start/endpoint.mss", "local/runtime/first-prelim-revised-fbd0fa61-20261014/chunks/chunk-00/end.mss", "local/runtime/first-prelim-revised-fbd0fa61-20261014/chunks/chunk-01/end.mss", "local/runtime/first-prelim-revised-fbd0fa61-20261014/chunks/chunk-02/end.mss", "local/runtime/first-prelim-final-abf9222a-20261014/choice/choice-ready.mss"]
+source_state_sha256 = ["f92375a22d2d42edcc11ce51deffc17fa094ab539fdbf31b8095b7cd50460a1f", "f1e60eaccb424cf8e8fe781d6f0898bfd754fac81490ae294aedcb59937611a4", "4b2532539d0c143fc373bb4409e6bf7b59f9f6cacba8ba6eb20393df29e26c1f", "000be6566c3000300aaec0569c731e9775c704bbfb248b71c5760ad801f3b606", "523a3095d85e35d46215a304115d11242d9460e9fe70f4b93e6caad6096e90e3"]
+events = ["local/runtime/first-prelim-corrections-final-f64cca80-20261014/chunk-00/events.jsonl", "local/runtime/first-prelim-corrections-final-f64cca80-20261014/chunk-01/events.jsonl", "local/runtime/first-prelim-corrections-final-f64cca80-20261014/chunk-02/events.jsonl", "local/runtime/first-prelim-corrections-final-f64cca80-20261014/chunk-03/events.jsonl", "local/runtime/first-prelim-corrections-final-f64cca80-20261014/response-X/events.jsonl"]
+events_sha256 = ["586c99c33d34075ca03553dfa2721f2eea7785e7f174a4d920bdb6454a41cdde", "cb5381df11d2dd15bd07c382cd161977e4b1bef90143a3db7ffb5f1d0d45b9b2", "2072ef177fc2b63b233ccdde5aec2ced9e4a8cc007d32f27bfc7ba0520c9454a", "01c9555c3dbdd6cff6d64db68e52319325c2987586fcc8c64a434c1baf1e9a7e", "ea6364f2d68cdce2a6497404f18c3abf5c218afc6e8f981c90ffe60886b2376c"]
+input_schedule = ["0:A@10-12 and every 120 relative frames for each bounded scene chunk", "0:X@10-12 followed by 0:A@130-132 and every 120 relative frames for the response route"]
+
+[[evidence]]
+id = "second_preliminary_corrections_runtime_final"
+date = "2026-10-14"
+system = "mesen-agent"
+rom_sha256 = "f64cca802e0d11230095fa611ae07fbc833ff0a78ccbb99f31fcf47bc4a51375"
+status = "confirmed"
+summary = "Definitive final-ROM replay executed selectors $027C-$0280 in order. Runtime portraits confirm the announcer for $027C/$0280, Yamcha for $027D, Krillin for $027E, and Goku's internal assessment for $027F. The revised $027D and $027F pages render without clipping."
+addresses = ["91:87A5", "91:87AB", "91:87B1", "91:87B7", "91:87E8", "99:A2A4", "99:FEA0", "99:FECE", "99:A336", "99:A3BA"]
+source_state = "local/runtime/first-prelim-final-abf9222a-20261014/branches/X/end.mss"
+events = "local/runtime/second-prelim-corrections-final-f64cca80-20261014/events.jsonl"
+events_sha256 = "9a98e99fd404e50758cf9cb7421729618e80268b543b3e097575f9463e38d451"
+state = "local/runtime/second-prelim-corrections-final-f64cca80-20261014/end.mss"
+state_sha256 = "2360c023381469ef3ed59965e5acffd81c1355d54e97b1eb68aee256a5b0f9d7"
+capture = "local/runtime/second-prelim-corrections-final-f64cca80-20261014/frame.png"
+capture_sha256 = "d4071d1ac8320558a15c3a7c71a5fc0eac043a6f8d253a4db85ecec5ba3f449f"
+input_schedule = ["retained state before selector $027C", "0:A@10-12 and every 120 relative frames"]
+
+[[evidence]]
+id = "finals_corrections_runtime_final"
+date = "2026-10-14"
+system = "mesen-agent"
+rom_sha256 = "f64cca802e0d11230095fa611ae07fbc833ff0a78ccbb99f31fcf47bc4a51375"
+status = "confirmed"
+summary = "Definitive final-ROM X/Y/B replay preserved result values 0/1/2 and executed the identical selector sequence $0281-$0288, repeated $0287, $0289-$0292, $0F25, and $0294-$0299. Selector $0293 did not execute. Runtime portraits confirm Goku at $0286; Yajirobe in disguise at $0289, $028E, and $028F; Master Roshi at $0296/$0299; Krillin at $0297; and Yamcha at $0298. Every route reached command $07 at $91:8AE9 and terminal cursor $91:8AEA; the three terminal screenshots are byte-identical."
+addresses = ["91:87EE", "91:8837", "91:8A68", "91:8AD1", "91:8AD7", "91:8ADD", "91:8AE3", "91:8AE9", "91:8AEA", "99:A494", "99:A4EE", "99:A546", "99:A5A2", "99:A5B0", "99:A78A", "99:A7C6", "99:A802", "99:A852"]
+source_state = "local/runtime/second-prelim-final-220b5030-20261014/choice/choice-ready.mss"
+source_state_sha256 = "903f8b46fd29045632284db65d30aebed75da1ca9cb616e8bfaa3e6db19041e6"
+x_events = "local/runtime/finals-corrections-final-f64cca80-20261014/X-final/events.jsonl"
+x_events_sha256 = "9fd0634306a6d60b072200f80b7dcd7ac176531325417b483e7c1db36feea645"
+y_events = "local/runtime/finals-corrections-final-f64cca80-20261014/Y-final/events.jsonl"
+y_events_sha256 = "99c4dac498b950e06b213d624a18312f0ee4279ffb24440660da63c357e8a455"
+b_events = "local/runtime/finals-corrections-final-f64cca80-20261014/B-final/events.jsonl"
+b_events_sha256 = "d80ef5f43f7b81f20304d49193ff3a69f430ac02f8a3f6a30bc253bd7f43c68a"
+x_state_sha256 = "0aac79fbdcc3ea2a9fcc0c211279608a097a826c527fe3169fcdba432434d054"
+y_state_sha256 = "e3bc913f0578645a268ed03a3986f56a74e5cbad5d0267eaefc0f6b1a4fe142e"
+b_state_sha256 = "806bb40a759ac5b71f3f817ea338d1cd4346654fee0f683c3fba25a354da09f3"
+terminal_capture_sha256 = "4f352be0656f570cfab397c4473b8bedd3119d44a3fcf6b1853ad359e4b559c0"
+input_schedule = ["0:X@10-12, 0:Y@10-12, or 0:B@10-12 from the retained choice state", "0:A@130-132 and every 120 relative frames through 5170-5172"]
+terminal_selector = 0x299
+next_quiz_cursor = "91:8AEA"
+
+[[evidence]]
+id = "finals_transition_and_next_quiz_runtime_final"
+date = "2026-10-14"
+system = "mesen-agent"
+rom_sha256 = "861d5808911c132cf512c552d0ead3759f6502c4079aeacbee1f94f6c71819b1"
+status = "confirmed"
+summary = "Final-ROM X/Y/B replay from the retained command-$07 choice state preserved result values 0/1/2, converged before translated dialogue, and executed the identical selector sequence $0281-$0288, repeated $0287, $0289-$0292, $0F25, and $0294-$0299. Selector $0293 did not execute. All routes reached command $07 at $91:8AE9 and terminal cursor $91:8AEA with resources $0013/$0014/$0015. The three byte-identical screenshots visibly confirm the existing bank-$88 label 'World Tournament Arena' and unclipped rows 'This could be bad.', 'No big deal.', and 'We'll manage.'."
+addresses = ["91:87EE", "91:8807", "91:8809", "91:8837", "91:8A68", "91:8AE3", "91:8AE9", "91:8AEA", "88:8018", "98:9B50", "98:9B52", "98:9B54", "98:F5C8", "99:8502", "99:8532", "98:C26A"]
+source_state = "local/runtime/second-prelim-final-220b5030-20261014/choice/choice-ready.mss"
+source_state_sha256 = "903f8b46fd29045632284db65d30aebed75da1ca9cb616e8bfaa3e6db19041e6"
+x_events = "local/runtime/finals-transition-final-861d5808-20261014/X/events.jsonl"
+x_events_sha256 = "5700e9cacafd59f0d7165dde4b87a7d9c318313e08de3f9b89b95d74cdcc0ebf"
+x_state = "local/runtime/finals-transition-final-861d5808-20261014/X/next-quiz.mss"
+x_state_sha256 = "d06f5ebda27eef901e4e0bef0bd4ef81ca8c965ec452e74beae301b8cba2df90"
+y_events = "local/runtime/finals-transition-final-861d5808-20261014/Y/events.jsonl"
+y_events_sha256 = "84097828becd3c808ce434b535ec29e6532aa9447ca10a08d431a35f9ec3ed4c"
+y_state = "local/runtime/finals-transition-final-861d5808-20261014/Y/next-quiz.mss"
+y_state_sha256 = "156d187249c4d85ce8334f8474e92a0e37a99ac8663c5e29f447b67fdcdc706b"
+b_events = "local/runtime/finals-transition-final-861d5808-20261014/B/events.jsonl"
+b_events_sha256 = "dd3b5325f699fe03278010dae53423b0d745c0abd12bcbc7c75a61b08cf5640f"
+b_state = "local/runtime/finals-transition-final-861d5808-20261014/B/next-quiz.mss"
+b_state_sha256 = "adecb5f354f3d356649e3866a1e34a8d35838dc3dad0d07367a11bacaa94ebe1"
+terminal_capture_sha256 = "87f2f9e0aa7487d9e6c8fe1fe2cfca017e021ebfeaa8ef23c17aa9b9e6157485"
+input_schedule = ["0:X@10-12, 0:Y@10-12, or 0:B@10-12 from the retained choice state", "0:A@130-132 and every 120 relative frames through 5170-5172"]
+terminal_selector = 0x299
+next_quiz_cursor = "91:8AEA"
+
+[[evidence]]
+id = "second_preliminary_leadin_and_quiz_screen_runtime"
+date = "2026-10-14"
+system = "mesen-agent"
+rom_sha256 = "220b5030e5d32bc6ff5db77d6ee7431eeb2fbb1423336ba652f40fb9dc15fe4f"
+status = "confirmed"
+summary = "Historical final-ROM replay executed selectors $027C-$0280 in order and reached command $07 at $91:87EE with resource indices $0010-$0012. Runtime portraits confirm the announcer for $027C/$0280, Yamcha for $027D, Krillin for $027E, and Goku's internal assessment for $027F. Seven dialogue-page captures and the translated quiz rows 'Heh heh heh!', 'Peace!', and 'I did it!' render without clipping."
+addresses = ["91:87A5", "91:87AB", "91:87B1", "91:87B7", "91:87E8", "91:87EE", "99:84F8", "99:8500", "99:A2A4", "99:A3BA", "99:FF52", "99:FF88", "98:9B4A", "98:9B4C", "98:9B4E", "98:F5A6", "98:F5B8"]
+source_state = "local/runtime/first-prelim-final-abf9222a-20261014/branches/X/end.mss"
+choice_state = "local/runtime/second-prelim-final-220b5030-20261014/choice/choice-ready.mss"
+choice_state_sha256 = "903f8b46fd29045632284db65d30aebed75da1ca9cb616e8bfaa3e6db19041e6"
+choice_capture = "local/runtime/second-prelim-final-220b5030-20261014/choice/frame.png"
+choice_capture_sha256 = "f2ce273b19423c15294cb1be1c7ff222d303519cbb81443ed6978ebab9963742"
+choice_events = "local/runtime/second-prelim-final-220b5030-20261014/choice/events.jsonl"
+choice_events_sha256 = "d66b53052d068cb5eb062d21abd6a1c488b92906aeda509db60d7637c32e1ca4"
+route_events = "local/runtime/second-prelim-final-220b5030-20261014/route-600/events.jsonl"
+route_events_sha256 = "9b62c6af5deedee6393bc3251c59a4937cbd4ade6287acbc74346301b985fe2f"
+page_capture_sha256 = ["ec2b985043f71d7e7279c135b8e4c760b7592402f8fdbb46a85df40f04e167a2", "468c2806dd1bfae45ac5e2e940650b3129caf0607bda8a53d44db4bdecc34a6a", "0c97c968970c6954c877d4a5dce1e1d335d040837dd7685a0d0c745e791b463d", "3164f8250cba5d3e312a75d3a98df949c7cf9c326dfb9c8a548cba512f0e8934", "729c5c669a990d35f53b28ac8b5e603a727cc89e7d389e4ee5d6e76f5da06cb1", "0839c6fcc20d60d71f8e63ccdc0c446e1613046c3111f31fe250f4cd7de7fd75", "beeeba2c53bae0917ec857cac2b45d05ed458944b0080f571057c1a1aeddd6c2", "4e142bd566fd34d6d7a60ce994afbdeecf4fd50aa0a1b86b682e4f894195f2b6"]
+input_schedule = ["retained state before selector $027C", "0:A one frame every 120 relative frames"]
+choice_cursor = "91:87EE"
+
+[[evidence]]
 id = "first_preliminary_match_runtime_revised_pagination_intermediate"
 date = "2026-10-14"
 system = "mesen-agent"
@@ -436,6 +778,46 @@ input_schedule = ["0:A one frame every 120 relative frames", "0:X, 0:Y, or 0:B a
 choice_frame = 18268
 next_scene_selector = 0x27C
 next_scene_cursor = "91:87A5"
+
+[[evidence]]
+id = "tien_tao_unrecognized_native_pagination_runtime"
+date = "2026-10-22"
+system = "mesen-agent"
+rom_sha256 = "b1b354ec6b74ebe7f6754dcb18e35643c95e4e1f3244fb1434cffb9a82f0a9bf"
+status = "confirmed_with_migrated_state_limitation"
+summary = "The unrecognized Tien-Tao route executed selector $02C4 at scenario cursor $91:8EB5 and selector $02C5 at $91:8ECB in order. Runtime captures show $02C4 as three native pages with visible-line occupancy 2+2+3 and $02C5 as two native pages with occupancy 4+2. After the final 'Now, begin / match two!!' page, execution advanced through command $1C at $91:8ECE and command $10 at $91:8ED0 into the arena transition; the former jump from 'Now for match two!!' into the middle of 'be called the anonymous' did not recur."
+addresses = ["91:8EB5", "91:8ECB", "91:8ECE", "91:8ED0", "99:8588", "99:858A", "99:B3F2", "99:B48A"]
+source_state = "local/runtime/finals-transition-final-861d5808-20261014/B/next-quiz.mss"
+source_state_sha256 = "adecb5f354f3d356649e3866a1e34a8d35838dc3dad0d07367a11bacaa94ebe1"
+current_rom_state = "local/runtime/tien-tao-layout-fix-b1b354ec-20261022/continuation/end.mss"
+current_rom_state_sha256 = "56afc70a847aeef3f7b8ec632de8be5484477bcde771bf0f10fafe0c4c65331f"
+events = "local/runtime/tien-tao-layout-fix-b1b354ec-20261022/continuation/target/events.jsonl"
+events_sha256 = "0df1673ed56c576788e6824b895bcd803beffa2199fc83529e8ae6fac8f4613e"
+captures = ["local/runtime/tien-tao-layout-fix-b1b354ec-20261022/continuation/target/02C4-page-1.png", "local/runtime/tien-tao-layout-fix-b1b354ec-20261022/continuation/target/02C4-page-2.png", "local/runtime/tien-tao-layout-fix-b1b354ec-20261022/continuation/target/02C4-page-3.png", "local/runtime/tien-tao-layout-fix-b1b354ec-20261022/continuation/target/02C5-page-1.png", "local/runtime/tien-tao-layout-fix-b1b354ec-20261022/continuation/target/02C5-page-2.png", "local/runtime/tien-tao-layout-fix-b1b354ec-20261022/continuation/target/post-transition.png"]
+capture_sha256 = ["bd3fa13ea5f5f5e355b8e1b7b1f8e1572dd3906c29d3a3288de5a44a0cc46230", "521aebd7d35d7ee145b1471e796f2b9c744cac042766b1e45ea08349e17bd934", "cd2cd4807cd3447ebc32ee5f379487c5afc306fc86aa46f620cdb94b26a89065", "e446853ef2f1adb83ef574f21125c9612c085c8793a2c7cd18c44618c6989ed8", "8b93469acb020845d720000d75d2c7dda861bdee8e5de98a9547d3ce569363ab", "5cee5d0bb57b13040a30f6a67af967d4528af2c04e88282aa4b7c1c48ee1c91a"]
+input_schedule = ["0:B@10-12 from the retained finals continuation state", "0:A for three frames every 120 relative frames", "two current-ROM continuation states before the bounded target replay"]
+limitation = "The initial finals continuation state was generated by an earlier translated ROM revision. The subsequent continuation states and the complete $02C4/$02C5 target replay were generated on the pinned final ROM, so this confirms final-ROM execution and rendering but is not a clean-lineage playthrough from reset."
+
+[[evidence]]
+id = "matchup_announcement_fixed_label_runtime"
+date = "2026-10-18"
+system = "mesen-agent"
+rom_sha256 = "e4e53732c96b161344002404a7aa791839441ce9d07e923c12a2f6029d236faa"
+status = "confirmed"
+summary = "A deterministic replay from the retained second-preliminary choice state followed the X route through selectors $028E, $028F, and $0290, crossed the bracket-transition fade, and rendered fixed bank-$88 table entry $27 as 'Matchup Announcement' on the stable Match 3 screen without clipping. Static handler analysis separately confirms that command $28 $000A at $91:89A9 sets a WRAM flag bit and is unrelated to this banner."
+addresses = ["91:89A9", "91:89F2", "91:8A03", "91:8A1B", "83:CCDB", "88:804E", "88:8210"]
+source_state = "local/runtime/second-prelim-final-220b5030-20261014/choice/choice-ready.mss"
+route_state = "local/runtime/matchup-announcement-1ff24f4f-20261018/frame-3450/end.mss"
+route_state_sha256 = "d69f45bb894cf8e87af0a79af79c23b92cfd58cf04e5dffae5d3c7ca034a4d47"
+capture = "local/runtime/matchup-announcement-e4e53732-20261018/frame.png"
+capture_sha256 = "57575dceffc51fc5c7f0b534461d18daffd3e6ff3f78be6ae0eb3b4e56739b84"
+events = "local/runtime/matchup-announcement-e4e53732-20261018/events.jsonl"
+events_sha256 = "b29029f980a18649663f148cd904aa1b5e36d8bff76896b3fb1145213307c0b5"
+state = "local/runtime/matchup-announcement-e4e53732-20261018/state.json"
+state_sha256 = "229fe7a5c3e43ed97d4a1ade1a14daaf6ae13ee368da6509157f90d7d541b5ed"
+end_state = "local/runtime/matchup-announcement-e4e53732-20261018/end.mss"
+end_state_sha256 = "b41af4bd4ed61dffa9e609c3cf8cd990e30f76744740525e6e4af210887e2a92"
+input_schedule = ["0:X@10-12 from the retained choice state", "0:A@130-132 and every 120 relative frames through the finals transition", "continued 500 frames from the retained fade state with 0:A@130-132, 250-252, and 370-372"]
 
 [[evidence]]
 id = "mercenary_tao_quiz_and_branches_runtime_final"

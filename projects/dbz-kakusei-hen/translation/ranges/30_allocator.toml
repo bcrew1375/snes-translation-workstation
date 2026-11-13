@@ -1,0 +1,13 @@
+schema_version = 1
+
+[[record]]
+name = "free_text_bank_99_tail"
+rom_start = 0xCF8EE
+rom_end = 0xCFFFF
+cpu_start = "$F8EE"
+cpu_end = "$FFFF"
+bank = 0x99
+alignment = 2
+evidence = "All-$FF tail after the final structurally decoded bank-$99 text stream at $99:F8C6-$99:F8ED; no command-$08 selector target enters the range, and it remains wholly inside bank $99."
+confidence = "confirmed"
+

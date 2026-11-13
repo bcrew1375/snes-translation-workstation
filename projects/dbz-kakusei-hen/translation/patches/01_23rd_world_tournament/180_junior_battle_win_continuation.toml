@@ -1,0 +1,237 @@
+schema_version = 1
+
+# Junior battle win continuation (root $0019, selectors $03A2-$03AB, $0011, $0002)
+# Runtime evidence: win-terminal replay from retained battle state
+
+[[record]]
+id = "junior_win_cont_03a2"
+selector = 0x03A2
+reference_address = "99:8744"
+reference_offset = 0xC8744
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:EDD2"
+original_offset = 0xCEDD2
+original_length = 16
+source_sha256 = "4fb81f6c9e85ceb689502bdfd209e99f5402c56cafa38ab055c6316913098f40"
+english = ["Y-you bastard...!!"]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $0019 selector $03A2, portrait 4/2 (Junior); Junior reacts after surviving Goku's Kamehameha."
+
+[[record]]
+id = "junior_win_cont_03a3"
+selector = 0x03A3
+reference_address = "99:8746"
+reference_offset = 0xC8746
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:EDE2"
+original_offset = 0xCEDE2
+original_length = 56
+source_sha256 = "6a0a95a1c33352a312b4d05131675f1921620730164c594a77bc94550c9a014f"
+english = [
+  "Impressive...",
+  "Even though it was",
+  "your special",
+  "Kamehameha...",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $0019 selector $03A3, portrait 0/1 (announcer); Announcer comments on the Kamehameha."
+
+[[record]]
+id = "junior_win_cont_03a4"
+selector = 0x03A4
+reference_address = "99:8748"
+reference_offset = 0xC8748
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:EE1A"
+original_offset = 0xCEE1A
+english = [
+  "I won't forgive you!",
+  "I'll crush you to",
+  "pieces...!!",
+]
+source_sha256 = "1a0020de99dde4db18f65da4d37acf180a6840d8d3bd3d6d82c3489f2207e887"
+original_length = 46
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $0019 selector $03A4, portrait 4/2 (Junior); Junior threatens Goku."
+
+[[record]]
+id = "junior_win_cont_03a5"
+selector = 0x03A5
+reference_address = "99:874A"
+reference_offset = 0xC874A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:EE48"
+original_offset = 0xCEE48
+original_length = 206
+source_sha256 = "0dc7944a0db7621a6baa802d52bab7b937436b023eb5fe5eeedce4ba3d85b7e0"
+english = [
+  "S-Son's attack was",
+  "tremendous...",
+  "",
+  "",
+  "But Junior",
+  "unbelievably",
+  "endured it...",
+  "",
+  "...Ah...",
+  "Huh...?",
+  "",
+  "",
+  "Huh...?",
+  "W-where did he...",
+  "",
+  "",
+  "He vanished...",
+  "completely...",
+  "........",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $0019 selector $03A5, portrait 33/0 (announcer); Announcer narrates the fight and Junior's disappearance."
+
+[[record]]
+id = "junior_win_cont_03a6"
+selector = 0x03A6
+reference_address = "99:874C"
+reference_offset = 0xC874C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:EF16"
+original_offset = 0xCEF16
+original_length = 14
+source_sha256 = "08a739616c0af22459aef9daaacdc03129d22ca1bf5006eacfed1aab1695828e"
+english = ["N-no good!!"]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $0019 selector $03A6, portrait 9/2 (spectator); Spectator reacts to Junior's disappearance."
+
+[[record]]
+id = "junior_win_cont_03a7"
+selector = 0x03A7
+reference_address = "99:874E"
+reference_offset = 0xC874E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:EF24"
+original_offset = 0xCEF24
+original_length = 36
+source_sha256 = "2a799b27b7b5782a9c4908dfe66c1677d1edfbd2b3dd9d9d8c12c364f83d7217"
+english = [
+  "H-he looks like...",
+  "King Piccolo...",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $0019 selector $03A7, portrait 20/2 (spectator); Spectator notices Junior's resemblance to King Piccolo."
+
+[[record]]
+id = "junior_win_cont_03a8"
+selector = 0x03A8
+reference_address = "99:8750"
+reference_offset = 0xC8750
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:EF48"
+original_offset = 0xCEF48
+original_length = 22
+source_sha256 = "752075b99c5d5431fc38b1426f49d37f7a6dc25fb67278811ec046e815124e28"
+english = ["K-King Piccolo?"]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $0019 selector $03A8, portrait 45/0 (spectator); Another spectator questions the resemblance."
+
+[[record]]
+id = "junior_win_cont_03a9"
+selector = 0x03A9
+reference_address = "99:8752"
+reference_offset = 0xC8752
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:EF5E"
+original_offset = 0xCEF5E
+original_length = 16
+source_sha256 = "cbc0b4216b499c94dee55d60efa74aac0967e3baf4ba25bd2c4e33eb671fb794"
+english = ["Now you mention it..."]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $0019 selector $03A9, portrait 39/0 (spectator); Spectator realizes the resemblance."
+
+[[record]]
+id = "junior_win_cont_03aa"
+selector = 0x03AA
+reference_address = "99:8754"
+reference_offset = 0xC8754
+pointer_format = "16-bit same-bank LoROM pointer"
+english = [
+  "It's true,",
+  "he looks like him...",
+]
+original_address = "99:EF6E"
+original_offset = 0xCEF6E
+original_length = 26
+source_sha256 = "ef0585779d81f123559569a2f73c79a356ffa5d7a095f176a3e4cd083e1353b0"
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $0019 selector $03AA, portrait 40/0 (spectator); Spectator confirms the resemblance."
+
+[[record]]
+id = "junior_win_cont_03ab"
+selector = 0x03AB
+reference_address = "99:8756"
+reference_offset = 0xC8756
+pointer_format = "16-bit same-bank LoROM pointer"
+english = [
+  "Of course I look",
+  "like him!!",
+  "",
+  "",
+  "I am King Piccolo's",
+  "reincarnation!!",
+  "Bow before me!",
+]
+original_address = "99:EF88"
+original_offset = 0xCEF88
+source_sha256 = "6aeeead9636673224883d8970acf29514bbffba2ae3df18b035bac3e10aca490"
+original_length = 78
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $0019 selector $03AB, portrait 4/1 (Junior); Junior reveals he is King Piccolo's reincarnation."
+
+[[record]]
+id = "junior_win_cont_0011"
+selector = 0x0011
+reference_address = "99:8022"
+reference_offset = 0xC8022
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:8878"
+original_offset = 0xC8878
+original_length = 14
+source_sha256 = "49467c1ab144e5dbd8a68a6a038be2eca347dae4934cd49182f73b36ab33ef70"
+english = ["...Eh!?"]
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $0019 shared selector $0011, no portrait; Reaction to Junior's revelation."
+
+[[record]]
+id = "junior_win_cont_0002"
+selector = 0x0002
+reference_address = "99:8004"
+reference_offset = 0xC8004
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:87E0"
+original_offset = 0xC87E0
+original_length = 10
+source_sha256 = "f3ce9b7148bb04198e2a2ec3e58601b744e9b62914efd9084c60c15026699efd"
+english = ["!!!!!!"]
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $0019 shared selector $0002, no portrait; Shocked reaction to Junior's revelation."

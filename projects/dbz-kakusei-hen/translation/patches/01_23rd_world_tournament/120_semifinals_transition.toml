@@ -1,0 +1,69 @@
+schema_version = 1
+
+[[record]]
+id = "semifinals_00"
+selector = 0x0306
+reference_address = "99:860C"
+reference_offset = 0xC860C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C4B4"
+original_offset = 0xCC4B4
+original_length = 154
+source_sha256 = "efa8227412ef54468e27e4602f94b4629c7aaec5e1634e2797ba003869b1757a"
+english = [
+  "After fierce battles,",
+  "only four remain!",
+  "The semifinals",
+  "begin now!!",
+  "These four fighters",
+  "are all incredibly",
+  "powerful martial",
+  "artists!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Announcer opens the tournament semifinals after four contestants remain."
+
+[[record]]
+id = "semifinals_01"
+selector = 0x0307
+reference_address = "99:860E"
+reference_offset = 0xC860E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C54E"
+original_offset = 0xCC54E
+original_length = 78
+source_sha256 = "0b77bca615a38a0eb03bae6a644b86e746b02844570640e8e42a71a923484dd4"
+english = [
+  "I knew it.",
+  "",
+  "",
+  "",
+  "These four really",
+  "are the best",
+  "in the world.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $0307 before the first visible battle HUD."
+
+[[record]]
+id = "semifinals_02"
+selector = 0x0308
+reference_address = "99:8610"
+reference_offset = 0xC8610
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C59C"
+original_offset = 0xCC59C
+original_length = 62
+source_sha256 = "17832b00f227f38a086c506f510401baa6016639ed2fec3ebc2c0d0c8f232995"
+english = [
+  "So strong...",
+  "Krillin and",
+  "Yamcha never",
+  "had a chance...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $0308 before the first visible battle HUD."
+

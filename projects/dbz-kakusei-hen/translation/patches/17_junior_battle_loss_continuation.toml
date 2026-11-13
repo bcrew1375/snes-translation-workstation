@@ -1,0 +1,177 @@
+schema_version = 1
+
+# Junior battle loss continuation (root $001C, selectors $096C-$0976)
+# Runtime evidence: loss-terminal replay from retained battle state
+
+[[record]]
+id = "junior_loss_cont_096c"
+original_address = "9C:F4DC"
+original_offset = 0xE74DC
+original_length = 140
+source_sha256 = "c9621635d8c91f4adb006e5f11bc8a08da77952f6436b147d6822feeb4a4f40b"
+english = [
+  "Hahaha...",
+  "He's dead! He's dead!",
+  "Goku is dead!!",
+  "",
+  "Now there's no one to",
+  "stand in my way.",
+  "The demonic world of",
+  "terror returns!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $001C selector $096C, portrait 4/1 (Junior); Junior celebrates Goku's death."
+
+[[record]]
+id = "junior_loss_cont_096d"
+original_address = "9C:F568"
+original_offset = 0xE7568
+original_length = 40
+source_sha256 = "a3ec6d44fd933a0e6da1021ecceb38e3ea21c533413601bd0ec65fab623a9ca7"
+english = [
+  "D-damn it!!",
+  "Give Goku back!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $001C selector $096D, portrait 8/3 (Krillin); Krillin reacts."
+
+[[record]]
+id = "junior_loss_cont_096e"
+original_address = "9C:F590"
+original_offset = 0xE7590
+original_length = 50
+source_sha256 = "77d716773f807b1e149d999b09ddba8f58e7140e27fa8c65aedc8b6cbcc6bd47"
+english = [
+  "G-Goku's gone...",
+  "this world is",
+  "finished...",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $001C selector $096E, portrait 14/2 (announcer); Announcer despairs."
+
+[[record]]
+id = "junior_loss_cont_096f"
+original_address = "9C:F5C2"
+original_offset = 0xE75C2
+original_length = 16
+source_sha256 = "a4834b0ded7a1199af818476cba856d8e52a94f12ab2e3a3052610609c87e136"
+english = ["D-damn it!!"]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $001C selector $096F, portrait 10/2 (Tien); Tien curses."
+
+[[record]]
+id = "junior_loss_cont_0970"
+original_address = "9C:F5D2"
+original_offset = 0xE75D2
+original_length = 100
+source_sha256 = "942c575d786663e5148c0b9f48d7dd69a08b6f4f963a08976a16d9edaaaf24eb"
+english = [
+  "Ha! Don't worry!",
+  "I'll take you all",
+  "",
+  "",
+  "to Goku",
+  "now!",
+  "Come along!",
+  "",
+  "To the other world!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $001C selector $0970, portrait 4/1 (Junior); Junior threatens spectators."
+
+[[record]]
+id = "junior_loss_cont_0971"
+original_address = "9C:F636"
+original_offset = 0xE7636
+original_length = 16
+source_sha256 = "9be9a102e8c46c652afef49beb20049d3dd0e9438154aeffe9482707695488ce"
+english = ["Gaaaaah...!!"]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $001C selector $0971, portrait 4/3 (Junior); Junior attacks."
+
+[[record]]
+id = "junior_loss_cont_0972"
+original_address = "9C:F646"
+original_offset = 0xE7646
+original_length = 56
+source_sha256 = "6954987387e226cafa4bef3156b5b572f3c41d25fe2f6bc41c2e14f626bd373b"
+english = [
+  "U-uwah!!",
+  "He's charging up more",
+  "and more power...!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $001C selector $0972, portrait 8/4 (Krillin); Krillin observes Junior charging."
+
+[[record]]
+id = "junior_loss_cont_0973"
+original_address = "9C:F67E"
+original_offset = 0xE767E
+original_length = 58
+source_sha256 = "fe981ea5d0c4b4c746c2880c99fa8aca35dbae4cc3b1f03c7316d014d63f2b53"
+english = [
+  "It's no good...",
+  "No time to run!!",
+  "It's over...",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $001C selector $0973, portrait 14/2 (announcer); Announcer despairs."
+
+[[record]]
+id = "junior_loss_cont_0974"
+original_address = "9C:F6B8"
+original_offset = 0xE76B8
+original_length = 12
+source_sha256 = "6b62412346b3dcf3afdf374589f7520aafa6a629729c8f195de074c4ab260be5"
+english = ["I-It's over..."]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $001C selector $0974, portrait 10/3 (Tien); Tien despairs."
+
+[[record]]
+id = "junior_loss_cont_0975"
+original_address = "9C:F6C4"
+original_offset = 0xE76C4
+original_length = 32
+source_sha256 = "16628e771edce644ca3e4bd83aff40f3c8803ce9e38d5a732783c54c750be74c"
+english = [
+  "Kkk...",
+  "Dieeeee!!!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $001C selector $0975, portrait 4/1 (Junior); Junior's finishing attack."
+
+[[record]]
+id = "junior_loss_cont_0976"
+original_address = "9C:F6E4"
+original_offset = 0xE76E4
+original_length = 44
+source_sha256 = "c4d594f1cb8fe081bde53e7c25eec638381794f8d6f7fbad043f8110724e6526"
+english = [
+  "Hahaha...",
+  "King Piccolo",
+  "lives again!",
+]
+max_line_length = 21
+preserve_source_line_layout = true
+status = "implemented"
+notes = "Root $001C selector $0976, portrait 4/1 (Junior); Junior declares King Piccolo's resurrection."

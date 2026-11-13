@@ -53,13 +53,17 @@ class ProjectDescriptorTest(unittest.TestCase):
     def test_translation_manifests_exist(self):
         patches = PROJECT_ROOT / self.data["manifests"]["patches"]
         self.assertTrue(patches.is_dir(), f"missing translation manifest collection {patches}")
-        for name in ("references", "ranges", "menu", "name_entry", "choices", "glossary"):
+        ranges = PROJECT_ROOT / self.data["manifests"]["ranges"]
+        self.assertTrue(ranges.is_dir(), f"missing range manifest collection {ranges}")
+        for name in (
+            "menu", "name_entry", "choices", "battle_text", "hud", "glossary"
+        ):
             manifest = PROJECT_ROOT / self.data["manifests"][name]
             self.assertTrue(manifest.is_file(), f"missing translation manifest {manifest}")
 
     def test_status_manifest_is_valid(self):
         status = load_project_status(PROJECT_ROOT / self.data["manifests"]["status"])
-        self.assertEqual(status.phase, "first_preliminary_match")
+        self.assertEqual(status.phase, "junior_fight_leadin")
         self.assertTrue(status.milestones)
         self.assertTrue(status.recommended_tasks)
 
@@ -77,16 +81,84 @@ class TranslationManifestTest(unittest.TestCase):
     @staticmethod
     def load_patches() -> list[dict[str, object]]:
         records = []
-        for path in sorted((PROJECT_ROOT / "translation" / "patches").glob("*.toml")):
+        for path in sorted((PROJECT_ROOT / "translation" / "patches").rglob("*.toml")):
             with path.open("rb") as source:
                 document = tomllib.load(source)
             records.extend(document["record"])
         return records
 
+    def test_funimation_terminology_and_corrected_finals_lines(self):
+        patches = {record["id"]: record for record in self.load_patches()}
+        rendered = "\n".join(
+            line
+            for record in patches.values()
+            for line in record["english"]
+        )
+        self.assertNotIn("Master Shen", rendered)
+        self.assertNotIn("Dodonpa", rendered)
+        self.assertNotIn("God Shen", rendered)
+        self.assertEqual(patches["yamcha_shen_28"]["english"], ["K-Kami!!"])
+        self.assertIn("Kami", "\n".join(patches["yamcha_shen_31"]["english"]))
+        self.assertEqual(patches["tien_tao_00"]["english"], ["The Crane Hermit!"])
+        self.assertEqual(
+            patches["tien_tao_06"]["english"][-3:],
+            ["Let's hope Tien and", "you lot have even the", "slightest chance..."],
+        )
+        self.assertEqual(patches["goku_affirmative_reply"]["english"], ["Right!!"])
+        self.assertEqual(
+            patches["finals_transition_match_02_recognized"]["english"],
+            ["Match 2", "", "Goku vs Chi-Chi"],
+        )
+        self.assertEqual(
+            patches["tien_tao_27"]["english"],
+            ["What...?", "That little victory", "made you cocky?"],
+        )
+        self.assertEqual(patches["tien_tao_34"]["english"][-1], "with his ki alone!!")
+        self.assertIn("in the groin!!", patches["yamcha_shen_07"]["english"])
+        self.assertEqual(patches["yamcha_shen_19"]["english"][0], "See? I knew it.")
+        self.assertIn("borrowing", " ".join(patches["yamcha_shen_21"]["english"]))
+        self.assertIn("possessing", " ".join(patches["yamcha_shen_21"]["english"]))
+        self.assertEqual(patches["semifinals_01"]["english"][0], "I knew it.")
+        self.assertEqual(
+            patches["tien_tao_12"]["english"],
+            ["One Senzu keeps you", "full for ten days!"],
+        )
+        self.assertEqual(
+            patches["tien_tao_unrecognized_01"]["english"],
+            [
+                "At her request,",
+                "she will be called",
+                "the anonymous",
+                "contestant.",
+                "Now, begin",
+                "match two!!",
+            ],
+        )
+        self.assertEqual(
+            patches["goku_chichi_recognized_01"]["english"],
+            ["Hey!", "Get off me!"],
+        )
+        self.assertEqual(
+            patches["goku_chichi_recognized_02"]["english"],
+            ["That's how married", "couples are."],
+        )
+        for identifier in ("tien_tao_31", "tien_tao_32", "tien_tao_34"):
+            self.assertIn("Super Dodon Ray", "\n".join(patches[identifier]["english"]))
+
+        glossary = {
+            term["id"]: term
+            for term in self.load("glossary.toml", "term")
+        }
+        self.assertEqual(glossary["character_crane_hermit"]["canonical"], "Crane Hermit")
+        self.assertEqual(glossary["character_hero"]["canonical"], "Shen")
+        self.assertEqual(glossary["character_kami"]["canonical"], "Kami")
+        self.assertEqual(glossary["technique_dodon_ray"]["canonical"], "Dodon Ray")
+
     def test_tracked_manifests_are_versioned_toml_with_records(self):
         for name, table in (
-            ("references.toml", "record"), ("ranges.toml", "record"), ("menu.toml", "record"),
+            ("menu.toml", "record"),
             ("name_entry.toml", "record"), ("choices.toml", "record"),
+            ("hud.toml", "record"),
             ("glossary.toml", "term"),
         ):
             with self.subTest(name=name):
@@ -95,16 +167,32 @@ class TranslationManifestTest(unittest.TestCase):
                 self.assertEqual(document["schema_version"], 1)
                 self.assertTrue(document[table])
 
-        patch_paths = sorted((PROJECT_ROOT / "translation" / "patches").glob("*.toml"))
+        patches_root = PROJECT_ROOT / "translation" / "patches"
+        patch_paths = sorted(patches_root.rglob("*.toml"))
         self.assertEqual(
-            [path.name for path in patch_paths],
+            [path.relative_to(patches_root).as_posix() for path in patch_paths],
             [
-                "01_opening_narration.toml",
-                "02_opening_recap.toml",
-                "03_tournament_opening.toml",
-                "04_preliminaries_choice.toml",
-                "05_chichi_branches_next_quiz.toml",
-                "06_first_preliminary_match.toml",
+                "00_opening/010_narration.toml",
+                "00_opening/020_recap.toml",
+                "01_23rd_world_tournament/010_opening.toml",
+                "01_23rd_world_tournament/020_preliminaries_choice.toml",
+                "01_23rd_world_tournament/030_chichi_branches_next_quiz.toml",
+                "01_23rd_world_tournament/040_first_preliminary_match.toml",
+                "01_23rd_world_tournament/050_second_preliminary_leadin.toml",
+                "01_23rd_world_tournament/060_finals_transition.toml",
+                "01_23rd_world_tournament/070_finals_quiz_results.toml",
+                "01_23rd_world_tournament/080_tien_vs_mercenary_tao.toml",
+                "01_23rd_world_tournament/090_goku_chichi_finals_routes.toml",
+                "01_23rd_world_tournament/100_krillin_match_aftermath.toml",
+                "01_23rd_world_tournament/110_yamcha_vs_shen.toml",
+                "01_23rd_world_tournament/120_semifinals_transition.toml",
+                "01_23rd_world_tournament/130_goku_tien_battle_opening.toml",
+                "01_23rd_world_tournament/140_junior_kami_confrontation.toml",
+                "01_23rd_world_tournament/150_shenron_wishes_and_junior_leadin.toml",
+                "01_23rd_world_tournament/160_reused_announcer_begin_lines.toml",
+                "01_23rd_world_tournament/170_junior_fight_leadin.toml",
+                "01_23rd_world_tournament/180_junior_battle_win_continuation.toml",
+                "01_23rd_world_tournament/190_junior_battle_loss_continuation.toml",
             ],
         )
         for path in patch_paths:
@@ -114,9 +202,29 @@ class TranslationManifestTest(unittest.TestCase):
                 self.assertEqual(document["schema_version"], 1)
                 self.assertTrue(document["record"])
 
+        ranges_root = PROJECT_ROOT / "translation" / "ranges"
+        range_paths = sorted(ranges_root.rglob("*.toml"))
+        self.assertEqual(
+            [path.relative_to(ranges_root).as_posix() for path in range_paths],
+            [
+                "00_core.toml",
+                "10_hud.toml",
+                "20_menu_name_font.toml",
+                "30_allocator.toml",
+                "story/00_opening.toml",
+                "story/01_23rd_world_tournament.toml",
+            ],
+        )
+        for path in range_paths:
+            with self.subTest(name=path.name):
+                with path.open("rb") as source:
+                    document = tomllib.load(source)
+                self.assertEqual(document["schema_version"], 1)
+                self.assertTrue(document["record"])
+
     def test_tracked_manifests_preserve_opening_records(self):
         patches = self.load_patches()
-        self.assertEqual(len(patches), 138)
+        self.assertEqual(len(patches), 369)
         self.assertEqual(
             [patch["id"] for patch in patches[:4]],
             ["opening_narration", "opening_narration_2", "opening_narration_3", "opening_narration_4"],
@@ -165,9 +273,85 @@ class TranslationManifestTest(unittest.TestCase):
             + [f"preliminaries_quiz_response_{index:02d}" for index in range(3)],
         )
         self.assertEqual(
-            [patch["id"] for patch in patches[117:]],
+            [patch["id"] for patch in patches[117:138]],
             [f"first_preliminary_match_{index:02d}" for index in range(16)]
             + [f"first_preliminary_match_response_{index:02d}" for index in range(5)],
+        )
+        self.assertEqual(
+            [patch["id"] for patch in patches[138:143]],
+            [f"second_preliminary_leadin_{index:02d}" for index in range(5)],
+        )
+        self.assertEqual(
+            [patch["id"] for patch in patches[143:169]],
+            [f"finals_transition_{index:02d}" for index in range(17)]
+            + ["finals_transition_match_01", "finals_transition_match_02_recognized",
+               "finals_transition_match_02_unknown",
+               "finals_transition_match_03", "finals_transition_match_04"]
+            + [f"finals_transition_{index:02d}" for index in range(17, 21)],
+        )
+        self.assertEqual(
+            [patch["id"] for patch in patches[169:237]],
+            ["finals_quiz_result_x", "finals_quiz_result_yb"]
+            + [f"tien_tao_{index:02d}" for index in range(9)]
+            + ["yamcha_startled_laugh"]
+            + ["tien_tao_09", "tien_tao_10", "goku_affirmative_reply"]
+            + [f"tien_tao_{index:02d}" for index in range(11, 40)]
+            + ["tien_tao_unrecognized_00", "tien_tao_unrecognized_01"]
+            + [f"goku_chichi_recognized_{index:02d}" for index in range(5)]
+            + ["goku_chichi_unknown_00", "goku_chichi_unknown_name_reaction"]
+            + [f"goku_chichi_unknown_{index:02d}" for index in range(1, 10)]
+            + ["goku_chichi_unknown_agreement", "goku_chichi_unknown_10"]
+            + ["goku_chichi_unknown_x", "goku_chichi_unknown_y",
+               "goku_chichi_unknown_b", "goku_chichi_unknown_result"],
+        )
+        self.assertEqual(
+            [patch["id"] for patch in patches[237:288]],
+            [f"krillin_match_end_{index:02d}" for index in range(13)]
+            + [f"yamcha_shen_{index:02d}" for index in range(35)]
+            + [f"semifinals_{index:02d}" for index in range(3)],
+        )
+        self.assertEqual(
+            [patch["id"] for patch in patches[288:298]],
+            [f"goku_tien_battle_opening_{index:02d}" for index in range(9)]
+            + ["goku_tien_weight_reaction_shared"],
+        )
+        self.assertEqual(
+            [patch["id"] for patch in patches[298:330]],
+            [
+                *[f"junior_kami_{index:02d}" for index in range(5)],
+                "junior_kami_goku_reaction",
+                *[f"junior_kami_{index:02d}" for index in range(5, 31)],
+            ],
+        )
+        self.assertEqual(
+            [patch["id"] for patch in patches[330:335]],
+            [
+                "shenron_wish_prompt",
+                "shenron_save_prompt",
+                "shenron_wish_granted",
+                "shenron_save_cancelled",
+                "shenron_boost_response",
+            ],
+        )
+        self.assertEqual(
+            [patch["id"] for patch in patches[335:337]],
+            ["semifinal_match_begin_reuse", "first_match_begin_reuse"],
+        )
+        self.assertEqual(
+            [patch["id"] for patch in patches[337:346]],
+            [f"junior_fight_leadin_{index:02d}" for index in range(9)],
+        )
+        self.assertEqual(
+            [patch["id"] for patch in patches[346:358]],
+            [
+                *[f"junior_win_cont_{selector:04x}" for selector in range(0x03A2, 0x03AC)],
+                "junior_win_cont_0011",
+                "junior_win_cont_0002",
+            ],
+        )
+        self.assertEqual(
+            [patch["id"] for patch in patches[358:369]],
+            [f"junior_loss_cont_{selector:04x}" for selector in range(0x096C, 0x0977)],
         )
         self.assertEqual(
             [patch["original_address"] for patch in patches[:4]],
@@ -192,15 +376,44 @@ class TranslationManifestTest(unittest.TestCase):
             {
                 "opening_recap_01", "opening_recap_04", "opening_recap_15",
                 "opening_recap_19", "post_quiz_krillin_exclamation",
+                "yamcha_startled_laugh", "goku_affirmative_reply",
+                "goku_chichi_unknown_name_reaction",
+                "goku_chichi_unknown_agreement",
+                "junior_kami_goku_reaction",
+                "junior_win_cont_0011",
+                "junior_win_cont_0002",
             },
         )
-        self.assertEqual(sum(patch.get("max_line_length") == 21 for patch in patches), 128)
-        self.assertEqual(sum(patch.get("max_line_length") == 28 for patch in patches), 5)
+        self.assertEqual(sum(patch.get("max_line_length") == 21 for patch in patches), 345)
+        self.assertEqual(sum(patch.get("max_line_length") == 28 for patch in patches), 12)
 
-        references = self.load("references.toml")
-        self.assertEqual(len(references), 154)
+        self.assertTrue(
+            all(
+                patch["pointer_format"] == "16-bit same-bank LoROM pointer"
+                for patch in patches
+            )
+        )
+        finals_sequence = {
+            patch["id"]: patch["selector"]
+            for patch in patches
+            if patch["id"] in {
+                "tien_tao_07", "tien_tao_08", "yamcha_startled_laugh",
+                "tien_tao_09", "tien_tao_10", "goku_affirmative_reply",
+            }
+        }
         self.assertEqual(
-            [reference["message_index"] for reference in references[4:26]],
+            list(finals_sequence.items()),
+            [
+                ("tien_tao_07", 0x02A3),
+                ("tien_tao_08", 0x02A4),
+                ("yamcha_startled_laugh", 0x0007),
+                ("tien_tao_09", 0x02A5),
+                ("tien_tao_10", 0x02A6),
+                ("goku_affirmative_reply", 0x001C),
+            ],
+        )
+        self.assertEqual(
+            [patch["selector"] for patch in patches[4:26]],
             [
                 0x0026, 0x07E5, 0x07E6, 0x002E, 0x07E7, 0x076B,
                 0x07E8, 0x07E9, 0x07EA, 0x07EB, 0x07EC, 0x07ED,
@@ -208,17 +421,39 @@ class TranslationManifestTest(unittest.TestCase):
                 0x0003, 0x0803, 0x0804, 0x0805,
             ],
         )
+        semifinals = [
+            patch for patch in patches
+            if patch["id"].startswith("semifinals_")
+        ]
         self.assertEqual(
-            [reference["id"] for reference in references[-3:]],
+            [patch["id"] for patch in semifinals],
+            ["semifinals_00", "semifinals_01", "semifinals_02"],
+        )
+        goku_tien = [
+            patch for patch in patches
+            if patch["id"].startswith("goku_tien_")
+        ]
+        self.assertEqual(
+            [patch["id"] for patch in goku_tien],
+            [f"goku_tien_battle_opening_{index:02d}" for index in range(9)]
+            + ["goku_tien_weight_reaction_shared"],
+        )
+        junior_kami = [
+            patch for patch in patches
+            if patch["id"].startswith("junior_kami_")
+        ]
+        self.assertEqual(
+            [patch["id"] for patch in junior_kami],
             [
-                "tao_pai_pai_quiz_x", "tao_pai_pai_quiz_y", "tao_pai_pai_quiz_b",
+                *[f"junior_kami_{index:02d}" for index in range(5)],
+                "junior_kami_goku_reaction",
+                *[f"junior_kami_{index:02d}" for index in range(5, 31)],
             ],
         )
         self.assertEqual(
-            [reference["reference_type"] for reference in references[-3:]],
-            ["fixed_resource_pointer"] * 3,
+            [patch["selector"] for patch in junior_kami],
+            [*range(0x030A, 0x030F), 0x002A, *range(0x030F, 0x0329)],
         )
-
         menu = self.load("menu.toml")
         self.assertEqual(
             [record["id"] for record in menu],
@@ -249,19 +484,23 @@ class TranslationManifestTest(unittest.TestCase):
         self.assertTrue(all(record["status"] == "implemented" for record in name_entry))
 
         choices = self.load("choices.toml")
-        self.assertEqual(len(choices), 19)
+        self.assertEqual(len(choices), 35)
         self.assertEqual(
             [row["button"] for row in choices],
-            ["", "", "", "", "", "X", "Y", "B", "X", "Y", "B", "X", "Y", "X", "Y", "B", "X", "Y", "B"],
+            ["", "", "", "", "", "", "", "", "", "X", "Y", "B", "X", "Y", "B", "X", "Y", "X", "Y", "B", "X", "Y", "B", "X", "Y", "B", "X", "Y", "B", "X", "Y", "B", "X", "Y", "B"],
         )
         self.assertEqual([row["english"] for row in choices], [
             "World Tournament Arena", "Papaya Island", "Preliminaries Venue",
-            "DBZ Trivia Quiz", "(Choice)",
+            "Backstage", "Arena", "Stands", "Matchup Announcement", "DBZ Trivia Quiz", "(Choice)",
             "You're bleeding!", "Are you sick?", "You look sexy.",
             "You haven't changed!", "I grew more than you!", "You look well, Krillin!",
             "You're Chi-Chi!?", "Who are you?",
             "Huh?", "You again...", "King Chappa...",
             "He's an assassin.", "I don't know him either.", "I've seen him somewhere.",
+            "Heh heh heh!", "Peace!", "I did it!",
+            "This could be bad.", "No big deal.", "We'll manage.",
+            "When this is over.", "Sorry, forget it.", "Let's get married!",
+            "Save the game.", "Boost power.", "Boost health.",
         ])
 
     def test_local_decoded_catalog_names_remain_ignored(self):

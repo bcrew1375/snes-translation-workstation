@@ -1,0 +1,248 @@
+schema_version = 1
+
+[[record]]
+id = "krillin_match_end_00"
+selector = 0x02D6
+reference_address = "99:85AC"
+reference_offset = 0xC85AC
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B8A4"
+original_offset = 0xCB8A4
+original_length = 12
+source_sha256 = "4e8da45439c5836649daec99ac1d74b79792456023b821c120df30df44ab9d71"
+english = [
+  "Afterimage",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Krillin uses the Afterimage Fist during the end of his match with Shen."
+
+[[record]]
+id = "krillin_match_end_01"
+selector = 0x02D7
+reference_address = "99:85AE"
+reference_offset = 0xC85AE
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B8B0"
+original_offset = 0xCB8B0
+original_length = 14
+source_sha256 = "e8c359f3259d150313d9a3d90bce081cd175ba28f4d04ed7ab96ea9878513abe"
+english = [
+  "Got me...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02D7 before the first visible battle HUD."
+
+[[record]]
+id = "krillin_match_end_02"
+selector = 0x02D8
+reference_address = "99:85B0"
+reference_offset = 0xC85B0
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B8BE"
+original_offset = 0xCB8BE
+original_length = 82
+source_sha256 = "13a72168b18bdbe80de6793253a5380c3aabab44a6e3e8d83ac8dbb1620d56ee"
+english = [
+  "Heh.",
+  "I overdid it",
+  "and killed him...",
+  "",
+  "Games are best",
+  "this way!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02D8 before the first visible battle HUD."
+
+[[record]]
+id = "krillin_match_end_03"
+selector = 0x02D9
+reference_address = "99:85B2"
+reference_offset = 0xC85B2
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B910"
+original_offset = 0xCB910
+original_length = 14
+source_sha256 = "c90e114db7a1b61a80772c78f1e11fd7517335ebb14c6ca2fe62fb506b89e1b3"
+english = [
+  "Owww...!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02D9 before the first visible battle HUD."
+
+[[record]]
+id = "krillin_match_end_04"
+selector = 0x02DA
+reference_address = "99:85B4"
+reference_offset = 0xC85B4
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B91E"
+original_offset = 0xCB91E
+original_length = 28
+source_sha256 = "96ead6b2ac79619679293a004c93c1ababcfa592e3444e493a4a31586a52ed6d"
+english = [
+  "Heh heh...",
+  "I lost.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02DA before the first visible battle HUD."
+
+[[record]]
+id = "krillin_match_end_05"
+selector = 0x02DB
+reference_address = "99:85B6"
+reference_offset = 0xC85B6
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B93A"
+original_offset = 0xCB93A
+original_length = 78
+source_sha256 = "c27aa9ead71408f02275fafaa905704c71b980a94b337784c84121371ccf338a"
+english = [
+  "A-and Krillin",
+  "is down!!",
+  "",
+  "Contestant Shen",
+  "wins the match!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02DB before the first visible battle HUD."
+
+[[record]]
+id = "krillin_match_end_06"
+selector = 0x02DC
+reference_address = "99:85B8"
+reference_offset = 0xC85B8
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B988"
+original_offset = 0xCB988
+original_length = 92
+source_sha256 = "c487cc088fa956ef26b6cd659c71c8f116053dcfb9129a7dcefe68b600183fe6"
+english = [
+  "Krillin!!",
+  "You were incredible!",
+  "",
+  "You really gave",
+  "that old guy a scare!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02DC before the first visible battle HUD."
+
+[[record]]
+id = "krillin_match_end_07"
+selector = 0x02DD
+reference_address = "99:85BA"
+reference_offset = 0xC85BA
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:B9E4"
+original_offset = 0xCB9E4
+original_length = 42
+source_sha256 = "c5ddc275d70210bc861e9156e01296d993907b35ea2d162d695765a0cc074d3d"
+english = [
+  "Heh... I lost.",
+  "Can't be helped...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02DD before the first visible battle HUD."
+
+[[record]]
+id = "krillin_match_end_08"
+selector = 0x02DE
+reference_address = "99:85BC"
+reference_offset = 0xC85BC
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BA0E"
+original_offset = 0xCBA0E
+original_length = 48
+source_sha256 = "97b1b6cc377eade8c5f2c6855ed78d4eb76d10e86279bd7dbea9ab42ef4790f4"
+english = [
+  "You've become a fine",
+  "martial artist,",
+  "Krillin.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02DE before the first visible battle HUD."
+
+[[record]]
+id = "krillin_match_end_09"
+selector = 0x02DF
+reference_address = "99:85BE"
+reference_offset = 0xC85BE
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BA3E"
+original_offset = 0xCBA3E
+original_length = 74
+source_sha256 = "51fb5087fc0150cc9d11473af5edb71a74f692853803e991b697de5d18963337"
+english = [
+  "Taking over the world",
+  "may not be so easy",
+  "after all...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02DF before the first visible battle HUD."
+
+[[record]]
+id = "krillin_match_end_10"
+selector = 0x02E0
+reference_address = "99:85C0"
+reference_offset = 0xC85C0
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BA88"
+original_offset = 0xCBA88
+original_length = 66
+source_sha256 = "28e307876b28f595d8af21f489562c6615ab7ecc5a577a0bad3201319317fe7f"
+english = [
+  "Yamcha's up against",
+  "Shen next.",
+  "He's lucky.",
+  "He drew a good foe.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02E0 before the first visible battle HUD."
+
+[[record]]
+id = "krillin_match_end_11"
+selector = 0x02E1
+reference_address = "99:85C2"
+reference_offset = 0xC85C2
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BACA"
+original_offset = 0xCBACA
+original_length = 46
+source_sha256 = "bc37f75502c5f60cc92db6785edf427161caaacb5bcb3eb342cb7274146090eb"
+english = [
+  "Heh...",
+  "Sorry, Krillin.",
+  "I'll go on ahead.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02E1 before the first visible battle HUD."
+
+[[record]]
+id = "krillin_match_end_12"
+selector = 0x02E2
+reference_address = "99:85C4"
+reference_offset = 0xC85C4
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BAF8"
+original_offset = 0xCBAF8
+original_length = 34
+source_sha256 = "7ae4579f1f36dd3ffb1e645279ce38b5dabf4990d27b0e91ef1f634274407290"
+english = [
+  "Good luck.",
+  "Do your best.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02E2 before the first visible battle HUD."
+

@@ -1,0 +1,752 @@
+schema_version = 1
+
+[[record]]
+id = "goku_chichi_battle_opening_00"
+path = "opening"
+speaker = "Goku"
+resource_id = 0x1000
+pointer_address = "B4:8000"
+pointer_offset = 0x1A0000
+original_address = "B4:8800"
+original_offset = 0x1A0800
+original_length = 26
+source_sha256 = "d34ed504e8ebc3bad8e6c1acc94aea5db36d2dd58b95fee6d5460260f618b9f3"
+english = [
+  "Who are you,",
+  "really?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Battle-opening script $B5:BB1E, opcode $02; runtime presentation identifies Goku as the speaker."
+
+[[record]]
+id = "goku_chichi_battle_opening_01"
+path = "opening"
+speaker = "Chi-Chi"
+resource_id = 0x1001
+pointer_address = "B4:8002"
+pointer_offset = 0x1A0002
+original_address = "B4:881A"
+original_offset = 0x1A081A
+original_length = 38
+source_sha256 = "3f63890aa80a6d7841773cf1abfab9ba16d6e41f1a7298d075edfc1d63efb0c5"
+english = [
+  "...Grrr!",
+  "Now I'm really mad!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Battle-opening script $B5:BB1E, opcode $03; opposing on-field presentation identifies Chi-Chi."
+
+[[record]]
+id = "goku_chichi_chichi_zero_00"
+path = "chichi_zero"
+speaker = "Goku"
+resource_id = 0x1180
+pointer_address = "B4:8300"
+pointer_offset = 0x1A0300
+original_address = "B4:B006"
+original_offset = 0x1A3006
+original_length = 52
+source_sha256 = "3e1dde3724670f615b5ffe89a3445999a526ec6462a8059427e4e29b695fb9bb"
+english = [
+  "H-hey!",
+  "Haven't I met",
+  "you somewhere!?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script $B5:C64C; first Goku line after the result transition."
+
+[[record]]
+id = "goku_chichi_chichi_zero_01"
+path = "chichi_zero"
+speaker = "Chi-Chi"
+resource_id = 0x1181
+pointer_address = "B4:8302"
+pointer_offset = 0x1A0302
+original_address = "B4:B03A"
+original_offset = 0x1A303A
+original_length = 8
+source_sha256 = "bb80ef9881b7953d436ed9e7e440fa33de55e3f4deda4182eb777f62af8f858d"
+english = [
+  "Yes!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script response in the opcode-$03 presentation."
+
+[[record]]
+id = "goku_chichi_chichi_zero_02"
+path = "chichi_zero"
+speaker = "Goku"
+resource_id = 0x1182
+pointer_address = "B4:8304"
+pointer_offset = 0x1A0304
+original_address = "B4:B042"
+original_offset = 0x1A3042
+original_length = 26
+source_sha256 = "1d6927782e94c7b1db56e5014e390a1e45ef1c7a78ca0edf3a7937b440851aa8"
+english = [
+  "Really!?",
+  "When!?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script, Goku presentation."
+
+[[record]]
+id = "goku_chichi_chichi_zero_03"
+path = "chichi_zero"
+speaker = "Chi-Chi"
+resource_id = 0x1183
+pointer_address = "B4:8306"
+pointer_offset = 0x1A0306
+original_address = "B4:B05C"
+original_offset = 0x1A305C
+original_length = 64
+source_sha256 = "7003bd15eeb180e5f422d1ad5398c79b88215b0c8226ec223ee974a4d24a6e25"
+english = [
+  "Look closer!",
+  "Don't trifle with a",
+  "maiden's heart!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script, Chi-Chi presentation."
+
+[[record]]
+id = "goku_chichi_chichi_zero_04"
+path = "chichi_zero"
+speaker = "Goku"
+resource_id = 0x1184
+pointer_address = "B4:8308"
+pointer_offset = 0x1A0308
+original_address = "B4:B09C"
+original_offset = 0x1A309C
+original_length = 18
+source_sha256 = "314977fadc090e7bc4a59b0cb217dd710858a7560ee2b5a019fa7248f0bb1376"
+english = [
+  "W-what...?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script, Goku presentation."
+
+[[record]]
+id = "goku_chichi_chichi_zero_05"
+path = "chichi_zero"
+speaker = "Chi-Chi"
+resource_id = 0x1185
+pointer_address = "B4:830A"
+pointer_offset = 0x1A030A
+original_address = "B4:B0AE"
+original_offset = 0x1A30AE
+original_length = 32
+source_sha256 = "11f2ac45a1d69726c083a416d03517e1bbae92a8ac43b7b747e51fe9b8f0fcd2"
+english = [
+  "You forgot our",
+  "promise!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script, Chi-Chi presentation."
+
+[[record]]
+id = "goku_chichi_chichi_zero_06"
+path = "chichi_zero"
+speaker = "Goku"
+resource_id = 0x1186
+pointer_address = "B4:830C"
+pointer_offset = 0x1A030C
+original_address = "B4:B0CE"
+original_offset = 0x1A30CE
+original_length = 56
+source_sha256 = "0c2917736ddee5bc56be3f50330aff361b7d5064378adec4ff36f0ebc3488d5c"
+english = [
+  "Promise!? Me!?",
+  "What'd I",
+  "promise you!?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script, Goku presentation."
+
+[[record]]
+id = "goku_chichi_chichi_zero_07"
+path = "chichi_zero"
+speaker = "Chi-Chi"
+resource_id = 0x1187
+pointer_address = "B4:830E"
+pointer_offset = 0x1A030E
+original_address = "B4:B106"
+original_offset = 0x1A3106
+original_length = 42
+source_sha256 = "d7a76d3e44d30ecf4f5516a6a02dda546bcefc58a643522794ff9e899a997bed"
+english = [
+  "You said you'd",
+  "make me your bride!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script, Chi-Chi presentation."
+
+[[record]]
+id = "goku_chichi_chichi_zero_08"
+path = "chichi_zero"
+speaker = "Goku"
+resource_id = 0x1188
+pointer_address = "B4:8310"
+pointer_offset = 0x1A0310
+original_address = "B4:B130"
+original_offset = 0x1A3130
+original_length = 40
+source_sha256 = "7d289842175a1658f71a5d3e3ff1c758724d6f7ee2c3bc92e291776f3e84f9c0"
+english = [
+  "What's a bride!?",
+  "Explain it!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script, Goku presentation."
+
+[[record]]
+id = "goku_chichi_chichi_zero_09"
+path = "chichi_zero"
+speaker = "Narration"
+resource_id = 0x1189
+pointer_address = "B4:8312"
+pointer_offset = 0x1A0312
+original_address = "B4:B158"
+original_offset = 0x1A3158
+original_length = 86
+source_sha256 = "6bdb1cdd3abf416e5029d9a980fe110dae4b598526a1ce4e6b81b71a77aead65"
+english = [
+  "Taking a wife...",
+  "means you",
+  "become husband",
+  "and wife, then",
+  "live together.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script opcode $01 uses the wider explanatory presentation rather than either fighter's alternating box."
+
+[[record]]
+id = "goku_chichi_chichi_zero_10"
+path = "chichi_zero"
+speaker = "Goku"
+resource_id = 0x118A
+pointer_address = "B4:8314"
+pointer_offset = 0x1A0314
+original_address = "B4:B1AE"
+original_offset = 0x1A31AE
+original_length = 60
+source_sha256 = "3dc49b66552d7df6995f45e251dc21c447b69fb57880fc2d381603713f6c78fd"
+english = [
+  "Live together!?",
+  "With you!?",
+  "I promised that!?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script, Goku presentation."
+
+[[record]]
+id = "goku_chichi_chichi_zero_11"
+path = "chichi_zero"
+speaker = "Goku"
+resource_id = 0x118B
+pointer_address = "B4:8316"
+pointer_offset = 0x1A0316
+original_address = "B4:B1EA"
+original_offset = 0x1A31EA
+original_length = 54
+source_sha256 = "9eaab403664aedfe20a32c8b830bc976eacfbd1bb5902a81b6da52958c533bb8"
+english = [
+  "Who are you anyway...",
+  "Please,",
+  "tell me!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script retains Goku's presentation for a consecutive second resource."
+
+[[record]]
+id = "goku_chichi_chichi_zero_12"
+path = "chichi_zero"
+speaker = "Chi-Chi"
+resource_id = 0x118C
+pointer_address = "B4:8318"
+pointer_offset = 0x1A0318
+original_address = "B4:B220"
+original_offset = 0x1A3220
+original_length = 62
+source_sha256 = "6dd4aa720d65e8bac0323cf95ad5d674809155125f8f1b41093fd20e3153ebec"
+english = [
+  "Hmph! If you",
+  "can beat me,",
+  "I'll tell you...!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script, Chi-Chi presentation."
+
+[[record]]
+id = "goku_chichi_chichi_zero_13"
+path = "chichi_zero"
+speaker = "Goku"
+resource_id = 0x118D
+pointer_address = "B4:831A"
+pointer_offset = 0x1A031A
+original_address = "B4:B25E"
+original_offset = 0x1A325E
+original_length = 70
+source_sha256 = "ede1fe50c19fc0f68d3228ab79714a4cebf30e75fa9248b3c15373fe8d0594b1"
+english = [
+  "Really!? Great!",
+  "Then at least I'll",
+  "I'll know your name!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script, Goku presentation."
+
+[[record]]
+id = "goku_chichi_chichi_zero_14"
+path = "chichi_zero"
+speaker = "Chi-Chi"
+resource_id = 0x118E
+pointer_address = "B4:831C"
+pointer_offset = 0x1A031C
+original_address = "B4:B2A4"
+original_offset = 0x1A32A4
+original_length = 62
+source_sha256 = "dce5c52b6babf43b63a962116986c781cf63a32fb22218f362b26f1e79cc2388"
+english = [
+  "Hmph!! Just because",
+  "you won",
+  "don't sell me short!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script, Chi-Chi presentation."
+
+[[record]]
+id = "goku_chichi_chichi_zero_15"
+path = "chichi_zero"
+speaker = "Goku"
+resource_id = 0x118F
+pointer_address = "B4:831E"
+pointer_offset = 0x1A031E
+original_address = "B4:B2E2"
+original_offset = 0x1A32E2
+original_length = 36
+source_sha256 = "a6dec85d466c21f150efa67f6da1928d5b0d56806853b35977cb534b333dcfac"
+english = [
+  "Then let's go!",
+  "Get ready!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script, Goku presentation."
+
+[[record]]
+id = "goku_chichi_chichi_zero_16"
+path = "chichi_zero"
+speaker = "Chi-Chi"
+resource_id = 0x1190
+pointer_address = "B4:8320"
+pointer_offset = 0x1A0320
+original_address = "B4:B306"
+original_offset = 0x1A3306
+original_length = 34
+source_sha256 = "5e1d7673af4f7743ee00dd9a1e0f2115d2b5e3becf7317a3aae7b20b50f028d3"
+english = [
+  "Think you can?",
+  "Then try me!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Chi-Chi-at-zero script, Chi-Chi presentation."
+
+[[record]]
+id = "goku_chichi_chichi_zero_17"
+path = "chichi_zero"
+speaker = "Goku"
+resource_id = 0x10B6
+pointer_address = "B4:816C"
+pointer_offset = 0x1A016C
+original_address = "B4:9D76"
+original_offset = 0x1A1D76
+original_length = 32
+source_sha256 = "7fafc6897fc2865247d654881d49e0583c95615006140e2395fcebb97f9daba1"
+english = [
+  "Oops... I",
+  "hit way too hard",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Shared battle-result resource reached after the Chi-Chi-at-zero recognition exchange; opcode $02 is Goku."
+
+[[record]]
+id = "goku_chichi_chichi_zero_18"
+path = "chichi_zero"
+speaker = "Chi-Chi"
+resource_id = 0x10B7
+pointer_address = "B4:816E"
+pointer_offset = 0x1A016E
+original_address = "B4:9D96"
+original_offset = 0x1A1D96
+original_length = 16
+source_sha256 = "4a54a78d82a904e6e2588bc4e6cc029b602548f907ed45fe67c9497e12f05a5b"
+english = [
+  "...Oww...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Shared final response after Chi-Chi reaches zero HP; opcode $03 is Chi-Chi."
+
+[[record]]
+id = "goku_chichi_goku_zero_00"
+path = "goku_zero"
+speaker = "Goku"
+resource_id = 0x10B8
+pointer_address = "B4:8170"
+pointer_offset = 0x1A0170
+original_address = "B4:9DA6"
+original_offset = 0x1A1DA6
+original_length = 18
+source_sha256 = "dfe860ec0dccc0965873e062f044f4dd0073fb99ec5c19fc4e14a4d6abbf5e9c"
+english = ["N-no way..."]
+max_line_length = 21
+status = "implemented"
+notes = "Goku-at-zero script $B5:CD14, opcode $02; Goku concedes after his HP reaches zero."
+
+[[record]]
+id = "goku_chichi_goku_zero_01"
+path = "goku_zero"
+speaker = "Chi-Chi"
+resource_id = 0x10B9
+pointer_address = "B4:8172"
+pointer_offset = 0x1A0172
+original_address = "B4:9DB8"
+original_offset = 0x1A1DB8
+original_length = 36
+source_sha256 = "19c5cf28fac91d4c535039933fea128ef3355935c7a658d2b0859a1bf67a78df"
+english = [
+  "Don't underestimate",
+  "this woman!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Goku-at-zero script $B5:CD14, opcode $03; Chi-Chi answers from the opposing presentation."
+
+# Junior battle opening (encounter $0003, script B5:BB5A)
+
+[[record]]
+id = "junior_battle_opening_00"
+path = "junior_opening"
+speaker = "Junior"
+resource_id = 0x1006
+pointer_address = "B4:800C"
+pointer_offset = 0x1A000C
+original_address = "B4:88C6"
+original_offset = 0x1A08C6
+original_length = 18
+source_sha256 = "3b46bf1791fa75983d6877b85d4f7446aa13c734f8d4421ad7b6c683591afd08"
+english = ["Are you ready?"]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle opening script B5:BB5A, opcode $03; runtime presentation identifies Junior."
+
+[[record]]
+id = "junior_battle_opening_01"
+path = "junior_opening"
+speaker = "Goku"
+resource_id = 0x1007
+pointer_address = "B4:800E"
+pointer_offset = 0x1A000E
+original_address = "B4:88D8"
+original_offset = 0x1A08D8
+original_length = 14
+source_sha256 = "9f7d3e2a3d4d49a757f3e70555c85a242959dae5657a4796dc8c6a2acf9b847a"
+english = ["Ready for?"]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle opening script B5:BB5A, opcode $02; opposing presentation identifies Goku."
+
+[[record]]
+id = "junior_battle_opening_02"
+path = "junior_opening"
+speaker = "Junior"
+resource_id = 0x11AB
+pointer_address = "B4:8356"
+pointer_offset = 0x1A0356
+original_address = "B4:B7B4"
+original_offset = 0x1A37B4
+original_length = 14
+source_sha256 = "05abad1ca8576ef42419be8066d9b73fa7844cd1d2f657320ae9d1ae2ff97609"
+english = ["Of course..."]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle opening script B5:BB5A, opcode $03; Junior's response."
+
+[[record]]
+id = "junior_battle_opening_03"
+path = "junior_opening"
+speaker = "Junior"
+resource_id = 0x11AC
+pointer_address = "B4:8358"
+pointer_offset = 0x1A0358
+original_address = "B4:B7C2"
+original_offset = 0x1A37C2
+original_length = 14
+source_sha256 = "c073d7924869b46261fee5b6b3db13e4f32898521156fad93a4261327cc370a4"
+english = ["To die!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle opening script B5:BB5A, opcode $03; Junior escalates the challenge."
+
+# Junior battle win path (script B5:C718, opponent defeated)
+
+[[record]]
+id = "junior_battle_win_00"
+path = "junior_win"
+speaker = "Junior"
+resource_id = 0x11A4
+pointer_address = "B4:8348"
+pointer_offset = 0x1A0348
+original_address = "B4:B68A"
+original_offset = 0x1A368A
+original_length = 52
+source_sha256 = "c68c8b95a385c16ed2d8b4c12e8622cb8416afb99a10462f6c98925b40c20c5e"
+english = [
+  "Bastard...!!",
+  "You and it",
+  "will be blown away!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle win script B5:C718, opcode $03; Junior threatens to destroy the arena."
+
+[[record]]
+id = "junior_battle_win_01"
+path = "junior_win"
+speaker = "Goku"
+resource_id = 0x11A5
+pointer_address = "B4:834A"
+pointer_offset = 0x1A034A
+original_address = "B4:B6BE"
+original_offset = 0x1A36BE
+original_length = 68
+source_sha256 = "dff6dcfbf776da654ee6dc0693a433de32ca57f233cce9e43fc8287df5fe3b50"
+english = [
+  "Stop!! I'm fighting!",
+  "Leave the others out!",
+  "Fight me alone!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle win script B5:C718, opcode $02; Goku protests Junior's threat to spectators."
+
+[[record]]
+id = "junior_battle_win_02"
+path = "junior_win"
+speaker = "Junior"
+resource_id = 0x11A6
+pointer_address = "B4:834C"
+pointer_offset = 0x1A034C
+original_address = "B4:B702"
+original_offset = 0x1A3702
+original_length = 18
+source_sha256 = "81439a66d86c5cc798a8bdb7a255ba5960324ce8ed87fb84b9f85c19dcd31d5d"
+english = ["I've had enough!"]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle win script B5:C718, opcode $03; Junior expresses frustration."
+
+[[record]]
+id = "junior_battle_win_03"
+path = "junior_win"
+speaker = "Goku"
+resource_id = 0x11A7
+pointer_address = "B4:834E"
+pointer_offset = 0x1A034E
+original_address = "B4:B714"
+original_offset = 0x1A3714
+original_length = 62
+source_sha256 = "466d3e1c40818cb09e644bb60ad6cd978e078ca57ec4d749f53b218d18c0018e"
+english = [
+  "Now I have",
+  "no choice but use",
+  "my Kamehameha!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle win script B5:C718, opcode $02; Goku prepares his signature technique."
+
+[[record]]
+id = "junior_battle_win_04"
+path = "junior_win"
+speaker = "Junior"
+resource_id = 0x11A8
+pointer_address = "B4:8350"
+pointer_offset = 0x1A0350
+original_address = "B4:B752"
+original_offset = 0x1A3752
+original_length = 52
+source_sha256 = "c8bdb941ac940b87987edfd0ac581f8ddc548fb92ac66024d02c873831cf1851"
+english = [
+  "Fuhahahaha!!",
+  "You think you",
+  "pull it off!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle win script B5:C718, opcode $03; Junior mocks Goku's Kamehameha attempt."
+
+[[record]]
+id = "junior_battle_win_05"
+path = "junior_win"
+speaker = "Junior"
+resource_id = 0x11A9
+pointer_address = "B4:8352"
+pointer_offset = 0x1A0352
+original_address = "B4:B786"
+original_offset = 0x1A3786
+original_length = 20
+source_sha256 = "e0ae436e87197ca448ed5df2609f0a7081ed6b2a7d5c3a7117f34ce97a35eb04"
+english = ["Disappear!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle win script B5:C718, opcode $03; Junior attacks."
+
+[[record]]
+id = "junior_battle_win_06"
+path = "junior_win"
+speaker = "Junior"
+resource_id = 0x10BE
+pointer_address = "B4:817C"
+pointer_offset = 0x1A017C
+original_address = "B4:9E72"
+original_offset = 0x1A1E72
+original_length = 70
+source_sha256 = "11fec5458956b2d671d376a565c9d900d79b0b6e19919726a77a937e0e520b58"
+english = [
+  "Y-you bastard...!!",
+  "You made me afraid,",
+  "even for a moment...!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle win script B5:C718, opcode $03; Junior acknowledges Goku's attack succeeded."
+
+[[record]]
+id = "junior_battle_win_07"
+path = "junior_win"
+speaker = "Goku"
+resource_id = 0x10BF
+pointer_address = "B4:817E"
+pointer_offset = 0x1A017E
+original_address = "B4:9EB8"
+original_offset = 0x1A1EB8
+original_length = 38
+source_sha256 = "572f80995eaf5afa90ab44d24694554448af8e5310df2931c4d8e7e9772683e6"
+english = [
+  "What a guy...",
+  "He endured it...!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle win script B5:C718, opcode $02; Goku is surprised Junior survived."
+
+# Junior battle loss path (script B5:CD44, player defeated)
+
+[[record]]
+id = "junior_battle_loss_00"
+path = "junior_loss"
+speaker = "Junior"
+resource_id = 0x10C0
+pointer_address = "B4:8180"
+pointer_offset = 0x1A0180
+original_address = "B4:9EDE"
+original_offset = 0x1A1EDE
+original_length = 64
+source_sha256 = "a24b22b2bbea30b2fc0e6cae6988d82e8d7dfae364c2ebfd760f91e78f3e294b"
+english = [
+  "Fuhahahaha!!",
+  "You had no chance",
+  "against me!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle loss script B5:CD44, opcode $03; Junior gloats over Goku's defeat."
+
+[[record]]
+id = "junior_battle_loss_01"
+path = "junior_loss"
+speaker = "Goku"
+resource_id = 0x10C1
+pointer_address = "B4:8182"
+pointer_offset = 0x1A0182
+original_address = "B4:9F1E"
+original_offset = 0x1A1F1E
+original_length = 22
+source_sha256 = "511bc10cf4c4a7247560a89252459bcc809e485761b586dc4af2c4c7de441f46"
+english = ["Tch... damn it!"]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle loss script B5:CD44, opcode $02; Goku's frustrated reaction to defeat."
+
+[[record]]
+id = "junior_battle_loss_02"
+path = "junior_loss"
+speaker = "Junior"
+resource_id = 0x10C2
+pointer_address = "B4:8184"
+pointer_offset = 0x1A0184
+original_address = "B4:9F34"
+original_offset = 0x1A1F34
+original_length = 16
+source_sha256 = "582fe6b4491ce1477901ca51f4a4a9e88eecd2fca8a6b9fec50053e0b2b47278"
+english = ["Die!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle loss script B5:CD44, opcode $03; Junior's finishing attack."
+
+[[record]]
+id = "junior_battle_loss_03"
+path = "junior_loss"
+speaker = "Junior"
+resource_id = 0x10C4
+pointer_address = "B4:8188"
+pointer_offset = 0x1A0188
+original_address = "B4:9F88"
+original_offset = 0x1A1F88
+original_length = 14
+source_sha256 = "1963e6fd18f2a1ebd5bf157c6a25aff3d9e714a445d87bae8d01fb8ebd60d649"
+english = ["........"]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle loss script B5:CD44, opcode $03; Brief silence after the attack."
+
+[[record]]
+id = "junior_battle_loss_04"
+path = "junior_loss"
+speaker = "Junior"
+resource_id = 0x10C3
+pointer_address = "B4:8186"
+pointer_offset = 0x1A0186
+original_address = "B4:9F44"
+original_offset = 0x1A1F44
+original_length = 68
+source_sha256 = "c19bdce1c74c55e739aab3460ffd02215c34a8c45b714fba0bba16310195e959"
+english = [
+  "Blown to pieces...",
+  "Uwahahahaha!!",
+  "I won! I won!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Junior battle loss script B5:CD44, opcode $03; Junior celebrates victory."

@@ -38,6 +38,10 @@ from .scenario import (
 
 PATCH_FIELDS = {
     "id": str,
+    "selector": int,
+    "reference_address": str,
+    "reference_offset": int,
+    "pointer_format": str,
     "original_address": str,
     "original_offset": int,
     "original_length": int,
@@ -46,16 +50,10 @@ PATCH_FIELDS = {
     "status": str,
     "notes": str,
 }
-PATCH_OPTIONAL_FIELDS = {"max_line_length": int}
-REFERENCE_FIELDS = {
-    "id": str,
-    "reference_type": str,
-    "reference_address": str,
-    "reference_offset": int,
-    "message_index": int,
-    "pointer_format": str,
-    "target_address": str,
-    "target_offset": int,
+PATCH_OPTIONAL_FIELDS = {
+    "max_line_length": int,
+    "alias_selectors": list,
+    "preserve_source_line_layout": bool,
 }
 RANGE_FIELDS = {
     "name": str,
@@ -76,7 +74,7 @@ def _hex(value: object, field: str) -> int:
 
 @dataclass(frozen=True)
 class TranslationRecord:
-    """One patch joined to its authoritative selector reference."""
+    """One self-contained translated command-$08 text record."""
 
     id: str
     selector: int
@@ -87,23 +85,26 @@ class TranslationRecord:
     source_sha256: str
     english: tuple[str, ...]
     max_line_length: int | None
+    alias_selectors: tuple[int, ...]
     status: str
     notes: str
     reference_offset: int
     pointer_format: str
+    preserve_source_line_layout: bool = False
 
 
 @dataclass(frozen=True)
 class TranslationPlan:
     record: TranslationRecord
     slot: TextSelectorSlot
+    alias_slots: tuple[TextSelectorSlot, ...]
     source_stream: TextStream
     encoded: EncodedText
     allocation: Allocation
 
     @property
     def needs_pointer_update(self) -> bool:
-        return self.allocation.strategy != "in-place"
+        return self.allocation.strategy != "in-place" or bool(self.alias_slots)
 
 
 def visible_line_character_limit(presentation: TextPresentation) -> int | None:
@@ -155,24 +156,44 @@ def source_dialogue_box_count(stream: TextStream, *, lines_per_box: int = 4) -> 
     return (len(stream.line_lengths) + lines_per_box - 1) // lines_per_box
 
 
-def load_translation_manifests(
-    patches_path: str | Path, references_path: str | Path
-) -> list[TranslationRecord]:
-    """Join tracked patch and reference manifests by stable ``id``."""
+def validate_dialogue_box_count(
+    record: TranslationRecord, stream: TextStream, *, lines_per_box: int = 4
+) -> None:
+    """Preserve source box count without creating invisible input prompts."""
+
+    source_boxes = source_dialogue_box_count(stream, lines_per_box=lines_per_box)
+    english_boxes = (len(record.english) + lines_per_box - 1) // lines_per_box
+    if english_boxes != source_boxes:
+        raise WorkstationError(
+            f"{record.id} selector ${record.selector:04X} uses {english_boxes} English "
+            f"dialogue boxes; source uses {source_boxes}"
+        )
+    for box_index in range(source_boxes):
+        start = box_index * lines_per_box
+        source_lines = stream.line_lengths[start:start + lines_per_box]
+        english_lines = record.english[start:start + lines_per_box]
+        if any(source_lines) and not any(line.strip() for line in english_lines):
+            raise WorkstationError(
+                f"{record.id} selector ${record.selector:04X} English dialogue box "
+                f"{box_index + 1} is blank but the source box contains visible text"
+            )
+
+    if record.preserve_source_line_layout:
+        source_layout = tuple(bool(length) for length in stream.line_lengths)
+        english_layout = tuple(bool(line.strip()) for line in record.english)
+        if english_layout != source_layout:
+            raise WorkstationError(
+                f"{record.id} selector ${record.selector:04X} must preserve source "
+                f"line layout {source_layout}; English uses {english_layout}"
+            )
+
+
+def load_translation_manifests(patches_path: str | Path) -> list[TranslationRecord]:
+    """Load self-contained command-$08 translation manifests."""
 
     patches = read_manifest_collection(
         patches_path, PATCH_FIELDS, optional_fields=PATCH_OPTIONAL_FIELDS
     )
-    references = read_manifest(references_path, REFERENCE_FIELDS)
-    by_id: dict[str, dict[str, str]] = {}
-    for reference in references:
-        if reference["reference_type"] != "command_08_selector":
-            continue
-        identifier = reference["id"]
-        if identifier in by_id:
-            raise WorkstationError(f"duplicate reference id {identifier!r}")
-        by_id[identifier] = reference
-
     records = []
     seen: set[str] = set()
     for patch in patches:
@@ -180,17 +201,19 @@ def load_translation_manifests(
         if identifier in seen:
             raise WorkstationError(f"duplicate patch id {identifier!r}")
         seen.add(identifier)
-        try:
-            reference = by_id.pop(identifier)
-        except KeyError as error:
-            raise WorkstationError(f"patch {identifier!r} has no reference record") from error
-        selector = _hex(reference["message_index"], f"{identifier} selector")
+        selector = _hex(patch["selector"], f"{identifier} selector")
+        reference_bank, reference_address = parse_cpu_address(
+            patch["reference_address"].removeprefix("$")
+        )
+        reference_offset = _hex(
+            patch["reference_offset"], f"{identifier} reference offset"
+        )
+        if cpu_to_offset(reference_bank, reference_address, "lorom") != reference_offset:
+            raise WorkstationError(
+                f"reference address and offset disagree for {identifier!r}"
+            )
         bank, address = parse_cpu_address(patch["original_address"].removeprefix("$"))
-        target_bank, target_address = parse_cpu_address(reference["target_address"].removeprefix("$"))
         offset = _hex(patch["original_offset"], f"{identifier} original offset")
-        target_offset = _hex(reference["target_offset"], f"{identifier} target offset")
-        if (bank, address, offset) != (target_bank, target_address, target_offset):
-            raise WorkstationError(f"patch and reference locations disagree for {identifier!r}")
         try:
             length = manifest_int(patch["original_length"], f"{identifier} original length")
         except WorkstationError as error:
@@ -200,6 +223,8 @@ def load_translation_manifests(
             raise WorkstationError(f"patch {identifier!r} has an empty English line array")
         if any(not isinstance(line, str) for line in english):
             raise WorkstationError(f"patch {identifier!r} has a non-string English line")
+        if not any(line.strip() for line in english):
+            raise WorkstationError(f"patch {identifier!r} has no nonblank English lines")
         if any("\n" in line or "\r" in line for line in english):
             raise WorkstationError(f"patch {identifier!r} has an embedded English line break")
         max_line_length = patch.get("max_line_length")
@@ -214,6 +239,14 @@ def load_translation_manifests(
                         f"patch {identifier!r} line {line_number} has {len(line)} characters; "
                         f"max_line_length is {max_line_length}"
                     )
+        raw_aliases = patch.get("alias_selectors", [])
+        alias_selectors = tuple(
+            _hex(value, f"{identifier} alias selector") for value in raw_aliases
+        )
+        if len(set(alias_selectors)) != len(alias_selectors):
+            raise WorkstationError(f"patch {identifier!r} repeats an alias selector")
+        if selector in alias_selectors:
+            raise WorkstationError(f"patch {identifier!r} aliases its primary selector")
         records.append(
             TranslationRecord(
                 id=identifier,
@@ -225,14 +258,14 @@ def load_translation_manifests(
                 source_sha256=patch["source_sha256"],
                 english=tuple(english),
                 max_line_length=max_line_length,
+                alias_selectors=alias_selectors,
                 status=patch["status"],
                 notes=patch["notes"],
-                reference_offset=_hex(reference["reference_offset"], f"{identifier} reference offset"),
-                pointer_format=reference["pointer_format"],
+                reference_offset=reference_offset,
+                pointer_format=patch["pointer_format"],
+                preserve_source_line_layout=patch.get("preserve_source_line_layout", False),
             )
         )
-    if by_id:
-        raise WorkstationError(f"reference {sorted(by_id)[0]!r} has no patch record")
     return records
 
 
@@ -240,7 +273,7 @@ def load_translations_from_tsv(tsv_path: str | Path) -> list[TranslationRecord]:
     """Reject the old unsafe single-manifest API with actionable guidance."""
 
     raise WorkstationError(
-        f"{tsv_path} does not contain selectors; load patches.tsv and references.tsv together"
+        f"{tsv_path} is obsolete; load the self-contained TOML patch collection"
     )
 
 
@@ -252,7 +285,7 @@ def load_reviewed_free_regions(ranges_path: str | Path) -> list[FreeSpaceRegion]
     ``confirmed`` confidence, and half-open conversion of its inclusive manifest end.
     """
 
-    rows = read_manifest(ranges_path, RANGE_FIELDS)
+    rows = read_manifest_collection(ranges_path, RANGE_FIELDS)
     regions = []
     for row in rows:
         if not row["name"].startswith("free_text_"):
@@ -396,56 +429,128 @@ def plan_translations(
 
     validate_reviewed_free_regions(original, free_regions)
     slots = decode_text_slots(original)
-    allocator = StreamAllocator(free_regions)
     implemented = [record for record in records if record.status == "implemented"]
-    if len({record.selector for record in implemented}) != len(implemented):
-        raise WorkstationError("implemented translation records repeat a selector")
+    claimed_selectors = [
+        selector
+        for record in implemented
+        for selector in (record.selector, *record.alias_selectors)
+    ]
+    if len(set(claimed_selectors)) != len(claimed_selectors):
+        raise WorkstationError("implemented translation records repeat a selector or alias")
 
-    validated: list[tuple[TranslationRecord, TextSelectorSlot, TextStream, EncodedText]] = []
-    source_alias_counts: dict[tuple[int, int], int] = {}
+    validated: list[
+        tuple[
+            TranslationRecord,
+            TextSelectorSlot,
+            tuple[TextSelectorSlot, ...],
+            TextStream,
+            EncodedText,
+        ]
+    ] = []
+    source_selectors: dict[tuple[int, int], set[int]] = {}
     for slot in slots:
         if not slot.is_null:
             key = (slot.pointer_bank, slot.target_address)
-            source_alias_counts[key] = source_alias_counts.get(key, 0) + 1
+            source_selectors.setdefault(key, set()).add(slot.selector)
     for record in implemented:
         if not 0 <= record.selector < len(slots):
             raise WorkstationError(f"selector ${record.selector:04X} is outside the text tables")
         slot = slots[record.selector]
         stream = _validate_record(original, record, slot)
+        alias_slots = []
+        for alias_selector in record.alias_selectors:
+            if not 0 <= alias_selector < len(slots):
+                raise WorkstationError(
+                    f"alias selector ${alias_selector:04X} for {record.id} is outside the text tables"
+                )
+            alias_slot = slots[alias_selector]
+            if alias_slot.is_null:
+                raise WorkstationError(
+                    f"alias selector ${alias_selector:04X} for {record.id} is null"
+                )
+            alias_stream = decode_text_stream(
+                original,
+                bank=alias_slot.pointer_bank,
+                address=alias_slot.target_address,
+                selectors=(alias_selector,),
+            )
+            if alias_stream.data != stream.data:
+                raise WorkstationError(
+                    f"alias selector ${alias_selector:04X} for {record.id} does not contain "
+                    f"the same source stream as ${record.selector:04X}"
+                )
+            alias_slots.append(alias_slot)
         validate_visible_line_width(record, slot.presentation)
-        lines = record.english
-        needed_cells = tuple((len(line) + 1) // 2 for line in lines)
-        exact_cells = None
-        if (
-            len(lines) == len(stream.line_lengths)
-            and all(needed <= available for needed, available in zip(needed_cells, stream.line_lengths))
-        ):
-            exact_cells = stream.line_lengths
+        validate_dialogue_box_count(record, stream)
         encoded = encode_text_layout(
             "\n".join(record.english),
             max_line_width=slot.presentation.width_cells,
             max_lines=source_dialogue_box_count(stream) * 4,
-            line_cells=exact_cells,
             context=f"{record.id} selector ${record.selector:04X}",
         )
-        key = (stream.bank, stream.address)
-        validated.append((record, slot, stream, encoded))
+        validated.append((record, slot, tuple(alias_slots), stream, encoded))
 
-    plans: list[TranslationPlan] = []
-    for record, slot, stream, encoded in validated:
+    allocation_regions = list(free_regions)
+    force_relocations: dict[int, bool] = {}
+    for record, slot, alias_slots, stream, encoded in validated:
         key = (stream.bank, stream.address)
-        force_relocation = source_alias_counts[key] > 1
+        claimed = {record.selector, *(alias.selector for alias in alias_slots)}
+        force_relocation = not source_selectors[key] <= claimed
+        force_relocations[record.selector] = force_relocation
+        if not force_relocation:
+            if len(encoded.data) < record.original_length:
+                allocation_regions.append(
+                    FreeSpaceRegion(
+                        bank=slot.pointer_bank,
+                        rom_start=record.original_offset + len(encoded.data),
+                        rom_end=record.original_offset + record.original_length,
+                        alignment=2,
+                        name=f"compact suffix of {record.id}",
+                    )
+                )
+            elif len(encoded.data) > record.original_length:
+                allocation_regions.append(
+                    FreeSpaceRegion(
+                        bank=slot.pointer_bank,
+                        rom_start=record.original_offset,
+                        rom_end=record.original_offset + record.original_length,
+                        alignment=2,
+                        name=f"vacated source of {record.id}",
+                        priority=1,
+                    )
+                )
+
+    allocator = StreamAllocator(allocation_regions)
+    indexed_validated = list(enumerate(validated))
+
+    def allocation_order(item):
+        index, (record, _slot, _alias_slots, _stream, encoded) = item
+        needs_relocation = (
+            force_relocations[record.selector]
+            or len(encoded.data) > record.original_length
+        )
+        return (not needs_relocation, -len(encoded.data) if needs_relocation else 0, index)
+
+    allocations: dict[int, Allocation] = {}
+    for index, (record, slot, _alias_slots, _stream, encoded) in sorted(
+        indexed_validated, key=allocation_order
+    ):
         allocation = allocator.allocate(
             selector=record.selector,
             original_offset=record.original_offset,
             original_length=record.original_length,
             new_length=len(encoded.data),
             bank=slot.pointer_bank,
-            force_relocation=force_relocation,
+            force_relocation=force_relocations[record.selector],
         )
         if not validate_allocation(allocation, len(original)):
             raise WorkstationError(f"invalid allocation for {record.id}")
-        plans.append(TranslationPlan(record, slot, stream, encoded, allocation))
+        allocations[index] = allocation
+
+    plans = [
+        TranslationPlan(record, slot, alias_slots, stream, encoded, allocations[index])
+        for index, (record, slot, alias_slots, stream, encoded) in indexed_validated
+    ]
 
     spans = sorted(
         (plan.allocation.new_offset, plan.allocation.end_offset, plan.record.id)
@@ -461,13 +566,14 @@ def apply_translation(rom: bytearray, plan: TranslationPlan) -> None:
     bounded_write(rom, plan.allocation.new_offset, plan.encoded.data, plan.record.id)
     if plan.needs_pointer_update:
         new_address = 0x8000 + (plan.allocation.new_offset & 0x7FFF)
-        write_pointer(
-            rom,
-            plan.record.selector,
-            new_address,
-            slots=(plan.slot,),
-            expected_target_address=plan.record.original_address,
-        )
+        for slot in (plan.slot, *plan.alias_slots):
+            write_pointer(
+                rom,
+                slot.selector,
+                new_address,
+                slots=(slot,),
+                expected_target_address=slot.target_address,
+            )
 
 
 def build_translation(
@@ -481,12 +587,14 @@ def build_translation(
         bounded_write(rom, plan.allocation.new_offset, plan.encoded.data, plan.record.id)
         if plan.needs_pointer_update:
             new_address = 0x8000 + (plan.allocation.new_offset & 0x7FFF)
-            write_pointer(
-                rom,
-                plan.record.selector,
-                new_address,
-                expected_target_address=plan.record.original_address,
-            )
+            for slot in (plan.slot, *plan.alias_slots):
+                write_pointer(
+                    rom,
+                    slot.selector,
+                    new_address,
+                    slots=(slot,),
+                    expected_target_address=slot.target_address,
+                )
 
     for plan in plans:
         address = 0x8000 + (plan.allocation.new_offset & 0x7FFF)
@@ -496,6 +604,13 @@ def build_translation(
         )
         if decoded.data != plan.encoded.data or decoded.line_lengths != plan.encoded.line_cells:
             raise WorkstationError(f"{plan.record.id} failed the post-write decode round trip")
+        for alias_slot in plan.alias_slots:
+            alias_target = decode_text_slots(bytes(rom))[alias_slot.selector]
+            if alias_target.target_offset != plan.allocation.new_offset:
+                raise WorkstationError(
+                    f"{plan.record.id} alias selector ${alias_slot.selector:04X} "
+                    "does not resolve to the translated allocation"
+                )
 
     write_snes_checksum(rom, 0x7FDE)
     translated = bytes(rom)

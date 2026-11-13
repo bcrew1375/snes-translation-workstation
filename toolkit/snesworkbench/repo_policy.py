@@ -34,15 +34,16 @@ LONG_BYTE_ESCAPE = re.compile(r"(?:\\x[0-9a-fA-F]{2}){16,}")
 
 TRANSLATION_SCHEMAS = {
     "patches.toml": ("record", {
-        "id": str, "original_address": str, "original_offset": int,
+        "id": str, "selector": int, "reference_address": str,
+        "reference_offset": int, "pointer_format": str,
+        "original_address": str, "original_offset": int,
         "original_length": int, "source_sha256": str, "english": list,
         "status": str, "notes": str,
-    }, {"max_line_length": int}),
-    "references.toml": ("record", {
-        "id": str, "reference_type": str, "reference_address": str,
-        "reference_offset": int, "message_index": int, "pointer_format": str,
-        "target_address": str, "target_offset": int,
-    }, {}),
+    }, {
+        "max_line_length": int,
+        "alias_selectors": list,
+        "preserve_source_line_layout": bool,
+    }),
     "ranges.toml": ("record", {
         "name": str, "rom_start": int, "rom_end": int, "cpu_start": str,
         "cpu_end": str, "bank": int, "alignment": int, "evidence": str,
@@ -69,6 +70,28 @@ TRANSLATION_SCHEMAS = {
         "destination_address": str, "destination_offset": int,
         "prefix_words": int, "english": str, "status": str, "notes": str,
     }, {}),
+    "battle_text.toml": ("record", {
+        "id": str, "path": str, "speaker": str, "resource_id": int,
+        "pointer_address": str, "pointer_offset": int,
+        "original_address": str, "original_offset": int,
+        "original_length": int, "source_sha256": str, "english": list,
+        "max_line_length": int, "status": str, "notes": str,
+    }, {}),
+    "hud.toml": ("record", {
+        "id": str, "original_offset": int, "original_length": int,
+        "source_sha256": str, "patch_offsets": list, "english": str,
+        "status": str, "notes": str,
+    }, {}),
+}
+
+TRANSLATION_COLLECTION_SCHEMAS = {
+    "patches": "patches.toml",
+    "ranges": "ranges.toml",
+    "menu": "menu.toml",
+    "name_entry": "name_entry.toml",
+    "choices": "choices.toml",
+    "battle_text": "battle_text.toml",
+    "hud": "hud.toml",
 }
 
 
@@ -114,12 +137,12 @@ def _translation_manifest_name(relative: str) -> str | None:
         if path.name in TRANSLATION_SCHEMAS:
             return path.name
     if (
-        len(path.parts) == 5
+        len(path.parts) >= 5
         and path.parts[0] == "projects"
-        and path.parts[2:4] == ("translation", "patches")
+        and path.parts[2] == "translation"
         and path.suffix == ".toml"
     ):
-        return "patches.toml"
+        return TRANSLATION_COLLECTION_SCHEMAS.get(path.parts[3])
     return None
 
 
@@ -170,6 +193,10 @@ def validate_translation_manifest(relative: str, text: str) -> list[str]:
                         f"{relative} record {record_number} has a non-string English line"
                     )
                 else:
+                    if lines and not any(line.strip() for line in lines):
+                        failures.append(
+                            f"{relative} record {record_number} has no nonblank English lines"
+                        )
                     if any("\n" in line or "\r" in line for line in lines):
                         failures.append(
                             f"{relative} record {record_number} has an embedded English line break"
@@ -186,6 +213,19 @@ def validate_translation_manifest(relative: str, text: str) -> list[str]:
                                     f"{relative} record {record_number} line {line_number} "
                                     f"has {len(line)} characters; max_line_length is {limit}"
                                 )
+                    aliases = row.get("alias_selectors")
+                    if aliases is not None:
+                        try:
+                            values = manifest_int_list(aliases, "alias selectors")
+                        except WorkstationError:
+                            values = []
+                            failures.append(
+                                f"{relative} record {record_number} has invalid alias selectors"
+                            )
+                        if values and (len(set(values)) != len(values) or any(value < 0 for value in values)):
+                            failures.append(
+                                f"{relative} record {record_number} has invalid alias selectors"
+                            )
             if name == "menu.toml":
                 if row["record_type"] not in {"terminated", "fixed", "fixed_native_suffix"}:
                     failures.append(

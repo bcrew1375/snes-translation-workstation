@@ -2,6 +2,10 @@ schema_version = 1
 
 [[record]]
 id = "post_quiz_00"
+selector = 0x0223
+reference_address = "99:8446"
+reference_offset = 0xC8446
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:919C"
 original_offset = 0xC919C
 original_length = 30
@@ -16,6 +20,10 @@ notes = "Post-quiz transition; speaker/context: Krillin recognizing Goku; select
 
 [[record]]
 id = "post_quiz_krillin_exclamation"
+selector = 0x001B
+reference_address = "99:8036"
+reference_offset = 0xC8036
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:88D2"
 original_offset = 0xC88D2
 original_length = 8
@@ -28,6 +36,10 @@ notes = "Post-quiz transition; speaker/context: Krillin reacting immediately aft
 
 [[record]]
 id = "post_quiz_01"
+selector = 0x0225
+reference_address = "99:844A"
+reference_offset = 0xC844A
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:91BA"
 original_offset = 0xC91BA
 original_length = 100
@@ -45,6 +57,10 @@ notes = "Post-quiz transition; speaker/context: Krillin greeting Goku; reached s
 
 [[record]]
 id = "post_quiz_02"
+selector = 0x0226
+reference_address = "99:844C"
+reference_offset = 0xC844C
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:921E"
 original_offset = 0xC921E
 original_length = 26
@@ -59,6 +75,10 @@ notes = "Post-quiz transition; speaker/context: Yamcha recognizing Goku; selecto
 
 [[record]]
 id = "post_quiz_03"
+selector = 0x0227
+reference_address = "99:844E"
+reference_offset = 0xC844E
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9238"
 original_offset = 0xC9238
 original_length = 16
@@ -72,6 +92,10 @@ notes = "Post-quiz transition; speaker/context: Tien confirming Yamcha's recogni
 
 [[record]]
 id = "post_quiz_04"
+selector = 0x0228
+reference_address = "99:8450"
+reference_offset = 0xC8450
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9248"
 original_offset = 0xC9248
 original_length = 76
@@ -87,6 +111,10 @@ notes = "Post-quiz transition; speaker/context: Bulma reacting to the grown Goku
 
 [[record]]
 id = "post_quiz_05"
+selector = 0x0229
+reference_address = "99:8452"
+reference_offset = 0xC8452
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9294"
 original_offset = 0xC9294
 original_length = 26
@@ -101,6 +129,10 @@ notes = "Post-quiz transition; speaker/context: Oolong reacting to Bulma; select
 
 [[record]]
 id = "preliminaries_00"
+selector = 0x022A
+reference_address = "99:8454"
+reference_offset = 0xC8454
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:92AE"
 original_offset = 0xC92AE
 original_length = 44
@@ -116,6 +148,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Krillin asking Goku abou
 
 [[record]]
 id = "preliminaries_01"
+selector = 0x022B
+reference_address = "99:8456"
+reference_offset = 0xC8456
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:92DA"
 original_offset = 0xC92DA
 original_length = 36
@@ -130,6 +166,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Goku answering Krillin; 
 
 [[record]]
 id = "preliminaries_02"
+selector = 0x022C
+reference_address = "99:8458"
+reference_offset = 0xC8458
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:92FE"
 original_offset = 0xC92FE
 original_length = 32
@@ -144,14 +184,23 @@ notes = "Preliminaries Venue dialogue; speaker/context: Yamcha asking about Goku
 
 [[record]]
 id = "preliminaries_03"
+selector = 0x022D
+reference_address = "99:845A"
+reference_offset = 0xC845A
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:931E"
 original_offset = 0xC931E
 original_length = 146
 source_sha256 = "5977555447333f8ecd204dab46a0d1c8edc73f76c7080e41c89a8aea9e48e57f"
 english = [
   "Kami removed it.",
+  "",
+  "",
+  "",
   "He wants to restore",
   "the moon, and said",
+  "",
+  "",
   "my tail would get",
   "in the way.",
 ]
@@ -161,6 +210,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Goku explains that Kami 
 
 [[record]]
 id = "preliminaries_04"
+selector = 0x022E
+reference_address = "99:845C"
+reference_offset = 0xC845C
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:93B0"
 original_offset = 0xC93B0
 original_length = 14
@@ -174,6 +227,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Yamcha thinking; selecto
 
 [[record]]
 id = "preliminaries_05"
+selector = 0x022F
+reference_address = "99:845E"
+reference_offset = 0xC845E
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:93BE"
 original_offset = 0xC93BE
 original_length = 28
@@ -188,6 +245,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Krillin agreeing tentati
 
 [[record]]
 id = "preliminaries_06"
+selector = 0x0230
+reference_address = "99:8460"
+reference_offset = 0xC8460
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:93DA"
 original_offset = 0xC93DA
 original_length = 18
@@ -201,6 +262,10 @@ notes = "Preliminaries Venue dialogue after reused selector $0003; speaker/conte
 
 [[record]]
 id = "preliminaries_07"
+selector = 0x0231
+reference_address = "99:8462"
+reference_offset = 0xC8462
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:93EC"
 original_offset = 0xC93EC
 original_length = 18
@@ -214,6 +279,10 @@ notes = "Preliminaries Venue dialogue immediately before the Chi-Chi choice; spe
 
 [[record]]
 id = "pre_chichi_00"
+selector = 0x0232
+reference_address = "99:8464"
+reference_offset = 0xC8464
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:93FE"
 original_offset = 0xC93FE
 original_length = 14
@@ -227,6 +296,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Krillin reacting to the 
 
 [[record]]
 id = "pre_chichi_01"
+selector = 0x0233
+reference_address = "99:8466"
+reference_offset = 0xC8466
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:940C"
 original_offset = 0xC940C
 original_length = 18
@@ -240,6 +313,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Yamcha asking Krillin ab
 
 [[record]]
 id = "pre_chichi_02"
+selector = 0x0234
+reference_address = "99:8468"
+reference_offset = 0xC8468
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:941E"
 original_offset = 0xC941E
 original_length = 32
@@ -255,6 +332,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Krillin recognizing the 
 
 [[record]]
 id = "pre_chichi_03"
+selector = 0x0235
+reference_address = "99:846A"
+reference_offset = 0xC846A
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:943E"
 original_offset = 0xC943E
 original_length = 44
@@ -269,6 +350,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Goku addressing the newl
 
 [[record]]
 id = "pre_chichi_04"
+selector = 0x0236
+reference_address = "99:846C"
+reference_offset = 0xC846C
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:946A"
 original_offset = 0xC946A
 original_length = 74
@@ -284,6 +369,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Tien asking whether the 
 
 [[record]]
 id = "pre_chichi_05"
+selector = 0x0237
+reference_address = "99:846E"
+reference_offset = 0xC846E
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:94B4"
 original_offset = 0xC94B4
 original_length = 28
@@ -298,6 +387,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Goku cautiously confirmi
 
 [[record]]
 id = "pre_chichi_06"
+selector = 0x0238
+reference_address = "99:8470"
+reference_offset = 0xC8470
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:94D0"
 original_offset = 0xC94D0
 original_length = 18
@@ -311,6 +404,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Yamcha accepting Goku's 
 
 [[record]]
 id = "pre_chichi_07"
+selector = 0x0239
+reference_address = "99:8472"
+reference_offset = 0xC8472
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:94E2"
 original_offset = 0xC94E2
 original_length = 90
@@ -318,6 +415,8 @@ source_sha256 = "82210980986b51026c6cbf4c720850e50e9664939ff1391dd81d249baf6f801
 english = [
   "But keep it secret!",
   "If they found out,",
+  "",
+  "",
   "it'd be a huge fuss!",
 ]
 max_line_length = 21
@@ -326,6 +425,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Krillin warning the grou
 
 [[record]]
 id = "pre_chichi_08"
+selector = 0x023A
+reference_address = "99:8474"
+reference_offset = 0xC8474
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:953C"
 original_offset = 0xC953C
 original_length = 38
@@ -340,6 +443,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Goku sensing the newly a
 
 [[record]]
 id = "pre_chichi_09"
+selector = 0x023B
+reference_address = "99:8476"
+reference_offset = 0xC8476
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:9562"
 original_offset = 0xC9562
 original_length = 28
@@ -353,6 +460,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Krillin asking whether G
 
 [[record]]
 id = "pre_chichi_10"
+selector = 0x023C
+reference_address = "99:8478"
+reference_offset = 0xC8478
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:957E"
 original_offset = 0xC957E
 original_length = 42
@@ -367,6 +478,10 @@ notes = "Preliminaries Venue dialogue; speaker/context: Goku denying that he kno
 
 [[record]]
 id = "pre_chichi_11"
+selector = 0x023D
+reference_address = "99:847A"
+reference_offset = 0xC847A
+pointer_format = "16-bit same-bank LoROM pointer"
 original_address = "99:95A8"
 original_offset = 0xC95A8
 original_length = 12

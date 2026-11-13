@@ -138,9 +138,11 @@ def read_manifest_collection(
 ) -> list[dict[str, Any]]:
     """Read one manifest or an ordered directory of TOML manifests.
 
-    Directory members are direct ``*.toml`` children loaded in lexical filename
-    order. Each member is independently schema-validated by ``read_manifest``;
-    record order is then preserved while the results are concatenated.
+    Directory members are recursive ``*.toml`` descendants loaded in lexical
+    relative-path order. Each member is independently schema-validated by
+    ``read_manifest``; record order is then preserved while the results are
+    concatenated. This permits large collections to be grouped into ordered
+    story-arc directories without changing stable record IDs.
     """
 
     source_path = Path(path)
@@ -150,7 +152,8 @@ def read_manifest_collection(
         )
 
     members = sorted(
-        member for member in source_path.iterdir() if member.is_file() and member.suffix == ".toml"
+        (member for member in source_path.rglob("*.toml") if member.is_file()),
+        key=lambda member: member.relative_to(source_path).as_posix(),
     )
     if not members:
         raise WorkstationError(f"manifest directory has no TOML files: {source_path}")

@@ -1,0 +1,736 @@
+schema_version = 1
+
+[[record]]
+id = "yamcha_shen_00"
+selector = 0x02E3
+reference_address = "99:85C6"
+reference_offset = 0xC85C6
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BB1A"
+original_offset = 0xCBB1A
+original_length = 48
+source_sha256 = "71497734a8596d044f879e377c4185d1b01cdf1c36115f21b6d31c6c9d84bddc"
+english = [
+  "Looks like Yamcha may",
+  "get past round one",
+  "this time.",
+  "Look at his opponent.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02E3 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_01"
+selector = 0x02E4
+reference_address = "99:85C8"
+reference_offset = 0xC85C8
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BB4A"
+original_offset = 0xCBB4A
+original_length = 90
+source_sha256 = "08b24777770be154da90c6817555ab8538541b8c7324a01be2c42c9688f50c7f"
+english = [
+  "That Yamcha fellow",
+  "was Goku's friend...",
+  "",
+  "",
+  "Poor guy. He will",
+  "lose.",
+  "He drew the wrong",
+  "opponent...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02E4 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_02"
+selector = 0x02E5
+reference_address = "99:85CA"
+reference_offset = 0xC85CA
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BBA4"
+original_offset = 0xCBBA4
+original_length = 30
+source_sha256 = "d06a298ab583ab45d3cf43c8f444fbbcc48aa3797813667579394a94c0f6b7ef"
+english = [
+  "Begin!",
+]
+max_line_length = 21
+alias_selectors = [0x0309]
+status = "implemented"
+notes = "Announcer starts Yamcha versus Shen; selector $0309 is a byte-identical content alias reused before the next battle."
+
+[[record]]
+id = "yamcha_shen_03"
+selector = 0x02E6
+reference_address = "99:85CC"
+reference_offset = 0xC85CC
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BBC2"
+original_offset = 0xCBBC2
+original_length = 58
+source_sha256 = "68d739c6d462912079703ed061a9614e653ca37f7d2b9432d34160920a1debe1"
+english = [
+  "I don't mind.",
+  "Please,",
+  "you go first.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02E6 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_04"
+selector = 0x02E7
+reference_address = "99:85CE"
+reference_offset = 0xC85CE
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BBFC"
+original_offset = 0xCBBFC
+original_length = 44
+source_sha256 = "13b2fa71c6b5f0a08407645d593d2535a0d18c76ed8ab1a00a87eb6cca3ad2e7"
+english = [
+  "Is that so?",
+  "Then I'll take you",
+  "up on that.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02E7 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_05"
+selector = 0x02E8
+reference_address = "99:85D0"
+reference_offset = 0xC85D0
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BC28"
+original_offset = 0xCBC28
+original_length = 18
+source_sha256 = "37621815b87b50b3a47eb10f794cc18ece7543bf4650a704c26b1b8de49ce1c7"
+english = [
+  "Hyaah...!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02E8 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_06"
+selector = 0x02E9
+reference_address = "99:85D2"
+reference_offset = 0xC85D2
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BC3A"
+original_offset = 0xCBC3A
+original_length = 22
+source_sha256 = "d89cd8380d811f4acc95bbe66817f4bde5549139150b2c2fe5dd8309e7ccbb6a"
+english = [
+  "Hah!!",
+  "Haaah!!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02E9 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_07"
+selector = 0x02EA
+reference_address = "99:85D4"
+reference_offset = 0xC85D4
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BC50"
+original_offset = 0xCBC50
+original_length = 96
+source_sha256 = "dd5a7e4170d337a2147a09ebac748817f51e31cf75c861e7a623ea323301f605"
+english = [
+  "Oh! That has to hurt!",
+  "As Shen fell,",
+  "his foot struck",
+  "Yamcha right",
+  "",
+  "in the groin!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02EA before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_08"
+selector = 0x02EB
+reference_address = "99:85D6"
+reference_offset = 0xC85D6
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BCB0"
+original_offset = 0xCBCB0
+original_length = 68
+source_sha256 = "effe6609153b18ad9074f2ec86b7a3830bb2c76def3cf8b8a0880c13e65f7650"
+english = [
+  "Well, now...",
+  "",
+  "",
+  "",
+  "Sorry you saw such",
+  "an embarrassing",
+  "display...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02EB before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_09"
+selector = 0x02EC
+reference_address = "99:85D8"
+reference_offset = 0xC85D8
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BCF4"
+original_offset = 0xCBCF4
+original_length = 68
+source_sha256 = "18cc1d6a51f128fc79d4e7a8fb4257c9959c081d6522321ff300a8f492a99548"
+english = [
+  "Are you...",
+  "",
+  "",
+  "",
+  "all right?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02EC before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_10"
+selector = 0x02ED
+reference_address = "99:85DA"
+reference_offset = 0xC85DA
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BD38"
+original_offset = 0xCBD38
+original_length = 140
+source_sha256 = "b72d4c45b80c3f01c1103bfbb3385dbd8e21f5f03fb872db86da08e9b70ec5f0"
+english = [
+  "No, no.",
+  "I see. What a relief.",
+  "",
+  "",
+  "Either way,",
+  "I expect to win.",
+  "",
+  "",
+  "But I would not enjoy",
+  "winning like this.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02ED before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_11"
+selector = 0x02EE
+reference_address = "99:85DC"
+reference_offset = 0xC85DC
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BDC4"
+original_offset = 0xCBDC4
+original_length = 82
+source_sha256 = "05c6b678d25909b2f43fe57199c07e17a1d05417283d72fa351750b40db7f19c"
+english = [
+  "Oh? You seem",
+  "very confident.",
+  "Do you truly think",
+  "you can beat me?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02EE before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_12"
+selector = 0x02EF
+reference_address = "99:85DE"
+reference_offset = 0xC85DE
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BE16"
+original_offset = 0xCBE16
+original_length = 16
+source_sha256 = "cf8f31bb9b0596b0fb97a6a98c0cb9dcbdec6a8f5d38408d1e3cad0702e56a99"
+english = [
+  "Yes, I do.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02EF before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_13"
+selector = 0x02F0
+reference_address = "99:85E0"
+reference_offset = 0xC85E0
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BE26"
+original_offset = 0xCBE26
+original_length = 90
+source_sha256 = "cdc32e2c99f3f95b5b8d6cb763c49a7ab1cbd24bacb0feb776ed3ce646f3992d"
+english = [
+  "Ha ha ha.",
+  "How amusing...",
+  "",
+  "",
+  "Then I shall",
+  "get serious too.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02F0 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_14"
+selector = 0x02F1
+reference_address = "99:85E2"
+reference_offset = 0xC85E2
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BE80"
+original_offset = 0xCBE80
+original_length = 82
+source_sha256 = "268d80b47d3f361e2d6ee953b4d5746fa7c58b31de404c61a964ec5e689bf006"
+english = [
+  "Of course.",
+  "Please do.",
+  "",
+  "",
+  "Then let us both",
+  "fight seriously.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02F1 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_15"
+selector = 0x02F2
+reference_address = "99:85E4"
+reference_offset = 0xC85E4
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BED2"
+original_offset = 0xCBED2
+original_length = 28
+source_sha256 = "07a873f6748ff84a2b8df813064a108bb04032164b20a10bf19d76d41bc1cbae"
+english = [
+  "Yes, yes.",
+  "Whenever you're",
+  "ready.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02F2 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_16"
+selector = 0x02F3
+reference_address = "99:85E6"
+reference_offset = 0xC85E6
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BEEE"
+original_offset = 0xCBEEE
+original_length = 28
+source_sha256 = "4a7e4e3121f9fc1611f1338ac6a4b89f4089510c1c28dfe23abfb1913352db2e"
+english = [
+  "Guh...!",
+  "C-cough...!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02F3 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_17"
+selector = 0x02F4
+reference_address = "99:85E8"
+reference_offset = 0xC85E8
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BF0A"
+original_offset = 0xCBF0A
+original_length = 194
+source_sha256 = "7bb6a459eedd147bd84329143abca6c6e4499e31028d1936972ea6ec4f60b74b"
+english = [
+  "You judged me only",
+  "by my appearance",
+  "without sensing",
+  "my presence.",
+  "That is why you",
+  "lost track of me",
+  "and got caught.",
+  "",
+  "You still have far",
+  "to go as a true",
+  "martial artist.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02F4 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_18"
+selector = 0x02F5
+reference_address = "99:85EA"
+reference_offset = 0xC85EA
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BFCC"
+original_offset = 0xCBFCC
+original_length = 42
+source_sha256 = "903f314f42ef1b453e5069fafe5fd8cd81bc95a24f1591ed5a904ad788ff31c7"
+english = [
+  "W-who...",
+  "Who is that guy...?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02F5 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_19"
+selector = 0x02F6
+reference_address = "99:85EC"
+reference_offset = 0xC85EC
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:BFF6"
+original_offset = 0xCBFF6
+original_length = 64
+source_sha256 = "9cefa866fc47ea30ce58af978adc2d627a421371608e20d80f38d772361f9661"
+english = [
+  "See? I knew it.",
+  "That guy is no",
+  "",
+  "",
+  "ordinary old man...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02F6 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_20"
+selector = 0x02F7
+reference_address = "99:85EE"
+reference_offset = 0xC85EE
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C036"
+original_offset = 0xCC036
+original_length = 140
+source_sha256 = "4e4c9a14c6b54a3dde19276f104bf03f6d44c8886c242c861d5e7a4c2198f755"
+english = [
+  "I see...",
+  "You were right.",
+  "You have opened",
+  "my eyes.",
+  "",
+  "But I do not care",
+  "what tricks you use.",
+  "",
+  "I will still",
+  "beat you.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02F7 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_21"
+selector = 0x02F8
+reference_address = "99:85F0"
+reference_offset = 0xC85F0
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C0C2"
+original_offset = 0xCC0C2
+original_length = 220
+source_sha256 = "0c75716784a299d22477448522c5cab45c6d0b91f9e812f8c58c30d0e4db8ce1"
+english = [
+  "No, no.",
+  "I am afraid",
+  "that will not happen.",
+  "",
+  "Just between us...",
+  "I am not human.",
+  "",
+  "",
+  "I am only borrowing",
+  "this human body.",
+  "",
+  "",
+  "My spirit is",
+  "possessing it.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02F8 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_22"
+selector = 0x02F9
+reference_address = "99:85F2"
+reference_offset = 0xC85F2
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C19E"
+original_offset = 0xCC19E
+original_length = 16
+source_sha256 = "7c746181e3434dd8a9fd6f0be62ffde376c08da274e558b37460d6fad32167bb"
+english = [
+  "Possessing...?",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02F9 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_23"
+selector = 0x02FA
+reference_address = "99:85F4"
+reference_offset = 0xC85F4
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C1AE"
+original_offset = 0xCC1AE
+original_length = 164
+source_sha256 = "5fa24e0fb42babb78693c52adaea328582b70d4a0355aa1feb06043c7a3c3a39"
+english = [
+  "Hmph! Quit babbling",
+  "nonsense I can't",
+  "understand!",
+  "",
+  "Damn it...",
+  "I have no choice.",
+  "",
+  "",
+  "I never thought I'd",
+  "use my secret move",
+  "in this match...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02FA before the first visible battle HUD. Yamcha dismisses Kami's explanation as incomprehensible babbling, says he has no choice, and reluctantly resorts to his secret move."
+
+[[record]]
+id = "yamcha_shen_24"
+selector = 0x02FB
+reference_address = "99:85F6"
+reference_offset = 0xC85F6
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C252"
+original_offset = 0xCC252
+original_length = 48
+source_sha256 = "aed7e1fd39f8e0743c9924dd36560a109e8d108b3fe80ffbc5e9e5740c406f1d"
+english = [
+  "Huh?!",
+  "",
+  "",
+  "",
+  "His ki",
+  "is focused!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02FB before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_25"
+selector = 0x02FC
+reference_address = "99:85F8"
+reference_offset = 0xC85F8
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C282"
+original_offset = 0xCC282
+original_length = 10
+source_sha256 = "7c4d3e783d528556b9b06cbdf4ef3427fc44942041180444224fa5f533b7b089"
+english = [
+  "Spirit Ball!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Yamcha calls the Spirit Ball technique."
+
+[[record]]
+id = "yamcha_shen_26"
+selector = 0x02FD
+reference_address = "99:85FA"
+reference_offset = 0xC85FA
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C28C"
+original_offset = 0xCC28C
+original_length = 86
+source_sha256 = "39eb5171dc256d96057bfed189e2f75c0c048fda19c396d92b6f860d98ac5a20"
+english = [
+  "Wh-what!",
+  "He had a trick",
+  "like this...!",
+  "",
+  "That was truly",
+  "a fine move.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02FD before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_27"
+selector = 0x02FE
+reference_address = "99:85FC"
+reference_offset = 0xC85FC
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C2E2"
+original_offset = 0xCC2E2
+original_length = 72
+source_sha256 = "e803791f66428adf61c708d1b749ed12a319ad2faec2e4e4bb188bfe914fe945"
+english = [
+  "Heh heh...",
+  "You are a little",
+  "too slow, aren't you?",
+  "",
+  "Take this!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02FE before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_28"
+selector = 0x02FF
+reference_address = "99:85FE"
+reference_offset = 0xC85FE
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C32A"
+original_offset = 0xCC32A
+original_length = 18
+source_sha256 = "5b794f8f504baf516e2c0716c780f2802e25fed88177ecade1cfe91a935c9703"
+english = [
+  "K-Kami!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $02FF before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_29"
+selector = 0x0300
+reference_address = "99:8600"
+reference_offset = 0xC8600
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C33C"
+original_offset = 0xCC33C
+original_length = 60
+source_sha256 = "7c287d679ccad5d3734556f255d6bfea7ce08d3471d2582b1009642875248c3d"
+english = [
+  "Y-Yamcha is down!",
+  "Shen wins",
+  "the match!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Announcer declares Shen the winner over Yamcha."
+
+[[record]]
+id = "yamcha_shen_30"
+selector = 0x0301
+reference_address = "99:8602"
+reference_offset = 0xC8602
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C378"
+original_offset = 0xCC378
+original_length = 10
+source_sha256 = "4595c26764c60edf36e0bc9677c753b2579c6a03ab78996c15166b1b981f7ca9"
+english = [
+  "Damn!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $0301 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_31"
+selector = 0x0302
+reference_address = "99:8604"
+reference_offset = 0xC8604
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C382"
+original_offset = 0xCC382
+original_length = 122
+source_sha256 = "05001783ef9b68f12bf6f71a7855ac684c17fbcd764e6a547a66f5f168a1df1c"
+english = [
+  "Contestant Shen...",
+  "Shen...",
+  "Shenron, the divine",
+  "dragon...",
+  "Kami!!!",
+  "",
+  "",
+  "",
+  "That old man truly",
+  "was Kami after all!!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $0302 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_32"
+selector = 0x0303
+reference_address = "99:8606"
+reference_offset = 0xC8606
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C3FC"
+original_offset = 0xCC3FC
+original_length = 54
+source_sha256 = "20684a5381e55e6a5fdd53bbf9386caa93f62b4a18facba2475ebc6c11ae2eff"
+english = [
+  "Oh dear...",
+  "I hurt this",
+  "borrowed body.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $0303 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_33"
+selector = 0x0304
+reference_address = "99:8608"
+reference_offset = 0xC8608
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C432"
+original_offset = 0xCC432
+original_length = 80
+source_sha256 = "1775cabf0ca9c1cce1e7c3104192049605411de35e3879806e97c07b789e0ac9"
+english = [
+  "I lost.",
+  "A complete defeat...",
+  "",
+  "",
+  "Please tell me",
+  "who you really are...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $0304 before the first visible battle HUD."
+
+[[record]]
+id = "yamcha_shen_34"
+selector = 0x0305
+reference_address = "99:860A"
+reference_offset = 0xC860A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:C482"
+original_offset = 0xCC482
+original_length = 50
+source_sha256 = "67509646006e945dc42e9a5cad5a0979d61277f7f78fc0da2fb2928dd80f2b09"
+english = [
+  "Ho ho.",
+  "That's for",
+  "later.",
+  "",
+  "Indeed!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Runtime-confirmed recognized-route dialogue at selector $0305 before the first visible battle HUD."
+

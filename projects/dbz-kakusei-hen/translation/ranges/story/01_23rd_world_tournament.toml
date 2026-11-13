@@ -1,0 +1,639 @@
+schema_version = 1
+
+[[record]]
+name = "martial_arts_stage_fixed_label"
+rom_start = 0x40070
+rom_end = 0x40077
+cpu_start = "$8070"
+cpu_end = "$8077"
+bank = 0x88
+alignment = 2
+evidence = "Exact bank-$88 fixed resource $03 source allocation. Fresh recognized Chi-Chi finals replay visibly renders this resource as the martial-arts-stage banner."
+confidence = "confirmed"
+
+[[record]]
+name = "tournament_opening_streams"
+rom_start = 0xC8BB4
+rom_end = 0xC905F
+cpu_start = "$8BB4"
+cpu_end = "$905F"
+bank = 0x99
+alignment = 2
+evidence = "Exact consecutive source allocations for opening 23rd World Tournament selectors $0200-$021A; pointer slots are $99:8400-$99:8435."
+confidence = "confirmed"
+
+[[record]]
+name = "tournament_quiz_response_b_stream"
+rom_start = 0xC906E
+rom_end = 0xC9089
+cpu_start = "$906E"
+cpu_end = "$9089"
+bank = 0x99
+alignment = 2
+evidence = "Exact source allocation for first tournament trivia B response selector $021C, reached from scenario cursor $91:819A."
+confidence = "confirmed"
+
+[[record]]
+name = "tournament_quiz_response_xy_stream"
+rom_start = 0xC9060
+rom_end = 0xC906D
+cpu_start = "$9060"
+cpu_end = "$906D"
+bank = 0x99
+alignment = 2
+evidence = "Exact source allocation for first tournament trivia shared X/Y response selector $021B, reached from scenario cursor $91:8193."
+confidence = "confirmed"
+
+[[record]]
+name = "tournament_quiz_02_leadin_streams"
+rom_start = 0xC908A
+rom_end = 0xC917D
+cpu_start = "$908A"
+cpu_end = "$917D"
+bank = 0x99
+alignment = 2
+evidence = "Five consecutive source allocations for second tournament trivia lead-in selectors $021D-$0221; pointer slots are $99:843A-$99:8443."
+confidence = "confirmed"
+
+[[record]]
+name = "tournament_quiz_02_response_stream"
+rom_start = 0xC917E
+rom_end = 0xC919B
+cpu_start = "$917E"
+cpu_end = "$919B"
+bank = 0x99
+alignment = 2
+evidence = "Exact source allocation for second tournament trivia shared X/Y/B response selector $0222, reached from scenario cursor $91:8218."
+confidence = "confirmed"
+
+[[record]]
+name = "post_quiz_selector_pointers"
+rom_start = 0xC8446
+rom_end = 0xC847B
+cpu_start = "$8446"
+cpu_end = "$847B"
+bank = 0x99
+alignment = 2
+evidence = "Consecutive selector slots $0223-$023D. Slots $0224/$0225 alias source $99:91BA; only reached selector $0225 has a translation record."
+confidence = "confirmed"
+
+[[record]]
+name = "post_quiz_and_preliminaries_streams"
+rom_start = 0xC919C
+rom_end = 0xC95B3
+cpu_start = "$919C"
+cpu_end = "$95B3"
+bank = 0x99
+alignment = 2
+evidence = "Exact consecutive source allocations for post-quiz and Preliminaries Venue selectors $0223-$023D, including the shared $0224/$0225 stream and the complete lead-in to the Chi-Chi choice."
+confidence = "confirmed"
+
+[[record]]
+name = "world_tournament_arena_pointer"
+rom_start = 0x40018
+rom_end = 0x40019
+cpu_start = "$8018"
+cpu_end = "$8019"
+bank = 0x88
+alignment = 2
+evidence = "Fixed bank-$88 table entry 12 is updated from its pinned source at $88:80C0 to the reviewed same-bank relocation at $88:FFB4."
+confidence = "confirmed"
+
+[[record]]
+name = "papaya_island_pointer"
+rom_start = 0x40046
+rom_end = 0x40047
+cpu_start = "$8046"
+cpu_end = "$8047"
+bank = 0x88
+alignment = 2
+evidence = "Fixed bank-$88 table entry 35 is updated from its pinned source at $88:81EC to the reviewed same-bank relocation at $88:FFCC."
+confidence = "confirmed"
+
+[[record]]
+name = "preliminaries_venue_pointer"
+rom_start = 0x40002
+rom_end = 0x40003
+cpu_start = "$8002"
+cpu_end = "$8003"
+bank = 0x88
+alignment = 2
+evidence = "Fixed bank-$88 table entry 1 is updated from its pinned source at $88:8058 to reviewed same-bank tail space at $88:FFDC."
+confidence = "confirmed"
+
+[[record]]
+name = "backstage_label"
+rom_start = 0x40064
+rom_end = 0x4006F
+cpu_start = "$8064"
+cpu_end = "$806F"
+bank = 0x88
+alignment = 2
+evidence = "Fixed bank-$88 table entry 2 contains the header meaning behind the martial-arts stage. The packed English Backstage exactly fills the pinned source allocation at $88:8064-$88:806F."
+confidence = "confirmed"
+
+[[record]]
+name = "matchup_announcement_label"
+rom_start = 0x40210
+rom_end = 0x4022B
+cpu_start = "$8210"
+cpu_end = "$822B"
+bank = 0x88
+alignment = 2
+evidence = "Runtime replay identifies fixed bank-$88 table entry $27 as the top banner on the World Tournament matchup-announcement screens. The packed English fits in place within the pinned source allocation at $88:8210-$88:822B."
+confidence = "confirmed"
+
+[[record]]
+name = "opening_fixed_label_relocations"
+rom_start = 0x47FB4
+rom_end = 0x47FF1
+cpu_start = "$FFB4"
+cpu_end = "$FFF1"
+bank = 0x88
+alignment = 2
+evidence = "The final reviewed all-$FF run in bank $88 holds non-overlapping packed-Latin World Tournament Arena, Papaya Island, and Preliminaries Venue streams with terminators."
+confidence = "confirmed"
+
+[[record]]
+name = "quiz_option_pointers"
+rom_start = 0xC1B2A
+rom_end = 0xC1B3D
+cpu_start = "$9B2A"
+cpu_end = "$9B35"
+bank = 0x98
+alignment = 2
+evidence = "The reviewed fixed-resource pointer run covers both trivia panels and the later Chi-Chi X/Y choice while preserving native row order and button-icon prefixes."
+confidence = "confirmed"
+
+[[record]]
+name = "quiz_header"
+rom_start = 0xC41A8
+rom_end = 0xC41BD
+cpu_start = "$C1A8"
+cpu_end = "$C1BD"
+bank = 0x98
+alignment = 2
+evidence = "Fixed choice-panel heading selected through table entry $0173 at $98:9E10; packed English fits its original ten-cell field and leaves the pointer unchanged."
+confidence = "confirmed"
+
+[[record]]
+name = "generic_choice_header"
+rom_start = 0xC41BE
+rom_end = 0xC41C7
+cpu_start = "$C1BE"
+cpu_end = "$C1C7"
+bank = 0x98
+alignment = 2
+evidence = "Fixed generic choice heading selected through table entry $0174 at $98:9E12; packed '(Choice)' fits the original four-cell field in place."
+confidence = "confirmed"
+
+[[record]]
+name = "chichi_choice_options"
+rom_start = 0xC1EDA
+rom_end = 0xC1F05
+cpu_start = "$9EDA"
+cpu_end = "$9F05"
+bank = 0x98
+alignment = 2
+evidence = "Two consecutive fixed X/Y option streams selected by resource indices $0008/$0009; English preserves the two-word icon/spacer prefix and fits each original allocation."
+confidence = "confirmed"
+
+[[record]]
+name = "quiz_option_y"
+rom_start = 0xC1E3A
+rom_end = 0xC1E4F
+cpu_start = "$9E3A"
+cpu_end = "$9E4F"
+bank = 0x98
+alignment = 2
+evidence = "Original Y option allocation; native Y icon/spacer words are retained and the eight-cell field holds the English text in place."
+confidence = "confirmed"
+
+[[record]]
+name = "quiz_02_option_sources"
+rom_start = 0xC1E60
+rom_end = 0xC1EA9
+cpu_start = "$9E60"
+cpu_end = "$9EA9"
+bank = 0x98
+alignment = 2
+evidence = "Three consecutive source allocations selected by scenario resource indices $0003/$0004/$0005 for the second tournament trivia X/Y/B rows."
+confidence = "confirmed"
+
+[[record]]
+name = "quiz_option_relocations"
+rom_start = 0xC74D8
+rom_end = 0xC75C7
+cpu_start = "$F4D8"
+cpu_end = "$F5C7"
+bank = 0x98
+alignment = 2
+evidence = "Reviewed bank-$98 all-$FF tail holds the earlier relocated quiz rows, the full Mercenary Tao Y/B rows, and the second-preliminary X/B rows, with native icon/spacer words and terminators."
+confidence = "confirmed"
+
+[[record]]
+name = "chichi_branch_and_next_quiz_pointers"
+rom_start = 0xC847C
+rom_end = 0xC84CD
+cpu_start = "$847C"
+cpu_end = "$84CD"
+bank = 0x99
+alignment = 2
+evidence = "Selector slots $023E-$0266 cover both Chi-Chi branches, their convergence, the first-preliminaries quiz lead-in, and its common continuation. Runtime tracing confirms the reached subset $023E-$0253 and $0260-$0266."
+confidence = "confirmed"
+
+[[record]]
+name = "chichi_branch_and_next_quiz_streams"
+rom_start = 0xC95B4
+rom_end = 0xC9D75
+cpu_start = "$95B4"
+cpu_end = "$9D75"
+bank = 0x99
+alignment = 2
+evidence = "Exact source allocations for reached selectors $023E-$0253 and $0260-$0266. Selectors $0254-$025F remain reserved intervening streams and are not included in the translation manifest."
+confidence = "confirmed"
+
+[[record]]
+name = "first_preliminary_match_pointers"
+rom_start = 0xC84CE
+rom_end = 0xC84F7
+cpu_start = "$84CE"
+cpu_end = "$84F7"
+bank = 0x99
+alignment = 2
+evidence = "Runtime-confirmed selector slots $0267-$027B cover the first preliminary match, the Mercenary Tao quiz, and the shared response through the scene transition."
+confidence = "confirmed"
+
+[[record]]
+name = "first_preliminary_match_streams"
+rom_start = 0xC9D76
+rom_end = 0xCA2A3
+cpu_start = "$9D76"
+cpu_end = "$A2A3"
+bank = 0x99
+alignment = 2
+evidence = "Exact source allocations for runtime-confirmed selectors $0267-$027B; low selectors $0000/$0002 reached within the action sequence are shared existing streams and are not duplicated here."
+confidence = "confirmed"
+
+[[record]]
+name = "mercenary_tao_quiz_options"
+rom_start = 0xC1F38
+rom_end = 0xC1F87
+cpu_start = "$9F38"
+cpu_end = "$9F87"
+bank = 0x98
+alignment = 2
+evidence = "Three consecutive fixed X/Y/B option streams selected by resource indices $000D-$000F at the runtime-confirmed Mercenary Tao identity quiz."
+confidence = "confirmed"
+
+[[record]]
+name = "second_preliminary_leadin_pointers"
+rom_start = 0xC84F8
+rom_end = 0xC8501
+cpu_start = "$84F8"
+cpu_end = "$8501"
+bank = 0x99
+alignment = 2
+evidence = "Runtime-confirmed selector slots $027C-$0280 cover the sequence from contestant 51's win through contestant 2 qualifying for the World Tournament."
+confidence = "confirmed"
+
+[[record]]
+name = "second_preliminary_leadin_streams"
+rom_start = 0xCA2A4
+rom_end = 0xCA3E9
+cpu_start = "$A2A4"
+cpu_end = "$A3E9"
+bank = 0x99
+alignment = 2
+evidence = "Exact source allocations for runtime-confirmed selectors $027C-$0280 immediately before command $07 at $91:87EE."
+confidence = "confirmed"
+
+[[record]]
+name = "second_preliminary_quiz_options"
+rom_start = 0xC1F88
+rom_end = 0xC1FB1
+cpu_start = "$9F88"
+cpu_end = "$9FB1"
+bank = 0x98
+alignment = 2
+evidence = "Three consecutive fixed X/Y/B option streams selected by resource indices $0010-$0012 at command $07, CPU $91:87EE."
+confidence = "confirmed"
+
+[[record]]
+name = "finals_transition_primary_pointers"
+rom_start = 0xC8502
+rom_end = 0xC8533
+cpu_start = "$8502"
+cpu_end = "$8533"
+bank = 0x99
+alignment = 2
+evidence = "Runtime-confirmed primary selector slots $0281-$0292 and $0294-$0299, plus source/glyph-confirmed recognized-route selector $0293 inside the same structural pointer run."
+confidence = "confirmed"
+
+[[record]]
+name = "finals_transition_primary_streams_through_0293"
+rom_start = 0xCA3EA
+rom_end = 0xCA725
+cpu_start = "$A3EA"
+cpu_end = "$A725"
+bank = 0x99
+alignment = 2
+evidence = "Exact consecutive source allocations for selectors $0281-$0293. Runtime and glyph evidence identifies $0293 as the recognized-route Goku/Chi-Chi matchup card; the unrecognized route substitutes $0F25."
+confidence = "confirmed"
+
+[[record]]
+name = "finals_transition_primary_streams_after_0293"
+rom_start = 0xCA726
+rom_end = 0xCA8AD
+cpu_start = "$A726"
+cpu_end = "$A8AD"
+bank = 0x99
+alignment = 2
+evidence = "Exact consecutive source allocations for runtime-confirmed selectors $0294-$0299."
+confidence = "confirmed"
+
+[[record]]
+name = "finals_transition_match_02_pointer"
+rom_start = 0xC426A
+rom_end = 0xC426B
+cpu_start = "$C26A"
+cpu_end = "$C26B"
+bank = 0x98
+alignment = 2
+evidence = "Runtime-confirmed selector $0F25 supplies the second finals bracket card selected by scenario selector variable $0F25 at CPU $91:8A68."
+confidence = "confirmed"
+
+[[record]]
+name = "finals_transition_match_02_stream"
+rom_start = 0xC5B1E
+rom_end = 0xC5B4F
+cpu_start = "$DB1E"
+cpu_end = "$DB4F"
+bank = 0x98
+alignment = 2
+evidence = "Exact source allocation for runtime-confirmed selector $0F25, the second finals bracket card."
+confidence = "confirmed"
+
+[[record]]
+name = "finals_transition_quiz_options"
+rom_start = 0xC1FB2
+rom_end = 0xC1FEF
+cpu_start = "$9FB2"
+cpu_end = "$9FEF"
+bank = 0x98
+alignment = 2
+evidence = "Three consecutive fixed X/Y/B option streams selected by resource indices $0013-$0015 at command $07, CPU $91:8AE9."
+confidence = "confirmed"
+
+[[record]]
+name = "yamcha_startled_laugh_stream"
+rom_start = 0xC880E
+rom_end = 0xC881B
+cpu_start = "$880E"
+cpu_end = "$881B"
+bank = 0x99
+alignment = 2
+evidence = "Exact selector $0007 source allocation. Fresh current-ROM replay reaches it between selectors $02A4 and $02A5 and visibly confirms Yamcha as the speaker."
+confidence = "confirmed"
+
+[[record]]
+name = "finals_quiz_tien_tao_chichi_primary_pointers"
+rom_start = 0xC8534
+rom_end = 0xC85A9
+cpu_start = "$8534"
+cpu_end = "$85A9"
+bank = 0x99
+alignment = 2
+evidence = "Runtime and static control-flow evidence confirms selector slots $029A-$02D5 across the quiz results, Tien/Tao continuation, recognized finals route, and unrecognized Goku/Chi-Chi route."
+confidence = "confirmed"
+
+[[record]]
+name = "finals_quiz_tien_tao_chichi_primary_streams"
+rom_start = 0xCA8AE
+rom_end = 0xCB8A3
+cpu_start = "$A8AE"
+cpu_end = "$B8A3"
+bank = 0x99
+alignment = 2
+evidence = "Exact consecutive source allocations for selectors $029A-$02D5. Runtime reaches $029A or $029B, common $029C-$02C5, recognized $02C6-$02CA, and unrecognized $02CB-$02D5 according to the confirmed scenario branches."
+confidence = "confirmed"
+
+[[record]]
+name = "goku_chichi_finals_disjoint_pointers"
+rom_start = 0xC423E
+rom_end = 0xC4245
+cpu_start = "$C23E"
+cpu_end = "$C245"
+bank = 0x98
+alignment = 2
+evidence = "Selector slots $0F1F-$0F22 are referenced by the unrecognized Goku/Chi-Chi finals route and its response branches."
+confidence = "confirmed"
+
+[[record]]
+name = "goku_chichi_finals_disjoint_streams"
+rom_start = 0xC593A
+rom_end = 0xC5A61
+cpu_start = "$D93A"
+cpu_end = "$DA61"
+bank = 0x98
+alignment = 2
+evidence = "Exact source allocations for unrecognized Goku/Chi-Chi selectors $0F1F-$0F22."
+confidence = "confirmed"
+
+[[record]]
+name = "goku_chichi_finals_choice_options"
+rom_start = 0xC1FF0
+rom_end = 0xC203D
+cpu_start = "$9FF0"
+cpu_end = "$A03D"
+bank = 0x98
+alignment = 2
+evidence = "Three consecutive fixed X/Y/B option streams selected by resource indices $0016-$0018 in the unrecognized Goku/Chi-Chi finals route."
+confidence = "confirmed"
+
+[[record]]
+name = "post_sealing_shenron_choice_options"
+rom_start = 0xC416A
+rom_end = 0xC41A7
+cpu_start = "$C16A"
+cpu_end = "$C1A7"
+bank = 0x98
+alignment = 2
+evidence = "Final-ROM renderer tracing after command $07 at CPU $93:C187 records CPU $80:997B source addresses $98:C16A, $98:C17E, and $98:C194 for the visible X/Y/B rows. Their pointer words are at CPU $98:9E0A-$98:9E0F."
+confidence = "confirmed"
+
+[[record]]
+name = "recognized_route_to_first_hud_pointers"
+rom_start = 0xC85AC
+rom_end = 0xC8613
+cpu_start = "$85AC"
+cpu_end = "$8613"
+bank = 0x99
+alignment = 2
+evidence = "Runtime confirms selectors $02D6-$0309 on the recognized Chi-Chi route before command $47 at CPU $91:9931. Selector $0309 is a byte-identical content alias of $02E5 and is intentionally updated to the same translated allocation."
+confidence = "confirmed"
+
+[[record]]
+name = "recognized_route_to_first_hud_streams"
+rom_start = 0xCB8A4
+rom_end = 0xCC5F7
+cpu_start = "$B8A4"
+cpu_end = "$C5F7"
+bank = 0x99
+alignment = 2
+evidence = "Exact consecutive source allocations for selectors $02D6-$0309. The tracked manifest writes 49 records in place, relocates the shared $02E5/$0309 translation once, and relocates $02FC without crossing reviewed bank-$99 text space."
+confidence = "confirmed"
+
+[[record]]
+name = "goku_tien_battle_opening_primary_pointers"
+rom_start = 0xC8664
+rom_end = 0xC8675
+cpu_start = "$8664"
+cpu_end = "$8675"
+bank = 0x99
+alignment = 2
+evidence = "Root $0014 at CPU $91:9932 directly references selectors $0332-$033A after the observed Tien battle HUD."
+confidence = "confirmed"
+
+[[record]]
+name = "goku_tien_battle_opening_primary_streams"
+rom_start = 0xCCF1E
+rom_end = 0xCD111
+cpu_start = "$CF1E"
+cpu_end = "$D111"
+bank = 0x99
+alignment = 2
+evidence = "Exact consecutive source allocations for selectors $0332-$033A; source-order glyph reconstruction identifies Goku, Tien, Krillin, Kami, and Goku's weighted clothing."
+confidence = "confirmed"
+
+[[record]]
+name = "goku_tien_weight_reaction_shared_pointer"
+rom_start = 0xC4268
+rom_end = 0xC4269
+cpu_start = "$C268"
+cpu_end = "$C269"
+bank = 0x98
+alignment = 2
+evidence = "Selector slot $0F24 is referenced by root $0014 between selectors $0337 and $0338."
+confidence = "confirmed"
+
+[[record]]
+name = "goku_tien_weight_reaction_shared_stream"
+rom_start = 0xC5ACC
+rom_end = 0xC5B1D
+cpu_start = "$DACC"
+cpu_end = "$DB1D"
+bank = 0x98
+alignment = 2
+evidence = "Exact source allocation for shared selector $0F24, where Krillin reacts to Goku having fought in weighted clothing."
+confidence = "confirmed"
+
+[[record]]
+name = "goku_chichi_battle_opening_resources"
+rom_start = 0x1A0800
+rom_end = 0x1A083F
+cpu_start = "$8800"
+cpu_end = "$883F"
+bank = 0xB4
+alignment = 2
+evidence = "Encounter index $0000 selects battle-opening script CPU $B5:BB1E through table CPU $B5:BA7E. The script invokes resources $1000/$1001 through the bank-$B4 pointer table; both translations preserve native pagination and fit in place."
+confidence = "confirmed"
+
+[[record]]
+name = "goku_chichi_shared_battle_result_resources"
+rom_start = 0x1A1D76
+rom_end = 0x1A1DDB
+cpu_start = "$9D76"
+cpu_end = "$9DDB"
+bank = 0xB4
+alignment = 2
+evidence = "Chi-Chi-at-zero script CPU $B5:C64C ends with shared resources $10B6/$10B7. Goku-at-zero script CPU $B5:CD14 uses adjacent resources $10B8/$10B9. Runtime HP manipulation and CPU $82:D0C0 control flow establish the result ownership."
+confidence = "confirmed"
+
+[[record]]
+name = "goku_chichi_chichi_zero_resources"
+rom_start = 0x1A3006
+rom_end = 0x1A3327
+cpu_start = "$B006"
+cpu_end = "$B327"
+bank = 0xB4
+alignment = 2
+evidence = "Opponent-defeated table CPU $B5:C5AC selects script CPU $B5:C64C for encounter index $0000. The script invokes resources $1180-$1190 before shared $10B6/$10B7; all translations preserve source line counts and allocations."
+confidence = "confirmed"
+
+[[record]]
+name = "junior_kami_confrontation_pointers"
+rom_start = 0xC8614
+rom_end = 0xC8651
+cpu_start = "$8614"
+cpu_end = "$8651"
+bank = 0x99
+alignment = 2
+evidence = "The Goku-defeat continuation writes root $0018 and enters CPU $91:A3B0. Runtime begins selectors $030A-$030F in source order; static root decoding and portrait-supported source pages establish the continuation through selector $0328."
+confidence = "confirmed"
+
+[[record]]
+name = "junior_kami_confrontation_streams"
+rom_start = 0xCC5F8
+rom_end = 0xCCDBB
+cpu_start = "$C5F8"
+cpu_end = "$CDBB"
+bank = 0x99
+alignment = 2
+evidence = "Exact consecutive source allocations for selectors $030A-$0328; native pages and blank lines are preserved."
+confidence = "confirmed"
+
+[[record]]
+name = "shenron_wish_streams"
+rom_start = 0xE1A84
+rom_end = 0xE1B25
+cpu_start = "$9A84"
+cpu_end = "$9B25"
+bank = 0x9C
+alignment = 2
+evidence = "Exact consecutive source allocations for selectors $0806-$080A. Independent X/Y/B captures confirm $0807 for X, $080A for Y/B, common $0808, and $0809 when B cancels the save workflow."
+confidence = "confirmed"
+
+[[record]]
+name = "reused_announcer_semifinal_begin_stream"
+rom_start = 0xCDD38
+rom_end = 0xCDD73
+cpu_start = "$DD38"
+cpu_end = "$DD73"
+bank = 0x99
+alignment = 2
+evidence = "Selector $0369 uses announcer portrait resource $21 variant $00. Direct source-glyph rendering identifies a semifinal announcement ending with the same encoded request used by selector $0265."
+confidence = "confirmed"
+
+[[record]]
+name = "reused_announcer_first_match_begin_stream"
+rom_start = 0xE6FFE
+rom_end = 0xE7021
+cpu_start = "$EFFE"
+cpu_end = "$F021"
+bank = 0x9C
+alignment = 2
+evidence = "Selector $0950 uses announcer portrait resource $21 variant $00. Direct source-glyph rendering identifies a first-match announcement ending with the same encoded request used by selector $0265."
+confidence = "confirmed"
+
+[[record]]
+name = "junior_fight_leadin_pointers"
+rom_start = 0xC8652
+rom_end = 0xC8663
+cpu_start = "$8652"
+cpu_end = "$8663"
+bank = 0x99
+alignment = 2
+evidence = "Root $001E executes selectors $0329-$0331 in order after every successful Shenron X/Y/B wish branch converges."
+confidence = "confirmed"
+
+[[record]]
+name = "junior_fight_leadin_streams"
+rom_start = 0xCCDBC
+rom_end = 0xCCF1D
+cpu_start = "$CDBC"
+cpu_end = "$CF1D"
+bank = 0x99
+alignment = 2
+evidence = "Exact consecutive source allocations for selectors $0329-$0331; source pagination, including selector $032D's two blank padding lines, is preserved."
+confidence = "confirmed"

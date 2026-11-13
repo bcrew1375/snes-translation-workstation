@@ -1,0 +1,435 @@
+schema_version = 1
+
+[[record]]
+id = "finals_transition_00"
+selector = 0x0281
+reference_address = "99:8502"
+reference_offset = 0xC8502
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A3EA"
+original_offset = 0xCA3EA
+original_length = 34
+source_sha256 = "cab1f4d40daf38bd86de69006c8b20ec5098064a41e5c45ed139b0a62977071d"
+english = ["Number 35 is in", "the finals!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; the announcer declares contestant 35 qualified; selector $0281."
+
+[[record]]
+id = "finals_transition_01"
+selector = 0x0282
+reference_address = "99:8504"
+reference_offset = 0xC8504
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A40C"
+original_offset = 0xCA40C
+original_length = 36
+source_sha256 = "4f0d769145494a590435f730ba9d21f40cb57e176394656fa7542ddd0da68075"
+english = ["Number 16 is in", "the finals!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; the announcer declares contestant 16 qualified; selector $0282."
+
+[[record]]
+id = "finals_transition_02"
+selector = 0x0283
+reference_address = "99:8506"
+reference_offset = 0xC8506
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A430"
+original_offset = 0xCA430
+original_length = 34
+source_sha256 = "16bb638505e5b8d6acfb00e2a383e805af51af60b23f59dde5ed61d492cd6c08"
+english = ["Number 22", "qualifies", "for the finals!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; the announcer declares contestant 22 qualified; selector $0283."
+
+[[record]]
+id = "finals_transition_03"
+selector = 0x0284
+reference_address = "99:8508"
+reference_offset = 0xC8508
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A452"
+original_offset = 0xCA452
+original_length = 34
+source_sha256 = "0449e8fb7aee308cd9955ab211e3f0e370c90e5e74c3aa8c6d4520b52a941177"
+english = ["Number 51", "qualifies", "for the finals!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; the announcer declares contestant 51 qualified; selector $0284."
+
+[[record]]
+id = "finals_transition_04"
+selector = 0x0285
+reference_address = "99:850A"
+reference_offset = 0xC850A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A474"
+original_offset = 0xCA474
+original_length = 32
+source_sha256 = "7fb825eb95d4af4a4a176f6d9ce48a7d9b980fc71b22ac1aff3b128336e3d975"
+english = ["Amazing!", "That girl..."]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; Krillin reacts to the female contestant's strength; selector $0285."
+
+[[record]]
+id = "finals_transition_05"
+selector = 0x0286
+reference_address = "99:850C"
+reference_offset = 0xC850C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A494"
+original_offset = 0xCA494
+original_length = 36
+source_sha256 = "1f73ec02f2e2b194ba34475ec917b8ddc5b83b0a4f13bed7845e72a232da77df"
+english = ["Wow...", "She's pretty good!"]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; Goku praises the female contestant's ability; selector $0286."
+
+[[record]]
+id = "finals_transition_06"
+selector = 0x0287
+reference_address = "99:850E"
+reference_offset = 0xC850E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A4B8"
+original_offset = 0xCA4B8
+original_length = 12
+source_sha256 = "03612e99e87c62a5a223e7255ef0010107e86f3852742e4b44a71fcf1af4b181"
+english = ["Huff...!"]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; an exhausted contestant pants; selector $0287."
+
+[[record]]
+id = "finals_transition_07"
+selector = 0x0288
+reference_address = "99:8510"
+reference_offset = 0xC8510
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A4C4"
+original_offset = 0xCA4C4
+original_length = 42
+source_sha256 = "c212189ffa30d026ac7b4542b8f17babdaa5c940374a51b8b5dd2db4243aa369"
+english = ["Damn...", "Just a warm-up", "for him."]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; Krillin observes that the exertion was merely a warm-up for the fighter he is watching; selector $0288."
+
+[[record]]
+id = "finals_transition_08"
+selector = 0x0289
+reference_address = "99:8512"
+reference_offset = 0xC8512
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A4EE"
+original_offset = 0xCA4EE
+original_length = 38
+source_sha256 = "ecf82d0fbff10063923b071a3f40e2c7ce6b46f9aa52c965deb0e70b3ef4ddb5"
+english = ["Tch...", "What a pain..."]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; Yajirobe, competing in disguise, complains that the situation is a nuisance; selector $0289."
+
+[[record]]
+id = "finals_transition_09"
+selector = 0x028A
+reference_address = "99:8514"
+reference_offset = 0xC8514
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A514"
+original_offset = 0xCA514
+original_length = 14
+source_sha256 = "4b08a3a1311ff0611fc897d0edd948151a83d9a6a7d619d5ade46cc62957fb6b"
+english = ["Eeeek!!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; a contestant cries out during the action; selector $028A."
+
+[[record]]
+id = "finals_transition_10"
+selector = 0x028B
+reference_address = "99:8516"
+reference_offset = 0xC8516
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A522"
+original_offset = 0xCA522
+original_length = 16
+source_sha256 = "5e842ccded49af99e1c447dbf514e58c4f4d87cf5043b5daa0cc6b324eeab796"
+english = ["Grrr...!!"]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; a contestant strains during the action; selector $028B."
+
+[[record]]
+id = "finals_transition_11"
+selector = 0x028C
+reference_address = "99:8518"
+reference_offset = 0xC8518
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A532"
+original_offset = 0xCA532
+original_length = 20
+source_sha256 = "3c66f7dcd2d6f07f6eacaf49bad7fbd6bbf47cc00f3928fad842ef8dbdb0b229"
+english = ["Number 70 is in!"]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; the announcer declares contestant 70 qualified; selector $028C."
+
+[[record]]
+id = "finals_transition_12"
+selector = 0x028D
+reference_address = "99:851A"
+reference_offset = 0xC851A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A546"
+original_offset = 0xCA546
+original_length = 92
+source_sha256 = "4bff1effde034597a872b7cdca51f5b6315e459482b78c8f0178a269ca9f61ec"
+english = [
+  "Man!",
+  "What a lousy match!",
+  "",
+  "",
+  "That old man won",
+  "when he stumbled...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; Krillin calls the bout a lousy match and observes that the old fighter won as a consequence of tripping; selector $028D. The source phrase is 'a lousy match' and does not name Saiya. The blank lines preserve the source's two dialogue boxes."
+
+[[record]]
+id = "finals_transition_13"
+selector = 0x028E
+reference_address = "99:851C"
+reference_offset = 0xC851C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A5A2"
+original_offset = 0xCA5A2
+original_length = 14
+source_sha256 = "08db73c94f95e8816cf9f7852371bf6732f6cb2c3592e5b3390e2d1deb798162"
+english = ["Ow, ow..."]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; Yajirobe, competing in disguise, groans in pain after losing to Hero/Shen (Kami in disguise); selector $028E."
+
+[[record]]
+id = "finals_transition_14"
+selector = 0x028F
+reference_address = "99:851E"
+reference_offset = 0xC851E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A5B0"
+original_offset = 0xCA5B0
+original_length = 100
+source_sha256 = "fa6ee0e79deb66b4815950054cd3a0a5937cbb40048c58dbbfdc54556c694900"
+english = [
+  "Damn!",
+  "How pathetic...!",
+  "",
+  "",
+  "Good thing I wore",
+  "a disguise.",
+  "That old man's",
+  "no ordinary klutz.",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; Yajirobe, competing in disguise, is humiliated by his loss, is relieved that he concealed his identity, and realizes Hero/Shen (Kami in disguise) is no ordinary klutz; selector $028F. The blank lines preserve the source's two dialogue boxes."
+
+[[record]]
+id = "finals_transition_15"
+selector = 0x0290
+reference_address = "99:8520"
+reference_offset = 0xC8520
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A614"
+original_offset = 0xCA614
+original_length = 104
+source_sha256 = "cf52b1cca331b59bd048da50ab2e8bf9fd789e46e208fbab0bfb3586113516d7"
+english = [
+  "All right!",
+  "All eight finalists",
+  "are assembled!",
+  "",
+  "Now, everyone,",
+  "please draw lots!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; the announcer gathers the eight finalists and directs them to draw lots; selector $0290. The blank lines preserve the source's two dialogue boxes."
+
+[[record]]
+id = "finals_transition_16"
+selector = 0x0291
+reference_address = "99:8522"
+reference_offset = 0xC8522
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A67C"
+original_offset = 0xCA67C
+original_length = 76
+source_sha256 = "8344395eb65b74278f04768134f7e87fddfbad453aa7357a6fdc51c546c1c6aa"
+english = ["The draw is over!", "The 23rd World Tournament", "matchups are set!"]
+max_line_length = 28
+status = "implemented"
+notes = "Finals transition; the announcer introduces the completed finals bracket; selector $0291."
+
+[[record]]
+id = "finals_transition_match_01"
+selector = 0x0292
+reference_address = "99:8524"
+reference_offset = 0xC8524
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A6C8"
+original_offset = 0xCA6C8
+original_length = 48
+source_sha256 = "a6ed17be7cbb804db4fe6366ad7659acafe13090dde0c189fae56107bfbfb6de"
+english = ["Match 1", "", "Mercenary Tao vs Tien"]
+max_line_length = 28
+status = "implemented"
+notes = "Finals bracket card for the first match; selector $0292."
+
+[[record]]
+id = "finals_transition_match_02_recognized"
+selector = 0x0293
+reference_address = "99:8526"
+reference_offset = 0xC8526
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A6F8"
+original_offset = 0xCA6F8
+original_length = 46
+source_sha256 = "3b75cfa496c4dd06569aa3e981fb758632990ca12eccff4a80eac113788448dc"
+english = ["Match 2", "", "Goku vs Chi-Chi"]
+max_line_length = 28
+status = "implemented"
+notes = "Recognized-route finals bracket card for the second match; selector $0293. Runtime tracing shows that the unrecognized route substitutes selector $0F25 instead."
+
+[[record]]
+id = "finals_transition_match_02_unknown"
+selector = 0x0F25
+reference_address = "98:C26A"
+reference_offset = 0xC426A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "98:DB1E"
+original_offset = 0xC5B1E
+original_length = 50
+source_sha256 = "232d3cd65c37738fed665fe519a208d2e84006786b40a00c3b876b8345b8fd56"
+english = ["Match 2", "", "Goku vs Anonymous"]
+max_line_length = 28
+status = "implemented"
+notes = "Unrecognized-route finals bracket card for the second match; selector $0F25. The recognized route uses selector $0293 and names Chi-Chi."
+
+[[record]]
+id = "finals_transition_match_03"
+selector = 0x0294
+reference_address = "99:8528"
+reference_offset = 0xC8528
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A726"
+original_offset = 0xCA726
+original_length = 50
+source_sha256 = "ddeec481c66419928f12669d792d85fadb2452ddbaa7d051d9a248129ea1c6ac"
+english = ["Match 3", "", "Junior vs Krillin"]
+max_line_length = 28
+status = "implemented"
+notes = "Finals bracket card for the third match; selector $0294."
+
+[[record]]
+id = "finals_transition_match_04"
+selector = 0x0295
+reference_address = "99:852A"
+reference_offset = 0xC852A
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A758"
+original_offset = 0xCA758
+original_length = 50
+source_sha256 = "83d6caed1a38cec06e93fd2c749709ee50262d3575cb40400f09e1c7dccb0398"
+english = ["Match 4", "", "Shen vs Yamcha"]
+max_line_length = 28
+status = "implemented"
+notes = "Finals bracket card for the fourth match; selector $0295."
+
+[[record]]
+id = "finals_transition_17"
+selector = 0x0296
+reference_address = "99:852C"
+reference_offset = 0xC852C
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A78A"
+original_offset = 0xCA78A
+original_length = 60
+source_sha256 = "17d7b9a4ebcedd455f36d2ec95ce9f0f04ec762ea7ae3a9b5dfaac25e2346ec5"
+english = [
+  "M-Mercenary Tao...!?",
+  "",
+  "",
+  "",
+  "But Goku killed him!",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; Master Roshi recognizes Mercenary Tao's name and recalls that Goku killed him; selector $0296. The blank lines preserve the source's two dialogue boxes."
+
+[[record]]
+id = "finals_transition_18"
+selector = 0x0297
+reference_address = "99:852E"
+reference_offset = 0xC852E
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A7C6"
+original_offset = 0xCA7C6
+original_length = 60
+source_sha256 = "ffef7b773659c58e9520468d8f2481422e3cd51dbd7ad71d7d72326bc3674026"
+english = ["He survived.", "Half his body's", "mechanical now..."]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; Krillin explains that Mercenary Tao survived and now has a half-mechanical body; selector $0297."
+
+[[record]]
+id = "finals_transition_19"
+selector = 0x0298
+reference_address = "99:8530"
+reference_offset = 0xC8530
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A802"
+original_offset = 0xCA802
+original_length = 80
+source_sha256 = "09bc5ff140f93247c942b6108b4a775a8f648a1fb64acdcd88e041edaeaff0dd"
+english = [
+  "Tao plans",
+  "to kill Goku",
+  "and Tien...",
+  "",
+  "First up:",
+  "Tien vs Tao...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; Yamcha explains that Mercenary Tao intends to kill both Goku and Tien, and that Tien must face him in the first match; selector $0298. The blank line preserves the source's two dialogue boxes."
+
+[[record]]
+id = "finals_transition_20"
+selector = 0x0299
+reference_address = "99:8532"
+reference_offset = 0xC8532
+pointer_format = "16-bit same-bank LoROM pointer"
+original_address = "99:A852"
+original_offset = 0xCA852
+original_length = 92
+source_sha256 = "832daee1deaa5068b790b6084f131fb7ae4803767cddaf8dc8f295381b82660b"
+english = [
+  "Tao...",
+  "Of all people...",
+  "",
+  "",
+  "He knows Tien's",
+  "techniques inside",
+  "and out...",
+]
+max_line_length = 21
+status = "implemented"
+notes = "Finals transition; Master Roshi warns that Mercenary Tao knows Tien's techniques inside and out; selector $0299. The blank lines preserve the source's two dialogue boxes."
